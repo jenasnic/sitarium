@@ -1,10 +1,10 @@
-# This file is the entry point to configure your own services.
-# Files in the packages/ subdirectory configure your dependencies.
-
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: 'en'
+    locale: 'fr'
+    tmdb_api_key: '%env(tmdb_api_key)%'
+    tmdb_base_uri: 'https://api.themoviedb.org/3'
+    tmdb_picture_base_uri: 'https://image.tmdb.org/t/p/w185'
 
 services:
     # default configuration for services in *this* file
@@ -17,9 +17,16 @@ services:
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
+#    App\:
+#        resource: '../src/*'
+#        exclude: '../src/{Annotation,Domain,Entity,Enum,Event,Migrations,Model,Tool,Kernel.php}'
     App\:
-        resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        resource: '../src/{EventListener,Handler,Repository,Service}'
+
+    App\Service\TmdbApiService:
+        bind:
+            $apiKey: '%tmdb_api_key%'
+            $baseUri: '%tmdb_base_uri%'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class

@@ -1,4 +1,10 @@
 
+###> IDE ###
+.buildpath
+.project
+.settings
+###< IDE ###
+
 ###> symfony/framework-bundle ###
 /.env
 /public/bundles/
