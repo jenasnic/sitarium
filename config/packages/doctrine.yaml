@@ -16,6 +16,8 @@ doctrine:
         password: '%env(database_password)%'
         server_version: '5.7'
         charset: utf8mb4
+        mapping_types:
+            enum: string
         default_table_options:
             charset: utf8mb4
             collate: utf8mb4_unicode_ci

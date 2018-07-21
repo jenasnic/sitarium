@@ -6,6 +6,7 @@ use App\Annotation\Tmdb\TmdbField;
 use App\Annotation\Tmdb\TmdbType;
 use App\Enum\Maze\FilmographyStatus;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -153,9 +154,9 @@ class Actor
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getMovies(): ArrayCollection
+    public function getMovies(): Collection
     {
         return $this->movies;
     }

@@ -47,10 +47,10 @@ class CastingActor
 
     /**
      * @var ArrayCollection $movies
-     * @ORM\ManyToMany(targetEntity="Movie", inversedBy="actors", cascade={"persist", "merge"})
+     * @ORM\ManyToMany(targetEntity="Movie", inversedBy="actors", cascade={"persist"})
      * @ORM\JoinTable(name="movie_casting_actor",
-     *      joinColumns={@ORM\JoinColumn(name="actor_id", referencedColumnName="tmdbId")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="tmdbId")}
+     *      joinColumns={@ORM\JoinColumn(name="actor_id", referencedColumnName="tmdbId", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="tmdbId", onDelete="CASCADE")}
      * )
      */
     private $movies;

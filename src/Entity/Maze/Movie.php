@@ -6,6 +6,7 @@ use App\Annotation\Tmdb\TmdbField;
 use App\Annotation\Tmdb\TmdbType;
 use App\Enum\Maze\CastingStatus;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -197,9 +198,9 @@ class Movie
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getActors(): ArrayCollection
+    public function getActors(): Collection
     {
         return $this->actors;
     }
