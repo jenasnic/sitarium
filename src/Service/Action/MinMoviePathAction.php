@@ -19,7 +19,7 @@ class MinMoviePathAction
      * @param Movie $movie1 First movie we want to find the shortest path to second movie.
      * @param Movie $movie2 Second movie we want to find the shortest path from first movie.
      */
-    public function getPath(array $movieGraph, Movie $movie1, Movie $movie2)
+    public function execute(array $movieGraph, Movie $movie1, Movie $movie2)
     {
         $currentPath = [];
         $currentMovie = $movieGraph[$movie1->getTmdbId()];

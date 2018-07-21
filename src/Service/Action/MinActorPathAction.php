@@ -19,7 +19,7 @@ class MinActorPathAction
      * @param Actor $actor1 First actor we want to find the shortest path to second actor.
      * @param Actor $actor2 Second actor we want to find the shortest path from first actor.
      */
-    public function getPath(array $actorGraph, Actor $actor1, Actor $actor2)
+    public function execute(array $actorGraph, Actor $actor1, Actor $actor2)
     {
         $currentPath = [];
         $currentActor = $actorGraph[$actor1->getTmdbId()];

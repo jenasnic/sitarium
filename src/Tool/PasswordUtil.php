@@ -1,6 +1,6 @@
 <?php
 
-namespace Tool;
+namespace App\Tool;
 
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 

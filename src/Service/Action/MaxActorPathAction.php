@@ -20,7 +20,7 @@ class MaxActorPathAction
      *
      * @return array Array of actors linked with common movies.
      */
-    public function getPath(array $actorGraph): array
+    public function execute(array $actorGraph): array
     {
         if (count($actorGraph) < 2) {
             throw new \Exception('Not enough actor in specified graph. Set an actor graph with at least 2 actors.');

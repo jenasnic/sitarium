@@ -23,7 +23,7 @@ class RandomMoviePathAction
      *
      * @return array Array of movies linked with common actors (size of array is 'mazeSize').
      */
-    public function getPath(array $movieGraph, int $mazeSize)
+    public function execute(array $movieGraph, int $mazeSize)
     {
         if ($mazeSize < 2) {
             throw new \InvalidArgumentException('Movie count must be equal or greater than 2.');

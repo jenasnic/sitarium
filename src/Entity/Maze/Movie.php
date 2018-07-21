@@ -47,7 +47,7 @@ class Movie
      * @var string
      *
      * @ORM\Column(name="pictureUrl", type="string", length=255, nullable=true)
-     * @TmdbField(name="profile_path")
+     * @TmdbField(name="poster_path")
      */
     private $pictureUrl;
 
