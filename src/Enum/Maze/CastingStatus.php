@@ -4,9 +4,9 @@ namespace App\Enum\Maze;
 
 class CastingStatus
 {
-    const UNINITIALIZED = 'credit_to_check';
-    const INITIALIZED = 'credit_validated';
-    const EMPTY = 'credit_empty';
+    const UNINITIALIZED = 'casting_to_check';
+    const INITIALIZED = 'casting_validated';
+    const EMPTY = 'casting_empty';
 
     /**
      * @return array

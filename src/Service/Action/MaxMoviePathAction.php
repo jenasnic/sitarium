@@ -84,7 +84,7 @@ class MaxMoviePathAction
         }
 
         // NOTE : This condition should never occurs (movie should always be linked to another movie...)
-        if ($longestPath == null) {
+        if (null === $longestPath) {
             $longestPath = $currentPath;
         }
 

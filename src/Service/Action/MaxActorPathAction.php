@@ -84,7 +84,7 @@ class MaxActorPathAction
         }
 
         // NOTE : This condition should never occurs (actor should always be linked to another actor...)
-        if ($longestPath == null) {
+        if (null === $longestPath) {
             $longestPath = $currentPath;
         }
 

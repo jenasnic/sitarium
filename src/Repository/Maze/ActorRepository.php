@@ -27,7 +27,7 @@ class ActorRepository extends ServiceEntityRepository
     /**
      * Allows to get actors that doesn't appear in a movie.
      *
-     * @return array Array of actors without movie credits (as Actor).
+     * @return array Array of actors without filmography (as Actor).
      */
     public function getActorsWithoutFilmography(): array
     {
@@ -39,7 +39,7 @@ class ActorRepository extends ServiceEntityRepository
     }
 
     /**
-     * Allows to reset actors' status to default (i.e. movie_credits_to_check).
+     * Allows to reset actors' status to default (i.e. filmography_to_check).
      *
      * @return int Updated rows count.
      */
@@ -75,10 +75,11 @@ class ActorRepository extends ServiceEntityRepository
         ;
 
         // Make a join with movies (for main actors)
-        if ($minVoteCount > 0)
+        if ($minVoteCount > 0) {
             $queryBuilder->leftJoin('main_actor.movies', 'common_movies', Expr\Join::WITH, $queryBuilder->expr()->gte('common_movies.voteCount', $minVoteCount));
-        else
+        } else {
             $queryBuilder->leftJoin('main_actor.movies', 'common_movies');
+        }
 
         $queryBuilder->leftJoin('common_movies.actors', 'linked_actor', Expr\Join::WITH, $queryBuilder->expr()->neq('linked_actor.tmdbId', 'main_actor.tmdbId'));
 

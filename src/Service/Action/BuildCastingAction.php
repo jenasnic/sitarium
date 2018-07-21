@@ -7,11 +7,11 @@ use App\Enum\Maze\CastingStatus;
 use App\Event\Maze\CastingProgressEvent;
 use App\Event\Maze\CastingStartEvent;
 use App\Event\Maze\Events;
+use App\Repository\Maze\MovieRepository;
 use App\Service\TmdbApiService;
 use App\Validator\Maze\CastingActorValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use App\Repository\Maze\MovieRepository;
 
 /**
  * This class allows to get all actors relative to existing movies and to build casting keeping only actors linked together
@@ -81,7 +81,6 @@ class BuildCastingAction
                     $actorFullList[$actor->getTmdbId()] = $actor;
                 }
 
-                /** @var CastingActor $actor */
                 $actor = $actorFullList[$actor->getTmdbId()];
                 $actor->addMovie($movie);
             }

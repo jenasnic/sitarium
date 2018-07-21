@@ -27,9 +27,9 @@ class MovieRepository extends ServiceEntityRepository
     /**
      * Allows to get movies that doesn't have any actor.
      *
-     * @return array Array of movies without actor credits (as Movie).
+     * @return array Array of movies without casting (as Movie).
      */
-    public function getMoviesWithoutActorCredit(): array
+    public function getMoviesWithoutCasting(): array
     {
         return $this->createQueryBuilder('movie')
             ->where('SIZE(movie.actors) = 0')
@@ -39,7 +39,7 @@ class MovieRepository extends ServiceEntityRepository
     }
 
     /**
-     * Allows to reset movies' status to default (i.e. actor_credits_to_check).
+     * Allows to reset movies' status to default (i.e. casting_to_check).
      *
      * @return int Updated rows count.
      */

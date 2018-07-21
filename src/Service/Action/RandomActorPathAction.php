@@ -13,22 +13,23 @@ class RandomActorPathAction
 {
     /**
      * Allows to build an array with actors linked together with common filmography movies.
+     * NOTE : If no path found, choose a smaller actor count or increase actors list in graph.
      *
      * @param array $actorGraph Map of ActorGraphItem with TMDB identifier as key and ActorGraphItem as value.
      * @param int $mazeSize Number of linked actors we want to find (at least 2).
      *
-     * @throws \Exception Throw exception if specified size doesn't allow to build list of actors...
+     * @throws \InvalidArgumentException Throw exception if specified size doesn't allow to build list of actors...
      *
      * @return array Array of actors linked with common movies (size of array is 'mazeSize').
      */
     public function getPath(array $actorGraph, int $mazeSize): array
     {
         if ($mazeSize < 2) {
-            throw new \Exception('Actor count must be equal or greater than 2.');
+            throw new \InvalidArgumentException('Actor count must be equal or greater than 2.');
         }
 
         if ($mazeSize > count($actorGraph)) {
-            throw new \Exception('Actor count is too large to build a path. Choose a smaller actor count size or increase actors list.');
+            throw new \InvalidArgumentException('Actor count is too large to build a path. Choose a smaller actor count size or increase actors list.');
         }
 
         // Browse all ActorGraphItem randomly and try to find a path with specified size
@@ -42,7 +43,7 @@ class RandomActorPathAction
             $path = $this->findPathWithSize($actorGraph, $graphItem, $path, $mazeSize);
 
             // If we have found a path matching specified parameters => return path as array of actors
-            if (count($path) === $mazeSize) {
+            if ($mazeSize === count($path)) {
                 $result = [];
                 foreach ($path as $graphItem) {
                     $result[] = $graphItem->getActor();
@@ -52,7 +53,6 @@ class RandomActorPathAction
             }
         }
 
-        //throw new \Exception('Unable to find path for specified size. Choose a smaller actor count or increase actors list.');
         return null;
     }
 
@@ -78,7 +78,7 @@ class RandomActorPathAction
         $currentPath[] = $graphItem;
 
         // If current path reached required size => stop here
-        if (count($currentPath) == $pathSize) {
+        if ($pathSize === count($currentPath)) {
             return $currentPath;
         }
 

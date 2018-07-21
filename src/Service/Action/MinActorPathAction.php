@@ -59,7 +59,7 @@ class MinActorPathAction
         }
 
         // If actor reached => stop here (path OK)
-        if ($currentActor == $actorToReach) {
+        if ($currentActor === $actorToReach) {
             $currentPath[] = $currentActor;
             return $currentPath;
         }
@@ -96,9 +96,9 @@ class MinActorPathAction
             $newPath = $this->findShortestPath($actorGraph, $linkedActor, $actorToReach, $currentPath);
 
             // If path found => check if OK
-            if ($newPath !== null) {
+            if (null !== $newPath) {
                 // If no best path found yet or better path found
-                if ($currentActor->getBestPathSize() === 0 || count($newPath) <= $currentActor->getBestPathSize()) {
+                if (0 === $currentActor->getBestPathSize() || count($newPath) <= $currentActor->getBestPathSize()) {
                     $this->setBestPathSizeForGraphItem($actorGraph, count($newPath));
                     $minPath = $newPath;
                     $this->updateBestPathPositionForGraphItem($newPath);

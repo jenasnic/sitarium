@@ -7,11 +7,11 @@ use App\Enum\Maze\FilmographyStatus;
 use App\Event\Maze\Events;
 use App\Event\Maze\FilmographyProgressEvent;
 use App\Event\Maze\FilmographyStartEvent;
+use App\Repository\Maze\ActorRepository;
 use App\Service\TmdbApiService;
 use App\Validator\Maze\FilmographyMovieValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use App\Repository\Maze\ActorRepository;
 
 /**
  * This class allows to get all movies relative to existing actors and to build filmography keeping only movies linked together
@@ -83,11 +83,10 @@ class BuildFilmographyAction
                     $movieFullList[$movie->getTmdbId()] = $movie;
                 }
 
-                /** @var FilmographyMovie $movie */
                 $movie = $movieFullList[$movie->getTmdbId()];
                 // Add current actor to movie
                 // WARNING : Check if actor not already exist (a same actor can appear several times in a same movie...)
-                if ((count($movie->getActors()) === 0) || !$movie->getActors()->contains($actor)) {
+                if (0 === count($movie->getActors()) || !$movie->getActors()->contains($actor)) {
                     $movie->addActor($actor);
                 }
             }

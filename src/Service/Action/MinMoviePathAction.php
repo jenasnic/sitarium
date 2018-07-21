@@ -59,7 +59,7 @@ class MinMoviePathAction
         }
 
         // If movie reached => stop here (path OK)
-        if ($currentMovie == $movieToReach) {
+        if ($currentMovie === $movieToReach) {
             $currentPath[] = $currentMovie;
             return $currentPath;
         }
@@ -96,9 +96,9 @@ class MinMoviePathAction
             $newPath = $this->findShortestPath($movieGraph, $linkedMovie, $movieToReach, $currentPath);
 
             // If path found => check if OK
-            if ($newPath !== null) {
+            if (null !== $newPath) {
                 // If no best path found yet or better path found
-                if ($currentMovie->getBestPathSize() === 0 || count($newPath) <= $currentMovie->getBestPathSize()) {
+                if (0 === $currentMovie->getBestPathSize() || count($newPath) <= $currentMovie->getBestPathSize()) {
                     $this->setBestPathSizeForGraphItem($movieGraph, count($newPath));
                     $minPath = $newPath;
                     $this->updateBestPathPositionForGraphItem($newPath);
