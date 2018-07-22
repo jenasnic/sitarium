@@ -5,7 +5,7 @@ namespace App\EventListener;
 use App\Enum\Maze\SessionValues;
 use App\Event\Maze\CastingProgressEvent;
 use App\Event\Maze\CastingStartEvent;
-use App\Event\Maze\Events;
+use App\Event\MazeEvents;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -31,9 +31,9 @@ class BuildingCastingSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            Events::BUILD_CASTING_START => 'onBuildCastingStart',
-            Events::BUILD_CASTING_PROGRESS => 'onBuildCastingProgress',
-            Events::BUILD_CASTING_END => 'onBuildCastingEnd',
+            MazeEvents::BUILD_CASTING_START => 'onBuildCastingStart',
+            MazeEvents::BUILD_CASTING_PROGRESS => 'onBuildCastingProgress',
+            MazeEvents::BUILD_CASTING_END => 'onBuildCastingEnd',
         ];
     }
 

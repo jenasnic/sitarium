@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Event\Maze;
+namespace App\Event;
 
-class Events
+class MazeEvents
 {
     /**
      * Event fired when starting to build filmography for actors

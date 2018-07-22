@@ -4,7 +4,7 @@ namespace App\Service\Action;
 
 use App\Entity\Maze\FilmographyMovie;
 use App\Enum\Maze\FilmographyStatus;
-use App\Event\Maze\Events;
+use App\Event\MazeEvents;
 use App\Event\Maze\FilmographyProgressEvent;
 use App\Event\Maze\FilmographyStartEvent;
 use App\Repository\Maze\ActorRepository;
@@ -64,7 +64,7 @@ class BuildFilmographyAction
         $movieFilteredList = [];
         $processCount = 0;
 
-        $this->eventDispatcher->dispatch(Events::BUILD_FILMOGRAPHY_START, new FilmographyStartEvent(count($actorList)));
+        $this->eventDispatcher->dispatch(MazeEvents::BUILD_FILMOGRAPHY_START, new FilmographyStartEvent(count($actorList)));
 
         // First step : get all movies for all actors
         /** @var Actor $actor */
@@ -94,7 +94,7 @@ class BuildFilmographyAction
             // WARNING : wait between each TMDB request to not override request rate limit (40 per seconde)
             usleep(400000);
 
-            $this->eventDispatcher->dispatch(Events::BUILD_FILMOGRAPHY_PROGRESS, new FilmographyProgressEvent(++$processCount));
+            $this->eventDispatcher->dispatch(MazeEvents::BUILD_FILMOGRAPHY_PROGRESS, new FilmographyProgressEvent(++$processCount));
         }
 
         // Second step : keep only movies with at least two actors (i.e. allowing to link at least 2 actors)
@@ -123,6 +123,6 @@ class BuildFilmographyAction
 
         $this->entityManager->flush();
 
-        $this->eventDispatcher->dispatch(Events::BUILD_FILMOGRAPHY_END);
+        $this->eventDispatcher->dispatch(MazeEvents::BUILD_FILMOGRAPHY_END);
     }
 }

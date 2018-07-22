@@ -3,7 +3,7 @@
 namespace App\EventListener;
 
 use App\Enum\Maze\SessionValues;
-use App\Event\Maze\Events;
+use App\Event\MazeEvents;
 use App\Event\Maze\FilmographyProgressEvent;
 use App\Event\Maze\FilmographyStartEvent;
 use Symfony\Component\EventDispatcher\Event;
@@ -31,9 +31,9 @@ class BuildingFilmographySubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            Events::BUILD_FILMOGRAPHY_START => 'onBuildFilmographyStart',
-            Events::BUILD_FILMOGRAPHY_PROGRESS => 'onBuildFilmographyProgress',
-            Events::BUILD_FILMOGRAPHY_END => 'onBuildFilmographyEnd',
+            MazeEvents::BUILD_FILMOGRAPHY_START => 'onBuildFilmographyStart',
+            MazeEvents::BUILD_FILMOGRAPHY_PROGRESS => 'onBuildFilmographyProgress',
+            MazeEvents::BUILD_FILMOGRAPHY_END => 'onBuildFilmographyEnd',
         ];
     }
 

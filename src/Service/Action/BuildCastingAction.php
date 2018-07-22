@@ -6,7 +6,7 @@ use App\Entity\Maze\CastingActor;
 use App\Enum\Maze\CastingStatus;
 use App\Event\Maze\CastingProgressEvent;
 use App\Event\Maze\CastingStartEvent;
-use App\Event\Maze\Events;
+use App\Event\MazeEvents;
 use App\Repository\Maze\MovieRepository;
 use App\Service\TmdbApiService;
 use App\Validator\Maze\CastingActorValidator;
@@ -64,7 +64,7 @@ class BuildCastingAction
         $actorFilteredList = [];
         $processCount = 0;
 
-        $this->eventDispatcher->dispatch(Events::BUILD_CASTING_START, new CastingStartEvent(count($movieList)));
+        $this->eventDispatcher->dispatch(MazeEvents::BUILD_CASTING_START, new CastingStartEvent(count($movieList)));
 
         // First step : get all actors for all movies
         /** @var Movie $movie */
@@ -88,7 +88,7 @@ class BuildCastingAction
             // WARNING : wait between each TMDB request to not override request rate limit (40 per seconde)
             usleep(400000);
 
-            $this->eventDispatcher->dispatch(Events::BUILD_CASTING_PROGRESS, new CastingProgressEvent(++$processCount));
+            $this->eventDispatcher->dispatch(MazeEvents::BUILD_CASTING_PROGRESS, new CastingProgressEvent(++$processCount));
         }
 
         // Second step : keep only actors with at least two movies (i.e. allowing to link at least 2 movies)
@@ -117,6 +117,6 @@ class BuildCastingAction
 
         $this->entityManager->flush();
 
-        $this->eventDispatcher->dispatch(Events::BUILD_CASTING_END);
+        $this->eventDispatcher->dispatch(MazeEvents::BUILD_CASTING_END);
     }
 }
