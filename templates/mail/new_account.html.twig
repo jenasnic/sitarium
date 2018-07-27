@@ -1,0 +1,28 @@
+{#
+    This mail is used when user ask new password (forgotten password).
+    Required :
+    - user : user (as User) we send mail.
+    - password : clear password for previous user account (as String) => password in entity User is encoded...
+#}
+
+{% extends "mail.html.twig" %}
+
+{% block message %}
+
+    <strong>Bonjour {{ user.firstname }} {{ user.lastname }},</strong>
+    <br/><br/>
+    Bienvenue sur le sitarium et merci d'avoir créé votre compte.
+    <br/><br/>
+    Voici vos identifiants de connexion :
+    <br/>
+    <ul>
+        <li><strong>login :</strong> {{ user.username }}</li>
+        <li><strong>mot de passe :</strong> {{ password }}</li>
+    </ul>
+    <br/>
+    Pour accéder à votre compte, veuillez cliquer sur le lien suivant :
+    <br/><br/>
+    {#<a href="{{ app.request.scheme ~  '://' ~  app.request.host  ~ path('jc_user_account') }}" target="_blank">Mon compte</a>#}
+    <br/><br/>
+
+{% endblock %}

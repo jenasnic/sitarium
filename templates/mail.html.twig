@@ -1,0 +1,32 @@
+
+<table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+
+    <tr style="background-color: #333;">
+        <td>
+            <a href="{{ app.request.scheme ~  '://' ~  app.request.host }}" target="_blank">
+            <img src="{{ app.request.scheme ~  '://' ~  app.request.host  ~ asset('resources/images/sitarium.png') }}" alt="" width="298" height="68" border="0" style="Statut;" />
+            </a>
+        </td>
+    </tr>
+
+    <tr style="border: 1px solid #333;">
+
+        <td style="padding:25px 0; border:1px solid #CCC;">
+
+            <table border="0" cellspacing="0" cellpadding="0" align="center" width="520">
+
+                <tr>
+
+                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px;" align="left">
+                        {% block message %}{% endblock %}
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </td>
+
+    </tr>
+
+</table>
