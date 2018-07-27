@@ -14,16 +14,15 @@ class RandomMoviePathAction
     /**
      * Allows to build an array with movies linked together with common casting actors.
      * NOTE : If no path found, choose a smaller movie count or increase movies list in graph.
-
      *
      * @param array $movieGraph Map of MovieGraphItem with TMDB identifier as key and MovieGraphItem as value.
      * @param int $mazeSize Number of linked movies we want to find (at least 2).
-
+     *
      * @throws \InvalidArgumentException Throw exception if specified size doesn't allow to build list of movies...
      *
-     * @return array Array of movies linked with common actors (size of array is 'mazeSize').
+     * @return array|null Array of movies linked with common actors (size of array is 'mazeSize').
      */
-    public function execute(array $movieGraph, int $mazeSize)
+    public function execute(array $movieGraph, int $mazeSize): ?array
     {
         if ($mazeSize < 2) {
             throw new \InvalidArgumentException('Movie count must be equal or greater than 2.');

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Action;
+namespace App\Service\Maze;
 
 use App\Entity\Maze\FilmographyMovie;
 use App\Enum\Maze\FilmographyStatus;
@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  * This class allows to get all movies relative to existing actors and to build filmography keeping only movies linked together
  * (i.e. a movie with only one actor won't be kept and saved in database).
  */
-class BuildFilmographyAction
+class ActorFilmographyBuilder
 {
     /**
      * @var TmdbApiService
@@ -57,7 +57,7 @@ class BuildFilmographyAction
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function execute()
+    public function build()
     {
         $actorList = $this->actorRepository->findAll();
         $movieFullList = [];

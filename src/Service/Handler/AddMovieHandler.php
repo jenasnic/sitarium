@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Service\Action;
+namespace App\Service\Handler;
 
-use App\Entity\Maze\Actor;
-use App\Enum\Maze\FilmographyStatus;
+use App\Domain\Command\AddMovieCommand;
+use App\Entity\Maze\Movie;
+use App\Enum\Maze\CastingStatus;
 use App\Service\TmdbApiService;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * Allows to add actor from TMDB in current database
+ * Allows to add movie from TMDB in current database
  */
-class AddActorAction
+class AddMovieHandler
 {
     /**
      * @var TmdbApiService
@@ -33,23 +34,19 @@ class AddActorAction
     }
 
     /**
-     * @param int $tmdbId
-     *
-     * @return bool
+     * @param AddMovieCommand $command
      */
-    public function execute(int $tmdbId): bool
+    public function handle(AddMovieCommand $command)
     {
-        // Check if actor already exist
-        if ($this->entityManager->getRepository(Actor::class)->findBy(['tmdbId' => $tmdbId])) {
-            return false;
+        // Check if movie already exist
+        if ($this->entityManager->getRepository(Movie::class)->findBy(['tmdbId' => $command->getTmdbId()])) {
+            return;
         }
 
-        $actorToAdd = $this->tmdbService->getEntity(Actor::class, $tmdbId);
-        $actorToAdd->setStatus(FilmographyStatus::UNINITIALIZED);
+        $actorToAdd = $this->tmdbService->getEntity(Movie::class, $command->getTmdbId());
+        $actorToAdd->setStatus(CastingStatus::UNINITIALIZED);
 
         $this->entityManager->persist($actorToAdd);
         $this->entityManager->flush();
-
-        return true;
     }
 }

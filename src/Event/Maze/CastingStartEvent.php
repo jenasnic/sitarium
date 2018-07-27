@@ -11,6 +11,9 @@ class CastingStartEvent extends Event
      */
     protected $total;
 
+    /**
+     * @param int $total
+     */
     public function __construct(int $total)
     {
         $this->total = $total;
@@ -24,4 +27,3 @@ class CastingStartEvent extends Event
         return $this->total;
     }
 }
-

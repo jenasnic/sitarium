@@ -18,8 +18,10 @@ class MinMoviePathAction
      * @param array $movieGraph Map of MovieGraphItem with TMDB identifier as key and MovieGraphItem as value.
      * @param Movie $movie1 First movie we want to find the shortest path to second movie.
      * @param Movie $movie2 Second movie we want to find the shortest path from first movie.
+     *
+     * @return array|null Array of movies linked with common actors.
      */
-    public function execute(array $movieGraph, Movie $movie1, Movie $movie2)
+    public function execute(array $movieGraph, Movie $movie1, Movie $movie2): ?array
     {
         $currentPath = [];
         $currentMovie = $movieGraph[$movie1->getTmdbId()];

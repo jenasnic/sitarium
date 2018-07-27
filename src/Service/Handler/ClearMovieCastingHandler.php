@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Action;
+namespace App\Service\Handler;
 
 use App\Repository\Maze\CastingActorRepository;
 use App\Repository\Maze\MovieRepository;
@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 /**
  * This class allows to clear casting, i.e. remove all actors relative to existing movies.
  */
-class ClearCastingAction
+class ClearMovieCastingHandler
 {
     /**
      * @var MovieRepository
@@ -41,7 +41,7 @@ class ClearCastingAction
         $this->entityManager = $entityManager;
     }
 
-    public function execute()
+    public function handle()
     {
         $actors = $this->actorRepository->findAll();
         foreach ($actors as $actor) {

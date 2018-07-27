@@ -20,9 +20,9 @@ class RandomActorPathAction
      *
      * @throws \InvalidArgumentException Throw exception if specified size doesn't allow to build list of actors...
      *
-     * @return array Array of actors linked with common movies (size of array is 'mazeSize').
+     * @return array|null Array of actors linked with common movies (size of array is 'mazeSize').
      */
-    public function execute(array $actorGraph, int $mazeSize): array
+    public function execute(array $actorGraph, int $mazeSize): ?array
     {
         if ($mazeSize < 2) {
             throw new \InvalidArgumentException('Actor count must be equal or greater than 2.');

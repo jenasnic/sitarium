@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\Maze;
 
 use Doctrine\Common\Collections\Collection;
 

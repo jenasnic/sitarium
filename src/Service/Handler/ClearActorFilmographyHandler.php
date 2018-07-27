@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Action;
+namespace App\Service\Handler;
 
 use App\Repository\Maze\ActorRepository;
 use App\Repository\Maze\FilmographyMovieRepository;
@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 /**
  * This class allows to clear filmography, i.e. remove all movies relative to existing actors.
  */
-class ClearFilmographyAction
+class ClearActorFilmographyHandler
 {
     /**
      * @var ActorRepository
@@ -41,7 +41,7 @@ class ClearFilmographyAction
         $this->entityManager = $entityManager;
     }
 
-    public function execute()
+    public function handle()
     {
         $movies = $this->movieRepository->findAll();
         foreach ($movies as $movie) {

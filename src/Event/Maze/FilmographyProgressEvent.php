@@ -11,6 +11,9 @@ class FilmographyProgressEvent extends Event
      */
     protected $progress;
 
+    /**
+     * @param int $progress
+     */
     public function __construct(int $progress)
     {
         $this->progress = $progress;
@@ -24,4 +27,3 @@ class FilmographyProgressEvent extends Event
         return $this->progress;
     }
 }
-

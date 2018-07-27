@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\Maze;
 
 use App\Entity\Maze\Actor;
 use App\Entity\Maze\FilmographyMovie;

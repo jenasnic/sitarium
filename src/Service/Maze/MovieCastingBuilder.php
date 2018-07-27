@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Action;
+namespace App\Service\Maze;
 
 use App\Entity\Maze\CastingActor;
 use App\Enum\Maze\CastingStatus;
@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  * This class allows to get all actors relative to existing movies and to build casting keeping only actors linked together
  * (i.e. an actor playing in only one movie won't be kept and saved in database).
  */
-class BuildCastingAction
+class MovieCastingBuilder
 {
     /**
      * @var TmdbApiService
@@ -57,7 +57,7 @@ class BuildCastingAction
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function execute()
+    public function build()
     {
         $movieList = $this->movieRepository->findAll();
         $actorFullList = [];

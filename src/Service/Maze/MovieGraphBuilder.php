@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\Maze;
 
 use App\Entity\Maze\Movie;
 use App\Model\Maze\MovieGraphItem;
