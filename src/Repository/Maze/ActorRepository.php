@@ -65,26 +65,25 @@ class ActorRepository extends ServiceEntityRepository
      * @return array Array of linked actors using TMDB identifiers in a map with both keys : main_actor_identifier and linked_actor_identifier.
      * NOTE : unable to build same entity => use TMDB identifiers instead...
      */
-    public function getLinkedActorsId($actorIds = null, $minVoteCount = 0): array
+    public function getLinkedActorsIds($actorIds = null, $minVoteCount = 0): array
     {
         $queryBuilder = $this->createQueryBuilder('main_actor');
 
         $queryBuilder
             ->select('main_actor.tmdbId as main_actor_identifier, linked_actor.tmdbId as linked_actor_identifier')
-            ->distinct(true)
+            ->distinct()
         ;
 
         // Make a join with movies (for main actors)
         if ($minVoteCount > 0) {
-            $queryBuilder->leftJoin('main_actor.movies', 'common_movies', Expr\Join::WITH, $queryBuilder->expr()->gte('common_movies.voteCount', $minVoteCount));
+            $queryBuilder->join('main_actor.movies', 'common_movies', Expr\Join::WITH, $queryBuilder->expr()->gte('common_movies.voteCount', $minVoteCount));
         } else {
-            $queryBuilder->leftJoin('main_actor.movies', 'common_movies');
+            $queryBuilder->join('main_actor.movies', 'common_movies');
         }
 
-        $queryBuilder->leftJoin('common_movies.actors', 'linked_actor', Expr\Join::WITH, $queryBuilder->expr()->neq('linked_actor.tmdbId', 'main_actor.tmdbId'));
+        $queryBuilder->join('common_movies.actors', 'linked_actor', Expr\Join::WITH, $queryBuilder->expr()->neq('linked_actor.tmdbId', 'main_actor.tmdbId'));
 
         // Add condition on identifier for actors
-        $queryBuilder->where('linked_actor.tmdbId IS NOT NULL');
         if ($actorIds != null) {
             $queryBuilder
                 ->andWhere($queryBuilder->expr()->in('main_actor.tmdbId', $actorIds))

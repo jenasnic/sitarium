@@ -2,19 +2,17 @@
 
 namespace App\Model\Maze;
 
-use App\Entity\Maze\Movie;
-
-class MovieGraphItem
+class MazeGraphItem
 {
     /**
-     * @var Movie
+     * @var mixed
      */
-    private $movie;
+    private $item;
 
     /**
      * @var array
      */
-    private $linkedMovies;
+    private $linkedItems;
 
     /**
      * @var int
@@ -27,46 +25,46 @@ class MovieGraphItem
     private $bestPathSize = 0;
 
     /**
-     * @param Movie $movie
+     * @param mixed $item
      */
-    public function __construct(Movie $movie)
+    public function __construct($item)
     {
-        $this->movie = $movie;
-        $this->linkedMovies = [];
+        $this->item = $item;
+        $this->linkedItems = [];
     }
 
     /**
-     * @return Movie
+     * @return mixed
      */
-    public function getMovie(): Movie
+    public function getItem()
     {
-        return $this->movie;
+        return $this->item;
     }
 
     /**
-     * @param Movie $movie
+     * @param mixed $item
      */
-    public function setMovie(Movie $movie)
+    public function setItem($item)
     {
-        $this->movie = $movie;
+        $this->item = $item;
     }
 
     /**
      * @return array
      */
-    public function getLinkedMovies(): array
+    public function getLinkedItems(): array
     {
-        return $this->linkedMovies;
+        return $this->linkedItems;
     }
 
     /**
-     * @param MovieGraphItem $linkedMovie
+     * @param MazeGraphItem $linkedItem
      *
-     * @return MovieGraphItem
+     * @return MazeGraphItem
      */
-    public function addLinkedActor(MovieGraphItem $linkedMovie): self
+    public function addLinkedItem(MazeGraphItem $linkedItem): self
     {
-        $this->linkedMovies[] = $linkedMovie;
+        $this->linkedItems[] = $linkedItem;
 
         return $this;
     }

@@ -63,19 +63,18 @@ class MovieRepository extends ServiceEntityRepository
      * @return array Array of linked movies using TMDB identifiers in a map with both keys : main_movie_identifier and linked_movie_identifier.
      * NOTE : unable to build same entity => use TMDB identifiers instead...
      */
-    public function getLinkedMoviesId($movieIds = null)
+    public function getLinkedMoviesIds($movieIds = null)
     {
         $queryBuilder = $this->createQueryBuilder('main_movie');
 
         $queryBuilder
             ->select('main_movie.tmdbId as main_movie_identifier, linked_movie.tmdbId as linked_movie_identifier')
-            ->distinct(true)
-            ->leftJoin('main_movie.actors', 'common_actors')
-            ->leftJoin('common_actors.movies', 'linked_movie', Expr\Join::WITH, $queryBuilder->expr()->neq('linked_movie.tmdbId', 'main_movie.tmdbId'))
+            ->distinct()
+            ->join('main_movie.actors', 'common_actors')
+            ->join('common_actors.movies', 'linked_movie', Expr\Join::WITH, $queryBuilder->expr()->neq('linked_movie.tmdbId', 'main_movie.tmdbId'))
         ;
 
         // Add condition on identifier for movies
-        $queryBuilder->where('linked_movie.tmdbId IS NOT NULL');
         if ($movieIds != null) {
             $queryBuilder
                 ->andWhere($queryBuilder->expr()->in('main_movie.tmdbId', $movieIds))

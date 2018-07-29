@@ -2,9 +2,8 @@
 
 namespace App\Service\Maze;
 
-use App\Entity\Maze\Movie;
-use App\Model\Maze\MovieGraphItem;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Model\Maze\MazeGraphItem;
+use App\Repository\Maze\MovieRepository;
 
 /**
  * This class allows to build movies graph (i.e. list of movies with all links between them through common actors).
@@ -12,16 +11,16 @@ use Doctrine\ORM\EntityManagerInterface;
 class MovieGraphBuilder
 {
     /**
-     * @var EntityManagerInterface
+     * @var MovieRepository
      */
-    protected $entityManager;
+    protected $movieRespository;
 
     /**
-     * @param EntityManagerInterface $entityManager
+     * @param MovieRepository $movieRespository
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(MovieRepository $movieRespository)
     {
-        $this->entityManager = $entityManager;
+        $this->movieRespository = $movieRespository;
     }
 
     /**
@@ -32,16 +31,16 @@ class MovieGraphBuilder
      * @param array $movieIds Array of TMDB identifiers (as integer) for movies to use to build graph.
      * Default value null means that we build full graph for all existing movies.
      *
-     * @return array Map of MovieGraphItem with TMDB identifier as key and MovieGraphItem as value.
+     * @return array Map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value.
      */
     public function buildGraph($movieIds = null): array
     {
         $movieMap = [];
-        $movieGraphItemMap = [];
+        $mazeGraphItemMap = [];
 
         $movieList = (null === $movieIds)
-            ? $this->entityManager->getRepository(Movie::class)->findAll()
-            : $this->entityManager->getRepository(Movie::class)->findBy(array('tmdbId' => $movieIds))
+            ? $this->movieRespository->findAll()
+            : $this->movieRespository->findBy(array('tmdbId' => $movieIds))
         ;
 
         // First step : Build movie map with tmdbId as key and matching movie as value
@@ -50,29 +49,29 @@ class MovieGraphBuilder
         }
 
         // Second step : get all linked movies array
-        $linkedMovieList = $this->entityManager->getRepository(Movie::class)->getLinkedMoviesId($movieIds);
+        $linkedMoviesIds = $this->movieRespository->getLinkedMoviesIds($movieIds);
 
         // Third step : build graph with movies
-        foreach ($linkedMovieList as $linkedMovieIds) {
-            $mainMovieId = $linkedMovieIds['main_movie_identifier'];
-            $linkedMovieId = $linkedMovieIds['linked_movie_identifier'];
+        foreach ($linkedMoviesIds as $moviesIds) {
+            $mainMovieId = $moviesIds['main_movie_identifier'];
+            $linkedMovieId = $moviesIds['linked_movie_identifier'];
 
-            // Check if movies are already set in movieGraphItemMap
-            if (!isset($movieGraphItemMap[$mainMovieId])) {
-                $movieGraphItemMap[$mainMovieId] = new MovieGraphItem($movieMap[$mainMovieId]);
+            // Check if movies are already set in mazeGraphItemMap
+            if (!isset($mazeGraphItemMap[$mainMovieId])) {
+                $mazeGraphItemMap[$mainMovieId] = new MazeGraphItem($movieMap[$mainMovieId]);
             }
-            if (!isset($movieGraphItemMap[$linkedMovieId])) {
-                $movieGraphItemMap[$linkedMovieId] = new MovieGraphItem($movieMap[$linkedMovieId]);
+            if (!isset($mazeGraphItemMap[$linkedMovieId])) {
+                $mazeGraphItemMap[$linkedMovieId] = new MazeGraphItem($movieMap[$linkedMovieId]);
             }
 
-            $mainMovieGraphItem = $movieGraphItemMap[$mainMovieId];
-            $linkedMovieGraphItem = $movieGraphItemMap[$linkedMovieId];
+            $mainMovieGraphItem = $mazeGraphItemMap[$mainMovieId];
+            $linkedMovieGraphItem = $mazeGraphItemMap[$linkedMovieId];
 
             // Update main movie (as MovieGraphItem) if needed (add linked movie if not already added)
-            if (!in_array($linkedMovieGraphItem, $mainMovieGraphItem->getLinkedMovies()))
-                $mainMovieGraphItem->addLinkedActor($linkedMovieGraphItem);
+            if (!in_array($linkedMovieGraphItem, $mainMovieGraphItem->getLinkedItems()))
+                $mainMovieGraphItem->addLinkedItem($linkedMovieGraphItem);
         }
 
-        return $movieGraphItemMap;
+        return $mazeGraphItemMap;
     }
 }

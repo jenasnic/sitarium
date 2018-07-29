@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Action;
+namespace App\Service\Maze;
 
 use App\Entity\Maze\CastingActor;
 use App\Repository\Maze\MovieRepository;
@@ -11,7 +11,7 @@ use App\Tool\TextUtil;
  * This class allows to check if given response to link both movies (in movie path) is valide or not.
  * => Check if given actor name match with one of common actors between both movies.
  */
-class CheckMoviePathResponseAction
+class MoviePathResponseValidator
 {
     /**
      * @var MovieRepository
@@ -42,7 +42,7 @@ class CheckMoviePathResponseAction
      *
      * @return CastingActor|null Common actor matching specified name or null if no common actor found.
      */
-    public function execute(int $movieId1, int $movieId2, string $actorName): ?CastingActor
+    public function check(int $movieId1, int $movieId2, string $actorName): ?CastingActor
     {
         $movie1 = $this->movieRepository->find($movieId1);
         $movie2 = $this->movieRepository->find($movieId2);
