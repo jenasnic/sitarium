@@ -30,7 +30,7 @@ class ResponseRepository extends ServiceEntityRepository
      *
      * @return Response|null Response matching specified parameters.
      */
-    public function findMatchingResponseForQuizId(string $response, int $quizId): ?Response
+    public function searchMatchingResponseForQuizId(string $response, int $quizId): ?Response
     {
         return $this
             ->createQueryBuilder('response')
@@ -55,7 +55,7 @@ class ResponseRepository extends ServiceEntityRepository
      *
      * @return array Array of responses matching specified paramters (as Response)
      */
-    public function findResponsesWithCoordonate(int $coordonateX, int $coordonateY, int $quizId): array
+    public function getResponsesWithCoordonates(int $coordonateX, int $coordonateY, int $quizId): array
     {
         return $this
             ->createQueryBuilder('response')

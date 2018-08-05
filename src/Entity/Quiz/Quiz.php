@@ -5,6 +5,7 @@ namespace App\Entity\Quiz;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Quiz
@@ -80,8 +81,21 @@ class Quiz
      */
     private $responses;
 
+    /**
+     * Additional property used to upload file for picture
+     */
+    private $pictureFile;
+
+    /**
+     * Additional property used to upload file for thumbnail
+     */
+    private $thumbnailFile;
+
     function __construct()
     {
+        $this->displayResponse = false;
+        $this->displayTrick = false;
+        $this->published = false;
         $this->responses = new ArrayCollection();
     }
 
@@ -227,5 +241,37 @@ class Quiz
     public function removeResponse(Response $response)
     {
         $this->responses->removeElement($response);
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    public function getPictureFile(): UploadedFile
+    {
+        return $this->pictureFile;
+    }
+
+    /**
+     * @param UploadedFile $pictureFile
+     */
+    public function setPictureFile(UploadedFile $pictureFile)
+    {
+        $this->pictureFile = $pictureFile;
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    public function getThumbnailFile(): UploadedFile
+    {
+        return $this->thumbnailFile;
+    }
+
+    /**
+     * @param UploadedFile $thumbnailFile
+     */
+    public function setThumbnailFile(UploadedFile $thumbnailFile)
+    {
+        $this->thumbnailFile = $thumbnailFile;
     }
 }

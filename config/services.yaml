@@ -17,6 +17,7 @@ services:
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
         bind:
+            $rootDir: '%kernel.project_dir%'
             $mailerFrom: '%mailer_from%'
             $mailerSender: '%mailer_sender%'
 

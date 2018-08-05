@@ -27,7 +27,7 @@ class WinnerRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function findWinnersForQuizId(int $quizId): array
+    public function getWinnersForQuizId(int $quizId): array
     {
         return $this
             ->createQueryBuilder('winner')
@@ -44,7 +44,38 @@ class WinnerRepository extends ServiceEntityRepository
      */
     public function removeWinnersForQuizId(int $quizId)
     {
-        $winners = $this->getWinnerForQuizId($quizId);
+        $winners = $this->getWinnersForQuizId($quizId);
+
+        foreach ($winners as $winner) {
+            $this->_em->remove($winner);
+        }
+
+        $this->_em->flush();
+    }
+
+    /**
+     * @param int $userId
+     *
+     * @return array
+     */
+    public function getWinnersForUserId(int $userId): array
+    {
+        return $this
+            ->createQueryBuilder('winner')
+            ->join('winner.user', 'user')
+            ->where('user.id = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @param int $userId
+     */
+    public function removeWinnersForUserId(int $userId)
+    {
+        $winners = $this->getWinnersForUserId($userId);
 
         foreach ($winners as $winner) {
             $this->_em->remove($winner);

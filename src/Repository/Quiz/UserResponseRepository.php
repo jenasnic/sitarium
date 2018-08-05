@@ -30,7 +30,7 @@ class UserResponseRepository extends ServiceEntityRepository
      *
      * @return array List of responses found by specified user for specified quiz.
      */
-    public function findResponsesForUserIdAndQuizId(int $userId, int $quizId): array
+    public function getResponsesForUserIdAndQuizId(int $userId, int $quizId): array
     {
         return $this
             ->createQueryBuilder('userResponse')
@@ -255,7 +255,7 @@ class UserResponseRepository extends ServiceEntityRepository
      *
      * @return array List of user responses matching specified parameter.
      */
-    public function findUserResponsesForResponseId(int $responseId): array
+    public function getUserResponsesForResponseId(int $responseId): array
     {
         return $this
             ->createQueryBuilder('userResponse')
@@ -275,7 +275,7 @@ class UserResponseRepository extends ServiceEntityRepository
      *
      * @return bool TRUE if specified response has already been found by specified user, FALSE either.
      */
-    public function checkExistingResponseForUser(int $userId, int $responseId): bool
+    public function checkExistingResponseForUserId(int $userId, int $responseId): bool
     {
         $queryBuilder = $this
             ->createQueryBuilder('userResponse')
