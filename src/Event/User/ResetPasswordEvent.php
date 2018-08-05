@@ -3,9 +3,9 @@
 namespace App\Event\User;
 
 use Symfony\Component\EventDispatcher\Event;
-use App\Entity\User;
+use App\Entity\User\User;
 
-class ResetUserPasswordEvent extends Event
+class ResetPasswordEvent extends Event
 {
     /**
      * @var User

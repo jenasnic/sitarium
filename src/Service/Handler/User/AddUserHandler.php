@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Service\Handler;
+namespace App\Service\Handler\User;
 
-use App\Domain\Command\ResetUserPasswordCommand;
-use App\Entity\User;
+use App\Domain\Command\User\AddUserCommand;
 use App\Event\UserEvents;
-use App\Event\User\ResetUserPasswordEvent;
+use App\Event\User\NewAccountEvent;
 use App\Tool\PasswordUtil;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Allows to reset user password : generate new password and send it by email
+ * Allows to add user in current database
  */
-class ResetUserPasswordHandler
+class AddUserHandler
 {
     /**
      * @var EntityManagerInterface
@@ -36,18 +35,21 @@ class ResetUserPasswordHandler
     }
 
     /**
-     * @param ResetUserPasswordCommand $command
+     * @param AddUserCommand $command
      */
-    public function handle(ResetUserPasswordCommand $command)
+    public function handle(AddUserCommand $command)
     {
-        $password = PasswordUtil::generatePassword(6, true, true, true, false);
+        $password = $command->getPassword();
+        if (null === $password) {
+            $password = PasswordUtil::generatePassword(6, true, true, true, false);
+        }
 
-        $user = $this->entityManager->getRepository(User::class)->find($command->getUserId());
+        $user = $command->getUser();
         $user->setPassword(PasswordUtil::encodePassword($password));
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $this->eventDispatcher->dispatch(UserEvents::RESET_PASSWORD, new ResetUserPasswordEvent($user, $password));
+        $this->eventDispatcher->dispatch(UserEvents::NEW_ACCOUNT, new NewAccountEvent($user, $password));
     }
 }

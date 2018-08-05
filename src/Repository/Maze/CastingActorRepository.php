@@ -42,4 +42,16 @@ class CastingActorRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * Allows to clear casting for all movies.
+     */
+    public function clearCasting()
+    {
+        return $this->createQueryBuilder('actor')
+            ->delete()
+            ->getQuery()
+            ->execute()
+        ;
+    }
 }

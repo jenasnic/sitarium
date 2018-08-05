@@ -2,7 +2,7 @@
 
 namespace App\Entity\Quiz;
 
-use App\Entity\User;
+use App\Entity\User\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -68,7 +68,7 @@ class Winner
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User\User")
      * @ORM\JoinColumn(nullable=true)
      */
     private $user;

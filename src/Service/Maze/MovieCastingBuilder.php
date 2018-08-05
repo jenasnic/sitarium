@@ -8,7 +8,7 @@ use App\Event\Maze\CastingProgressEvent;
 use App\Event\Maze\CastingStartEvent;
 use App\Event\MazeEvents;
 use App\Repository\Maze\MovieRepository;
-use App\Service\TmdbApiService;
+use App\Service\Tmdb\TmdbApiService;
 use App\Validator\Maze\CastingActorValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

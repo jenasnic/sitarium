@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\Command;
+namespace App\Domain\Command\User;
 
-class ResetUserPasswordCommand
+class ResetPasswordCommand
 {
     /**
      * @var int
@@ -20,7 +20,7 @@ class ResetUserPasswordCommand
     /**
      * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }

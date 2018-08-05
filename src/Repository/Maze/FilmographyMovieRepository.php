@@ -42,4 +42,16 @@ class FilmographyMovieRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * Allows to clear filmography for all actors.
+     */
+    public function clearFilmography()
+    {
+        return $this->createQueryBuilder('movie')
+            ->delete()
+            ->getQuery()
+            ->execute()
+        ;
+    }
 }

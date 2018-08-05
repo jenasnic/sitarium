@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Enum;
+namespace App\Enum\User;
 
-class UserRoles
+class Roles
 {
     const ROLE_ADMIN = 'ROLE_ADMIN';
     const ROLE_USER = 'ROLE_USER';

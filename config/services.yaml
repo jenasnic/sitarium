@@ -28,7 +28,7 @@ services:
     App\:
         resource: '../src/{DataFixtures,EventListener,Repository,Service}'
 
-    App\Service\TmdbApiService:
+    App\Service\Tmdb\TmdbApiService:
         bind:
             $apiKey: '%tmdb_api_key%'
             $baseUri: '%tmdb_base_uri%'

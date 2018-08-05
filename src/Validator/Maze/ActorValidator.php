@@ -2,10 +2,10 @@
 
 namespace App\Validator\Maze;
 
-use App\Validator\TmdbValidator;
 use App\Entity\Maze\Actor;
+use App\Validator\Tmdb\TmdbValidatorInterface;
 
-class ActorValidator implements TmdbValidator
+class ActorValidator implements TmdbValidatorInterface
 {
     /**
      * Allows to check if specified actor is valid or not.

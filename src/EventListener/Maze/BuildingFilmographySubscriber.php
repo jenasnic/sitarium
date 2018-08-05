@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventListener;
+namespace App\EventListener\Maze;
 
 use App\Enum\Maze\SessionValues;
 use App\Event\MazeEvents;

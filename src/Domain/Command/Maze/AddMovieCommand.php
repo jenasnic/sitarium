@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Command;
+namespace App\Domain\Command\Maze;
 
 class AddMovieCommand
 {
@@ -10,7 +10,7 @@ class AddMovieCommand
     protected $tmdbId;
 
     /**
-     * @param int $userId
+     * @param int $tmdbId
      */
     function __construct(int $tmdbId)
     {
@@ -20,7 +20,7 @@ class AddMovieCommand
     /**
      * @return int
      */
-    public function getTmdbId()
+    public function getTmdbId(): int
     {
         return $this->tmdbId;
     }

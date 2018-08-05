@@ -2,7 +2,7 @@
 
 namespace App\Entity\Quiz;
 
-use App\Entity\User;
+use App\Entity\User\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,7 +16,7 @@ class UserResponse
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User\User", fetch="EAGER")
      * @ORM\Id
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */

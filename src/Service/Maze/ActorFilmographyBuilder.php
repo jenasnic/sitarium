@@ -8,7 +8,7 @@ use App\Event\MazeEvents;
 use App\Event\Maze\FilmographyProgressEvent;
 use App\Event\Maze\FilmographyStartEvent;
 use App\Repository\Maze\ActorRepository;
-use App\Service\TmdbApiService;
+use App\Service\Tmdb\TmdbApiService;
 use App\Validator\Maze\FilmographyMovieValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

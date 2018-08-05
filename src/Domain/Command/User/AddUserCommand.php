@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\Command;
+namespace App\Domain\Command\User;
 
-use App\Entity\User;
+use App\Entity\User\User;
 
 class AddUserCommand
 {
@@ -29,15 +29,15 @@ class AddUserCommand
     /**
      * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }

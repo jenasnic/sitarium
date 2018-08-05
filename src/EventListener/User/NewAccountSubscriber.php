@@ -1,12 +1,12 @@
 <?php
 
-namespace App\EventListener;
+namespace App\EventListener\User;
 
 use App\Event\UserEvents;
-use App\Event\User\NewUserAccountEvent;
+use App\Event\User\NewAccountEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class NewUserAccountSubscriber implements EventSubscriberInterface
+class NewAccountSubscriber implements EventSubscriberInterface
 {
     /**
      * @var \Swift_Mailer
@@ -57,9 +57,9 @@ class NewUserAccountSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param NewUserAccountEvent $event
+     * @param NewAccountEvent $event
      */
-    public function onNewAccount(NewUserAccountEvent $event)
+    public function onNewAccount(NewAccountEvent $event)
     {
         try {
             $subject = 'Bienvenue ' . $event->getUser()->getDisplayName();

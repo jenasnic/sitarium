@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\Tmdb;
 
 use App\Annotation\Tmdb\TmdbType;
 use App\Annotation\Tmdb\TmdbField;
-use App\Validator\TmdbValidator;
+use App\Validator\Tmdb\TmdbValidatorInterface;
 use Doctrine\Common\Annotations\CachedReader;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Cache\ArrayCache;
@@ -94,12 +94,12 @@ class TmdbApiService
      *
      * @param string $entityClass Class of entity to build matching specified TMDB identifier.
      * @param string $search Query parameter to send to TMDB to search entities.
-     * @param TmdbValidator $validator Validator used to check if entities we are searching are valide or not.
+     * @param TmdbValidatorInterface $validator Validator used to check if entities we are searching are valide or not.
      * @param int (optional) $maxCount Maximum result count allowed (default 20).
      *
      * @return array Associative array with total count (key 'total') and array with first max count actors found (key 'results').
      */
-    public function searchEntity(string $entityClass, string $search, TmdbValidator $validator = null, $maxCount = 20)
+    public function searchEntity(string $entityClass, string $search, TmdbValidatorInterface $validator = null, $maxCount = 20)
     {
         $reflectionClass = new \ReflectionClass($entityClass);
         $annotation = $this->annotationReader->getClassAnnotation($reflectionClass, TmdbType::class);
@@ -143,12 +143,16 @@ class TmdbApiService
      * @param string $entityMovieClass Class of entity used to build movies.
      * @param int $tmdbId Identifier of actor in TMDB database.
      * @param string $filmographyType 'movie' or 'tv' : allows to specifiy if we want movie credits or tv credits.
-     * @param TmdbValidator $validator Validator used to check if movies are valide or not (useful to filter filmography).
+     * @param TmdbValidatorInterface|null $validator Validator used to check if movies are valide or not (useful to filter filmography).
      *
      * @return array List of movies of specified type.
      */
-    public function getFilmographyForActorId(string $entityMovieClass, int $tmdbId, $filmographyType = 'movie', $validator = null): array
-    {
+    public function getFilmographyForActorId(
+        string $entityMovieClass,
+        int $tmdbId,
+        $filmographyType = 'movie',
+        TmdbValidatorInterface $validator = null
+    ): array {
         $url = $this->baseUri . '/person/' . $tmdbId . '/' . $filmographyType . '_credits?api_key=' . $this->apiKey . '&language=fr';
         $response = $this->guzzleClient->request('GET', $url);
 
@@ -177,11 +181,11 @@ class TmdbApiService
      *
      * @param string $entityActorClass Class of entity used to build actors.
      * @param int $tmdbId Identifier of movie in TMDB database.
-     * @param TmdbValidator $validator Validator used to check if actors are valide or not (useful to filter casting).
+     * @param TmdbValidatorInterface|null $validator Validator used to check if actors are valide or not (useful to filter casting).
      *
      * @return array List of actors of specified type.
      */
-    public function getCastingForMovieId(string $entityActorClass, int $tmdbId, $validator = null)
+    public function getCastingForMovieId(string $entityActorClass, int $tmdbId, TmdbValidatorInterface $validator = null)
     {
         $url = $this->baseUri . '/movie/' . $tmdbId . '/credits?api_key=' . $this->apiKey . '&language=fr';
         $response = $this->guzzleClient->request('GET', $url);

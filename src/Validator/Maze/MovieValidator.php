@@ -3,9 +3,9 @@
 namespace App\Validator\Maze;
 
 use App\Entity\Maze\Movie;
-use App\Validator\TmdbValidator;
+use App\Validator\Tmdb\TmdbValidatorInterface;
 
-class MovieValidator implements TmdbValidator
+class MovieValidator implements TmdbValidatorInterface
 {
     /**
      * Allows to check if specified movie is valid or not.

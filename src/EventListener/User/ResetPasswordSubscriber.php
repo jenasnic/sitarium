@@ -1,12 +1,12 @@
 <?php
 
-namespace App\EventListener;
+namespace App\EventListener\User;
 
 use App\Event\UserEvents;
-use App\Event\User\ResetUserPasswordEvent;
+use App\Event\User\ResetPasswordEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class ResetUserPasswordSubscriber implements EventSubscriberInterface
+class ResetPasswordSubscriber implements EventSubscriberInterface
 {
     /**
      * @var \Swift_Mailer
@@ -57,9 +57,9 @@ class ResetUserPasswordSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param ResetUserPasswordEvent $event
+     * @param ResetPasswordEvent $event
      */
-    public function onResetPassword(ResetUserPasswordEvent $event)
+    public function onResetPassword(ResetPasswordEvent $event)
     {
         try {
             $subject = 'Mot de passe oublié';
@@ -82,7 +82,6 @@ class ResetUserPasswordSubscriber implements EventSubscriberInterface
             $this->mailer->send($mailMessage);
         }
         catch (\Exception $e) {
-            dump($e);
         }
     }
 }

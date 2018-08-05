@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Service\Handler;
+namespace App\Service\Handler\Maze;
 
-use App\Domain\Command\AddActorCommand;
+use App\Domain\Command\Maze\AddActorCommand;
 use App\Entity\Maze\Actor;
 use App\Enum\Maze\FilmographyStatus;
-use App\Service\TmdbApiService;
+use App\Service\Tmdb\TmdbApiService;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
