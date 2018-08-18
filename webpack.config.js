@@ -17,13 +17,14 @@ Encore
     // uncomment to define the assets of the project
     .addEntry('js/app', './assets/js/app.js')
     .addEntry('js/admin', './assets/js/admin.js')
-    //.addStyleEntry('css/app', './assets/css/style.css')
+    .addStyleEntry('css/app', './assets/css/app.scss')
+    .addStyleEntry('css/admin', './assets/css/admin.scss')
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
 
     // uncomment if you use Sass/SCSS files
-    //.enableSassLoader()
+    .enableSassLoader()
 
     // uncomment for legacy applications that require $/jQuery as a global variable
     //.autoProvidejQuery()
