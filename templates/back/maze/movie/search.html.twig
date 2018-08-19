@@ -1,0 +1,20 @@
+{#
+Allows to display result movie list (from TMDB search based on movie's title).
+Required :
+- movies : list of movies to display (as Movie).
+#}
+
+{% if (movies|length == 0) %}
+    <p>Aucun film trouvé</p>
+{% endif %}
+
+<div class="tile is-ancestor is-12" style="flex-wrap: wrap;">
+{% for movie in movies %}
+    <a href="{{ path('bo_maze_movie_add', { 'tmdbId': movie.tmdbId }) }}"
+        onclick="return confirm('Confirmer la sélection ?');"
+        class="tile is-child is-2">
+            <p>{{ movie.title }}</p>
+            <img src="https://image.tmdb.org/t/p/w185/{{ movie.pictureUrl }}" alt="-" />
+    </a>
+{% endfor %}
+</div>

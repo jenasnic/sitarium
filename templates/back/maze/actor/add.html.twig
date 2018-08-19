@@ -1,0 +1,19 @@
+{#
+Allows to add new actor using TMDB API.
+#}
+
+{% extends "admin.html.twig" %}
+
+{% block body %}
+
+    <h1 class="title">Ajout d'un acteur</h1>
+
+    <nav id="actor-add" class="level">
+        <input id="actor-add-search" type="text" class="input" placeholder="Saisissez le nom de l'acteur" />
+        <button id="actor-add-button" class="button is-primary" disabled>Rechercher</button>
+    </nav>
+
+    {# Allows to display search result #}
+    <div id="actor-add-result" class="hide"></div>
+
+{% endblock %}

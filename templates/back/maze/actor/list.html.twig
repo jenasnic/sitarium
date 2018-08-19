@@ -1,0 +1,81 @@
+{#
+Allows to list all actors available. It allows to add/delete actors.
+Required :
+- actors : list of all actors available (as Actor).
+#}
+
+{% extends "admin.html.twig" %}
+
+{% block body %}
+
+    <h1 class="title">Gestion des acteurs</h1>
+
+    <nav class="level">
+        <div class="level-left">
+            <span>{{ actors|length }} acteur(s)</span>
+        </div>
+        <div class="level-right">
+            <div class="column">
+                <a class="button is-primary" href="{{ path('bo_maze_actor_add') }}">Ajouter</a>
+                <span id="build-filmography-button" class="button is-primary">Construire la filmographie</span>
+            </div>
+        </div>
+    </nav>
+
+    {# Display all actors found #}
+    <table id="actor-list" class="table is-striped is-hoverable is-fullwidth">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>ID TMDB</th>
+                <th>Filmographie</th>
+                <th>Détails</th>
+                <th>Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for actor in actors %}
+            <tr>
+                <td>{{ actor.fullname }}</td>
+                <td>{{ actor.tmdbId}}</td>
+                <td>
+                    {% include 'back/maze/actor/_filmography_status.html.twig' with {'status': actor.status} %}
+                </td>
+                <td>
+                    <span class="icon has-text-info button show-actor-detail-button" data-id="{{ actor.tmdbId }}">
+                        <i class="fas fa-search"></i>
+                    </span>
+                </td>
+                <td>
+                    <a href="{{ path('bo_maze_actor_delete', { 'actor': actor.tmdbId }) }}" onclick="return confirm('Confirmer la suppression ?');" >
+                        <span class="icon has-text-danger button">
+                            <i class="fas fa-trash-alt"></i>
+                        </span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# Allows to display informations about actors using Ajax #}
+    <div id="actor-detail-modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <div class="modal-card-body">
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
+    {# Allows to display progress bar when building filmography using Ajax #}
+    <div id="progress-bar-modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <div class="modal-card-body">
+                <progress class="progress is-large" value="0" max="100"></progress>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

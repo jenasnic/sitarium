@@ -1,0 +1,19 @@
+{#
+Allows to display an icon depending on filmography status for an actor (initialized, uninitialized or empty).
+Required :
+- status : current filmography status (as string).
+#}
+
+{% if (status == constant('App\\Enum\\Maze\\FilmographyStatus::INITIALIZED')) %}
+<span class="icon has-text-success">
+    <i class="fas fa-check"></i>
+</span>
+{% elseif (status == constant('App\\Enum\\Maze\\FilmographyStatus::EMPTY')) %}
+<span class="icon has-text-danger">
+    <i class="fas fa-times"></i>
+</span>
+{% else %}
+<span class="icon has-text-warning">
+    <i class="fas fa-question"></i>
+</span>
+{% endif %}
