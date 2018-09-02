@@ -1,0 +1,23 @@
+{#
+    Allows to display response detail for statistics user.
+    NOTE : Ajax view used in JCMovieQuizBundle:BO:statisticsUser.html.twig
+    Required :
+    - responseList : list of response found by user on a specific quiz.
+#}
+
+<table class="bo-table">
+    <thead>
+        <tr>
+            <th class="bo-table-label">Réponse</th>
+            <th class="bo-table-field">Trouvée le</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for response in responseList %}
+        <tr{% if loop.index is even %} class="odd"{% endif %}>
+            <td class="bo-table-label">{{ response.response.title }}</td>
+            <td class="bo-table-field">{{ response.date|date("d/m/Y") }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

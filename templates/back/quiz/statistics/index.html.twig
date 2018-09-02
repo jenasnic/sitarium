@@ -1,0 +1,83 @@
+{#
+Allows to display statistics about quiz and players.
+Required :
+- quizInfoList : statisctics about quiz.
+- userInfoList : statisctics about players.
+#}
+
+{% extends "admin.html.twig" %}
+
+{% block body %}
+
+    <h1 class="title">Statistiques</h1>
+
+    {# Display statistics about quiz #}
+    <div id="statistics-tabs">
+
+        <div class="tabs is-boxed">
+            <ul>
+                <li><a id="tab-statistics-quiz" class="is-active">Quiz</a></li>
+                <li><a id="tab-statistics-user">Joueur</a></li>
+            </ul>
+        </div>
+
+        <div id="statistics-quiz" class="hide">
+            <table class="table is-striped is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>Quiz</th>
+                        <th>Nb. participants</th>
+                        <th>Détail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for quizInfo in quizInfos %}
+                    <tr>
+                        <td>{{ quizInfo['name'] }}</td>
+                        <td>{{ quizInfo['userCount'] }}</td>
+                        <td>
+                            <a href="{{ path('bo_quiz_statistics_quiz', { 'quiz': quizInfo['id'] }) }}">
+                                <span class="icon has-text-info button">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {# Display statistics about player #}
+        <div id="statistics-user" class="hide">
+            <table class="table is-striped is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>Joueur</th>
+                        <th>Nb. réponses trouvées</th>
+                        <th>Dernière session de jeu</th>
+                        <th>Détail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for userInfo in userInfos %}
+                    <tr>
+                        <td>{{ userInfo['firstname'] }} {{ userInfo['lastname'] }}</td>
+                        <td>{{ userInfo['responseCount'] }}</td>
+                        <td>{{ userInfo['lastDate']|date("d/m/Y") }}</td>
+                        <td>
+                            <a href="{{ path('bo_quiz_statistics_user', { 'user': userInfo['id'] }) }}">
+                                <span class="icon has-text-info button">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+{% endblock %}

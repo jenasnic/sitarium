@@ -1,0 +1,61 @@
+{#
+Allows to display all winners for a quiz.
+Required :
+- quiz : quiz we want to display winners (as Quiz).
+- winners : list of winners for current quiz (as Winner).
+#}
+
+{% extends "admin.html.twig" %}
+
+{% block body %}
+
+    <h1 class="title">Liste des vainqueurs du quiz '{{ quiz.name }}'</h1>
+
+    <nav class="level">
+        <div class="level-left">
+            <span>{{ winners|length }} vainqueur(s)</span>
+        </div>
+        <div class="level-right">
+            <a class="button is-primary" href="{{ path('bo_quiz_winner_clear', { 'quiz': quiz.id }) }}">Tout supprimer</a>
+            <div>
+            </div>
+        </div>
+    </nav>
+
+    <table id="quiz-winner-list" class="table is-striped is-hoverable is-fullwidth">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Utilisateur connecté</th>
+                <th>Détails</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for winner in winners %}
+            <tr>
+                <td>{{ winner.name }}</td>
+                <td>{{ winner.user ? 'Oui' : 'Non' }}</td>
+                <td>
+                    <span
+                        class="icon has-text-info button show-winner-detail-button"
+                        data-url="{{ path('bo_quiz_winner_detail', {'winner': winner.id}) }}"
+                    >
+                        <i class="fas fa-search"></i>
+                    </span>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# Allows to display informations about winner using Ajax #}
+    <div id="winner-detail-modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <div class="modal-card-body">
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
+{% endblock %}

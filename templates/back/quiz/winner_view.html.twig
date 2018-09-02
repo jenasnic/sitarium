@@ -1,0 +1,14 @@
+{#
+Allows to view winner information.
+Required :
+- winner : winner we want to display information (as Winner).
+#}
+
+<div class="winner-details">
+    <p><strong>Nom complet</strong> : {{ winner.name }}</p>
+    <p><strong>Adresse mail</strong> : {{ winner.email }}</p>
+    <p><strong>Résolu le</strong> : {{ winner.date|date('d-m-Y') }}</p>
+    <p><strong>Indice(s) utilisé(s)</strong> : {{ winner.trickCount }}</p>
+    <p><strong>Commentaire</strong> :</p>
+    <p>{{ winner.comment }}</p>
+</div>

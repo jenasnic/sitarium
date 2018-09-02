@@ -28,6 +28,11 @@ class DeleteQuizHandler
     protected $winnerRepository;
 
     /**
+     * @var string
+     */
+    protected $rootDir;
+
+    /**
      * @param EntityManagerInterface $entityManager
      * @param UserResponseRepository $userResponseRepository
      * @param WinnerRepository $winnerRepository
@@ -35,11 +40,13 @@ class DeleteQuizHandler
     public function __construct(
         EntityManagerInterface $entityManager,
         UserResponseRepository $userResponseRepository,
-        WinnerRepository $winnerRepository
+        WinnerRepository $winnerRepository,
+        string $rootDir
     ) {
         $this->entityManager = $entityManager;
         $this->userResponseRepository = $userResponseRepository;
         $this->winnerRepository = $winnerRepository;
+        $this->rootDir = $rootDir;
     }
 
     /**
@@ -47,12 +54,12 @@ class DeleteQuizHandler
      */
     public function handle(DeleteQuizCommand $command)
     {
-        $pictureToDelete = $this->getParameter('kernel.root_dir') . '/../web' . $command->getQuiz()->getPictureUrl();
-        $thumbnailToDelete = $this->getParameter('kernel.root_dir') . '/../web' . $command->getQuiz()->getThumbnailUrl();
+        $pictureToDelete = $this->rootDir . '/public' . $command->getQuiz()->getPictureUrl();
+        $thumbnailToDelete = $this->rootDir . '/public' . $command->getQuiz()->getThumbnailUrl();
 
         // Remove linked QuizUserResponse + Winner
-        $this->userResponseRepository->removeResponsesForQuizId($command->getQuizId());
-        $this->winnerRepository->removeWinnersForQuizId($command->getQuizId());
+        $this->userResponseRepository->removeResponsesForQuizId($command->getQuiz()->getId());
+        $this->winnerRepository->removeWinnersForQuizId($command->getQuiz()->getId());
 
         $this->entityManager->remove($command->getQuiz());
         $this->entityManager->flush();

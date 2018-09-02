@@ -99,6 +99,14 @@ class Response
      */
     private $quiz;
 
+    public function __construct()
+    {
+        $this->title = '';
+        $this->responses = '';
+        $this->trick = '';
+        $this->size = 1;
+    }
+
     /**
      * @return int
      */
@@ -108,17 +116,17 @@ class Response
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getTmdbId(): int
+    public function getTmdbId(): ?int
     {
         return $this->tmdbId;
     }
 
     /**
-     * @param int $tmdbId
+     * @param int|null $tmdbId
      */
-    public function setTmdbId(int $tmdbId)
+    public function setTmdbId(?int $tmdbId)
     {
         $this->tmdbId = $tmdbId;
     }
@@ -220,15 +228,15 @@ class Response
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPictureUrl(): string
+    public function getPictureUrl(): ?string
     {
         return $this->pictureUrl;
     }
 
     /**
-     * @param string $pictureUrl
+     * @param string $pictureUrl|null
      */
     public function setPictureUrl(string $pictureUrl)
     {
@@ -236,33 +244,33 @@ class Response
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTagline(): string
+    public function getTagline(): ?string
     {
         return $this->tagline;
     }
 
     /**
-     * @param string $tagline
+     * @param string $tagline|null
      */
-    public function setTagline(string $tagline)
+    public function setTagline(?string $tagline)
     {
         $this->tagline = $tagline;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOverview(): string
+    public function getOverview(): ?string
     {
         return $this->overview;
     }
 
     /**
-     * @param string $overview
+     * @param string $overview|null
      */
-    public function setOverview(string $overview)
+    public function setOverview(?string $overview)
     {
         $this->overview = $overview;
     }

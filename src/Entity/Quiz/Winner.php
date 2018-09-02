@@ -32,9 +32,9 @@ class Winner
     /**
      * @var string
      *
-     * @ORM\Column(name="mail", type="string", length=255, nullable=true)
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
      */
-    private $mail;
+    private $email;
 
     /**
      * @var string
@@ -73,6 +73,11 @@ class Winner
      */
     private $user;
 
+    public function __construct()
+    {
+        $this->date = new \DateTime();
+    }
+
     /**
      * @return int
      */
@@ -98,33 +103,33 @@ class Winner
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMail(): string
+    public function getEmail(): ?string
     {
-        return $this->mail;
+        return $this->email;
     }
 
     /**
-     * @param string $mail
+     * @param string|null $email
      */
-    public function setMail(string $mail)
+    public function setEmail(?string $email)
     {
-        $this->mail = $mail;
+        $this->email = $email;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getComment(): string
+    public function getComment(): ?string
     {
         return $this->comment;
     }
 
     /**
-     * @param string $comment
+     * @param string|null $comment
      */
-    public function setComment(string $comment)
+    public function setComment(?string $comment)
     {
         $this->comment = $comment;
     }
@@ -178,17 +183,17 @@ class Winner
     }
 
     /**
-     * @return User
+     * @return User|null
      */
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
     /**
-     * @param User $user
+     * @param User|null $user
      */
-    public function setUser(User $user)
+    public function setUser(?User $user)
     {
         $this->user = $user;
     }

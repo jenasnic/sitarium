@@ -1,0 +1,10 @@
+{#
+Allows to edit response from quiz. This is used through Ajax.
+Required :
+- form : FormView element based on QuizRepsonseType object (i.e. response to edit).
+#}
+
+{{ form_start(form) }}
+    {{ form_rest(form) }}
+    <input type="submit" class="button is-primary" value="Enregistrer"/>
+{{ form_end(form) }}

@@ -1,0 +1,50 @@
+{#
+    Allows to display statistics about specific player.
+    Required :
+    - user : player we want to display statisctics (as User).
+    - quizInfoList : statisctics about specified user.
+#}
+
+{% extends "admin.html.twig" %}
+
+{% block body %}
+
+    <h1>Statistiques du joueur</h1>
+
+    <h2 class="center">{{ user.firstname }} {{ user.lastname }}</h2>
+    <div class="sep-20"></div>
+
+    <input type="hidden" id="user-id" name="user-id" value="{{ user.id }}" />
+
+    <table class="bo-table">
+        <thead>
+            <tr>
+                <th class="bo-table-label">Quiz</th>
+                <th class="bo-table-field">Nb. réponses trouvées</th>
+                <th class="bo-table-field">Dernière session de jeu</th>
+                <th class="bo-table-action">Détail</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for quizInfo in quizInfoList %}
+            <tr{% if loop.index is even %} class="odd"{% endif %}>
+                <td class="bo-table-label">{{ quizInfo['name'] }}</td>
+                <td class="bo-table-field">{{ quizInfo['responseCount'] }}</td>
+                <td class="bo-table-field">{{ quizInfo['lastDate']|date("d/m/Y") }}</td>
+                <td class="bo-table-action">
+                    <span class="clickable quiz-info-detail" data-id="{{ quizInfo['id'] }}">
+                        <img src="{{ asset('resources/images/admin/icons/view.png') }}" width="16" height="16" border="0" alt="Détail" title="Détail" />
+                    </span>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="sep-20"></div>
+
+    {# Allows to display detail for response using Ajax #}
+    <div id="user-info-detail-popup" class="bpopup hide">
+    </div>
+
+{% endblock %}

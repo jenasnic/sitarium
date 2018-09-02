@@ -1,0 +1,91 @@
+{#
+    Allows to display statistics about specific quiz.
+    Required :
+    - quiz : quiz we want to display statisctics.
+    - responseInfoList : statisctics about specified quiz.
+    - userInfoList : statisctics about specified quiz.
+#}
+
+{% extends "admin.html.twig" %}
+
+{% block body %}
+
+    <h1>Statistiques du quiz</h1>
+
+    <h2 class="center">{{ quiz.name }}</h2>
+    <div class="sep-20"></div>
+
+    <input type="hidden" id="quiz-id" name="quiz-id" value="{{ quiz.id }}" />
+
+    <div id="statistics-tabs">
+
+        <ul>
+            <li><a href="#statistics-response">Réponses</a></li>
+            <li><a href="#statistics-user">Joueurs</a></li>
+        </ul>
+
+        {# Display statistics about responses #}
+        <div id="statistics-response">
+            <table class="bo-table">
+                <thead>
+                    <tr>
+                        <th class="bo-table-label">Réponse</th>
+                        <th class="bo-table-field">Fréquence</th>
+                        <th class="bo-table-field">Dernière session</th>
+                        <th class="bo-table-action">Détail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for responseInfo in responseInfoList %}
+                    <tr{% if loop.index is even %} class="odd"{% endif %}>
+                        <td class="bo-table-label">{{ responseInfo['title'] }}</td>
+                        <td class="bo-table-field">{{ responseInfo['foundCount'] }}</td>
+                        <td class="bo-table-field">{{ responseInfo['lastDate']|date("d/m/Y") }}</td>
+                        <td class="bo-table-action">
+                            <span class="clickable response-info-detail" data-id="{{ responseInfo['id'] }}">
+                                <img src="{{ asset('resources/images/admin/icons/view.png') }}" width="16" height="16" border="0" alt="Détail" title="Détail" />
+                            </span>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {# Display statistics about player #}
+        <div id="statistics-user">
+            <table class="bo-table">
+                <thead>
+                    <tr>
+                        <th class="bo-table-label">Joueur</th>
+                        <th class="bo-table-field">Nb. réponses trouvées</th>
+                        <th class="bo-table-field">Dernière session de jeu</th>
+                        <th class="bo-table-action">Détail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for userInfo in userInfoList %}
+                    <tr{% if loop.index is even %} class="odd"{% endif %}>
+                        <td class="bo-table-label">{{ userInfo['firstname'] }} {{ userInfo['lastname'] }}</td>
+                        <td class="bo-table-field">{{ userInfo['responseCount'] }}</td>
+                        <td class="bo-table-field">{{ userInfo['lastDate']|date("d/m/Y") }}</td>
+                        <td class="bo-table-action">
+                            <span class="clickable user-info-detail" data-id="{{ userInfo['id'] }}">
+                                <img src="{{ asset('resources/images/admin/icons/view.png') }}" width="16" height="16" border="0" alt="Détail" title="Détail" />
+                            </span>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="sep-20"></div>
+
+    {# Allows to display detail for response or player using Ajax #}
+    <div id="quiz-info-detail-popup" class="bpopup hide">
+    </div>
+
+{% endblock %}

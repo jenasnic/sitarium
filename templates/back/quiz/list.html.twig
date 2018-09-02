@@ -1,0 +1,90 @@
+{#
+Allows to list all quiz available. It allows to add/edit/delete quiz.
+Required :
+- quizs : list of all quiz available (as Quiz).
+#}
+
+{% extends "admin.html.twig" %}
+
+{% block body %}
+
+    <h1 class="title">Gestion des quiz</h1>
+
+    <nav class="level">
+        <div class="level-left">
+            <span>{{ quizs|length }} quiz</span>
+        </div>
+        <div class="level-right">
+            <div>
+                <span id="new-quiz-button" class="button is-primary">Nouveau</span>
+                <a class="button is-primary" href="{{ path('bo_quiz_statistics') }}">Afficher les statistiques</a>
+            </div>
+        </div>
+    </nav>
+
+    {# Display all quiz found #}
+    <table id="quiz-list" class="table is-striped is-hoverable is-fullwidth">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Vainqueurs</th>
+                <th>Modifier</th>
+                <th>Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for quiz in quizs %}
+            <tr data-id="{{ quiz.id }}">
+                <td>
+                    <span class="icon">
+                        <i class="fas fa-arrows-alt"></i>
+                    </span>
+                    {{ quiz.name }}
+                </td>
+                <td>
+                    <a href="{{ path('bo_quiz_winner_list', { 'quiz': quiz.id }) }}">
+                        <span class="icon has-text-success button">
+                            <i class="fas fa-trophy"></i>
+                        </span>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('bo_quiz_edit', { 'quiz': quiz.id }) }}">
+                        <span class="icon has-text-warning button">
+                            <i class="fas fa-edit"></i>
+                        </span>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('bo_quiz_delete', { 'quiz': quiz.id }) }}" onclick="return confirm('Confirmer la suppression ?');" >
+                        <span class="icon has-text-danger button">
+                            <i class="fas fa-trash-alt"></i>
+                        </span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# Allows to display modal when creating new quiz #}
+    <div id="new-quiz-modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <div class="modal-card-body">
+                <form id="new-quiz-form" action="{{ path('bo_quiz_new') }}" method="POST">
+                    <div class="field has-addons">
+                        <div class="control is-expanded">
+                            <input id="name" name="name" type="text" class="input" placeholder="Nom du quiz" />
+                        </div>
+                        <div class="control">
+                            <input type="submit" class="button" value="Créer" disabled/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
+{% endblock %}

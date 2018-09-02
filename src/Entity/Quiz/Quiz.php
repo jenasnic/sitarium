@@ -62,14 +62,14 @@ class Quiz
     /**
      * @var string
      *
-     * @ORM\Column(name="pictureUrl", type="text")
+     * @ORM\Column(name="pictureUrl", type="text", nullable=true)
      */
     private $pictureUrl;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="thumbnailUrl", type="text")
+     * @ORM\Column(name="thumbnailUrl", type="text", nullable=true)
      */
     private $thumbnailUrl;
 
@@ -188,33 +188,33 @@ class Quiz
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPictureUrl(): string
+    public function getPictureUrl(): ?string
     {
         return $this->pictureUrl;
     }
 
     /**
-     * @param string $pictureUrl
+     * @param string|null $pictureUrl
      */
-    public function setPictureUrl(string $pictureUrl)
+    public function setPictureUrl(?string $pictureUrl)
     {
         $this->pictureUrl = $pictureUrl;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getThumbnailUrl(): string
+    public function getThumbnailUrl(): ?string
     {
         return $this->thumbnailUrl;
     }
 
     /**
-     * @param string $thumbnailUrl
+     * @param string|null $thumbnailUrl
      */
-    public function setThumbnailUrl(string $thumbnailUrl)
+    public function setThumbnailUrl(?string $thumbnailUrl)
     {
         $this->thumbnailUrl = $thumbnailUrl;
     }
@@ -244,33 +244,33 @@ class Quiz
     }
 
     /**
-     * @return UploadedFile
+     * @return UploadedFile|null
      */
-    public function getPictureFile(): UploadedFile
+    public function getPictureFile(): ?UploadedFile
     {
         return $this->pictureFile;
     }
 
     /**
-     * @param UploadedFile $pictureFile
+     * @param UploadedFile|null $pictureFile
      */
-    public function setPictureFile(UploadedFile $pictureFile)
+    public function setPictureFile(?UploadedFile $pictureFile)
     {
         $this->pictureFile = $pictureFile;
     }
 
     /**
-     * @return UploadedFile
+     * @return UploadedFile|null
      */
-    public function getThumbnailFile(): UploadedFile
+    public function getThumbnailFile(): ?UploadedFile
     {
         return $this->thumbnailFile;
     }
 
     /**
-     * @param UploadedFile $thumbnailFile
+     * @param UploadedFile|null $thumbnailFile
      */
-    public function setThumbnailFile(UploadedFile $thumbnailFile)
+    public function setThumbnailFile(?UploadedFile $thumbnailFile)
     {
         $this->thumbnailFile = $thumbnailFile;
     }

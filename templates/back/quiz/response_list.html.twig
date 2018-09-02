@@ -1,0 +1,81 @@
+{#
+Allows to list all responses for a quiz. It allows to edit/delete response.
+Required :
+- quiz : quiz we want to display responses (as Quiz).
+#}
+
+<h1 class="title">Liste des réponses</h1>
+
+<nav class="level">
+    <div class="level-left">
+        <span>{{ quiz.responses|length }} réponse(s)</span>
+    </div>
+    <div class="level-right">
+        <div>
+            <span
+                id="add-quiz-response-button"
+                class="button is-primary"
+                data-url="{{ path('bo_quiz_response_new', {'quiz': quiz.id}) }}"
+            >
+                Ajouter une réponse
+            </span>
+            <span
+                id="link-tmdb-button"
+                class="button is-primary"
+                data-link-url="{{ path('bo_quiz_link_tmdb_start', {'quiz': quiz.id}) }}"
+                data-progress-url="{{ path('bo_quiz_link_tmdb_progress') }}"
+            >
+                Créer les liens TMDB
+            </span>
+        </div>
+    </div>
+</nav>
+
+<table id="quiz-response-list" class="table is-striped is-hoverable is-fullwidth">
+    <thead>
+        <tr>
+            <th>Réponse</th>
+            <th>Lien TMDB</th>
+            <th>Modifier</th>
+            <th>Supprimer</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for response in quiz.responses %}
+        {% set editUrl = path('bo_quiz_response_edit', {'quiz': quiz.id, 'response': response.id}) %}
+        {% set deleteUrl = path('bo_quiz_response_delete', {'quiz': quiz.id, 'response': response.id}) %}
+        <tr data-id="{{ response.id }}">
+            <td>{{ response.title }}</td>
+            <td>
+            {% if response.tmdbId %}
+                <a href="https://www.themoviedb.org/movie/{{ response.tmdbId }}" target="_blank">
+                    <span class="icon has-text-success button">
+                        <i class="fas fa-film"></i>
+                    </span>
+                </a>
+            {% endif %}
+            </td>
+            <td>
+                <span class="icon has-text-warning button edit-quiz-response-button" data-url="{{ editUrl }}">
+                    <i class="fas fa-edit"></i>
+                </span>
+            </td>
+            <td>
+                <span class="icon has-text-danger button delete-quiz-response-button" data-url="{{ deleteUrl }}">
+                    <i class="fas fa-trash-alt"></i>
+                </span>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{# Allows to display progress bar when linking movies to TMDB using Ajax #}
+<div id="progress-bar-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <div class="modal-card-body">
+            <progress class="progress is-large" value="0" max="100"></progress>
+        </div>
+    </div>
+</div>
