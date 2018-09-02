@@ -5,7 +5,7 @@
  * @param string id identifier of modal to display.
  * @param string content text (or HTML content) to display in modal or null if no sepcific content.
  */
-export const displayModalWithContent = (id, content = null) => {
+export const displayModal = (id, content = null) => {
     const modal = document.querySelector('#' + id);
     if (null !== content) {
         modal.querySelector('.modal-card-body').innerHTML = content;

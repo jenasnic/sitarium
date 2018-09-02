@@ -17,13 +17,20 @@ Required :
         <div class="level-right">
             <div class="column">
                 <a class="button is-primary" href="{{ path('bo_maze_actor_add') }}">Ajouter</a>
-                <span id="build-filmography-button" class="button is-primary">Construire la filmographie</span>
+                <span
+                    id="build-credits-button"
+                    class="button is-primary"
+                    data-build-url="{{ path('bo_maze_actor_filmography_build') }}"
+                    data-progress-url="{{ path('bo_maze_actor_filmography_progress') }}"
+                >
+                    Construire la filmographie
+                </span>
             </div>
         </div>
     </nav>
 
     {# Display all actors found #}
-    <table id="actor-list" class="table is-striped is-hoverable is-fullwidth">
+    <table id="maze-item-list" class="table is-striped is-hoverable is-fullwidth" data-base-detail-url="/admin/maze/actor/view/">
         <thead>
             <tr>
                 <th>Nom</th>
@@ -42,7 +49,7 @@ Required :
                     {% include 'back/maze/actor/_filmography_status.html.twig' with {'status': actor.status} %}
                 </td>
                 <td>
-                    <span class="icon has-text-info button show-actor-detail-button" data-id="{{ actor.tmdbId }}">
+                    <span class="icon has-text-info button show-maze-item-detail-button" data-id="{{ actor.tmdbId }}">
                         <i class="fas fa-search"></i>
                     </span>
                 </td>
@@ -59,7 +66,7 @@ Required :
     </table>
 
     {# Allows to display informations about actors using Ajax #}
-    <div id="actor-detail-modal" class="modal">
+    <div id="maze-item-detail-modal" class="modal">
         <div class="modal-background"></div>
         <div class="modal-card">
             <div class="modal-card-body">

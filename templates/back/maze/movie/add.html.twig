@@ -8,12 +8,16 @@ Allows to add new movie using TMDB API.
 
     <h1 class="title">Ajout d'un film</h1>
 
-    <nav id="movie-add" class="level">
-        <input id="movie-add-search" type="text" class="input" placeholder="Saisissez le titre du film" />
-        <button id="movie-add-button" class="button is-primary" disabled>Rechercher</button>
-    </nav>
+    <div id="maze-item-add" class="field has-addons" data-base-url="/admin/maze/movie/search/">
+        <div class="control">
+            <input id="maze-item-add-search" type="text" class="input" placeholder="Saisissez le titre du film" />
+        </div>
+        <div class="control">
+            <button id="maze-item-add-button" class="button is-primary" disabled>Rechercher</button>
+        </div>
+    </div>
 
     {# Allows to display search result #}
-    <div id="movie-add-result" class="hide"></div>
+    <div id="maze-item-add-result" class="hide"></div>
 
 {% endblock %}

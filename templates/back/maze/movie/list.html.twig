@@ -17,13 +17,20 @@ Required :
         <div class="level-right">
             <div class="column">
                 <a class="button is-primary" href="{{ path('bo_maze_movie_add') }}">Ajouter</a>
-                <span id="build-casting-button" class="button is-primary">Construire le casting</span>
+                <span
+                    id="build-credits-button"
+                    class="button is-primary"
+                    data-build-url="{{ path('bo_maze_movie_casting_build') }}"
+                    data-progress-url="{{ path('bo_maze_movie_casting_progress') }}"
+                >
+                    Construire le casting
+                </span>
             </div>
         </div>
     </nav>
 
     {# Display all movies found #}
-    <table id="movie-list" class="table is-striped is-hoverable is-fullwidth">
+    <table id="maze-item-list" class="table is-striped is-hoverable is-fullwidth" data-base-detail-url="/admin/maze/movie/view/">
         <thead>
             <tr>
                 <th>Titre</th>
@@ -42,7 +49,7 @@ Required :
                     {% include 'back/maze/movie/_casting_status.html.twig' with {'status': movie.status} %}
                 </td>
                 <td>
-                    <span class="icon has-text-info button show-movie-detail-button" data-id="{{ movie.tmdbId }}">
+                    <span class="icon has-text-info button show-maze-item-detail-button" data-id="{{ movie.tmdbId }}">
                         <i class="fas fa-search"></i>
                     </span>
                 </td>
@@ -59,7 +66,7 @@ Required :
     </table>
 
     {# Allows to display informations about movies using Ajax #}
-    <div id="movie-detail-modal" class="modal">
+    <div id="maze-item-detail-modal" class="modal">
         <div class="modal-background"></div>
         <div class="modal-card">
             <div class="modal-card-body">
