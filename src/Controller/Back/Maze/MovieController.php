@@ -9,8 +9,8 @@ use App\Service\Handler\Maze\AddMovieHandler;
 use App\Service\Tmdb\TmdbApiService;
 use App\Validator\Maze\MovieValidator;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Annotation\Route;
 
 class MovieController extends Controller
 {

@@ -11,7 +11,8 @@ const searchMazeItem = (baseUrl, value) => {
         .then(response => response.text())
         .then(response => {
             document.getElementById('maze-item-add-result').innerHTML = response;
-        });
+        })
+    ;
 };
 
 /**
@@ -22,7 +23,7 @@ const initAddAction = () => {
     const addButton = document.getElementById('maze-item-add-button');
 
     // Define action when user fill search field
-    document.getElementById('maze-item-add-search').addEventListener('keyup', function(event) {
+    document.getElementById('maze-item-add-search').addEventListener('keyup', (event) => {
         const searchValue = event.target.value;
         if (searchValue.length > 2) {
             addButton.disabled = false;
@@ -35,7 +36,7 @@ const initAddAction = () => {
     });
 
     // Define action when user click on search button to add an item
-    addButton.addEventListener('click', function(event) {
+    addButton.addEventListener('click', (event) => {
         searchMazeItem(baseUrl, document.getElementById('maze-item-add-search').value);
     });
 };

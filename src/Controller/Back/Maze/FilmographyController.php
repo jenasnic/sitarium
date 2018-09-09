@@ -4,10 +4,10 @@ namespace App\Controller\Back\Maze;
 
 use App\Enum\Maze\SessionValues;
 use App\Service\Maze\ActorFilmographyBuilder;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
 class FilmographyController extends Controller
 {

@@ -6,8 +6,8 @@ import { displayModal, closeModal } from "../popup";
 const initDetailAction = () => {
     const baseUrl = document.getElementById('maze-item-list').getAttribute('data-base-detail-url');
     document.querySelectorAll('.show-maze-item-detail-button').forEach(
-        function(element) {
-            element.addEventListener('click', function(event) {
+        (element) => {
+            element.addEventListener('click', (event) => {
                 viewMazeItemDetail(baseUrl, element.getAttribute('data-id'));
             });
         }
@@ -17,7 +17,7 @@ const initDetailAction = () => {
 /**
  * Allows to display maze item informations in popup.
  * 
- * @param url Url to call to get detail. `/admin/maze/actor/view/${actorId}` // `/admin/maze/movie/view/${movieId}`
+ * @param baseUrl Base url to call to get detail. `/admin/maze/actor/view/${actorId}` // `/admin/maze/movie/view/${movieId}`
  * @param id Identifier of maze item we want to display detail.
  */
 const viewMazeItemDetail = (baseUrl, id) => {
@@ -26,7 +26,8 @@ const viewMazeItemDetail = (baseUrl, id) => {
         .then(response => response.text())
         .then(response => {
             displayModal('maze-item-detail-modal', response);
-        });
+        })
+    ;
 };
 
 /**
@@ -41,7 +42,8 @@ const buildCredits = (buildUrl, progressUrl) => {
         .then(response => {
             closeModal('progress-bar-modal');
             document.location.reload();
-        });
+        })
+    ;
 
     displayModal('progress-bar-modal');
     setTimeout(updateProgressBar, 500, progressUrl);
@@ -49,8 +51,8 @@ const buildCredits = (buildUrl, progressUrl) => {
 
 /**
  * Allows to update progress bar when building filmogrpahy.
- * 
- * @parma url Url to call to get progress when building credits.
+ *
+ * @parma progressUrl Url to call to get progress when building credits.
  */
 const updateProgressBar = (progressUrl) => {
     fetch(progressUrl, {credentials: 'same-origin'})
@@ -65,12 +67,13 @@ const updateProgressBar = (progressUrl) => {
             if (current < total) {
                 setTimeout(updateProgressBar, 700, progressUrl);
             }
-        });
+        })
+    ;
 };
 
 document.getElementById('maze-item-list') && initDetailAction();
 
 document.getElementById('build-credits-button')
-    && document.getElementById('build-credits-button').addEventListener('click', function(event) {
+    && document.getElementById('build-credits-button').addEventListener('click', (event) => {
         buildCredits(event.target.getAttribute('data-build-url'), event.target.getAttribute('data-progress-url'));
     });
