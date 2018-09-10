@@ -1,49 +1,50 @@
 {#
-    Allows to display statistics about specific quiz.
-    Required :
-    - quiz : quiz we want to display statisctics.
-    - responseInfoList : statisctics about specified quiz.
-    - userInfoList : statisctics about specified quiz.
+Allows to display statistics about specific quiz.
+Required :
+- quiz : quiz we want to display statisctics.
+- responseInfos : statisctics about specified quiz.
+- userInfos : statisctics about specified quiz.
 #}
 
 {% extends "admin.html.twig" %}
 
 {% block body %}
 
-    <h1>Statistiques du quiz</h1>
+    <h1 class="title">Statistiques du quiz</h1>
 
-    <h2 class="center">{{ quiz.name }}</h2>
-    <div class="sep-20"></div>
-
-    <input type="hidden" id="quiz-id" name="quiz-id" value="{{ quiz.id }}" />
+    <h2 class="subtitle">{{ quiz.name }}</h2>
 
     <div id="statistics-tabs">
 
-        <ul>
-            <li><a href="#statistics-response">Réponses</a></li>
-            <li><a href="#statistics-user">Joueurs</a></li>
-        </ul>
+        <div class="tabs is-boxed is-centered">
+            <ul>
+                <li class="tab-item" data-panel="statistics-response"><a>Réponses</a></li>
+                <li class="tab-item" data-panel="statistics-user"><a>Joueurs</a></li>
+            </ul>
+        </div>
 
-        {# Display statistics about responses #}
-        <div id="statistics-response">
-            <table class="bo-table">
+        <div id="statistics-response" class="tab-panel is-hidden">
+            <table class="table is-striped is-hoverable is-fullwidth">
                 <thead>
                     <tr>
-                        <th class="bo-table-label">Réponse</th>
-                        <th class="bo-table-field">Fréquence</th>
-                        <th class="bo-table-field">Dernière session</th>
-                        <th class="bo-table-action">Détail</th>
+                        <th>Réponse</th>
+                        <th>Fréquence</th>
+                        <th>Dernière session</th>
+                        <th>Détail</th>
                     </tr>
                 </thead>
                 <tbody>
-                {% for responseInfo in responseInfoList %}
-                    <tr{% if loop.index is even %} class="odd"{% endif %}>
-                        <td class="bo-table-label">{{ responseInfo['title'] }}</td>
-                        <td class="bo-table-field">{{ responseInfo['foundCount'] }}</td>
-                        <td class="bo-table-field">{{ responseInfo['lastDate']|date("d/m/Y") }}</td>
-                        <td class="bo-table-action">
-                            <span class="clickable response-info-detail" data-id="{{ responseInfo['id'] }}">
-                                <img src="{{ asset('resources/images/admin/icons/view.png') }}" width="16" height="16" border="0" alt="Détail" title="Détail" />
+                {% for responseInfo in responseInfos %}
+                    <tr>
+                        <td>{{ responseInfo['title'] }}</td>
+                        <td>{{ responseInfo['foundCount'] }}</td>
+                        <td>{{ responseInfo['lastDate']|date("d/m/Y") }}</td>
+                        <td>
+                            <span
+                                class="icon has-text-info button show-statistics-detail-button"
+                                data-url="{{ path('bo_quiz_statistics_response', {'response': responseInfo['id']}) }}"
+                            >
+                                <i class="fas fa-search"></i>
                             </span>
                         </td>
                     </tr>
@@ -52,26 +53,28 @@
             </table>
         </div>
 
-        {# Display statistics about player #}
-        <div id="statistics-user">
-            <table class="bo-table">
+        <div id="statistics-user" class="tab-panel is-hidden">
+            <table class="table is-striped is-hoverable is-fullwidth">
                 <thead>
                     <tr>
-                        <th class="bo-table-label">Joueur</th>
-                        <th class="bo-table-field">Nb. réponses trouvées</th>
-                        <th class="bo-table-field">Dernière session de jeu</th>
-                        <th class="bo-table-action">Détail</th>
+                        <th>Joueur</th>
+                        <th>Nb. réponses trouvées</th>
+                        <th>Dernière session de jeu</th>
+                        <th>Détail</th>
                     </tr>
                 </thead>
                 <tbody>
-                {% for userInfo in userInfoList %}
-                    <tr{% if loop.index is even %} class="odd"{% endif %}>
-                        <td class="bo-table-label">{{ userInfo['firstname'] }} {{ userInfo['lastname'] }}</td>
-                        <td class="bo-table-field">{{ userInfo['responseCount'] }}</td>
-                        <td class="bo-table-field">{{ userInfo['lastDate']|date("d/m/Y") }}</td>
-                        <td class="bo-table-action">
-                            <span class="clickable user-info-detail" data-id="{{ userInfo['id'] }}">
-                                <img src="{{ asset('resources/images/admin/icons/view.png') }}" width="16" height="16" border="0" alt="Détail" title="Détail" />
+                {% for userInfo in userInfos %}
+                    <tr>
+                        <td>{{ userInfo['firstname'] }} {{ userInfo['lastname'] }}</td>
+                        <td>{{ userInfo['responseCount'] }}</td>
+                        <td>{{ userInfo['lastDate']|date("d/m/Y") }}</td>
+                        <td>
+                            <span
+                                class="icon has-text-info button show-statistics-detail-button"
+                                data-url="{{ path('bo_quiz_statistics_user_response', {'user': userInfo['id'], 'quiz': quiz.id}) }}"
+                            >
+                                <i class="fas fa-search"></i>
                             </span>
                         </td>
                     </tr>
@@ -82,10 +85,14 @@
 
     </div>
 
-    <div class="sep-20"></div>
-
-    {# Allows to display detail for response or player using Ajax #}
-    <div id="quiz-info-detail-popup" class="bpopup hide">
+    {# Allows to display detail for statistics using Ajax #}
+    <div id="quiz-statistics-detail-modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <div class="modal-card-body">
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
     </div>
 
 {% endblock %}

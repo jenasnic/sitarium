@@ -74,7 +74,7 @@ class StatisticsBOController extends Controller
     public function statisticsUserResponseAction(User $user, Quiz $quiz)
     {
         return $this->render('back/quiz/statistics/user_response.html.twig', [
-            'responseList' => $this->userResponseReporitory->getResponsesForUserIdAndQuizId($user->getId(), $quiz->getId()),
+            'responses' => $this->userResponseReporitory->getResponsesForUserIdAndQuizId($user->getId(), $quiz->getId()),
         ]);
     }
 }

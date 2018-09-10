@@ -1,8 +1,8 @@
 {#
 Allows to display statistics about quiz and players.
 Required :
-- quizInfoList : statisctics about quiz.
-- userInfoList : statisctics about players.
+- quizInfos : statisctics about quiz.
+- userInfos : statisctics about players.
 #}
 
 {% extends "admin.html.twig" %}
@@ -14,14 +14,14 @@ Required :
     {# Display statistics about quiz #}
     <div id="statistics-tabs">
 
-        <div class="tabs is-boxed">
+        <div class="tabs is-boxed is-centered">
             <ul>
-                <li><a id="tab-statistics-quiz" class="is-active">Quiz</a></li>
-                <li><a id="tab-statistics-user">Joueur</a></li>
+                <li class="tab-item" data-panel="statistics-quiz"><a>Quiz</a></li>
+                <li class="tab-item" data-panel="statistics-user"><a>Joueur</a></li>
             </ul>
         </div>
 
-        <div id="statistics-quiz" class="hide">
+        <div id="statistics-quiz" class="tab-panel is-hidden">
             <table class="table is-striped is-hoverable is-fullwidth">
                 <thead>
                     <tr>
@@ -49,7 +49,7 @@ Required :
         </div>
 
         {# Display statistics about player #}
-        <div id="statistics-user" class="hide">
+        <div id="statistics-user" class="tab-panel is-hidden">
             <table class="table is-striped is-hoverable is-fullwidth">
                 <thead>
                     <tr>

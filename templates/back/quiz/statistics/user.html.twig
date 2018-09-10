@@ -1,39 +1,39 @@
 {#
-    Allows to display statistics about specific player.
-    Required :
-    - user : player we want to display statisctics (as User).
-    - quizInfoList : statisctics about specified user.
+Allows to display statistics about specific player.
+Required :
+- user : player we want to display statisctics (as User).
+- quizInfos : statisctics about specified user.
 #}
 
 {% extends "admin.html.twig" %}
 
 {% block body %}
 
-    <h1>Statistiques du joueur</h1>
+    <h1 class="title">Statistiques du joueur</h1>
 
-    <h2 class="center">{{ user.firstname }} {{ user.lastname }}</h2>
-    <div class="sep-20"></div>
+    <h2 class="subtitle">{{ user.firstname }} {{ user.lastname }}</h2>
 
-    <input type="hidden" id="user-id" name="user-id" value="{{ user.id }}" />
-
-    <table class="bo-table">
+    <table class="table is-striped is-hoverable is-fullwidth">
         <thead>
             <tr>
-                <th class="bo-table-label">Quiz</th>
-                <th class="bo-table-field">Nb. réponses trouvées</th>
-                <th class="bo-table-field">Dernière session de jeu</th>
-                <th class="bo-table-action">Détail</th>
+                <th>Quiz</th>
+                <th>Nb. réponses trouvées</th>
+                <th>Dernière session de jeu</th>
+                <th>Détail</th>
             </tr>
         </thead>
         <tbody>
-        {% for quizInfo in quizInfoList %}
-            <tr{% if loop.index is even %} class="odd"{% endif %}>
-                <td class="bo-table-label">{{ quizInfo['name'] }}</td>
-                <td class="bo-table-field">{{ quizInfo['responseCount'] }}</td>
-                <td class="bo-table-field">{{ quizInfo['lastDate']|date("d/m/Y") }}</td>
-                <td class="bo-table-action">
-                    <span class="clickable quiz-info-detail" data-id="{{ quizInfo['id'] }}">
-                        <img src="{{ asset('resources/images/admin/icons/view.png') }}" width="16" height="16" border="0" alt="Détail" title="Détail" />
+        {% for quizInfo in quizInfos %}
+            <tr>
+                <td>{{ quizInfo['name'] }}</td>
+                <td>{{ quizInfo['responseCount'] }}</td>
+                <td>{{ quizInfo['lastDate']|date("d/m/Y") }}</td>
+                <td>
+                    <span
+                                class="icon has-text-info button show-statistics-detail-button"
+                                data-url="{{ path('bo_quiz_statistics_user_response', {'user': user.id, 'quiz': quizInfo['id']}) }}"
+                    >
+                        <i class="fas fa-search"></i>
                     </span>
                 </td>
             </tr>
@@ -41,10 +41,14 @@
         </tbody>
     </table>
 
-    <div class="sep-20"></div>
-
-    {# Allows to display detail for response using Ajax #}
-    <div id="user-info-detail-popup" class="bpopup hide">
+    {# Allows to display detail for statistics using Ajax #}
+    <div id="quiz-statistics-detail-modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <div class="modal-card-body">
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
     </div>
 
 {% endblock %}
