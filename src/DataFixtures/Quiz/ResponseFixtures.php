@@ -93,7 +93,7 @@ class ResponseFixtures extends Fixture implements DependentFixtureInterface
     ): Response {
         $data = new Response();
         $data->setTitle($title);
-        $data->setResponses(';' . strtolower($title) . ';');
+        $data->setResponses(';' . mb_strtolower($title, 'UTF-8') . ';');
         $data->setTrick(strrev(TextUtil::sanitize($title)));
         $data->setPositionX($positionX);
         $data->setPositionY($positionY);

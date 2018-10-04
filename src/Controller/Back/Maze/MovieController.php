@@ -11,6 +11,7 @@ use App\Validator\Maze\MovieValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class MovieController extends Controller
 {
@@ -78,7 +79,7 @@ class MovieController extends Controller
      * @param TmdbApiService $tmdbService
      * @param string $name
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function searchAction(TmdbApiService $tmdbService, string $title)
     {
@@ -89,10 +90,8 @@ class MovieController extends Controller
                 $result = $tmdbService->searchEntity(Movie::class, $title, new MovieValidator(), self::MAX_MOVIE_RESULT_COUNT);
                 $movies = $result['results'];
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Erreur lors de la recherche');
+                return new Response('Erreur lors de la recherche', Response::HTTP_INTERNAL_SERVER_ERROR);
             }
-        } else {
-            $this->addFlash('warning', 'Veuillez saisir au moins 3 caractères pour la recherche');
         }
 
         return $this->render('back/maze/movie/search.html.twig', ['movies' => $movies]);

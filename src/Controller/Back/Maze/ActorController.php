@@ -11,6 +11,7 @@ use App\Validator\Maze\ActorValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class ActorController extends Controller
 {
@@ -78,7 +79,7 @@ class ActorController extends Controller
      * @param TmdbApiService $tmdbService
      * @param string $name
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function searchAction(TmdbApiService $tmdbService, string $name)
     {
@@ -89,10 +90,8 @@ class ActorController extends Controller
                 $result = $tmdbService->searchEntity(Actor::class, $name, new ActorValidator(), self::MAX_ACTOR_RESULT_COUNT);
                 $actors = $result['results'];
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Erreur lors de la recherche');
+                return new Response('Erreur lors de la recherche', Response::HTTP_INTERNAL_SERVER_ERROR);
             }
-        } else {
-            $this->addFlash('warning', 'Veuillez saisir au moins 3 caractères pour la recherche');
         }
 
         return $this->render('back/maze/actor/search.html.twig', ['actors' => $actors]);
