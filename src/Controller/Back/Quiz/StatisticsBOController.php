@@ -4,7 +4,7 @@ namespace App\Controller\Back\Quiz;
 
 use App\Entity\Quiz\Quiz;
 use App\Entity\Quiz\Response;
-use App\Entity\User\User;
+use App\Entity\User;
 use App\Repository\Quiz\UserResponseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;

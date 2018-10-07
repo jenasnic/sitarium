@@ -5,8 +5,8 @@ Required :
 #}
 
 <div class="winner-details">
-    <p><strong>Nom complet</strong> : {{ winner.name }}</p>
-    <p><strong>Adresse mail</strong> : {{ winner.email }}</p>
+    <p><strong>Nom complet</strong> : {{ winner.user.displayName }}</p>
+    <p><strong>Adresse mail</strong> : {{ winner.user.email }}</p>
     <p><strong>Résolu le</strong> : {{ winner.date|date('d-m-Y') }}</p>
     <p><strong>Indice(s) utilisé(s)</strong> : {{ winner.trickCount }}</p>
     <p><strong>Commentaire</strong> :</p>

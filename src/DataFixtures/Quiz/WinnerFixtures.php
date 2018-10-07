@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures\Quiz;
 
-use App\DataFixtures\User\UserFixtures;
+use App\DataFixtures\UserFixtures;
 use App\Entity\Quiz\Quiz;
 use App\Entity\Quiz\Winner;
-use App\Entity\User\User;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -14,8 +14,8 @@ class WinnerFixtures extends Fixture implements DependentFixtureInterface
 {
     public const WINNER_REI = 'winner-rei';
     public const WINNER_TED = 'winner-ted';
-    public const WINNER_LAURA = 'winner-laura';
-    public const WINNER_JULIE = 'winner-julie';
+    public const WINNER_JEANNOT = 'winner-jeannot';
+    public const WINNER_DAN = 'winner-dan';
 
     /**
      * {@inheritDoc}
@@ -49,7 +49,7 @@ class WinnerFixtures extends Fixture implements DependentFixtureInterface
     {
         $data = [];
 
-        $data[] = $this->buildDataWithUser(
+        $data[] = $this->buildData(
             $this->getReference(UserFixtures::USER_REI),
             'Rei powaaa',
             \DateTime::createFromFormat('Y-m-d', '2018-05-10'),
@@ -57,7 +57,7 @@ class WinnerFixtures extends Fixture implements DependentFixtureInterface
             $this->getReference(QuizFixtures::QUIZ_MOVIES),
             self::WINNER_REI
         );
-        $data[] = $this->buildDataWithUser(
+        $data[] = $this->buildData(
             $this->getReference(UserFixtures::USER_TED),
             'Ted powaaa',
             \DateTime::createFromFormat('Y-m-d', '2018-05-11'),
@@ -66,28 +66,26 @@ class WinnerFixtures extends Fixture implements DependentFixtureInterface
             self::WINNER_TED
         );
         $data[] = $this->buildData(
-            'Laura Kawa',
-            'laura.kawa@yopmail.com',
-            'Laura powaaa',
+            $this->getReference(UserFixtures::USER_JEANNOT),
+            'Jeannot powaaa',
             \DateTime::createFromFormat('Y-m-d', '2018-05-12'),
-            0,
+            3,
             $this->getReference(QuizFixtures::QUIZ_MOVIES),
-            self::WINNER_LAURA
+            self::WINNER_JEANNOT
         );
         $data[] = $this->buildData(
-            'Julie Uru',
-            'julie.uru@yopmail.com',
-            'Julie powaaa',
+            $this->getReference(UserFixtures::USER_DAN),
+            'Dan powaaa',
             \DateTime::createFromFormat('Y-m-d', '2018-05-13'),
             3,
             $this->getReference(QuizFixtures::QUIZ_SERIES),
-            self::WINNER_JULIE
+            self::WINNER_DAN
         );
 
         return $data;
     }
 
-    protected function buildDataWithUser(
+    protected function buildData(
         User $user,
         string $comment,
         \DateTime $date,
@@ -95,33 +93,8 @@ class WinnerFixtures extends Fixture implements DependentFixtureInterface
         Quiz $quiz,
         string $reference
     ): Winner {
-        $data = $this->buildData(
-            $user->getFirstname() . ' ' . $user->getLastname(),
-            $user->getEmail(),
-            $comment,
-            $date,
-            $trickCount,
-            $quiz,
-            $reference
-        );
-
-        $data->setUser($user);
-
-        return $data;
-    }
-
-    protected function buildData(
-        string $name,
-        string $email,
-        string $comment,
-        \DateTime $date,
-        int $trickCount,
-        Quiz $quiz,
-        string $reference
-    ): Winner {
         $data = new Winner();
-        $data->setName($name);
-        $data->setEmail($email);
+        $data->setUser($user);
         $data->setComment($comment);
         $data->setDate($date);
         $data->setTrickCount($trickCount);

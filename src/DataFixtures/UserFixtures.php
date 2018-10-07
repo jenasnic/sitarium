@@ -1,10 +1,10 @@
 <?php
 
-namespace App\DataFixtures\User;
+namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use App\Entity\User\User;
+use App\Entity\User;
 use App\Tool\PasswordUtil;
 
 class UserFixtures extends Fixture
@@ -37,12 +37,12 @@ class UserFixtures extends Fixture
     {
         $data = [];
 
-        $data[] = $this->buildData('JC', '', 'jc@jc.com', 'admin', 'admin', 'ROLE_ADMIN', self::USER_ADMIN);
-        $data[] = $this->buildData('Rei', 'Ichido', 'rei.ichido@yopmail.com', 'rei', 'pwd', 'ROLE_USER', self::USER_REI);
-        $data[] = $this->buildData('Ted', 'Reietsu', 'ted.reietsu@yopmail.com', 'ted', 'pwd', 'ROLE_USER', self::USER_TED);
-        $data[] = $this->buildData('Jeannot', 'Schusse', 'jeannot.schusse@yopmail.com', 'jeannot', 'pwd', 'ROLE_USER', self::USER_JEANNOT);
-        $data[] = $this->buildData('Jim', 'Daima', 'jim.daima@yopmail.com', 'jim', 'pwd', 'ROLE_USER', self::USER_JIM);
-        $data[] = $this->buildData('Dan', 'Monohoshi', 'dan.monohoshi@yopmail.com', 'dan', 'pwd', 'ROLE_USER', self::USER_DAN);
+        $data[] = $this->buildData('JC', '', 'jc@jc.com', 'admin', 'admin', ['ROLE_ADMIN','ROLE_USER'], self::USER_ADMIN);
+        $data[] = $this->buildData('Rei', 'Ichido', 'rei.ichido@yopmail.com', 'rei', 'pwd', ['ROLE_USER'], self::USER_REI);
+        $data[] = $this->buildData('Ted', 'Reietsu', 'ted.reietsu@yopmail.com', 'ted', 'pwd', ['ROLE_USER'], self::USER_TED);
+        $data[] = $this->buildData('Jeannot', 'Schusse', 'jeannot.schusse@yopmail.com', 'jeannot', 'pwd', ['ROLE_USER'], self::USER_JEANNOT);
+        $data[] = $this->buildData('Jim', 'Daima', 'jim.daima@yopmail.com', 'jim', 'pwd', ['ROLE_USER'], self::USER_JIM);
+        $data[] = $this->buildData('Dan', 'Monohoshi', 'dan.monohoshi@yopmail.com', 'dan', 'pwd', ['ROLE_USER'], self::USER_DAN);
 
         return $data;
     }
@@ -53,7 +53,7 @@ class UserFixtures extends Fixture
         string $email,
         string $username,
         string $password,
-        string $role,
+        array $roles,
         string $reference
 
     ): User {
@@ -63,7 +63,10 @@ class UserFixtures extends Fixture
         $data->setEmail($email);
         $data->setUsername($username);
         $data->setPassword(PasswordUtil::encodePassword($password));
-        $data->addRole($role);
+
+        foreach ($roles as $role) {
+            $data->addRole($role);
+        }
 
         $this->addReference($reference, $data);
 

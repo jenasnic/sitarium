@@ -26,15 +26,13 @@ Required :
         <thead>
             <tr>
                 <th>Nom</th>
-                <th>Utilisateur connecté</th>
                 <th>Détails</th>
             </tr>
         </thead>
         <tbody>
         {% for winner in winners %}
             <tr>
-                <td>{{ winner.name }}</td>
-                <td>{{ winner.user ? 'Oui' : 'Non' }}</td>
+                <td>{{ winner.user.displayName }}</td>
                 <td>
                     <span
                         class="icon has-text-info button show-winner-detail-button"

@@ -1,0 +1,18 @@
+{#
+Allows to add/edit user.
+Required :
+- user : FormView element based on UserType object (i.e. user to edit).
+#}
+
+{% extends "admin.html.twig" %}
+
+{% block body %}
+
+    <h1 class="title">Modification de l'utilisateur</h1>
+
+    {{ form_start(user) }}
+        {{ form_rest(user) }}
+        <input type="submit" class="button is-primary" value="Enregistrer"/>
+    {{ form_end(user) }}
+
+{% endblock %}

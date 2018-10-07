@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures\Quiz;
 
-use App\DataFixtures\User\UserFixtures;
+use App\DataFixtures\UserFixtures;
 use App\Entity\Quiz\Response;
 use App\Entity\Quiz\UserResponse;
-use App\Entity\User\User;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;

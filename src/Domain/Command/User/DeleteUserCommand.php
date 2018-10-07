@@ -2,7 +2,7 @@
 
 namespace App\Domain\Command\User;
 
-use App\Entity\User\User;
+use App\Entity\User;
 
 class DeleteUserCommand
 {

@@ -3,9 +3,9 @@
 namespace App\Service\Handler\User;
 
 use App\Domain\Command\User\DeleteUserCommand;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\Quiz\UserResponseRepository;
 use App\Repository\Quiz\WinnerRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Allows to remove user and its dependencies in current database

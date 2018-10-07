@@ -2,7 +2,7 @@
 
 namespace App\Entity\Quiz;
 
-use App\Entity\User\User;
+use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,18 +23,12 @@ class Winner
     private $id;
 
     /**
-     * @var string
+     * @var User
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255, nullable=true)
-     */
-    private $email;
+    private $user;
 
     /**
      * @var string
@@ -65,14 +59,6 @@ class Winner
      */
     private $quiz;
 
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User\User")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $user;
-
     public function __construct()
     {
         $this->date = new \DateTime();
@@ -87,35 +73,19 @@ class Winner
     }
 
     /**
-     * @return string
+     * @return User|null
      */
-    public function getName(): string
+    public function getUser(): ?User
     {
-        return $this->name;
+        return $this->user;
     }
 
     /**
-     * @param string $name
+     * @param User|null $user
      */
-    public function setName(string $name)
+    public function setUser(?User $user)
     {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param string|null $email
-     */
-    public function setEmail(?string $email)
-    {
-        $this->email = $email;
+        $this->user = $user;
     }
 
     /**
@@ -180,21 +150,5 @@ class Winner
     public function setQuiz(Quiz $quiz)
     {
         $this->quiz = $quiz;
-    }
-
-    /**
-     * @return User|null
-     */
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param User|null $user
-     */
-    public function setUser(?User $user)
-    {
-        $this->user = $user;
     }
 }

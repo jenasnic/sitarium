@@ -3,7 +3,7 @@
 namespace App\Domain\Command\Quiz;
 
 use App\Entity\Quiz\Response;
-use App\Entity\User\User;
+use App\Entity\User;
 
 class AddUserResponseCommand
 {

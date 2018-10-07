@@ -11,6 +11,12 @@ class UserEvents
     const NEW_ACCOUNT = 'new_account';
 
     /**
+     * Event fired when updating account
+     * @var string
+     */
+    const UPDATE_ACCOUNT = 'update_account';
+
+    /**
      * Event fired when user wants to reset password
      * @var string
      */

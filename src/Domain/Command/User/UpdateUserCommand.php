@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Event\User;
+namespace App\Domain\Command\User;
 
-use Symfony\Component\EventDispatcher\Event;
 use App\Entity\User;
 
-class NewAccountEvent extends Event
+class UpdateUserCommand
 {
     /**
      * @var User
@@ -21,7 +20,7 @@ class NewAccountEvent extends Event
      * @param User $user
      * @param string $password
      */
-    public function __construct(User $user, string $password)
+    function __construct(User $user, string $password = null)
     {
         $this->user = $user;
         $this->password = $password;
@@ -36,9 +35,9 @@ class NewAccountEvent extends Event
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
