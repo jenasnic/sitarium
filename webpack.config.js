@@ -19,6 +19,7 @@ Encore
     .addEntry('js/admin', './assets/js/admin.js')
     .addStyleEntry('css/app', './assets/css/app.scss')
     .addStyleEntry('css/admin', './assets/css/admin.scss')
+    .addEntry('images', './assets/img/images.js')
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
