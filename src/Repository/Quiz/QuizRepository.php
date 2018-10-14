@@ -3,7 +3,10 @@
 namespace App\Repository\Quiz;
 
 use App\Entity\Quiz\Quiz;
+use App\Entity\Quiz\UserResponse;
+use App\Entity\Quiz\Winner;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -35,5 +38,48 @@ class QuizRepository extends ServiceEntityRepository
         ;
 
         return $maxRank ?? 0;
+    }
+
+    /**
+     * @param int $userId
+     *
+     * @return array
+     */
+    public function getQuizOverForUserId(int $userId): array
+    {
+        $queryBuilder = $this->createQueryBuilder('quiz');
+
+        return $queryBuilder
+            ->join(
+                Winner::class,
+                'winner',
+                Join::WITH,
+                $queryBuilder->expr()->andX(
+                    $queryBuilder->expr()->eq('winner.quiz', 'quiz'),
+                    $queryBuilder->expr()->eq('winner.user', ':userId')
+                )
+            )
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @param int $userId
+     *
+     * @return array
+     */
+    public function getQuizInProgressForUserId(int $userId): array
+    {
+        $queryBuilder = $this->createQueryBuilder('quiz');
+
+        return $queryBuilder
+            ->join(UserResponse::class, 'userResponse', Join::WITH, $queryBuilder->expr()->eq('userResponse.user', ':userId'))
+            ->join('userResponse.response', 'response', Join::WITH, $queryBuilder->expr()->eq('response.quiz', 'quiz'))
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 }

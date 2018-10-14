@@ -10,7 +10,7 @@
         </div>
         <div class="navbar-end">
             {% if (app.user) %}
-                <a href="{{ path('fo_home') }}" class="navbar-item">Mon compte</a> 
+                <a href="{{ path('fo_account_infos') }}" class="navbar-item">Mon compte</a> 
                 <a href="{{ path('logout') }}" class="navbar-item">Se déconnecter</a>
             {% else %}
                 <a href="{{ path('login') }}" class="navbar-item">Se connecter</a></span>

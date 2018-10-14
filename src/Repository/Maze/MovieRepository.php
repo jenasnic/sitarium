@@ -5,7 +5,7 @@ namespace App\Repository\Maze;
 use App\Enum\Maze\CastingStatus;
 use App\Entity\Maze\Movie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -71,7 +71,7 @@ class MovieRepository extends ServiceEntityRepository
             ->select('main_movie.tmdbId as main_movie_identifier, linked_movie.tmdbId as linked_movie_identifier')
             ->distinct()
             ->join('main_movie.actors', 'common_actors')
-            ->join('common_actors.movies', 'linked_movie', Expr\Join::WITH, $queryBuilder->expr()->neq('linked_movie.tmdbId', 'main_movie.tmdbId'))
+            ->join('common_actors.movies', 'linked_movie', Join::WITH, $queryBuilder->expr()->neq('linked_movie.tmdbId', 'main_movie.tmdbId'))
         ;
 
         // Add condition on identifier for movies

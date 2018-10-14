@@ -1,0 +1,26 @@
+{#
+Allows to create new account.
+Required :
+- account : Form element based on AccountType object (i.e. user to edit).
+#}
+
+{% extends "base.html.twig" %}
+
+{% block header %}
+    <meta name="robots" content="noindex" />
+{% endblock %}
+
+{% block title %}Création d'un compte{% endblock %}
+
+{% block body %}
+
+    <h1>Créer un compte</h1>
+
+    <p>Veuillez remplir les champs ci-dessous pour créer votre compte.</p>
+
+    {{ form_start(account) }}
+        {{ form_rest(account) }}
+        <input type="submit" class="button" value="Enregistrer"/>
+    {{ form_end(account) }}
+
+{% endblock %}

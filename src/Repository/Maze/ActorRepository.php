@@ -5,7 +5,7 @@ namespace App\Repository\Maze;
 use App\Enum\Maze\FilmographyStatus;
 use App\Entity\Maze\Actor;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -76,12 +76,12 @@ class ActorRepository extends ServiceEntityRepository
 
         // Make a join with movies (for main actors)
         if ($minVoteCount > 0) {
-            $queryBuilder->join('main_actor.movies', 'common_movies', Expr\Join::WITH, $queryBuilder->expr()->gte('common_movies.voteCount', $minVoteCount));
+            $queryBuilder->join('main_actor.movies', 'common_movies', Join::WITH, $queryBuilder->expr()->gte('common_movies.voteCount', $minVoteCount));
         } else {
             $queryBuilder->join('main_actor.movies', 'common_movies');
         }
 
-        $queryBuilder->join('common_movies.actors', 'linked_actor', Expr\Join::WITH, $queryBuilder->expr()->neq('linked_actor.tmdbId', 'main_actor.tmdbId'));
+        $queryBuilder->join('common_movies.actors', 'linked_actor', Join::WITH, $queryBuilder->expr()->neq('linked_actor.tmdbId', 'main_actor.tmdbId'));
 
         // Add condition on identifier for actors
         if ($actorIds != null) {
