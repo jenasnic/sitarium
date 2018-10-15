@@ -1,0 +1,129 @@
+{#
+Display quiz.
+Required :
+- quiz : quiz to display.
+- userResponses (optionnal) : list of response found by current logged user.
+#}
+
+{% extends "base.html.twig" %}
+
+{% block meta %}
+    {{ parent() }}
+    <meta name="description" content="Quiz objets cachés : {{ quiz.name }}, trouvez les {{ quiz.responses|length }} références cachés dans cette image !"/>
+{% endblock %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    {% if (not app.user) %}
+        <p>Pour sauvegarder vos réponses, pensez à vous créer un compte <a href="{{ path('fo_account_new') }}">ici</a>.</p>
+    {% endif %}
+
+    <h1>{{ quiz.name }}</h1>
+
+    <div id="movie-quiz-answer-wrapper">
+        <label for="movie-quiz-response" class="f-i15 w-160">Saisissez une réponse : </label>
+        <input type="text" id="movie-quiz-response" name="movie-quiz-response" />
+        <input type="hidden" id="movie-quiz-id" name="movie-quiz-id" value="{{ quiz.id }}" />
+        <input type="hidden" id="movie-quiz-count" name="movie-quiz-count" value="{{ quiz.responses|length }}" />
+        <input type="hidden" id="movie-quiz-display-response" name="movie-quiz-display-response" value="{{ quiz.displayResponse ? '1' : '0' }}" />
+        <input id="movie-quiz-answer" name="movie-quiz-answer" type="button" class="button" value="Envoyer" />
+    </div>
+
+    <div id="movie-quiz-info">
+        <label class="f-n15">Réponses trouvées : </label><span id="movie-quiz-response-count" class="c-pink">{{ userResponses|length }}</span> / <span class="c-blue">{{ quiz.responses|length }}</span>
+    </div>
+
+    <div id="movie-quiz">
+        <img id="movie-quiz-picture" src="{{ asset(quiz.pictureUrl) }}" alt="" />
+        {% if (quiz.displayResponse) %}
+            {% for userResponse in userResponses %}
+                <div id="movie-quiz-picture-{{ userResponse.response.id }}" class="movie-quiz-picture movie-quiz-picture-size-{{ userResponse.response.size }}"
+                        style="left:{{ userResponse.response.positionX }}px;top:{{ userResponse.response.positionY }}px;" data-id="{{ userResponse.response.id }}"></div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div id="movie-quiz-scroll-wrapper" class="bg-black">
+        <ul id="movie-quiz-response-list">
+            {% for userResponse in userResponses %}
+                <li id="movie-quiz-movie-{{ userResponse.response.id }}">{{ userResponse.response.title }}</li>
+            {% endfor %}
+            <div class="clear"></div>
+        </ul>
+    </div>
+
+    <div class="clear"></div>
+    <div class="sep-20"></div>
+
+    {# Only ADMIN user can display responses #}
+    {% if is_granted('ROLE_ADMIN') %}
+        <input id="display-all-answer" type="button" class="button right" value="Afficher toutes les réponses" />
+    {% endif %}
+
+    {% if (quiz.displayTrick) %}
+        <input id="movie-quiz-require-trick" name="movie-quiz-require-trick" type="button" class="button" value="Demander un indice" />
+        <label class="f-n15 f-right margin-hor-10">Indices utilisés : </label><span id="movie-quiz-trick-count" class="c-pink">0</span>
+        <span class="padding-hor-20"></span>
+        <div class="sep-20"></div>
+    {% endif %}
+
+    <div id="movie-quiz-winner-form" class="bg-black hide">
+
+        <div {% if (app.user) %}class="hide"{% endif %}>
+
+            <label for="name">Votre nom</label>
+            <input type="text" id="name" name="name" />
+
+            <div class="sep-10"></div>
+
+            <label for="mail">Votre mail (optionnel)</label>
+            <input type="text" id="mail" name="mail" />
+
+            <div class="sep-20"></div>
+            <div class="sep-white"></div>
+            <div class="sep-10"></div>
+
+        </div>
+
+        <div class="f-i12">Vous avez des idées ou des suggestions ? N'hésitez pas à laisser un message ou un commentaire !</div>
+        <div class="sep-10"></div>
+        <textarea id="comment" name="comment"></textarea>
+
+        <div class="sep-20"></div>
+
+        <div class="center">
+            <span class="button">Envoyer</span>
+        </div>
+
+        <div class="clear"></div>
+        <div class="sep-5"></div>
+
+    </div>
+
+    <div id="movie-quiz-popup" class="popup hide"></div>
+
+    <div id="movie-quiz-winner-popup" class="popup center hide">
+        <h2 class="">Félicitations !</h2>
+        <div class="sep-20"></div>
+        <p>Vous avez trouvé les {{ quiz.responses|length }} objets cachés et leurs références.<br/>
+        Vous pouvez, si vous le désirez, vous enregistrer et laisser un message.</p>
+        <div class="sep-10"></div>
+        <p>Merci pour votre participation.</p>
+        <div class="sep-10"></div>
+    </div>
+
+    {% if (userResponses|length == quiz.responses|length) %}
+    <div id="user-quiz-over-popup" class="popup hide">
+        <div class="center">
+            <p>Vous avez déjà trouvé toutes les réponses pour ce quizz.</p>
+            <p>Voulez-vous effacer les réponses et recommencer ?</p>
+            <div class="sep-20"></div>
+            <span id="user-quiz-reset-confirm" class="button margin-hor-10 b-close">OUI</span>
+            <span class="button margin-hor-10 b-close">NON</span>
+        </div>
+    </div>
+    {% endif %}
+
+{% endblock %}

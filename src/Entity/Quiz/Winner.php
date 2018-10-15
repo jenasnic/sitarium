@@ -59,11 +59,6 @@ class Winner
      */
     private $quiz;
 
-    public function __construct()
-    {
-        $this->date = new \DateTime();
-    }
-
     /**
      * @return int
      */
@@ -105,9 +100,9 @@ class Winner
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getDate(): \DateTime
+    public function getDate(): ?\DateTime
     {
         return $this->date;
     }

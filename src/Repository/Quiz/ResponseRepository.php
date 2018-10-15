@@ -61,11 +61,11 @@ class ResponseRepository extends ServiceEntityRepository
             ->createQueryBuilder('response')
             ->join('response.quiz', 'quiz')
             ->where('quiz.id = :quizId')
-            //->andWhere('(Pow(:coordonateX - qr.positionX, 2) + Pow(:coordonateY - qr.positionY, 2)) <= Pow(25 * POW(2, (qr.size - 1)), 2)')
+            //->andWhere('(POWER(:coordonateX - qr.positionX, 2) + POWER(:coordonateY - qr.positionY, 2)) <= POWER(25 * POWER(2, (qr.size - 1)), 2)')
             ->andWhere(':coordonateX >= response.positionX')
-            ->andWhere(':coordonateX <= response.positionX + 25 * POW(2, (response.size))')
+            ->andWhere(':coordonateX <= response.positionX + 25 * POWER(2, (response.size))')
             ->andWhere(':coordonateY >= response.positionY')
-            ->andWhere(':coordonateY <= response.positionY + 25 * POW(2, (response.size))')
+            ->andWhere(':coordonateY <= response.positionY + 25 * POWER(2, (response.size))')
             ->setParameters([
                 'quizId' => $quizId,
                 'coordonateX' => $coordonateX,

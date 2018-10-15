@@ -1,5 +1,10 @@
 {% extends "base.html.twig" %}
 
+{% block meta %}
+    {{ parent() }}
+    <meta name="description" content="Site proposant des quiz et des jeux autour du cinéma ou des séries : acteur, filmographie, références à des objets cultes du 7ème art..." />
+{% endblock %}
+
 {% block body %}
 
     <h1>Bienvenue sur le Sitarium</h1>

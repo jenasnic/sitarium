@@ -1,0 +1,33 @@
+{#
+Display all available quiz.
+Required :
+- quizs : list of quiz to display (as Quiz)
+#}
+
+{% extends "base.html.twig" %}
+
+{% block meta %}
+    {{ parent() }}
+    <meta name="description" content="Quiz en image : trouvez les films ou séries auxquels font références les objets cachés dans l'image !"/>
+{% endblock %}
+
+{% block title %}Quiz objets cachés{% endblock %}
+
+{% block body %}
+
+    <h1>Quiz objets cachés</h1>
+
+    <p>Retrouvez dans les images ci-dessous, des objets issus de films et donnez le titre du film correspondant.</p>
+    {% if (not app.user) %}
+        <p>Pour sauvegarder vos réponses, pensez à vous créer un compte <a href="{{ path('fo_account_new') }}">ici</a>.</p>
+    {% endif %}
+
+    {% for quiz in quizs %}
+        <a href="{{ path('fo_quiz_play', { 'quiz': quiz.id }) }}">
+            <h2>{{ quiz.name }}</h2>
+            <img src="{{ quiz.thumbnailUrl }}" alt="{{ quiz.name }}"/>
+            <figcaption>Trouvez les {{ quiz.responses|length }} objets cachés dans l'image.</figcaption>
+        </a>
+    {% endfor %}
+
+{% endblock %}

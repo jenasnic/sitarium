@@ -32,3 +32,15 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+        dql:
+            datetime_functions:
+                 date: DoctrineExtensions\Query\Mysql\Date
+                 date_format: DoctrineExtensions\Query\Mysql\DateFormat
+                 datediff: DoctrineExtensions\Query\Mysql\DateDiff
+                 day: DoctrineExtensions\Query\Mysql\Day
+                 hour: DoctrineExtensions\Query\Mysql\Hour
+                 now: DoctrineExtensions\Query\Mysql\Now
+                 month: DoctrineExtensions\Query\Mysql\Month
+                 year: DoctrineExtensions\Query\Mysql\Year
+            numeric_functions:
+                power: DoctrineExtensions\Query\Mysql\Power

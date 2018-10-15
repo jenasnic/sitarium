@@ -10,6 +10,7 @@ use App\Form\AccountType;
 use App\Repository\Quiz\QuizRepository;
 use App\Service\Handler\User\AddUserHandler;
 use App\Service\Handler\User\UpdateUserHandler;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class AccountController extends Controller
 {
