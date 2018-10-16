@@ -18,9 +18,10 @@ class ResponseController extends Controller
      * @Route("/admin/quiz/{quiz}/response/list", requirements={"quiz" = "\d+"}, name="bo_quiz_response_list")
      *
      * @param Quiz $quiz
+     *
      * @return Response
      */
-    public function listAction(Quiz $quiz)
+    public function listAction(Quiz $quiz): Response
     {
         return $this->render('back/quiz/response_list.html.twig', ['quiz' => $quiz]);
     }
@@ -34,7 +35,7 @@ class ResponseController extends Controller
      *
      * @return Response
      */
-    public function newAction(Request $request, EntityManagerInterface $entityManager, Quiz $quiz)
+    public function newAction(Request $request, EntityManagerInterface $entityManager, Quiz $quiz): Response
     {
         $response = new QuizResponse();
         $response->setQuiz($quiz);
@@ -54,15 +55,20 @@ class ResponseController extends Controller
      *
      * @return Response
      */
-    public function editAction(Request $request, EntityManagerInterface $entityManager, Quiz $quiz, QuizResponse $response)
+    public function editAction(Request $request, EntityManagerInterface $entityManager, Quiz $quiz, QuizResponse $response): Response
     {
         return $this->addOrEditResponseAction($request, $entityManager, $response);
     }
 
     /**
      * @Route("/admin/quiz/{quiz}/response/delete/{response}", requirements={"quiz" = "\d+", "response" = "\d+"}, name="bo_quiz_response_delete")
+     *
+     * @param EntityManagerInterface $entityManager
+     * @param QuizResponse $response
+     *
+     * @return JsonResponse
      */
-    public function deleteResponseAction(EntityManagerInterface $entityManager, QuizResponse $response)
+    public function deleteResponseAction(EntityManagerInterface $entityManager, QuizResponse $response): JsonResponse
     {
         try {
             $entityManager->remove($response);
@@ -82,8 +88,11 @@ class ResponseController extends Controller
      *
      * @return Response
      */
-    protected function addOrEditResponseAction(Request $request, EntityManagerInterface $entityManager, QuizResponse $response)
-    {
+    protected function addOrEditResponseAction(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        QuizResponse $response
+    ): Response {
         $form = $this->createForm(ResponseType::class, $response);
         $form->handleRequest($request);
 

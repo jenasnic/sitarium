@@ -3,6 +3,7 @@
 namespace App\Controller\Front;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends Controller
@@ -10,9 +11,9 @@ class HomeController extends Controller
     /**
      * @Route("/", name="fo_home")
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function homeAction()
+    public function homeAction(): Response
     {
         return $this->render('front/home.html.twig');
     }
@@ -20,9 +21,10 @@ class HomeController extends Controller
     /**
      * @Route("/autres-quiz", name="fo_other_quiz")
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function otherQuizAction() {
+    public function otherQuizAction(): Response
+    {
         return $this->render('front/other_quiz.html.twig');
     }
 }

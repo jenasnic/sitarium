@@ -16,9 +16,9 @@ class CastingController extends Controller
      *
      * @param MovieCastingBuilder $castingBuilder
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
-    public function castingBuildAction(MovieCastingBuilder $castingBuilder)
+    public function castingBuildAction(MovieCastingBuilder $castingBuilder): JsonResponse
     {
         try {
             $castingBuilder->build();
@@ -34,9 +34,9 @@ class CastingController extends Controller
      *
      * @param SessionInterface $session
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
-    public function castingProgressAction(SessionInterface $session)
+    public function castingProgressAction(SessionInterface $session): JsonResponse
     {
         return new JsonResponse([
             'current' => $session->get(SessionValues::SESSION_BUILD_CASTING_PROGRESS),

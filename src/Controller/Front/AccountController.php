@@ -12,7 +12,6 @@ use App\Service\Handler\User\AddUserHandler;
 use App\Service\Handler\User\UpdateUserHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,9 +25,10 @@ class AccountController extends Controller
      *
      * @param Request $request
      * @param AddUserHandler $handler
-     * @return RedirectResponse|Response
+     *
+     * @return Response
      */
-    public function newAction(Request $request, TokenStorageInterface $tokenStorageInterface, AddUserHandler $handler)
+    public function newAction(Request $request, TokenStorageInterface $tokenStorageInterface, AddUserHandler $handler): Response
     {
         $user  = new User();
         $form = $this->createForm(AccountType::class, $user);
@@ -66,9 +66,10 @@ class AccountController extends Controller
      *
      * @param Request $request
      * @param UpdateUserHandler $handler
-     * @return RedirectResponse|Response
+     *
+     * @return Response
      */
-    public function infosAction(Request $request, QuizRepository $quizRepository, UpdateUserHandler $handler)
+    public function infosAction(Request $request, QuizRepository $quizRepository, UpdateUserHandler $handler): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(AccountType::class, $user, ['ignore_email' => true]);

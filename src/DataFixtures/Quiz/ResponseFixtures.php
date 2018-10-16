@@ -83,6 +83,16 @@ class ResponseFixtures extends Fixture implements DependentFixtureInterface
         return $data;
     }
 
+    /**
+     * @param string $title
+     * @param int $positionX
+     * @param int $positionY
+     * @param int $size
+     * @param Quiz $quiz
+     * @param string $reference
+     *
+     * @return Response
+     */
     protected function buildData(
         string $title,
         int $positionX,

@@ -85,6 +85,13 @@ class UserResponseFixtures extends Fixture implements DependentFixtureInterface
         return $data;
     }
 
+    /**
+     * @param User $user
+     * @param Response $response
+     * @param \DateTime $date
+     *
+     * @return UserResponse
+     */
     protected function buildData(
         User $user,
         Response $response,

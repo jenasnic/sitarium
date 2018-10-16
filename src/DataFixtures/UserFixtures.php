@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\User;
 use App\Tool\PasswordUtil;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\Persistence\ObjectManager;
 
 class UserFixtures extends Fixture
 {
@@ -47,6 +47,17 @@ class UserFixtures extends Fixture
         return $data;
     }
 
+    /**
+     * @param string $firstname
+     * @param string $lastname
+     * @param string $email
+     * @param string $username
+     * @param string $password
+     * @param array $roles
+     * @param string $reference
+     *
+     * @return User
+     */
     protected function buildData(
         string $firstname,
         string $lastname,

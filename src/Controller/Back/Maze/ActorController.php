@@ -10,8 +10,8 @@ use App\Service\Tmdb\TmdbApiService;
 use App\Validator\Maze\ActorValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ActorController extends Controller
 {
@@ -27,9 +27,9 @@ class ActorController extends Controller
      *
      * @param ActorRepository $actorRepository
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function listAction(ActorRepository $actorRepository)
+    public function listAction(ActorRepository $actorRepository): Response
     {
         return $this->render('back/maze/actor/list.html.twig', [
             'actors' => $actorRepository->findBy([], ['fullname' => 'asc'])
@@ -41,9 +41,9 @@ class ActorController extends Controller
      *
      * @param Actor $actor
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function viewAction(Actor $actor)
+    public function viewAction(Actor $actor): Response
     {
         return $this->render('back/maze/actor/view.html.twig', ['actor' => $actor]);
     }
@@ -54,9 +54,9 @@ class ActorController extends Controller
      * @param AddActorHandler $handler
      * @param int $tmdbId
      *
-     * @return \Symfony\Component\HttpFoundation\Response|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return Response
      */
-    public function addAction(AddActorHandler $handler, int $tmdbId)
+    public function addAction(AddActorHandler $handler, int $tmdbId): Response
     {
         // If no ID => allows user to search actor using TMDB API
         if (0 === $tmdbId) {
@@ -79,9 +79,9 @@ class ActorController extends Controller
      * @param TmdbApiService $tmdbService
      * @param string $name
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function searchAction(TmdbApiService $tmdbService, string $name)
+    public function searchAction(TmdbApiService $tmdbService, string $name): Response
     {
         $actors = [];
 
@@ -103,9 +103,9 @@ class ActorController extends Controller
      * @param EntityManagerInterface $entityManager
      * @param Actor $actor
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return Response
      */
-    public function deleteAction(EntityManagerInterface $entityManager, Actor $actor)
+    public function deleteAction(EntityManagerInterface $entityManager, Actor $actor): Response
     {
         try {
             $entityManager->remove($actor);

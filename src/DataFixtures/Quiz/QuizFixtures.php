@@ -40,6 +40,18 @@ class QuizFixtures extends Fixture
         return $data;
     }
 
+    /**
+     * @param string $name
+     * @param bool $displayResponse
+     * @param bool $displayTrick
+     * @param bool $published
+     * @param int $rank
+     * @param string $pictureUrl
+     * @param string $thumbnailUrl
+     * @param string $reference
+     *
+     * @return Quiz
+     */
     protected function buildData(
         string $name,
         bool $displayResponse,

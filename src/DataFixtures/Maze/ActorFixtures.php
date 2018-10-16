@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures\Maze;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Maze\Actor;
 use App\Enum\Maze\FilmographyStatus;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\Persistence\ObjectManager;
 
 class ActorFixtures extends Fixture
 {
@@ -134,6 +134,14 @@ class ActorFixtures extends Fixture
         return $data;
     }
 
+    /**
+     * @param int $tmdbId
+     * @param string $fullname
+     * @param string $birthdate
+     * @param string $pictureUrl
+     *
+     * @return Actor
+     */
     protected function buildData(
         int $tmdbId,
         string $fullname,

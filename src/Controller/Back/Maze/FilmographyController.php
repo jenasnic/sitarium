@@ -16,9 +16,9 @@ class FilmographyController extends Controller
      *
      * @param ActorFilmographyBuilder $filmographyBuilder
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
-    public function filmographyBuildAction(ActorFilmographyBuilder $filmographyBuilder)
+    public function filmographyBuildAction(ActorFilmographyBuilder $filmographyBuilder): JsonResponse
     {
         try {
             $filmographyBuilder->build();
@@ -34,9 +34,9 @@ class FilmographyController extends Controller
      *
      * @param SessionInterface $session
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
-    public function filmographyProgressAction(SessionInterface $session)
+    public function filmographyProgressAction(SessionInterface $session): JsonResponse
     {
         return new JsonResponse([
             'current' => $session->get(SessionValues::SESSION_BUILD_FILMOGRAPHY_PROGRESS),

@@ -2,9 +2,9 @@
 
 namespace App\Annotation\Tmdb;
 
-use Doctrine\ORM\Mapping\Annotation;
-use Doctrine\Common\Annotations\Annotation\Target;
 use Doctrine\Common\Annotations\Annotation\Enum;
+use Doctrine\Common\Annotations\Annotation\Target;
+use Doctrine\ORM\Mapping\Annotation;
 
 /**
  * Annotation used when linking object with TMDB. It allows to indicate type of data, the annotated class will be matching (person, movie or tv).

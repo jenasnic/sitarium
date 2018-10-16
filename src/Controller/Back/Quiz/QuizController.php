@@ -29,15 +29,20 @@ class QuizController extends Controller
      *
      * @return Response
      */
-    public function listAction(QuizRepository $quizRepository)
+    public function listAction(QuizRepository $quizRepository): Response
     {
         return $this->render('back/quiz/list.html.twig', ['quizs' => $quizRepository->findBy([], ['rank' => 'asc'])]);
     }
 
     /**
      * @Route("/admin/quiz/reorder", name="bo_quiz_reorder", methods="POST")
+     *
+     * @param Request $request
+     * @param ReorderQuizHandler $handler
+     *
+     * @return JsonResponse
      */
-    public function reorderAction(Request $request, ReorderQuizHandler $handler)
+    public function reorderAction(Request $request, ReorderQuizHandler $handler): JsonResponse
     {
         try {
             $handler->handle(new ReorderQuizCommand(json_decode($request->getContent())));
@@ -55,10 +60,13 @@ class QuizController extends Controller
      * @param QuizRepository $quizRepository
      * @param EntityManagerInterface $entityManager
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return Response
      */
-    public function newAction(Request $request, QuizRepository $quizRepository, EntityManagerInterface $entityManager)
-    {
+    public function newAction(
+        Request $request,
+        QuizRepository $quizRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
         try {
             $quizToCreate = new Quiz();
             $quizToCreate->setName($request->request->get('name'));
@@ -85,7 +93,7 @@ class QuizController extends Controller
      *
      * @return Response
      */
-    public function editAction(Request $request, Quiz $quiz, SaveQuizHandler $handler)
+    public function editAction(Request $request, Quiz $quiz, SaveQuizHandler $handler): Response
     {
         $form = $this->createForm(QuizType::class, $quiz);
         $form->handleRequest($request);
@@ -110,9 +118,9 @@ class QuizController extends Controller
      * @param DeleteQuizHandler $handler
      * @param Quiz $quiz
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return Response
      */
-    public function deleteAction(DeleteQuizHandler $handler, Quiz $quiz)
+    public function deleteAction(DeleteQuizHandler $handler, Quiz $quiz): Response
     {
         try {
             $handler->handle(new DeleteQuizCommand($quiz));
@@ -133,7 +141,7 @@ class QuizController extends Controller
      *
      * @return JsonResponse
      */
-    public function tmdbLinkAction(TmdbLinkBuilder $tmdbLinkBuilder, Quiz $quiz)
+    public function tmdbLinkAction(TmdbLinkBuilder $tmdbLinkBuilder, Quiz $quiz): JsonResponse
     {
         try {
             $tmdbLinkBuilder->build($quiz->getId());
@@ -152,7 +160,7 @@ class QuizController extends Controller
      *
      * @return JsonResponse
      */
-    public function tmdbLinkStepAction(Request $request)
+    public function tmdbLinkStepAction(Request $request): JsonResponse
     {
         return new JsonResponse([
             'current' => $request->getSession()->get(SessionValues::SESSION_BUILD_TMDB_LINK_PROGRESS),

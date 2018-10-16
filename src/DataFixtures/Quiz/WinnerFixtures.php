@@ -85,6 +85,16 @@ class WinnerFixtures extends Fixture implements DependentFixtureInterface
         return $data;
     }
 
+    /**
+     * @param User $user
+     * @param string $comment
+     * @param \DateTime $date
+     * @param int $trickCount
+     * @param Quiz $quiz
+     * @param string $reference
+     *
+     * @return Winner
+     */
     protected function buildData(
         User $user,
         string $comment,

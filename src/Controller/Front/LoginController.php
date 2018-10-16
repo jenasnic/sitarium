@@ -16,7 +16,7 @@ class LoginController extends Controller
      *
      * @return Response
      */
-    public function login(AuthenticationUtils $authenticationUtils)
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
         return $this->render('front/login.html.twig', array(
             'last_username' => $authenticationUtils->getLastUsername(),

@@ -2,19 +2,19 @@
 
 namespace App\Controller\Back;
 
+use App\Domain\Command\User\AddUserCommand;
 use App\Domain\Command\User\DeleteUserCommand;
+use App\Domain\Command\User\UpdateUserCommand;
 use App\Entity\User;
+use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Service\Handler\User\AddUserHandler;
 use App\Service\Handler\User\DeleteUserHandler;
+use App\Service\Handler\User\UpdateUserHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\UserType;
-use App\Service\Handler\User\UpdateUserHandler;
-use App\Domain\Command\User\UpdateUserCommand;
-use App\Service\Handler\User\AddUserHandler;
-use App\Domain\Command\User\AddUserCommand;
 
 class UserController extends Controller
 {
@@ -25,7 +25,7 @@ class UserController extends Controller
      *
      * @return Response
      */
-    public function listAction(UserRepository $userRepository)
+    public function listAction(UserRepository $userRepository): Response
     {
         $users = $userRepository->findBy(
             [],
@@ -44,9 +44,9 @@ class UserController extends Controller
      * @param Request $request
      * @param AddUserHandler $handler
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function addAction(Request $request, AddUserHandler $handler)
+    public function addAction(Request $request, AddUserHandler $handler): Response
     {
         $user  = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -75,9 +75,9 @@ class UserController extends Controller
      * @param UpdateUserHandler $handler
      * @param User $user
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function editAction(Request $request, UpdateUserHandler $handler, User $user)
+    public function editAction(Request $request, UpdateUserHandler $handler, User $user): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -104,9 +104,9 @@ class UserController extends Controller
      * @param DeleteUserHandler $handler
      * @param User $user
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return Response
      */
-    public function deleteAction(DeleteUserHandler $handler, User $user)
+    public function deleteAction(DeleteUserHandler $handler, User $user): Response
     {
         try {
             $handler->handle(new DeleteUserCommand($user));

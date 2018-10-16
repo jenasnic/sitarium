@@ -2,9 +2,9 @@
 
 namespace App\Annotation\Tmdb;
 
-use Doctrine\ORM\Mapping\Annotation;
 use Doctrine\Common\Annotations\Annotation\Target;
 use Doctrine\Common\Annotations\Annotation\Required;
+use Doctrine\ORM\Mapping\Annotation;
 
 /**
  * Annotation used to define mapping between properties of PHP object and properties in TMDB response (JSon flux).

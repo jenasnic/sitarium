@@ -10,8 +10,8 @@ use App\Service\Tmdb\TmdbApiService;
 use App\Validator\Maze\MovieValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class MovieController extends Controller
 {
@@ -27,9 +27,9 @@ class MovieController extends Controller
      *
      * @param MovieRepository $movieRepository
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function listAction(MovieRepository $movieRepository)
+    public function listAction(MovieRepository $movieRepository): Response
     {
         return $this->render('back/maze/movie/list.html.twig', [
             'movies' => $movieRepository->findBy([], ['title' => 'asc'])
@@ -41,9 +41,9 @@ class MovieController extends Controller
      *
      * @param Movie $movie
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function viewAction(Movie $movie)
+    public function viewAction(Movie $movie): Response
     {
         return $this->render('back/maze/movie/view.html.twig', ['movie' => $movie]);
     }
@@ -54,9 +54,9 @@ class MovieController extends Controller
      * @param AddMovieHandler $handler
      * @param int $tmdbId
      *
-     * @return \Symfony\Component\HttpFoundation\Response|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return Response
      */
-    public function addAction(AddMovieHandler $handler, int $tmdbId)
+    public function addAction(AddMovieHandler $handler, int $tmdbId): Response
     {
         // If no ID => allows user to search movie using TMDB API
         if (0 === $tmdbId) {
@@ -79,9 +79,9 @@ class MovieController extends Controller
      * @param TmdbApiService $tmdbService
      * @param string $name
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function searchAction(TmdbApiService $tmdbService, string $title)
+    public function searchAction(TmdbApiService $tmdbService, string $title): Response
     {
         $movies = [];
 
@@ -103,9 +103,9 @@ class MovieController extends Controller
      * @param EntityManagerInterface $entityManager
      * @param Movie $move
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return Response
      */
-    public function deleteAction(EntityManagerInterface $entityManager, Movie $movie)
+    public function deleteAction(EntityManagerInterface $entityManager, Movie $movie): Response
     {
         try {
             $entityManager->remove($movie);
