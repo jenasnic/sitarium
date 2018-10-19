@@ -9,7 +9,7 @@ Required :
     <div>
         <p><strong>Titre</strong> : {{ movie.title }}</p>
         <p><strong>Date de sortie</strong> : {{ movie.releaseDate|date('d-m-Y') }}</p>
-        <p><img src="https://image.tmdb.org/t/p/w185/{{ movie.pictureUrl }}" alt="-" /></p>
+        <p><img src="{{ movie.pictureUrl|tmdbPictureUrl }}" alt="-" /></p>
         <p><strong>Identifiant TMDB</strong> : {{ movie.tmdbId }}</p>
     </div>
 

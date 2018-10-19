@@ -1,0 +1,46 @@
+{#
+Allows to display list of actors for selection => user can select 2 actors for min path game...
+Required :
+- actors : list of actors to select (as Actor).
+#}
+
+{% extends "base.html.twig" %}
+
+{% block meta %}
+    {{ parent() }}
+    <meta name="description" content="Quiz filmographie : plus court chemin entre 2 acteurs/actrices !"/>
+{% endblock %}
+
+{% block title %}Quiz filmographie{% endblock %}
+
+{% block body %}
+
+    <h1>Reliez 2 acteurs</h1>
+
+    <p>Choisissez simplement 2 acteurs parmi ceux proposés ci-dessous.<br/>
+    Le système cherchera le plus court chemin entre ces deux acteurs/actrices en passant par leur filmographie et les acteurs avec lesquels ils ont joué.<br/>
+    A vous de retrouver les films pour lier ces 2 acteurs/actrices.</p>
+    <p><strong>Attention : </strong>la solution proposée n'est pas unique et n'utilisera que la sélection d'acteurs proposés sur ce site (acteurs et leur filmographie respective).<br/>
+    Un chemin plus court peut donc exister en passant par d'autres films avec des acteurs non présents ici.</p>
+
+    <form action="{{ path('fo_maze_actor_play_min_path') }}" method="POST">
+
+        <input type="hidden" id="startActorId" name="startActorId" />
+        <input type="hidden" id="endActorId" name="endActorId" />
+
+        <label for="level">Difficulté : </label>
+        <select id="level" name="level">
+            <option value="0">Facile</option>
+            <option value="1" selected="selected">Moyen</option>
+            <option value="2">Difficile</option>
+        </select>
+        <p><strong>NOTE : </strong>La difficulté porte sur la notoriété des films utilisés (selon le site TheMovieDB) pour mettre en relation les acteurs.<br/>
+        Elle permet également de réduire la sélection de films dans la rubrique "Besoin d'aide".</p>
+
+        <input type="submit" value="Jouer"/>
+
+    </form>
+
+    {% include 'front/maze/actor/_selection.html.twig' %}
+
+{% endblock %}

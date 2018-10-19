@@ -1,0 +1,45 @@
+{#
+Allows to display list of movies for selection => user can select 2 movies for min path game...
+Required :
+- movies : list of movies to select (as Movie).
+#}
+
+{% extends "base.html.twig" %}
+
+{% block meta %}
+    {{ parent() }}
+    <meta name="description" content="Quiz casting : plus court chemin entre 2 films !"/>
+{% endblock %}
+
+{% block title %}Quiz casting{% endblock %}
+
+{% block body %}
+
+    <h1>Reliez 2 films</h1>
+
+    <p>Choisissez simplement 2 films parmi ceux proposés ci-dessous.<br/>
+    Le système cherchera le plus court chemin entre ces deux films en passant par les acteurs du casting et les autres films dans lesquels ils ont joué.<br/>
+    A vous de retrouver les acteurs/actrices pour lier ces 2 films.</p>
+    <p><strong>Attention : </strong>la solution proposée n'est pas unique et n'utilisera que la sélection de films proposés sur ce site (films et casting d'acteurs).<br/>
+    Un chemin plus court peut donc exister en passant par d'autres acteurs ayant joués dans des films non présents ici.</p>
+
+    <form action="{{ path('fo_maze_movie_play_min_path') }}" method="POST">
+
+        <input type="hidden" id="startMovieId" name="startMovieId" />
+        <input type="hidden" id="endMovieId" name="endMovieId" />
+
+        <label for="level">Difficulté : </label>
+        <select id="level" name="level">
+            <option value="0">Facile</option>
+            <option value="1" selected="selected">Moyen</option>
+            <option value="2">Difficile</option>
+        </select>
+        <p><strong>NOTE : </strong>La difficulté permet de réduire la sélection d'acteurs dans la rubrique "Besoin d'aide".</p>
+
+        <input type="submit" value="Jouer"/>
+
+    </form>
+
+    {% include 'front/maze/movie/_selection.html.twig' %}
+
+{% endblock %}

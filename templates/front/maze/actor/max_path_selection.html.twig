@@ -1,0 +1,42 @@
+{#
+Allows to display list of actors for selection => user can select 10 actors to play maze...
+Required :
+- actors : list of actors to select (as Actor).
+#}
+
+{% extends "base.html.twig" %}
+
+{% block meta %}
+    {{ parent() }}
+    <meta name="description" content="Quiz personnalisé sur la filmographie avec votre propore sélection d'acteurs ou d'actrices."/>
+{% endblock %}
+
+{% block title %}Quiz filmographie{% endblock %}
+
+{% block body %}
+
+    <h1>Construisez votre quiz</h1>
+
+    <p>Veuillez choisir 10 acteurs/actrices parmi ceux proposés ci-dessous. Nous vous proposerons le plus long quiz trouvé pour votre sélection.</p>
+    <p>Bonne chance !</p>
+
+    <form action="{{ path('fo_maze_actor_play_max_path') }}" method="POST">
+
+        <input type="hidden" id="actorIds" name="actorIds" />
+
+        <label for="level">Difficulté : </label>
+        <select id="level" name="level">
+            <option value="0">Facile</option>
+            <option value="1" selected="selected">Moyen</option>
+            <option value="2">Difficile</option>
+        </select>
+        <p><strong>NOTE : </strong>La difficulté porte sur la notoriété des films utilisés (selon le site TheMovieDB) pour mettre en relation les acteurs.<br/>
+        Elle permet également de réduire la sélection de films dans la rubrique "Besoin d'aide".</p>
+
+        <input type="submit" value="Jouer"/>
+
+    </form>
+
+    {% include 'front/maze/actor/_selection.html.twig' %}
+
+{% endblock %}

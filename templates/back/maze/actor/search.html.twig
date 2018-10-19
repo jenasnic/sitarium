@@ -14,7 +14,7 @@ Required :
         onclick="return confirm('Confirmer la sélection ?');"
         class="tile is-child is-2">
             <p>{{ actor.fullname }}</p>
-            <img src="https://image.tmdb.org/t/p/w185/{{ actor.pictureUrl }}" alt="-" />
+            <img src="{{ actor.pictureUrl|tmdbPictureUrl }}" alt="-" />
     </a>
 {% endfor %}
 </div>

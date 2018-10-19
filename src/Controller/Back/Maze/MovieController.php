@@ -37,7 +37,7 @@ class MovieController extends Controller
     }
 
     /**
-     * @Route("/admin/maze/movie/view/{movie}", requirements={"id" = "\d+"}, name="bo_maze_movie_view")
+     * @Route("/admin/maze/movie/view/{movie}", requirements={"movie" = "\d+"}, name="bo_maze_movie_view")
      *
      * @param Movie $movie
      *
@@ -98,7 +98,7 @@ class MovieController extends Controller
     }
 
     /**
-     * @Route("/admin/maze/movie/delete/{movie}", requirements={"id" = "\d+"}, name="bo_maze_movie_delete")
+     * @Route("/admin/maze/movie/delete/{movie}", requirements={"movie" = "\d+"}, name="bo_maze_movie_delete")
      *
      * @param EntityManagerInterface $entityManager
      * @param Movie $move

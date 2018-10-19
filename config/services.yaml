@@ -27,7 +27,7 @@ services:
 #        resource: '../src/*'
 #        exclude: '../src/{Annotation,Domain,Entity,Enum,Event,Migrations,Model,Tool,Kernel.php}'
     App\:
-        resource: '../src/{DataFixtures,EventListener,Repository,Service}'
+        resource: '../src/{DataFixtures,EventListener,Repository,Service,Twig}'
 
     App\Service\Tmdb\TmdbApiService:
         bind:

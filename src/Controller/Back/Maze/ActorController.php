@@ -37,7 +37,7 @@ class ActorController extends Controller
     }
 
     /**
-     * @Route("/admin/maze/actor/view/{id}", requirements={"id" = "\d+"}, name="bo_maze_actor_view")
+     * @Route("/admin/maze/actor/view/{actor}", requirements={"actor" = "\d+"}, name="bo_maze_actor_view")
      *
      * @param Actor $actor
      *

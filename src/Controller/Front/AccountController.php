@@ -49,9 +49,9 @@ class AccountController extends Controller
                     $user->getRoles()
                 ));
 
-                $this->addFlash('info', 'Votre compte a bien été créé');
+                $this->addFlash('info', 'Votre compte a bien été créé.');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Erreur lors de la création de votre compte');
+                $this->addFlash('error', 'Erreur lors de la création de votre compte.');
             }
 
             return $this->redirectToRoute('fo_home');
@@ -80,9 +80,9 @@ class AccountController extends Controller
                 $newPassword = $form->get('newPassword')->getData();
                 $handler->handle(new UpdateUserCommand($user, $newPassword));
 
-                $this->addFlash('info', 'Votre compte a bien été mis à jour');
+                $this->addFlash('info', 'Votre compte a bien été mis à jour.');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Erreur lors de la mise à jour de votre compte sauvegarde');
+                $this->addFlash('error', 'Erreur lors de la mise à jour de votre compte sauvegarde.');
             }
 
             return $this->redirectToRoute('fo_account_infos');

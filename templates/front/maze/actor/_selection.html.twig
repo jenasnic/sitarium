@@ -1,0 +1,8 @@
+<section>
+    {% for actor in actors %}
+    <div data-tmdb-id="{{ actor.tmdbId }}">
+        <img src="{{ actor.pictureUrl|tmdbPictureUrl }}" alt="{{ actor.fullname|raw }}" />
+        <span>{{ actor.fullname }}</span>
+    </div>
+    {% endfor %}
+</section>

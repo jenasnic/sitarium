@@ -31,11 +31,10 @@ class WinnerController extends Controller
         RegisterWinnerHandler $handler,
         Quiz $quiz
     ): JsonResponse {
-        try {
-            // Get all responses found and check if quiz successfully completed
-            $responses = $request->request->get('responses');
-            $responses = explode(';', $responses);
+        $responses = $request->request->get('responses');
+        $responses = explode(';', $responses);
 
+        try {
             if ($validator->validateWinner($responses, $quiz)) {
                 $command = new RegisterWinnerCommand(
                     $quiz,
@@ -46,14 +45,14 @@ class WinnerController extends Controller
 
                 $handler->handle($command);
 
-                return new JsonResponse(['success' => true, 'message' => 'Vous avez bien été enregistré !']);
+                return new JsonResponse(['success' => true, 'message' => 'Vous avez bien été enregistré.']);
             }
             else {
-                return new JsonResponse(['success' => false, 'message' => 'Vous n\'avez pas résolu le quiz !']);
+                return new JsonResponse(['success' => false, 'message' => 'Vous n\'avez pas résolu le quiz.']);
             }
         }
         catch (\Exception $e) {
-            return new JsonResponse(['success' => false, 'message' => 'Erreur lors de votre enregistrement']);
+            return new JsonResponse(['success' => false, 'message' => 'Erreur lors de votre enregistrement.']);
         }
     }
 }

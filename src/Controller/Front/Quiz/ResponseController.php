@@ -30,10 +30,10 @@ class ResponseController extends Controller
         ResponseRepository $responseRepository,
         AddUserResponseHandler $handler
     ): JsonResponse {
-        try {
-            $quizId = $request->request->get('quizId');
-            $response = trim($request->request->get('response'));
+        $quizId = $request->request->get('quizId');
+        $response = trim($request->request->get('response'));
 
+        try {
             if ($quizId > 0 && strlen($response) > 0) {
                 $responseFound = $responseRepository->searchMatchingResponseForQuizId($response, $quizId);
 
@@ -54,10 +54,10 @@ class ResponseController extends Controller
                 }
             }
 
-            return new JsonResponse(['success' => false, 'message' => 'Réponse incorrecte']);
+            return new JsonResponse(['success' => false, 'message' => 'Réponse incorrecte.']);
         }
         catch (\Exception $e) {
-            return new JsonResponse(['success' => false, 'message' => 'Erreur lors du traitement de la réponse']);
+            return new JsonResponse(['success' => false, 'message' => 'Erreur lors du traitement de la réponse.']);
         }
     }
 
@@ -71,11 +71,11 @@ class ResponseController extends Controller
      */
     public function quizTrick(Request $request, ResponseRepository $responseRepository): JsonResponse
     {
-        try {
-            $quizId = $request->query->get('quizId');
-            $positionX = $request->query->get('positionX');
-            $positionY = $request->query->get('positionY');
+        $quizId = $request->request->get('quizId');
+        $positionX = $request->request->get('positionX');
+        $positionY = $request->request->get('positionY');
 
+        try {
             $responses = $responseRepository->getResponsesWithCoordonates($positionX, $positionY, $quizId);
 
             if ($responses) {
@@ -83,10 +83,10 @@ class ResponseController extends Controller
                 return new JsonResponse(['success' => true, 'trick' => $responses]);
             }
             else
-                return new JsonResponse(['success' => false, 'message' => 'Aucun indice trouvé pour la zone indiquée']);
+                return new JsonResponse(['success' => false, 'message' => 'Aucun indice trouvé pour la zone indiquée.']);
         }
         catch (\Exception $e) {
-            return new JsonResponse(['success' => false, 'message' => 'Erreur lors de la récupération des indices']);
+            return new JsonResponse(['success' => false, 'message' => 'Erreur lors de la récupération des indices.']);
         }
     }
 

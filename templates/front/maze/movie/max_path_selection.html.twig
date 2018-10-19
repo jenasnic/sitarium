@@ -1,0 +1,41 @@
+{#
+Allows to display list of movies for selection => user can select 10 movies to play maze...
+Required :
+- movies : list of movies to select (as Movie).
+#}
+
+{% extends "base.html.twig" %}
+
+{% block meta %}
+    {{ parent() }}
+    <meta name="description" content="Quiz personnalisé sur le casting avec votre propre sélection de films."/>
+{% endblock %}
+
+{% block title %}Quiz casting{% endblock %}
+
+{% block body %}
+
+    <h1>Construisez votre quiz</h1>
+
+    <p>Veuillez choisir 10 films parmi ceux proposés ci-dessous. Nous vous proposerons le plus long quiz trouvé pour votre sélection.</p>
+    <p>Bonne chance !</p>
+
+    <form action="{{ path('fo_maze_movie_play_max_path') }}" method="POST">
+
+        <input type="hidden" id="movieIds" name="movieIds" />
+
+        <label for="level">Difficulté : </label>
+        <select id="level" name="level">
+            <option value="0">Facile</option>
+            <option value="1" selected="selected">Moyen</option>
+            <option value="2">Difficile</option>
+        </select>
+        <p><strong>NOTE : </strong>La difficulté permet de réduire la sélection d'acteurs dans la rubrique "Besoin d'aide".</p>
+
+        <input type="submit" value="Jouer"/>
+
+    </form>
+
+    {% include 'front/maze/movie/_selection.html.twig' %}
+
+{% endblock %}
