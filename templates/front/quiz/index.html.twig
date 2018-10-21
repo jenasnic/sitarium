@@ -15,19 +15,33 @@ Required :
 
 {% block body %}
 
-    <h1>Quiz objets cachés</h1>
+    <div id="quiz-home" class="container center">
 
-    <p>Retrouvez dans les images ci-dessous, des objets issus de films et donnez le titre du film correspondant.</p>
-    {% if (not app.user) %}
-        <p>Pour sauvegarder vos réponses, pensez à vous créer un compte <a href="{{ path('fo_account_new') }}">ici</a>.</p>
-    {% endif %}
+        <h1>Quiz objets cachés</h1>
 
-    {% for quiz in quizs %}
-        <a href="{{ path('fo_quiz_play', { 'quiz': quiz.id }) }}">
-            <h2>{{ quiz.name }}</h2>
-            <img src="{{ quiz.thumbnailUrl }}" alt="{{ quiz.name }}"/>
-            <figcaption>Trouvez les {{ quiz.responses|length }} objets cachés dans l'image.</figcaption>
-        </a>
-    {% endfor %}
+        <section>
+
+            <p>Retrouvez dans les images ci-dessous, des objets issus de films et donnez le titre du film correspondant.</p>
+            {% if (not app.user) %}
+                <p>Pour sauvegarder vos réponses, pensez à vous créer un compte <a href="{{ path('fo_account_new') }}">ici</a>.</p>
+            {% endif %}
+
+            <div id="quiz-list">
+                {% for quiz in quizs %}
+                <figure class="quiz-item">
+                    <a href="{{ path('fo_quiz_play', { 'quiz': quiz.id }) }}">
+                        <img src="{{ quiz.thumbnailUrl }}" alt="{{ quiz.name }}"/>
+                        <figcaption class="quiz-infos">
+                            <h2>{{ quiz.name }}</h2>
+                            <p>Trouvez les {{ quiz.responses|length }} objets cachés dans l'image.</p>
+                        </figcaption>
+                    </a>
+                </figure>
+                {% endfor %}
+            </div>
+
+        </section>
+
+    </div>
 
 {% endblock %}

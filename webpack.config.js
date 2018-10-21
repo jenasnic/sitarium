@@ -15,11 +15,11 @@ Encore
     //.enableVersioning(Encore.isProduction())
 
     // uncomment to define the assets of the project
-    .addEntry('js/app', './assets/js/app.js')
-    .addEntry('js/admin', './assets/js/admin.js')
-    .addStyleEntry('css/app', './assets/css/app.scss')
-    .addStyleEntry('css/admin', './assets/css/admin.scss')
-    .addEntry('images', './assets/img/images.js')
+    .addEntry('js/app', './assets/scripts/app.js')
+    .addEntry('js/admin', './assets/scripts/admin.js')
+    .addStyleEntry('css/app', './assets/styles/app.scss')
+    .addStyleEntry('css/admin', './assets/styles/admin.scss')
+    .addEntry('images', './assets/images/index.js')
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()

@@ -1,0 +1,9 @@
+
+$small-screen-up: 768px !default;
+$medium-screen-down: 769px !default;
+$medium-screen-up: 1215px !default;
+$large-screen-down: 1216px !default;
+
+$media-small: "only screen and (max-width : #{$small-screen-up})" !default;
+$media-medium: "only screen and (min-width : #{$medium-screen-down}) and (max-width : #{$medium-screen-up})" !default;
+$media-large: "only screen and (min-width : #{$large-screen-down})" !default;

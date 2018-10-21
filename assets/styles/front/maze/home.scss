@@ -1,0 +1,34 @@
+
+#maze-home {
+    .maze-selection-wrapper {
+        margin: 40px 10px 60px 10px;
+        display: flex;
+        justify-content: center;
+
+        .maze-selection-item {
+            display: flex;
+            flex-direction: column;
+            font-size: 1.3em;
+            margin: 0 20px;
+            max-width: 40%;
+
+            &:hover span, &:hover span i {color: $color-text-link;}
+        }
+    }
+}
+
+@media #{$media-small}
+{
+    #maze-home {
+        .maze-selection-wrapper {
+            flex-direction: column;
+
+            .maze-selection-item {
+                margin: 20px 0;
+                max-width: 100%;
+
+                &:hover span, &:hover span i {color: $color-text-link;}
+            }
+        }
+    }
+}

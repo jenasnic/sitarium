@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuizController extends Controller
 {
     /**
-     * @Route("/quiz", name="fo_quiz")
+     * @Route("/quiz-en-images", name="fo_quiz")
      *
      * @param QuizRepository $quizRepository
      *

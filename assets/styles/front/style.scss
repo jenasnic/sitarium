@@ -1,0 +1,42 @@
+
+*{
+    color: $color-text-default;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: url('../img/background.jpg');
+    height: 100vh;
+    line-height: 1.3em;
+}
+
+#header {
+    background: $color-border-default;
+    padding: 10px;
+}
+
+h1 {
+    color: $color-text-title;
+    font-size: 1.9em;
+    line-height: 1.4em;
+    margin: 15px;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: $color-text-link;
+}
+
+input, textarea, button {color: #333;}
+
+.container {
+    max-width : 1600px;
+    margin: 10px 100px;
+}
+
+.center {
+    margin: 0 auto;
+    text-align: center;
+}

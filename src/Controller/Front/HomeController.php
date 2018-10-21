@@ -17,14 +17,4 @@ class HomeController extends Controller
     {
         return $this->render('front/home.html.twig');
     }
-
-    /**
-     * @Route("/autres-quiz", name="fo_other_quiz")
-     *
-     * @return Response
-     */
-    public function otherQuizAction(): Response
-    {
-        return $this->render('front/other_quiz.html.twig');
-    }
 }

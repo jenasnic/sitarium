@@ -1,20 +1,22 @@
-<nav class="navbar">
-    <div class="navbar-brand">
-        <img src="{{ asset('build/images/logo.png') }}" alt="Sitarium" />
+<div class="burger-icon">
+    <span class="is-large"><i class="fas fa-bars fa-3x"></i></span>
+</div>
+
+<nav id="menu">
+    <div class="navbar-main">
+        <a href="{{ path('fo_quiz') }}" class="navbar-item">Quiz en image</a>
+        <a href="{{ path('fo_home') }}" class="navbar-item navbar-logo">
+            <img src="{{ asset('build/images/logo.png') }}" alt="Sitarium" />
+            <span>Accueil</span>
+        </a>
+        <a href="{{ path('fo_maze') }}" class="navbar-item">Autres quiz</a>
     </div>
-    <div class="navbar-menu">
-        <div class="navbar-start">
-            <a href="{{ path('fo_home') }}" class="navbar-item">Accueil</a>
-            <a href="{{ path('fo_quiz') }}" class="navbar-item">Quiz en image</a>
-            <a href="{{ path('fo_other_quiz') }}" class="navbar-item">Autres quiz</a>
-        </div>
-        <div class="navbar-end">
-            {% if (app.user) %}
-                <a href="{{ path('fo_account_infos') }}" class="navbar-item">Mon compte</a> 
-                <a href="{{ path('logout') }}" class="navbar-item">Se déconnecter</a>
-            {% else %}
-                <a href="{{ path('login') }}" class="navbar-item">Se connecter</a></span>
-            {% endif %}
-        </div>
+    <div class="navbar-login">
+        {% if (app.user) %}
+            <a href="{{ path('fo_account_infos') }}" class="navbar-item">Mon compte</a> 
+            <a href="{{ path('logout') }}" class="navbar-item">Se déconnecter</a>
+        {% else %}
+            <a href="{{ path('login') }}" class="navbar-item">Se connecter</a></span>
+        {% endif %}
     </div>
 </nav>

@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {% block meta %}
-            <meta name="keywords" content="quiz, film, série, cinéma, acteur, casting, filmographie, objets cultes" />
+            <meta name="keywords" content="quiz, film, cinéma, acteur, série, casting, filmographie, objets cultes, objets cachés" />
         {% endblock %}
         <title>{% block title %}Sitarium{% endblock %}</title>
         {% block stylesheets %}
@@ -12,8 +12,10 @@
         {% endblock %}
     </head>
     <body>
-        <div class="container">
+        <div id="header">
             {% include 'front/_menu.html.twig' %}
+        </div>
+        <div class="container">
             {% block body %}{% endblock %}
         </div>
         {% block javascripts %}

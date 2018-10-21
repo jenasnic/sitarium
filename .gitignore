@@ -24,6 +24,10 @@ yarn-error.log
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
+###> external public resources ###
+/public/userfiles
+###< external public resources ###
+
 ###> symfony/web-server-bundle ###
 /.web-server-pid
 ###< symfony/web-server-bundle ###
