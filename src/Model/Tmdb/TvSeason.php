@@ -8,24 +8,28 @@ class TvSeason
 {
     /**
      * @TmdbField(name="id", type="integer")
+     *
      * @var int
      */
     private $tmdbId;
 
     /**
      * @TmdbField(name="episode_count", type="integer")
+     *
      * @var int
      */
     private $episodeCount;
 
     /**
      * @TmdbField(name="air_date", type="datetime", dateFormat="Y-m-d")
+     *
      * @var \DateTime
      */
     private $airingDate;
 
     /**
      * @TmdbField(name="poster_path")
+     *
      * @var string
      */
     private $pictureUrl;

@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Actor
+ * Actor.
  *
  * @ORM\Table(name="actor")
  * @ORM\Entity(repositoryClass="App\Repository\Maze\ActorRepository")
@@ -60,7 +60,7 @@ class Actor
     private $status;
 
     /**
-     * @var ArrayCollection $movies
+     * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="FilmographyMovie", mappedBy="actors")
      */
     private $movies;
@@ -147,8 +147,9 @@ class Actor
      */
     public function setStatus(string $status)
     {
-        if (!FilmographyStatus::exists($status))
-            throw new \InvalidArgumentException("Invalid status");
+        if (!FilmographyStatus::exists($status)) {
+            throw new \InvalidArgumentException('Invalid status');
+        }
 
         $this->status = $status;
     }

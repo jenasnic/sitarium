@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CastingActor
+ * CastingActor.
  *
  * @ORM\Table(name="casting_actor")
  * @ORM\Entity(repositoryClass="App\Repository\Maze\CastingActorRepository")
@@ -46,7 +46,7 @@ class CastingActor
     private $character;
 
     /**
-     * @var ArrayCollection $movies
+     * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="Movie", inversedBy="actors", cascade={"persist"})
      * @ORM\JoinTable(name="movie_casting_actor",
      *      joinColumns={@ORM\JoinColumn(name="actor_id", referencedColumnName="tmdbId", onDelete="CASCADE")},

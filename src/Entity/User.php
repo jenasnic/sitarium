@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * User
+ * User.
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -58,7 +58,7 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @var array $roles
+     * @var array
      *
      * @ORM\Column(name="roles", type="simple_array")
      */
@@ -70,7 +70,7 @@ class User implements UserInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getSalt(): ?string
     {
@@ -78,7 +78,7 @@ class User implements UserInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function eraseCredentials()
     {
@@ -183,6 +183,7 @@ class User implements UserInterface
     /**
      * @param string $role
 
+     *
      * @return self
      */
     public function addRole(string $role): self

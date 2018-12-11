@@ -20,7 +20,7 @@ class AddUserCommand
      * @param User $user
      * @param string $password
      */
-    function __construct(User $user, string $password = null)
+    public function __construct(User $user, string $password = null)
     {
         $this->user = $user;
         $this->password = $password;

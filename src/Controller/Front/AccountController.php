@@ -30,7 +30,7 @@ class AccountController extends Controller
      */
     public function newAction(Request $request, TokenStorageInterface $tokenStorageInterface, AddUserHandler $handler): Response
     {
-        $user  = new User();
+        $user = new User();
         $form = $this->createForm(AccountType::class, $user);
         $form->handleRequest($request);
 

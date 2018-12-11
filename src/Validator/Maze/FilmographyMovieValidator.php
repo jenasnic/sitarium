@@ -10,9 +10,9 @@ class FilmographyMovieValidator implements TmdbValidatorInterface
     /**
      * Allows to check if specified movie is valid or not.
      *
-     * @param FilmographyMovie $movie movie to check.
+     * @param FilmographyMovie $movie movie to check
      *
-     * @return bool TRUE if movie is valid, FALSE either.
+     * @return bool TRUE if movie is valid, FALSE either
      */
     public function isValid($movie): bool
     {
@@ -37,7 +37,7 @@ class FilmographyMovieValidator implements TmdbValidatorInterface
         }
 
         // If actor is not credited => ignore movie
-        if (strpos($movie->getCharacter(), '(uncredited)') !== false) {
+        if (false !== strpos($movie->getCharacter(), '(uncredited)')) {
             return false;
         }
 

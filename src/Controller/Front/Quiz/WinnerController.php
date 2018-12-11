@@ -46,12 +46,10 @@ class WinnerController extends Controller
                 $handler->handle($command);
 
                 return new JsonResponse(['success' => true, 'message' => 'Vous avez bien été enregistré.']);
-            }
-            else {
+            } else {
                 return new JsonResponse(['success' => false, 'message' => 'Vous n\'avez pas résolu le quiz.']);
             }
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return new JsonResponse(['success' => false, 'message' => 'Erreur lors de votre enregistrement.']);
         }
     }

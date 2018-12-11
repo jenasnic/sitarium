@@ -6,7 +6,7 @@ use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * UserResponse
+ * UserResponse.
  *
  * @ORM\Table(name="quiz_user_response")
  * @ORM\Entity(repositoryClass="App\Repository\Quiz\UserResponseRepository")

@@ -48,7 +48,7 @@ class UserController extends Controller
      */
     public function addAction(Request $request, AddUserHandler $handler): Response
     {
-        $user  = new User();
+        $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -111,8 +111,7 @@ class UserController extends Controller
         try {
             $handler->handle(new DeleteUserCommand($user));
             $this->addFlash('info', 'Suppression OK');
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash('error', 'Erreur lors de la suppression');
         }
 

@@ -75,8 +75,7 @@ class ResponseController extends Controller
             $entityManager->flush();
 
             return new JsonResponse(1);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return new JsonResponse(0);
         }
     }
@@ -103,14 +102,13 @@ class ResponseController extends Controller
                     $entityManager->flush();
 
                     return new JsonResponse(['success' => true, 'message' => 'Sauvegarde OK']);
-                }
-                catch (\Exception $e) {
+                } catch (\Exception $e) {
                     return new JsonResponse(['success' => false, 'message' => 'Erreur lors de la sauvegarde']);
                 }
             } else {
                 return new JsonResponse([
                     'success' => false,
-                    'message' => 'Certains champs ne sont pas remplis correctement'
+                    'message' => 'Certains champs ne sont pas remplis correctement',
                 ]);
             }
         }

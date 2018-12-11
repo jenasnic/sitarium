@@ -32,13 +32,12 @@ class MovieResponseController extends Controller
                     'success' => true,
                     'tmdbId' => $commonActor->getTmdbId(),
                     'fullname' => $commonActor->getFullname(),
-                    'pictureUrl' => TmdbUtil::getBasePictureUrl() . $commonActor->getPictureUrl(),
+                    'pictureUrl' => TmdbUtil::getBasePictureUrl().$commonActor->getPictureUrl(),
                 ]);
             }
 
             return new JsonResponse(['success' => false, 'message' => 'Réponse incorrecte.']);
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             return new JsonResponse(['success' => false, 'message' => 'Impossible de vérifier votre réponse.']);
         }
     }
@@ -62,12 +61,11 @@ class MovieResponseController extends Controller
                 $htmlFlux = $this->renderView('front/maze/movie/trick.html.twig', ['movie' => $movie]);
 
                 return new JsonResponse(['success' => true, 'message' => $htmlFlux]);
-            }
-            else
+            } else {
                 return new JsonResponse(['success' => false, 'message' => 'Film introuvable.']);
-        }
-        catch (\Exception $ex) {
-            return new JsonResponse(array('success' => false, 'message' => 'Impossible de charger le casting du film.'));
+            }
+        } catch (\Exception $ex) {
+            return new JsonResponse(['success' => false, 'message' => 'Impossible de charger le casting du film.']);
         }
     }
 }

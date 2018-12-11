@@ -5,7 +5,7 @@ namespace App\Entity\Quiz;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Response
+ * Response.
  *
  * @ORM\Table(name="quiz_response")
  * @ORM\Entity(repositoryClass="App\Repository\Quiz\ResponseRepository")

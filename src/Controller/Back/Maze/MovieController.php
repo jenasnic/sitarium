@@ -18,7 +18,7 @@ class MovieController extends Controller
     /**
      * Max movie count to return when searching movies through TMDB.
      *
-     * @var integer
+     * @var int
      */
     const MAX_MOVIE_RESULT_COUNT = 10;
 
@@ -32,7 +32,7 @@ class MovieController extends Controller
     public function listAction(MovieRepository $movieRepository): Response
     {
         return $this->render('back/maze/movie/list.html.twig', [
-            'movies' => $movieRepository->findBy([], ['title' => 'asc'])
+            'movies' => $movieRepository->findBy([], ['title' => 'asc']),
         ]);
     }
 

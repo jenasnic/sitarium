@@ -20,7 +20,7 @@ class StatisticsBOController extends Controller
     /**
      * @param UserResponseRepository $userResponseReporitory
      */
-    function __construct(UserResponseRepository $userResponseReporitory)
+    public function __construct(UserResponseRepository $userResponseReporitory)
     {
         $this->userResponseReporitory = $userResponseReporitory;
     }
@@ -50,7 +50,7 @@ class StatisticsBOController extends Controller
         return $this->render('back/quiz/statistics/quiz.html.twig', [
             'quiz' => $quiz,
             'responseInfos' => $this->userResponseReporitory->getResponsesStatisticsForQuizId($quiz->getId()),
-            'userInfos' => $this->userResponseReporitory->getUsersStatisticsForQuizId($quiz->getId())
+            'userInfos' => $this->userResponseReporitory->getUsersStatisticsForQuizId($quiz->getId()),
         ]);
     }
 

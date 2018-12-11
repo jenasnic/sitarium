@@ -34,7 +34,7 @@ class RegisterWinnerHandler
         $winner->setUser($command->getUser());
         $winner->setTrickCount($command->getTrickCount());
         // NOTE : for comment => replace break lines with HTML tag
-        $winner->setComment(str_replace("\n", "<br/>", $command->getComment()));
+        $winner->setComment(str_replace("\n", '<br/>', $command->getComment()));
 
         $this->entityManager->persist($winner);
         $this->entityManager->flush();

@@ -49,14 +49,13 @@ class ResponseController extends Controller
                         'id' => $responseFound->getId(),
                         'positionX' => $responseFound->getPositionX(),
                         'positionY' => $responseFound->getPositionY(),
-                        'size' => $responseFound->getSize()
+                        'size' => $responseFound->getSize(),
                     ]);
                 }
             }
 
             return new JsonResponse(['success' => false, 'message' => 'Réponse incorrecte.']);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return new JsonResponse(['success' => false, 'message' => 'Erreur lors du traitement de la réponse.']);
         }
     }
@@ -79,13 +78,15 @@ class ResponseController extends Controller
             $responses = $responseRepository->getResponsesWithCoordonates($positionX, $positionY, $quizId);
 
             if ($responses) {
-                $responses = array_map(function($response) {return $response->getTrick();}, $responses);
+                $responses = array_map(function ($response) {
+                    return $response->getTrick();
+                }, $responses);
+
                 return new JsonResponse(['success' => true, 'trick' => $responses]);
-            }
-            else
+            } else {
                 return new JsonResponse(['success' => false, 'message' => 'Aucun indice trouvé pour la zone indiquée.']);
-        }
-        catch (\Exception $e) {
+            }
+        } catch (\Exception $e) {
             return new JsonResponse(['success' => false, 'message' => 'Erreur lors de la récupération des indices.']);
         }
     }
@@ -104,12 +105,11 @@ class ResponseController extends Controller
         try {
             $handler->handle(new ClearUserResponseCommand($this->getUser(), $quiz));
 
-            return new JsonResponse(array('success' => true));
-        }
-        catch (\Exception $e) {
-            return new JsonResponse(array('success' => false));
+            return new JsonResponse(['success' => true]);
+        } catch (\Exception $e) {
+            return new JsonResponse(['success' => false]);
         }
 
-        return new JsonResponse(array('success' => true));
+        return new JsonResponse(['success' => true]);
     }
 }

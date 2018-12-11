@@ -33,7 +33,7 @@ class ActorGraphBuilder
      * @param int $minVoteCount (default = 0) Minimum vote count value for movies used to build actor graph. This allows to use only famous movie when building graph using movies as link between actors.
      * Default value 0 means that we ignore vote count (i.e. use all movies to link actors...)
      *
-     * @return array Map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value.
+     * @return array map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
      */
     public function buildGraph($actorIds = null, $minVoteCount = 0): array
     {

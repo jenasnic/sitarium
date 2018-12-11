@@ -16,11 +16,11 @@ class MinPathFinder
     /**
      * Allows to find shortest path between two specified grah items.
      *
-     * @param array $mazeGraph Map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value.
-     * @param MazeGraphItem $startItem MazeGraphItem to use as starting point to find shortest path.
-     * @param MazeGraphItem $endItem MazeGraphItem to use as ending point to find shortest path.
+     * @param array $mazeGraph map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
+     * @param MazeGraphItem $startItem mazeGraphItem to use as starting point to find shortest path
+     * @param MazeGraphItem $endItem mazeGraphItem to use as ending point to find shortest path
      *
-     * @return array|null Array of items linked together.
+     * @return array|null array of items linked together
      */
     public function find(array $mazeGraph, MazeGraphItem $startItem, MazeGraphItem $endItem): ?array
     {
@@ -44,12 +44,12 @@ class MinPathFinder
      * Allows to find shortest path between items.
      * NOTE : Recursive method used to find path...
      *
-     * @param array $mazeGraph Map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value.
-     * @param MazeGraphItem $currentItem MazeGraphItem to use as starting point to find shortest path.
-     * @param MazeGraphItem $itemToReach MazeGraphItem to use as ending point to find shortest path.
-     * @param array $currentPath Current path of MazeGraphItem (path we are building recursively).
+     * @param array $mazeGraph map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
+     * @param MazeGraphItem $currentItem mazeGraphItem to use as starting point to find shortest path
+     * @param MazeGraphItem $itemToReach mazeGraphItem to use as ending point to find shortest path
+     * @param array $currentPath current path of MazeGraphItem (path we are building recursively)
      *
-     * @return array|null Array of MazeGraphItem matching shortest path or NULL if no path found.
+     * @return array|null array of MazeGraphItem matching shortest path or NULL if no path found
      */
     protected function findShortestPath(array $mazeGraph, MazeGraphItem $currentItem, MazeGraphItem $itemToReach, array $currentPath): ?array
     {
@@ -61,6 +61,7 @@ class MinPathFinder
         // If item reached => stop here (path OK)
         if ($currentItem === $itemToReach) {
             $currentPath[] = $currentItem;
+
             return $currentPath;
         }
 
@@ -88,6 +89,7 @@ class MinPathFinder
         // If item to reach exist in linked items => use it
         if (in_array($itemToReach, $currentItem->getLinkedItems())) {
             $currentPath[] = $itemToReach;
+
             return $currentPath;
         }
 
@@ -126,7 +128,7 @@ class MinPathFinder
      */
     private function updateBestPathPositionForGraphItem(array $itemPath)
     {
-        for ($i = 0; $i < count($itemPath); $i++) {
+        for ($i = 0; $i < count($itemPath); ++$i) {
             if (0 === $itemPath[$i]->getBestPathPosition() || $itemPath[$i]->getBestPathPosition() > $i) {
                 $itemPath[$i]->setBestPathPosition($i);
             }

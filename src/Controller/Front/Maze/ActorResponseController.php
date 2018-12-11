@@ -32,13 +32,12 @@ class ActorResponseController extends Controller
                     'success' => true,
                     'tmdbId' => $commonMovie->getTmdbId(),
                     'title' => $commonMovie->getTitle(),
-                    'pictureUrl' => TmdbUtil::getBasePictureUrl() . $commonMovie->getPictureUrl(),
+                    'pictureUrl' => TmdbUtil::getBasePictureUrl().$commonMovie->getPictureUrl(),
                 ]);
             }
 
             return new JsonResponse(['success' => false, 'message' => 'Réponse incorrecte.']);
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             return new JsonResponse(['success' => false, 'message' => 'Impossible de vérifier votre réponse.']);
         }
     }
@@ -70,9 +69,8 @@ class ActorResponseController extends Controller
             } else {
                 return new JsonResponse(['success' => false, 'message' => 'Acteur introuvable.']);
             }
-        }
-        catch (\Exception $ex) {
-            return new JsonResponse(array('success' => false, 'message' => 'Impossible de charger la filmographie de l\'acteur.'));
+        } catch (\Exception $ex) {
+            return new JsonResponse(['success' => false, 'message' => 'Impossible de charger la filmographie de l\'acteur.']);
         }
     }
 }

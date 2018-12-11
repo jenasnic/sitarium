@@ -40,7 +40,7 @@ class ActorPathResponseValidator
      * @param int $actorId2
      * @param string $movieTitle
      *
-     * @return FilmographyMovie|null Common movie matching specified title or null if no common movie found.
+     * @return FilmographyMovie|null common movie matching specified title or null if no common movie found
      */
     public function check(int $actorId1, int $actorId2, string $movieTitle): ?FilmographyMovie
     {

@@ -48,7 +48,7 @@ class MoviePlayController extends Controller
         $count = $request->request->get('count');
         $level = $request->request->get('level');
 
-        if (!in_array($count, [3,4,5,6,7,8,9]) || !in_array($level, [0,1,2])) {
+        if (!in_array($count, [3, 4, 5, 6, 7, 8, 9]) || !in_array($level, [0, 1, 2])) {
             $this->addFlash('warning', 'Les paramètres spécifiés pour la page sont incorrects.');
 
             return $this->redirectToRoute('fo_maze_movie');
@@ -62,8 +62,7 @@ class MoviePlayController extends Controller
                 'moviePath' => $moviePath,
                 'helpActorList' => $this->helpFactory->getShuffledActors($moviePath, $level),
             ]);
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             $this->addFlash('error', 'Une erreur est survenue lors de l\'initialisation du quiz.');
 
             return $this->redirectToRoute('fo_maze_movie');

@@ -76,8 +76,7 @@ class QuizController extends Controller
             $entityManager->flush();
 
             return $this->redirectToRoute('bo_quiz_edit', ['quiz' => $quizToCreate->getId()]);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash('error', 'Erreur lors de la création');
 
             return $this->redirectToRoute('bo_quiz_list');
@@ -125,8 +124,7 @@ class QuizController extends Controller
         try {
             $handler->handle(new DeleteQuizCommand($quiz));
             $this->addFlash('info', 'Suppression OK');
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash('error', 'Erreur lors de la suppression');
         }
 
@@ -147,8 +145,7 @@ class QuizController extends Controller
             $tmdbLinkBuilder->build($quiz->getId());
 
             return new JsonResponse(['success' => true, 'message' => 'Création des liens TMDB OK']);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return new JsonResponse(['success' => false, 'message' => 'Erreur lors de la création des liens TMDB']);
         }
     }
@@ -164,7 +161,7 @@ class QuizController extends Controller
     {
         return new JsonResponse([
             'current' => $request->getSession()->get(SessionValues::SESSION_BUILD_TMDB_LINK_PROGRESS),
-            'total' => $request->getSession()->get(SessionValues::SESSION_BUILD_TMDB_LINK_TOTAL)
+            'total' => $request->getSession()->get(SessionValues::SESSION_BUILD_TMDB_LINK_TOTAL),
         ]);
     }
 }

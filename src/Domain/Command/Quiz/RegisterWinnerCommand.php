@@ -33,7 +33,7 @@ class RegisterWinnerCommand
      * @param string|null $comment
      * @param int $trickCount
      */
-    function __construct(Quiz $quiz, User $user, ?string $comment, int $trickCount)
+    public function __construct(Quiz $quiz, User $user, ?string $comment, int $trickCount)
     {
         $this->quiz = $quiz;
         $this->user = $user;

@@ -47,7 +47,7 @@ class NewAccountSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function getSubscribedEvents()
     {
@@ -62,7 +62,7 @@ class NewAccountSubscriber implements EventSubscriberInterface
     public function onNewAccount(NewAccountEvent $event)
     {
         try {
-            $subject = 'Bienvenue ' . $event->getUser()->getDisplayName();
+            $subject = 'Bienvenue '.$event->getUser()->getDisplayName();
 
             $messageContent = $this->twig->render('mail/new_account.html.twig', [
                 'user' => $event->getUser(),
@@ -80,8 +80,7 @@ class NewAccountSubscriber implements EventSubscriberInterface
             ;
 
             $this->mailer->send($mailMessage);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
         }
     }
 }

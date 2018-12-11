@@ -14,7 +14,7 @@ class DeleteQuizCommand
     /**
      * @param Quiz $quiz
      */
-    function __construct(Quiz $quiz)
+    public function __construct(Quiz $quiz)
     {
         $this->quiz = $quiz;
     }

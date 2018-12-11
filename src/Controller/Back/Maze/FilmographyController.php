@@ -40,7 +40,7 @@ class FilmographyController extends Controller
     {
         return new JsonResponse([
             'current' => $session->get(SessionValues::SESSION_BUILD_FILMOGRAPHY_PROGRESS),
-            'total' => $session->get(SessionValues::SESSION_BUILD_FILMOGRAPHY_TOTAL)
+            'total' => $session->get(SessionValues::SESSION_BUILD_FILMOGRAPHY_TOTAL),
         ]);
     }
 }

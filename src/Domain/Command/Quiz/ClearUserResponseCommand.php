@@ -21,7 +21,7 @@ class ClearUserResponseCommand
      * @param User $user
      * @param Quiz $quiz
      */
-    function __construct(User $user, Quiz $quiz)
+    public function __construct(User $user, Quiz $quiz)
     {
         $this->user = $user;
         $this->quiz = $quiz;

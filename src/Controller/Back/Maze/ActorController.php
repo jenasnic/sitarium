@@ -18,7 +18,7 @@ class ActorController extends Controller
     /**
      * Max actor count to return when searching actors through TMDB.
      *
-     * @var integer
+     * @var int
      */
     const MAX_ACTOR_RESULT_COUNT = 10;
 
@@ -32,7 +32,7 @@ class ActorController extends Controller
     public function listAction(ActorRepository $actorRepository): Response
     {
         return $this->render('back/maze/actor/list.html.twig', [
-            'actors' => $actorRepository->findBy([], ['fullname' => 'asc'])
+            'actors' => $actorRepository->findBy([], ['fullname' => 'asc']),
         ]);
     }
 

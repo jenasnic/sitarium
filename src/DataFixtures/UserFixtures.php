@@ -17,7 +17,7 @@ class UserFixtures extends Fixture
     public const USER_DAN = 'user-dan';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {
@@ -37,7 +37,7 @@ class UserFixtures extends Fixture
     {
         $data = [];
 
-        $data[] = $this->buildData('JC', '', 'jc@jc.com', 'admin', 'admin', ['ROLE_ADMIN','ROLE_USER'], self::USER_ADMIN);
+        $data[] = $this->buildData('JC', '', 'jc@jc.com', 'admin', 'admin', ['ROLE_ADMIN', 'ROLE_USER'], self::USER_ADMIN);
         $data[] = $this->buildData('Rei', 'Ichido', 'rei.ichido@yopmail.com', 'rei', 'pwd', ['ROLE_USER'], self::USER_REI);
         $data[] = $this->buildData('Ted', 'Reietsu', 'ted.reietsu@yopmail.com', 'ted', 'pwd', ['ROLE_USER'], self::USER_TED);
         $data[] = $this->buildData('Jeannot', 'Schusse', 'jeannot.schusse@yopmail.com', 'jeannot', 'pwd', ['ROLE_USER'], self::USER_JEANNOT);
@@ -66,7 +66,6 @@ class UserFixtures extends Fixture
         string $password,
         array $roles,
         string $reference
-
     ): User {
         $data = new User();
         $data->setFirstname($firstname);

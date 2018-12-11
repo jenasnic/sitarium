@@ -12,24 +12,28 @@ class Actor
 {
     /**
      * @TmdbField(name="id", type="integer")
+     *
      * @var int
      */
     private $tmdbId;
 
     /**
      * @TmdbField(name="name")
+     *
      * @var string
      */
     private $name;
 
     /**
      * @TmdbField(name="birthday", type="datetime", dateFormat="Y-m-d")
+     *
      * @var \DateTime
      */
     private $birthdate;
 
     /**
      * @TmdbField(name="profile_path")
+     *
      * @var string
      */
     private $pictureUrl;

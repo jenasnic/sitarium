@@ -12,10 +12,10 @@ class MoviePathHelpFactory
     /**
      * Allows to get list of actors to use to resolve specified movie path (used to display help for movie maze...).
      *
-     * @param array $moviePath Array of movies we want to get casting as helper.
-     * @param int $level Difficulty level (0 easy, 1 medium, 2 difficult) used to reduce help list count.
+     * @param array $moviePath array of movies we want to get casting as helper
+     * @param int $level difficulty level (0 easy, 1 medium, 2 difficult) used to reduce help list count
      *
-     * @return array Array of actors matching specified parameters.
+     * @return array array of actors matching specified parameters
      */
     public function getShuffledActors(array $moviePath, int $level): array
     {
@@ -27,7 +27,7 @@ class MoviePathHelpFactory
 
         // Browse each movie and get casting to fill helper actors list
         // NOTE : we try to get same actor count for each movie using actorCountPerMovie value (depending on difficulty level)
-        for ($i = 0; $i < $movieCount - 1; $i++) {
+        for ($i = 0; $i < $movieCount - 1; ++$i) {
             $currentMovie = $moviePath[$i];
             $nextMovie = $moviePath[$i + 1];
 
@@ -60,6 +60,7 @@ class MoviePathHelpFactory
 
         // Mix result and return it
         shuffle($actorList);
+
         return $actorList;
     }
 
@@ -67,12 +68,12 @@ class MoviePathHelpFactory
      * Allows to fill actor list using specified paramaters.
      * NOTE : Specified actor list to fill will be updated in this method.
      *
-     * @param array $actorListToFill Array of actors we want to fill until reaching actor count per movie value.
-     * @param array $actorListSource Array of actors used to fill previous parameter.
-     * @param int $addedActorCount Current actor count added to actor list we are filling.
-     * @param int $actorCountPerMovie Number of actors we want to add to actor list we are filling.
+     * @param array $actorListToFill array of actors we want to fill until reaching actor count per movie value
+     * @param array $actorListSource array of actors used to fill previous parameter
+     * @param int $addedActorCount current actor count added to actor list we are filling
+     * @param int $actorCountPerMovie number of actors we want to add to actor list we are filling
      *
-     * @return int Updated value for added actor count.
+     * @return int updated value for added actor count
      */
     private function fillActorListWithConstraints(
         array &$actorListToFill,
@@ -80,11 +81,11 @@ class MoviePathHelpFactory
         int $addedActorCount,
         int $actorCountPerMovie
     ): int {
-        for ($j = 0; $j < count($actorListSource) && $addedActorCount < $actorCountPerMovie; $j++) {
+        for ($j = 0; $j < count($actorListSource) && $addedActorCount < $actorCountPerMovie; ++$j) {
             $actorToAdd = $actorListSource[$j];
             if (!in_array($actorToAdd, $actorListToFill)) {
                 $actorListToFill[] = $actorToAdd;
-                $addedActorCount++;
+                ++$addedActorCount;
             }
         }
 

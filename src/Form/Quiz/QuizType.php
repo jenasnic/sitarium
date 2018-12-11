@@ -23,11 +23,11 @@ class QuizType extends AbstractType
             $quiz = $options['data'];
 
             if (!empty($quiz->getPictureUrl())) {
-                $helpPictureFile = 'Image actuellement chargée : ' . $quiz->getPictureUrl();
+                $helpPictureFile = 'Image actuellement chargée : '.$quiz->getPictureUrl();
             }
 
             if (!empty($quiz->getThumbnailUrl())) {
-                $helpThumbnailFile = 'Image actuellement chargée : ' . $quiz->getThumbnailUrl();
+                $helpThumbnailFile = 'Image actuellement chargée : '.$quiz->getThumbnailUrl();
             }
         }
 
@@ -56,7 +56,7 @@ class QuizType extends AbstractType
                 CheckboxType::class,
                 [
                     'required' => false,
-                    'label' => 'Publication'
+                    'label' => 'Publication',
                 ]
             )
             ->add(

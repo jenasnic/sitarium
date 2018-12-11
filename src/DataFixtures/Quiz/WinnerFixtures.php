@@ -18,7 +18,7 @@ class WinnerFixtures extends Fixture implements DependentFixtureInterface
     public const WINNER_DAN = 'winner-dan';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {
@@ -32,7 +32,7 @@ class WinnerFixtures extends Fixture implements DependentFixtureInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDependencies()
     {

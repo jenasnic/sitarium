@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\Annotation;
 /**
  * Annotation used when linking object with TMDB. It allows to indicate type of data, the annotated class will be matching (person, movie or tv).
  * This annotation allows to use appropriate URL when requesting TMDB to build instance of annotated class.
+ *
  * @Annotation
  * @Target("CLASS")
  */

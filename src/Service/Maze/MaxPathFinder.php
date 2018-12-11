@@ -16,11 +16,11 @@ class MaxPathFinder
     /**
      * Allows to build the largest path for specified graph (among MazeGraphItem objects).
      *
-     * @param array $mazeGraph Map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value.
+     * @param array $mazeGraph map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
      *
      * @throws \Exception Throw exception if not enough items in specified graph...
      *
-     * @return array Array of items linked together.
+     * @return array array of items linked together
      */
     public function find(array $mazeGraph): array
     {
@@ -58,11 +58,11 @@ class MaxPathFinder
      * Allows to find longuest path between items. It is used to link a maximum of items among specified graph.
      * NOTE : Recursive method used to find path...
      *
-     * @param array $mazeGraph Map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value.
-     * @param MazeGraphItem $currentItem MazeGraphItem to use as starting point to find longuest path.
-     * @param array $currentPath Current path of MazeGraphItem (path we are building recursively).
+     * @param array $mazeGraph map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
+     * @param MazeGraphItem $currentItem mazeGraphItem to use as starting point to find longuest path
+     * @param array $currentPath current path of MazeGraphItem (path we are building recursively)
      *
-     * @return array Array of MazeGraphItem matching longest path found.
+     * @return array array of MazeGraphItem matching longest path found
      */
     protected function findLongestPath(array $mazeGraph, MazeGraphItem $currentItem, array $currentPath): array
     {

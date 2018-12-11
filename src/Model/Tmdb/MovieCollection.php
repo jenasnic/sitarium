@@ -8,18 +8,21 @@ class MovieCollection
 {
     /**
      * @TmdbField(name="id", type="integer")
+     *
      * @var int
      */
     private $tmdbId;
 
     /**
      * @TmdbField(name="name")
+     *
      * @var string
      */
     private $title;
 
     /**
      * @TmdbField(name="poster_path")
+     *
      * @var string
      */
     private $pictureUrl;

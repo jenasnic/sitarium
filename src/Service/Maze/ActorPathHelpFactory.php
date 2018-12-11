@@ -12,11 +12,11 @@ class ActorPathHelpFactory
     /**
      * Allows to get list of movies to use to resolve specified actor path (used to display help for actor maze...).
      *
-     * @param array $actorPath Array of actors we want to get filmography as helper.
-     * @param int $minVoteCount Minimum vote count value used to extract movies from specified actors (difficulty level).
-     * @param int $level Difficulty level (0 easy, 1 medium, 2 difficult) used to reduce help list count.
+     * @param array $actorPath array of actors we want to get filmography as helper
+     * @param int $minVoteCount minimum vote count value used to extract movies from specified actors (difficulty level)
+     * @param int $level difficulty level (0 easy, 1 medium, 2 difficult) used to reduce help list count
      *
-     * @return array Array of movies matching specified parameters.
+     * @return array array of movies matching specified parameters
      */
     public function getShuffledMovies(array $actorPath, int $minVoteCount, int $level): array
     {
@@ -28,7 +28,7 @@ class ActorPathHelpFactory
 
         // Browse each actor and get filmography to fill helper movies list
         // NOTE : we try to get same movie count for each actor using actorCountPerMovie value (depending on difficulty level)
-        for ($i = 0; $i < $actorCount - 1; $i++) {
+        for ($i = 0; $i < $actorCount - 1; ++$i) {
             $currentActor = $actorPath[$i];
             $nextActor = $actorPath[$i + 1];
 
@@ -61,6 +61,7 @@ class ActorPathHelpFactory
 
         // Mix result and return it
         shuffle($movieList);
+
         return $movieList;
     }
 
@@ -68,13 +69,13 @@ class ActorPathHelpFactory
      * Allows to fill movie list using specified paramaters.
      * NOTE : Specified movie list to fill will be updated in this method.
      *
-     * @param array $movieListToFill Array of movies we want to fill until reaching movie count per actor value.
-     * @param array $movieListSource Array of movies used to fill previous parameter.
-     * @param int $addedMovieCount Current movie count added to movie list we are filling.
-     * @param int $movieCountPerActor Number of movies we want to add to movie list we are filling.
-     * @param int $minVoteCount Minimum vote count value for movies used to build movie list (difficulty level).
+     * @param array $movieListToFill array of movies we want to fill until reaching movie count per actor value
+     * @param array $movieListSource array of movies used to fill previous parameter
+     * @param int $addedMovieCount current movie count added to movie list we are filling
+     * @param int $movieCountPerActor number of movies we want to add to movie list we are filling
+     * @param int $minVoteCount minimum vote count value for movies used to build movie list (difficulty level)
      *
-     * @return int Updated value for added movie count.
+     * @return int updated value for added movie count
      */
     private function fillMovieListWithConstraints(
         array &$movieListToFill,
@@ -83,11 +84,11 @@ class ActorPathHelpFactory
         int $movieCountPerActor,
         int $minVoteCount
     ): int {
-        for ($j = 0; $j < count($movieListSource) && $addedMovieCount < $movieCountPerActor; $j++) {
+        for ($j = 0; $j < count($movieListSource) && $addedMovieCount < $movieCountPerActor; ++$j) {
             $movieToAdd = $movieListSource[$j];
             if (!in_array($movieToAdd, $movieListToFill) && $movieToAdd->getVoteCount() >= $minVoteCount) {
                 $movieListToFill[] = $movieToAdd;
-                $addedMovieCount++;
+                ++$addedMovieCount;
             }
         }
 
@@ -99,7 +100,7 @@ class ActorPathHelpFactory
      *
      * @param Collection $movieList1
      * @param Collection $movieList2
-     * @param int $minVoteCount Minimum vote count value for common movies to keep (difficulty level).
+     * @param int $minVoteCount minimum vote count value for common movies to keep (difficulty level)
      *
      * @return array
      */

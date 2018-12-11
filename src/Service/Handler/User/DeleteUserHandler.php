@@ -8,7 +8,7 @@ use App\Repository\Quiz\WinnerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * Allows to remove user and its dependencies in current database
+ * Allows to remove user and its dependencies in current database.
  */
 class DeleteUserHandler
 {

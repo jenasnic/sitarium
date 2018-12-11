@@ -42,7 +42,7 @@ class QuizController extends Controller
 
         return $this->render('front/quiz/play.html.twig', [
             'quiz' => $quiz,
-            'userResponses' => $userResponses
+            'userResponses' => $userResponses,
         ]);
     }
 }

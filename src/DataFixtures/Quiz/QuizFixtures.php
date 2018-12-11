@@ -13,7 +13,7 @@ class QuizFixtures extends Fixture
     public const QUIZ_ANIMATION = 'quiz-animation';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {
@@ -61,7 +61,6 @@ class QuizFixtures extends Fixture
         string $pictureUrl,
         string $thumbnailUrl,
         string $reference
-
     ): Quiz {
         $data = new Quiz();
         $data->setName($name);

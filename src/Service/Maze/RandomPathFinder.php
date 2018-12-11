@@ -17,12 +17,12 @@ class RandomPathFinder
      * Allows to build an array with linked items from specfied graph with specified size.
      * NOTE : If no path found, choose a smaller items count or increase items list in graph.
      *
-     * @param array $mzeGraph Map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value.
-     * @param int $mazeSize Number of linked items we want to find (at least 2).
+     * @param array $mzeGraph map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
+     * @param int $mazeSize number of linked items we want to find (at least 2)
      *
      * @throws \InvalidArgumentException Throw exception if specified size doesn't allows to build path of items...
      *
-     * @return array|null Array of items linked together (size of array is 'mazeSize').
+     * @return array|null array of items linked together (size of array is 'mazeSize')
      */
     public function find(array $mazeGraph, int $mazeSize): ?array
     {
@@ -62,12 +62,12 @@ class RandomPathFinder
      * Allows to build path with MazeGraphItem depending on specified parameters.
      * NOTE : Recursive method used to build path...
      *
-     * @param array $mazeGraph Map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value.
-     * @param MazeGraphItem $graphItem MazeGraphItem to use to build path (as new path step).
-     * @param array $currentPath Current path of MazeGraphItem (path we are building recursively).
+     * @param array $mazeGraph map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
+     * @param MazeGraphItem $graphItem mazeGraphItem to use to build path (as new path step)
+     * @param array $currentPath current path of MazeGraphItem (path we are building recursively)
      * @param int $pathSize Size of path (for previous argument $currentPath) we want to get (i.e. item count).
      *
-     * @return array Array of MazeGraphItem matching current built path.
+     * @return array array of MazeGraphItem matching current built path
      */
     protected function findPathWithSize(array $mazeGraph, MazeGraphItem $graphItem, array $currentPath, int $pathSize): array
     {

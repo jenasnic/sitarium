@@ -17,7 +17,7 @@ class MoviePathLinkReducer
     public function reduceLinks(array $moviePath)
     {
         // Process movies to keep only first common actor that allow a link with next movie
-        for ($i = 0; $i < count($moviePath); $i++) {
+        for ($i = 0; $i < count($moviePath); ++$i) {
             $movie = $moviePath[$i];
 
             // If we have a following actor => keep only first common actor
@@ -35,10 +35,10 @@ class MoviePathLinkReducer
     /**
      * Allows to get first common actor between two specified movies.
      *
-     * @param Movie $movie1 First movie we want to extract common actor with second movie.
-     * @param Movie $movie2 Second movie we want to extract common actor with first movie.
+     * @param Movie $movie1 first movie we want to extract common actor with second movie
+     * @param Movie $movie2 second movie we want to extract common actor with first movie
      *
-     * @return CastingActor Common actor.
+     * @return CastingActor common actor
      */
     protected function extractFirstCommonActorForMovies(Movie $movie1, Movie $movie2): CastingActor
     {

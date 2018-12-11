@@ -13,7 +13,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class UserResponseFixtures extends Fixture implements DependentFixtureInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {
@@ -27,7 +27,7 @@ class UserResponseFixtures extends Fixture implements DependentFixtureInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDependencies()
     {

@@ -47,7 +47,7 @@ class ResetPasswordSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function getSubscribedEvents()
     {
@@ -80,8 +80,7 @@ class ResetPasswordSubscriber implements EventSubscriberInterface
             ;
 
             $this->mailer->send($mailMessage);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
         }
     }
 }

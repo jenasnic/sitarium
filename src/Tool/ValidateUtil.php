@@ -11,9 +11,9 @@ class ValidateUtil
     /**
      * Allows to check validity mail.
      *
-     * @param string $mail Mail we want to check validity.
+     * @param string $mail mail we want to check validity
      *
-     * @return bool TRUE if mail is valid, FALSE either.
+     * @return bool TRUE if mail is valid, FALSE either
      */
     public static function checkMail(string $mail): bool
     {
@@ -23,9 +23,9 @@ class ValidateUtil
     /**
      * Allows to check validity phone number.
      *
-     * @param string $phone Phone we want to check validity.
+     * @param string $phone phone we want to check validity
      *
-     * @return bool TRUE if phone is valid, FALSE either.
+     * @return bool TRUE if phone is valid, FALSE either
      */
     public static function checkPhoneNumber(string $phone): bool
     {
@@ -36,9 +36,9 @@ class ValidateUtil
      * Allows to check if text is conform to URL restriction (no accent, not special character...).
      * Allowed characters are : letter (in lower case only), number, characters '.', '-', '+' and '_'.
      *
-     * @param string $text String we want to check characters for URL use.
+     * @param string $text string we want to check characters for URL use
      *
-     * @return bool TRUE if string can be used in URL, FALSE either.
+     * @return bool TRUE if string can be used in URL, FALSE either
      */
     public static function checkForUrlRestriction(string $text): bool
     {
@@ -48,12 +48,12 @@ class ValidateUtil
     /**
      * Allows to check if password is secure. It must contain at least 6 characters + characters depending on security level.
      *
-     * @param string $password Password we want to check if matches password security.
+     * @param string $password password we want to check if matches password security
      * @param int $level 1 for low security (only lower / upper case or letter / numeric),
      * 2 for medium security (lower / upper case + numeric),
-     * 3 for high security (lower / upper case + numeric + special character).
+     * 3 for high security (lower / upper case + numeric + special character)
      *
-     * @return bool TRUE if password is valid, FALSE either.
+     * @return bool TRUE if password is valid, FALSE either
      */
     public static function checkPassword(string $password, int $level): bool
     {
@@ -66,7 +66,7 @@ class ValidateUtil
 
         if (2 === $level) {
             $isSecure = $isSecure && preg_match('/.*([0-9]|[^a-zA-Z]).*/', $password);
-        } else if ($level >= 3) {
+        } elseif ($level >= 3) {
             $isSecure = $isSecure && preg_match('/.*([-_+=*$%&?!]).*/', $password);
         }
 

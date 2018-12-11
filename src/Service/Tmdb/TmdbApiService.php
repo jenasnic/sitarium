@@ -13,6 +13,7 @@ use Doctrine\Common\Annotations\Reader;
 /**
  * TMDB service used to launch request to TMDB and build entities (as PHP object) matching result.
  * This service used annotation to build response as PHP object.
+ *
  * @see TmdbType
  * @see TmdbField
  */
@@ -41,11 +42,11 @@ class TmdbApiService
     /**
      * @var array
      */
-    private const URL_MAPPING = array(
+    private const URL_MAPPING = [
         'MOVIE' => 'movie',
         'TV' => 'tv',
-        'PERSON'  => 'person',
-    );
+        'PERSON' => 'person',
+    ];
 
     public function __construct($baseUri, $apiKey)
     {
@@ -64,10 +65,10 @@ class TmdbApiService
     /**
      * Allows to get an entity from TMDB using TMDB identifier and class to build.
      *
-     * @param string $entityClass Class of entity to build matching specified TMDB identifier.
-     * @param int $tmdbId Identifier of entity to build in TMDB database.
+     * @param string $entityClass class of entity to build matching specified TMDB identifier
+     * @param int $tmdbId identifier of entity to build in TMDB database
      *
-     * @return mixed Entity matching specified class and identifier.
+     * @return mixed entity matching specified class and identifier
      */
     public function getEntity(string $entityClass, int $tmdbId)
     {
@@ -79,7 +80,7 @@ class TmdbApiService
         }
 
         // Build request depending on annotation information (giving type of data to get)
-        $url = $this->baseUri . '/' . self::URL_MAPPING[$annotation->type] . '/' . $tmdbId . '?api_key=' . $this->apiKey . '&language=fr';
+        $url = $this->baseUri.'/'.self::URL_MAPPING[$annotation->type].'/'.$tmdbId.'?api_key='.$this->apiKey.'&language=fr';
         $response = $this->guzzleClient->request('GET', $url);
 
         if (200 !== $response->getStatusCode()) {
@@ -92,12 +93,12 @@ class TmdbApiService
     /**
      * Allows to seach entities from TMDB using search parameter (i.e. query to send) and class to build for array result.
      *
-     * @param string $entityClass Class of entity to build matching specified TMDB identifier.
-     * @param string $search Query parameter to send to TMDB to search entities.
-     * @param TmdbValidatorInterface $validator Validator used to check if entities we are searching are valide or not.
-     * @param int (optional) $maxCount Maximum result count allowed (default 20).
+     * @param string $entityClass class of entity to build matching specified TMDB identifier
+     * @param string $search query parameter to send to TMDB to search entities
+     * @param TmdbValidatorInterface $validator validator used to check if entities we are searching are valide or not
+     * @param int (optional) $maxCount Maximum result count allowed (default 20)
      *
-     * @return array Associative array with total count (key 'total') and array with first max count actors found (key 'results').
+     * @return array associative array with total count (key 'total') and array with first max count actors found (key 'results')
      */
     public function searchEntity(string $entityClass, string $search, TmdbValidatorInterface $validator = null, $maxCount = 20)
     {
@@ -109,7 +110,7 @@ class TmdbApiService
         }
 
         // Build request depending on annotation information (giving type of data to search)
-        $url = $this->baseUri . '/search/' . self::URL_MAPPING[$annotation->type] . '?query=' . $search . '&api_key=' . $this->apiKey . '&language=fr';
+        $url = $this->baseUri.'/search/'.self::URL_MAPPING[$annotation->type].'?query='.$search.'&api_key='.$this->apiKey.'&language=fr';
         $response = $this->guzzleClient->request('GET', $url);
 
         if (200 !== $response->getStatusCode()) {
@@ -140,12 +141,12 @@ class TmdbApiService
     /**
      * Allows to get filmography for specified actor identifier (TMDB).
      *
-     * @param string $entityMovieClass Class of entity used to build movies.
-     * @param int $tmdbId Identifier of actor in TMDB database.
-     * @param string $filmographyType 'movie' or 'tv' : allows to specifiy if we want movie credits or tv credits.
-     * @param TmdbValidatorInterface|null $validator Validator used to check if movies are valide or not (useful to filter filmography).
+     * @param string $entityMovieClass class of entity used to build movies
+     * @param int $tmdbId identifier of actor in TMDB database
+     * @param string $filmographyType 'movie' or 'tv' : allows to specifiy if we want movie credits or tv credits
+     * @param TmdbValidatorInterface|null $validator validator used to check if movies are valide or not (useful to filter filmography)
      *
-     * @return array List of movies of specified type.
+     * @return array list of movies of specified type
      */
     public function getFilmographyForActorId(
         string $entityMovieClass,
@@ -153,7 +154,7 @@ class TmdbApiService
         $filmographyType = 'movie',
         TmdbValidatorInterface $validator = null
     ): array {
-        $url = $this->baseUri . '/person/' . $tmdbId . '/' . $filmographyType . '_credits?api_key=' . $this->apiKey . '&language=fr';
+        $url = $this->baseUri.'/person/'.$tmdbId.'/'.$filmographyType.'_credits?api_key='.$this->apiKey.'&language=fr';
         $response = $this->guzzleClient->request('GET', $url);
 
         if (200 !== $response->getStatusCode()) {
@@ -179,15 +180,15 @@ class TmdbApiService
     /**
      * Allows to get casting for specified movie identifier (TMDB).
      *
-     * @param string $entityActorClass Class of entity used to build actors.
-     * @param int $tmdbId Identifier of movie in TMDB database.
-     * @param TmdbValidatorInterface|null $validator Validator used to check if actors are valide or not (useful to filter casting).
+     * @param string $entityActorClass class of entity used to build actors
+     * @param int $tmdbId identifier of movie in TMDB database
+     * @param TmdbValidatorInterface|null $validator validator used to check if actors are valide or not (useful to filter casting)
      *
-     * @return array List of actors of specified type.
+     * @return array list of actors of specified type
      */
     public function getCastingForMovieId(string $entityActorClass, int $tmdbId, TmdbValidatorInterface $validator = null)
     {
-        $url = $this->baseUri . '/movie/' . $tmdbId . '/credits?api_key=' . $this->apiKey . '&language=fr';
+        $url = $this->baseUri.'/movie/'.$tmdbId.'/credits?api_key='.$this->apiKey.'&language=fr';
         $response = $this->guzzleClient->request('GET', $url);
 
         if (200 !== $response->getStatusCode()) {
@@ -213,10 +214,10 @@ class TmdbApiService
     /**
      * Allows to build an entity from JSon flux (use JSon properties to fill properties of instancied class).
      *
-     * @param \ReflectionClass $reflectionClass Reflection class of entity to build using specified JSon flux.
-     * @param array $jsonFlux JSon array containing information to build entity.
+     * @param \ReflectionClass $reflectionClass reflection class of entity to build using specified JSon flux
+     * @param array $jsonFlux JSon array containing information to build entity
      *
-     * @return mixed Entity matching specified reflection class filled with data from specified JSon flux.
+     * @return mixed entity matching specified reflection class filled with data from specified JSon flux
      */
     protected function buildEntity(\ReflectionClass $reflectionClass, array $jsonFlux)
     {
@@ -241,7 +242,7 @@ class TmdbApiService
     /**
      * Allows to convert specified value to match with annotation informations.
      *
-     * @param mixed $value Value from JSon to cast.
+     * @param mixed $value value from JSon to cast
      * @param TmdbField $annotation
      *
      * @return mixed
@@ -252,21 +253,21 @@ class TmdbApiService
             return $value;
         }
 
-        switch($annotation->type) {
-            case 'string' :
+        switch ($annotation->type) {
+            case 'string':
                 return strval($value);
-            case 'integer' :
+            case 'integer':
                 return intval($value);
-            case 'float' :
+            case 'float':
                 return floatval($value);
-            case 'datetime' :
+            case 'datetime':
                 return \DateTime::createFromFormat($annotation->dateFormat, $value) ?: null;
-            case 'object' :
+            case 'object':
                 return $this->processObjectValueForAnnotation($value, $annotation);
-            case 'array' :
+            case 'array':
                 return $this->processArrayValueForAnnotation($value, $annotation);
             // NOTE : Should never occurs
-            default :
+            default:
                 return $value;
         }
     }
@@ -274,10 +275,10 @@ class TmdbApiService
     /**
      * Allows to build TMDB sub entity value from JSon.
      *
-     * @param array $objectValue JSon array used to build entity.
-     * @param TmdbField $annotation Annotation indicating sub entity class to build.
+     * @param array $objectValue JSon array used to build entity
+     * @param TmdbField $annotation annotation indicating sub entity class to build
      *
-     * @return mixed Entity initialized with JSon data.
+     * @return mixed entity initialized with JSon data
      */
     protected function processObjectValueForAnnotation(array $objectValue, TmdbField $annotation)
     {
@@ -291,10 +292,10 @@ class TmdbApiService
     /**
      * Allows to build array value from JSon with sub TMDB entities.
      *
-     * @param array $value JSon array used to build entities array.
-     * @param TmdbField $annotation Annotation indicating sub entity class to build to fill array.
+     * @param array $value JSon array used to build entities array
+     * @param TmdbField $annotation annotation indicating sub entity class to build to fill array
      *
-     * @return array Result containing sub entities initialized with JSon data.
+     * @return array result containing sub entities initialized with JSon data
      */
     protected function processArrayValueForAnnotation(array $arrayValue, TmdbField $annotation): array
     {

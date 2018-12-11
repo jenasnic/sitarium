@@ -12,42 +12,49 @@ class Movie
 {
     /**
      * @TmdbField(name="id", type="integer")
+     *
      * @var int
      */
     private $tmdbId;
 
     /**
      * @TmdbField(name="title")
+     *
      * @var string
      */
     private $title;
 
     /**
      * @TmdbField(name="release_date", type="datetime", dateFormat="Y-m-d")
+     *
      * @var \DateTime
      */
     private $releaseDate;
 
     /**
      * @TmdbField(name="poster_path")
+     *
      * @var string
      */
     private $pictureUrl;
 
     /**
      * @TmdbField(name="belongs_to_collection", type="object", subClass="App\Model\Tmdb\MovieCollection")
+     *
      * @var MovieCollection
      */
     private $collection;
 
     /**
      * @TmdbField(name="tagline")
+     *
      * @var string
      */
     private $tagline;
 
     /**
      * @TmdbField(name="overview")
+     *
      * @var string
      */
     private $overview;

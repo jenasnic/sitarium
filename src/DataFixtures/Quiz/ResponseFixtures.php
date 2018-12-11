@@ -28,7 +28,7 @@ class ResponseFixtures extends Fixture implements DependentFixtureInterface
     public const RESPONSE_ANIMATION_5 = 'response-animation-5';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {
@@ -42,7 +42,7 @@ class ResponseFixtures extends Fixture implements DependentFixtureInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDependencies()
     {
@@ -103,7 +103,7 @@ class ResponseFixtures extends Fixture implements DependentFixtureInterface
     ): Response {
         $data = new Response();
         $data->setTitle($title);
-        $data->setResponses(';' . mb_strtolower($title, 'UTF-8') . ';');
+        $data->setResponses(';'.mb_strtolower($title, 'UTF-8').';');
         $data->setTrick(strrev(TextUtil::sanitize($title)));
         $data->setPositionX($positionX);
         $data->setPositionY($positionY);

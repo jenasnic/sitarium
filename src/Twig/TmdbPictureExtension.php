@@ -10,13 +10,13 @@ class TmdbPictureExtension extends AbstractExtension
 {
     public function getFilters()
     {
-        return array(
+        return [
             new TwigFilter('tmdbPictureUrl', [$this, 'tmdbPictureUrl']),
-        );
+        ];
     }
 
     public function tmdbPictureUrl($url)
     {
-        return TmdbUtil::getBasePictureUrl() . $url;
+        return TmdbUtil::getBasePictureUrl().$url;
     }
 }

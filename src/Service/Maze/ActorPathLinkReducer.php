@@ -17,7 +17,7 @@ class ActorPathLinkReducer
     public function reduceLinks(array $actorPath)
     {
         // Process actors to keep only top rated movie that allow a link with next actor
-        for ($i = 0; $i < count($actorPath); $i++) {
+        for ($i = 0; $i < count($actorPath); ++$i) {
             $actor = $actorPath[$i];
 
             // If we have a following actor => keep only top rated common movie
@@ -35,10 +35,10 @@ class ActorPathLinkReducer
     /**
      * Allows to get most known common movie between two specified actors.
      *
-     * @param Actor $actor1 First actor we want to extract common movie with second actor.
-     * @param Actor $actor2 Second actor we want to extract common movie with first actor.
+     * @param Actor $actor1 first actor we want to extract common movie with second actor
+     * @param Actor $actor2 second actor we want to extract common movie with first actor
      *
-     * @return FilmographyMovie Common movie with best vote count.
+     * @return FilmographyMovie common movie with best vote count
      */
     protected function extractTopRatedCommonMovieForActors(Actor $actor1, Actor $actor2): FilmographyMovie
     {
@@ -46,7 +46,7 @@ class ActorPathLinkReducer
 
         foreach ($actor1->getMovies() as $movie) {
             if ($actor2->getMovies()->contains($movie)) {
-                if ($topRatedMovie == null || $movie->getVoteCount() > $topRatedMovie->getVoteCount()) {
+                if (null == $topRatedMovie || $movie->getVoteCount() > $topRatedMovie->getVoteCount()) {
                     $topRatedMovie = $movie;
                 }
             }

@@ -31,7 +31,7 @@ class MovieGraphBuilder
      * @param array $movieIds Array of TMDB identifiers (as integer) for movies to use to build graph.
      * Default value null means that we build full graph for all existing movies.
      *
-     * @return array Map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value.
+     * @return array map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
      */
     public function buildGraph($movieIds = null): array
     {
@@ -40,7 +40,7 @@ class MovieGraphBuilder
 
         $movieList = (null === $movieIds)
             ? $this->movieRespository->findAll()
-            : $this->movieRespository->findBy(array('tmdbId' => $movieIds))
+            : $this->movieRespository->findBy(['tmdbId' => $movieIds])
         ;
 
         // First step : Build movie map with tmdbId as key and matching movie as value
@@ -68,8 +68,9 @@ class MovieGraphBuilder
             $linkedMovieGraphItem = $mazeGraphItemMap[$linkedMovieId];
 
             // Update main movie (as MovieGraphItem) if needed (add linked movie if not already added)
-            if (!in_array($linkedMovieGraphItem, $mainMovieGraphItem->getLinkedItems()))
+            if (!in_array($linkedMovieGraphItem, $mainMovieGraphItem->getLinkedItems())) {
                 $mainMovieGraphItem->addLinkedItem($linkedMovieGraphItem);
+            }
         }
 
         return $mazeGraphItemMap;

@@ -18,7 +18,8 @@ class UserType extends AccountType
             ->add('username', TextType::class, ['label' => 'Login'])
             ->add(
                 'roles',
-                ChoiceType::class, [
+                ChoiceType::class,
+                [
                     'choices' => [
                         'Administrateur' => Roles::ROLE_ADMIN,
                         'Utilisateur' => Roles::ROLE_USER,

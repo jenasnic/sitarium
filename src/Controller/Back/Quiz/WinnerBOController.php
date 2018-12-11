@@ -52,8 +52,7 @@ class WinnerBOController extends Controller
         try {
             $winnerRepository->removeWinnersForQuizId($quiz->getId());
             $this->addFlash('info', 'Suppression OK');
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash('error', 'Erreur lors de la suppression');
         }
 

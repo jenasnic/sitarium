@@ -12,30 +12,35 @@ class TvShow
 {
     /**
      * @TmdbField(name="id", type="integer")
+     *
      * @var int
      */
     private $tmdbId;
 
     /**
      * @TmdbField(name="name")
+     *
      * @var string
      */
     private $title;
 
     /**
      * @TmdbField(name="last_air_date", type="datetime", dateFormat="Y-m-d")
+     *
      * @var \DateTime
      */
     private $lastAiringDate;
 
     /**
      * @TmdbField(name="poster_path")
+     *
      * @var string
      */
     private $pictureUrl;
 
     /**
      * @TmdbField(name="seasons", type="array", subClass="App\Model\Tmdb\TvSeason")
+     *
      * @var array
      */
     private $seasonList;

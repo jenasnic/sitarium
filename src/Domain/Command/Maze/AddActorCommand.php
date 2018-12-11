@@ -12,7 +12,7 @@ class AddActorCommand
     /**
      * @param int $tmdbId
      */
-    function __construct(int $tmdbId)
+    public function __construct(int $tmdbId)
     {
         $this->tmdbId = $tmdbId;
     }

@@ -23,6 +23,7 @@ class PasswordUtil
     {
         // Use SHA to encode password (without salt => null)
         $shaEncoder = new MessageDigestPasswordEncoder();
+
         return $shaEncoder->encodePassword($password, $salt);
     }
 
@@ -30,13 +31,13 @@ class PasswordUtil
      * Allows to generate a random password.
      * NOTE : minimum size depends on specified parameters.
      *
-     * @param int $size Number of characters for password.
-     * @param bool $withLowerCase TRUE to include lower case character in password, FALSE either.
-     * @param bool $withUpperCase TRUE to include upper case character in password, FALSE either.
+     * @param int $size number of characters for password
+     * @param bool $withLowerCase TRUE to include lower case character in password, FALSE either
+     * @param bool $withUpperCase TRUE to include upper case character in password, FALSE either
      * @param bool $withNumeric TRUE to include numeric character in password (i.e. number), FALSE either.
-     * @param bool $withSpecial TRUE to include special character in password, FALSE either.
+     * @param bool $withSpecial TRUE to include special character in password, FALSE either
      *
-     * @return string A random password matching specified parameters.
+     * @return string a random password matching specified parameters
      */
     public static function generatePassword(
         int $size,
@@ -53,7 +54,7 @@ class PasswordUtil
         $result = '';
         $selectableChar = self::buildSelectableCharBuilder($withLowerCase, $withUpperCase, $withNumeric, $withSpecial);
 
-        for ($i = 0; $i < $size; $i++) {
+        for ($i = 0; $i < $size; ++$i) {
             // If remaining size is less than minimum size => check if all required type of character are used or not
             // => we must add required character type before it is too late
             if ($size < $minSize + $i) {
@@ -85,7 +86,7 @@ class PasswordUtil
 
             // Generate one char selection value
             $c = rand(0, strlen($selectableChar) - 1);
-            $result .= $selectableChar{$c};
+            $result .= $selectableChar[$c];
         }
 
         return $result;
@@ -98,7 +99,7 @@ class PasswordUtil
      * @param string $s1
      * @param string $s2
      *
-     * @return bool TRUE if specified String have common characters (one or many), FALSE either.
+     * @return bool TRUE if specified String have common characters (one or many), FALSE either
      */
     protected static function hasCommonCharacter(string $s1, string $s2): bool
     {
@@ -107,8 +108,8 @@ class PasswordUtil
         }
 
         // Browse all characters of s1 and search it in s2
-        for ($i = 0; $i < strlen($s1); $i++) {
-            if (strpos($s2, $s1{$i}) !== false) {
+        for ($i = 0; $i < strlen($s1); ++$i) {
+            if (false !== strpos($s2, $s1[$i])) {
                 return true;
             }
         }
@@ -119,12 +120,12 @@ class PasswordUtil
     /**
      * Allows to build a StringBuilder containing all specified character types.
      *
-     * @param bool $withLowerCase TRUE to include lower case character in password, FALSE either.
-     * @param bool $withUpperCase TRUE to include upper case character in password, FALSE either.
+     * @param bool $withLowerCase TRUE to include lower case character in password, FALSE either
+     * @param bool $withUpperCase TRUE to include upper case character in password, FALSE either
      * @param bool $withNumeric TRUE to include numeric character in password (i.e. number), FALSE either.
-     * @param bool $withSpecial TRUE to include special character in password, FALSE either.
+     * @param bool $withSpecial TRUE to include special character in password, FALSE either
      *
-     * @return string A string containing all required character types.
+     * @return string a string containing all required character types
      */
     protected static function buildSelectableCharBuilder(
         string $withLowerCase,

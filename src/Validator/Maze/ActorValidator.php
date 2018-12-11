@@ -11,9 +11,9 @@ class ActorValidator implements TmdbValidatorInterface
      * Allows to check if specified actor is valid or not.
      * NOTE : Keep only actors with picture.
      *
-     * @param Actor $actor actor to check.
+     * @param Actor $actor actor to check
      *
-     * @return bool TRUE if actor is valid, FALSE either.
+     * @return bool TRUE if actor is valid, FALSE either
      */
     public function isValid($actor): bool
     {

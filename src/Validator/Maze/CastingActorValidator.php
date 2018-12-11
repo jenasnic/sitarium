@@ -11,9 +11,9 @@ class CastingActorValidator implements TmdbValidatorInterface
      * Allows to check if specified actor is valid or not.
      * NOTE : Keep only actors with picture.
      *
-     * @param Actor $actor actor to check.
+     * @param Actor $actor actor to check
      *
-     * @return bool TRUE if actor is valid, FALSE either.
+     * @return bool TRUE if actor is valid, FALSE either
      */
     public function isValid($actor): bool
     {
@@ -23,7 +23,7 @@ class CastingActorValidator implements TmdbValidatorInterface
         }
 
         // If actor is not credited => ignore actor
-        if (strpos($actor->getCharacter(), '(uncredited)') !== false) {
+        if (false !== strpos($actor->getCharacter(), '(uncredited)')) {
             return false;
         }
 

@@ -54,8 +54,8 @@ class DeleteQuizHandler
      */
     public function handle(DeleteQuizCommand $command)
     {
-        $pictureToDelete = $this->rootDir . '/public' . $command->getQuiz()->getPictureUrl();
-        $thumbnailToDelete = $this->rootDir . '/public' . $command->getQuiz()->getThumbnailUrl();
+        $pictureToDelete = $this->rootDir.'/public'.$command->getQuiz()->getPictureUrl();
+        $thumbnailToDelete = $this->rootDir.'/public'.$command->getQuiz()->getThumbnailUrl();
 
         // Remove linked QuizUserResponse + Winner
         $this->userResponseRepository->removeResponsesForQuizId($command->getQuiz()->getId());

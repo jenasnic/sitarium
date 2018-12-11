@@ -40,7 +40,7 @@ class CastingController extends Controller
     {
         return new JsonResponse([
             'current' => $session->get(SessionValues::SESSION_BUILD_CASTING_PROGRESS),
-            'total' => $session->get(SessionValues::SESSION_BUILD_CASTING_TOTAL)
+            'total' => $session->get(SessionValues::SESSION_BUILD_CASTING_TOTAL),
         ]);
     }
 }

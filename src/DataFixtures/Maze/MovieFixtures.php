@@ -10,7 +10,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class MovieFixtures extends Fixture
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {

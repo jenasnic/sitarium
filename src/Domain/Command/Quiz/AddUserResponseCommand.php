@@ -21,7 +21,7 @@ class AddUserResponseCommand
      * @param User $user
      * @param Response $response
      */
-    function __construct(User $user, Response $response)
+    public function __construct(User $user, Response $response)
     {
         $this->user = $user;
         $this->response = $response;

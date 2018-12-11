@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Allows to reset user password : generate new password and send it by email
+ * Allows to reset user password : generate new password and send it by email.
  */
 class ResetUserPasswordHandler
 {

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * Quiz
+ * Quiz.
  *
  * @ORM\Table(name="quiz")
  * @ORM\Entity(repositoryClass="App\Repository\Quiz\QuizRepository")
@@ -32,21 +32,21 @@ class Quiz
     private $name;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="displayResponse", type="boolean")
      */
     private $displayResponse;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="displayTrick", type="boolean")
      */
     private $displayTrick;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="published", type="boolean")
      */
@@ -74,7 +74,7 @@ class Quiz
     private $thumbnailUrl;
 
     /**
-     * @var Collection $responses
+     * @var Collection
      *
      * @ORM\OneToMany(targetEntity="Response", mappedBy="quiz", cascade={"remove"})
      * @ORM\OrderBy({"title" = "ASC"})
@@ -82,16 +82,16 @@ class Quiz
     private $responses;
 
     /**
-     * Additional property used to upload file for picture
+     * Additional property used to upload file for picture.
      */
     private $pictureFile;
 
     /**
-     * Additional property used to upload file for thumbnail
+     * Additional property used to upload file for thumbnail.
      */
     private $thumbnailFile;
 
-    function __construct()
+    public function __construct()
     {
         $this->displayResponse = false;
         $this->displayTrick = false;

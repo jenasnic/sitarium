@@ -22,7 +22,7 @@ class ResponseType extends AbstractType
                 [
                     'label' => 'Valeurs autorisées',
                     'help' => 'Permet d\'indiquer toutes les réponses acceptées séparées par des \';\'.<br/>
-                        Les accents ne sont pas pris en compte lors des comparaisons.'
+                        Les accents ne sont pas pris en compte lors des comparaisons.',
                 ]
             )
             ->add(
@@ -58,7 +58,7 @@ class ResponseType extends AbstractType
                         'petit' => 1,
                         'moyen' => 2,
                         'grand' => 3,
-                    ]
+                    ],
                 ]
              )
             ->add(
@@ -77,7 +77,8 @@ class ResponseType extends AbstractType
                     'required' => false,
                 ]
             )
-            ->add('overview',
+            ->add(
+                'overview',
                 TextType::class,
                 [
                     'label' => 'Résumé',

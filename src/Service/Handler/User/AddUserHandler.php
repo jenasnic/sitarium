@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Allows to add user in current database
+ * Allows to add user in current database.
  */
 class AddUserHandler
 {

@@ -9,7 +9,7 @@ use App\Service\Tmdb\TmdbApiService;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * Allows to add movie from TMDB in current database
+ * Allows to add movie from TMDB in current database.
  */
 class AddMovieHandler
 {

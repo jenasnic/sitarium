@@ -7,7 +7,7 @@ class TextUtil
     /**
      * Allows to remove all HTML from specified text (tags with its attributes...).
      *
-     * @param string Text we want to remove HTML code.
+     * @param string text we want to remove HTML code
      *
      * @return string Specified text without HTML tags, i.e. without HTML structure.
      */
@@ -22,10 +22,10 @@ class TextUtil
      * WARNING : If text contains HTML code, text might be truncated on HTHML => causes errors.
      * In this case, it is highly recommended to remove HTML tags before.
      *
-     * @param string text Text we want to truncate.
-     * @param int size Max length of new truncated text (if more than current text size => no truncation).
+     * @param string text Text we want to truncate
+     * @param int size Max length of new truncated text (if more than current text size => no truncation)
      *
-     * @return string Truncated text with specified length.
+     * @return string truncated text with specified length
      */
     public static function truncateText(string $text, string $size): string
     {
@@ -65,6 +65,6 @@ class TextUtil
         $result = preg_replace('#([^a-z0-9])+#', '-', $result);
 
         // If last character is '-', remove it
-        return (substr($result, -1) == '-') ? substr($result, 0, -1) : $result;
+        return ('-' == substr($result, -1)) ? substr($result, 0, -1) : $result;
     }
 }

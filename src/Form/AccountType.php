@@ -20,13 +20,14 @@ class AccountType extends AbstractType
             ->add('lastname', TextType::class, ['label' => 'Prénom', 'required' => false])
             ->add(
                 'newPassword',
-                RepeatedType::class, [
+                RepeatedType::class,
+                [
                     'mapped' => false,
                     'required' => false,
                     'type' => PasswordType::class,
                     'constraints' => new Length(['min' => 3]),
                     'invalid_message' => 'La confirmation du mot de passe n\'est pas correcte.',
-                    'first_options'  => ['label' => 'Mot de passe'],
+                    'first_options' => ['label' => 'Mot de passe'],
                     'second_options' => ['label' => 'Confirmation mot de passe'],
                 ]
             )
