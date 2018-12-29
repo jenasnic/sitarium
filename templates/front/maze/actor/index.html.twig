@@ -9,44 +9,57 @@
 
 {% block body %}
 
-    <h1>Quiz filmographie</h1>
+    <div id="maze-filmography" class="container center">
 
-    <p>Le but du jeu est d'avancer d'acteur en acteur en trouvant un film commun. Ce quiz se base sur une sélection d'une centaine d'acteurs.</p>
-    <p>Bonne chance !</p>
+        <h1>Quiz filmographie</h1>
 
-    <form action="{{ path('fo_maze_actor_play') }}" method="POST">
+        <p>Le but du jeu est d'avancer d'acteur en acteur en trouvant un film commun.</p>
+        <p>Ce quiz se base sur une sélection d'une centaine d'acteurs.</p>
+        <p>Bonne chance !</p>
 
-        <label for="count">Jouer avec : </label>
-        <select id="count" name="count">
-            <option value="3">3 acteurs</option>
-            <option value="4">4 acteurs</option>
-            <option value="5" selected="selected">5 acteurs</option>
-            <option value="6">6 acteurs</option>
-            <option value="7">7 acteurs</option>
-            <option value="8">8 acteurs</option>
-            <option value="9">9 acteurs</option>
-        </select>
+        <form action="{{ path('fo_maze_actor_play') }}" method="POST" class="card">
 
-        <label for="level">Difficulté : </label>
-        <select id="level" name="level">
-            <option value="0">Facile</option>
-            <option value="1" selected="selected">Moyen</option>
-            <option value="2">Difficile</option>
-        </select>
-        <p><strong>NOTE : </strong>La difficulté porte sur la notoriété des films utilisés (selon le site TheMovieDB) pour mettre en relation les acteurs.<br/>
-        Elle permet également de réduire la sélection de films dans la rubrique "Besoin d'aide".</p>
+            <div class="selection-item">
+                <label for="count">Jouer avec : </label>
+                <select id="count" name="count">
+                    <option value="3">3 acteurs</option>
+                    <option value="4">4 acteurs</option>
+                    <option value="5" selected="selected">5 acteurs</option>
+                    <option value="6">6 acteurs</option>
+                    <option value="7">7 acteurs</option>
+                    <option value="8">8 acteurs</option>
+                    <option value="9">9 acteurs</option>
+                </select>
+            </div>
 
-        <input type="submit" value="Jouer"/>
+            <div class="selection-item">
+                <label for="level">Difficulté : </label>
+                <select id="level" name="level">
+                    <option value="0">Facile</option>
+                    <option value="1" selected="selected">Moyen</option>
+                    <option value="2">Difficile</option>
+                </select>
+                <p class="note"><strong>NOTE : </strong>La difficulté porte sur la notoriété des films utilisés (selon le site TheMovieDB) pour mettre en relation les acteurs.<br/>
+                Elle permet également de réduire la sélection de films dans la rubrique "Besoin d'aide".</p>
+            </div>
 
-    </form>
+            <input type="submit" value="Jouer"/>
 
-    {% if app.user %}
-        <p>Si vous le souhaitez, vous pouvez également jouer avec votre propre sélection d'acteurs parmi ceux proposés sur ce site.</p>
-        <a href="{{ path('fo_maze_actor_select_max_path') }}" class="button">Choisir mes acteurs</a>
-        <p>Si vous êtes curieux, vous pouvez aussi découvrir "le plus court chemin" reliant 2 acteurs.</p>
-        <a href="{{ path('fo_maze_actor_select_min_path') }}" class="button">Jouer sur le plus court chemin</a>
-    {% else %}
-        <p>Pour accéder à plus de fonctionnalités, pensez à vous créer un compte <a href="{{ path('fo_account_new') }}">ici</a>.</p>
-    {% endif %}
+        </form>
+
+        {% if app.user %}
+            <div class="card">
+                <p>Si vous le souhaitez, vous pouvez également jouer avec votre propre sélection d'acteurs parmi ceux proposés sur ce site.</p>
+                <a href="{{ path('fo_maze_actor_select_max_path') }}" class="button">Choisir mes acteurs</a>
+            </div>
+            <div class="card">
+                <p>Si vous êtes curieux, vous pouvez aussi découvrir "le plus court chemin" reliant 2 acteurs.</p>
+                <a href="{{ path('fo_maze_actor_select_min_path') }}" class="button">Jouer sur le plus court chemin</a>
+            </div>
+        {% else %}
+            <p>Pour accéder à plus de fonctionnalités, pensez à vous créer un compte <a href="{{ path('fo_account_new') }}">ici</a>.</p>
+        {% endif %}
+
+    </div>
 
 {% endblock %}

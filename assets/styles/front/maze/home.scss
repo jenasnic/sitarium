@@ -17,6 +17,19 @@
     }
 }
 
+#maze-filmography, #maze-casting {
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .selection-item {margin-bottom: 10px;}
+
+        input[type="submit"] {margin-top: 10px;}
+    }
+}
+
 @media #{$media-small}
 {
     #maze-home {
@@ -30,5 +43,9 @@
                 &:hover span, &:hover span i {color: $color-text-link;}
             }
         }
+    }
+
+    #maze-filmography, #maze-casting {
+        form .note {display: none;}
     }
 }

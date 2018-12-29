@@ -13,8 +13,9 @@
             max-width: 30%;
 
             a {
-                border: 5px solid $color-border-default;
+                border: 2px solid $color-border-default;
                 border-radius: 5px;
+                box-shadow: 0px 0px 2px $color-border-default;
                 display: flex;
                 height: 200px;
                 justify-content: center;
@@ -42,7 +43,11 @@
                     }
                 }
 
-                &:hover .quiz-infos {display: flex;}
+                &:hover {
+                    box-shadow: 0px 0px 20px $color-border-default;
+
+                    .quiz-infos {display: flex;}
+                }
             }
         }
     }

@@ -1,0 +1,32 @@
+
+$color-background-default: #435B72;
+$color-background-header-1: #FF6712;
+$color-background-header-2: #FFB954;
+$color-button-default-1: #9E0F9E;
+$color-button-default-2: #DB75DB;
+$color-button-active-1: #3ACD13;
+$color-button-active-2: #97EF80;
+$color-border-default: #F59F22;
+$color-border-input: #9E0F9E;
+$color-shadow-default: #333333;
+$color-shadow-dark: #000000;
+
+$color-text-default: #E0EAEB;
+$color-text-input: #333333;
+$color-text-shadow: #858585;
+$color-text-shadow-darker: #747474;
+$color-text-menu: #E0EAEB;
+$color-text-link: #FF6712;
+$color-text-title: #B8CACB;
+
+$transparent-background-black: rgba(0, 0, 0, 0.22);
+$transparent-background-white: rgba(255, 255, 255, 0.09);
+
+$small-screen-up: 768px !default;
+$medium-screen-down: 769px !default;
+$medium-screen-up: 1215px !default;
+$large-screen-down: 1216px !default;
+
+$media-small: "only screen and (max-width : #{$small-screen-up})" !default;
+$media-medium: "only screen and (min-width : #{$medium-screen-down}) and (max-width : #{$medium-screen-up})" !default;
+$media-large: "only screen and (min-width : #{$large-screen-down})" !default;
