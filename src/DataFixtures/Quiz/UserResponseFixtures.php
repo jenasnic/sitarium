@@ -44,7 +44,7 @@ class UserResponseFixtures extends Fixture implements DependentFixtureInterface
     {
         $data = [];
 
-        $userRei = $this->getReference(UserFixtures::USER_REI);
+        $userRay = $this->getReference(UserFixtures::USER_RAY);
         $userTed = $this->getReference(UserFixtures::USER_TED);
         $userJeannot = $this->getReference(UserFixtures::USER_JEANNOT);
 
@@ -59,16 +59,16 @@ class UserResponseFixtures extends Fixture implements DependentFixtureInterface
         $responseAnimation1 = $this->getReference(ResponseFixtures::RESPONSE_ANIMATION_1);
         $responseAnimation2 = $this->getReference(ResponseFixtures::RESPONSE_ANIMATION_2);
 
-        $data[] = $this->buildData($userRei, $responseMovie1, \DateTime::createFromFormat('Y-m-d', '2018-05-09'));
-        $data[] = $this->buildData($userRei, $responseMovie2, \DateTime::createFromFormat('Y-m-d', '2018-05-09'));
-        $data[] = $this->buildData($userRei, $responseMovie3, \DateTime::createFromFormat('Y-m-d', '2018-05-09'));
-        $data[] = $this->buildData($userRei, $responseMovie4, \DateTime::createFromFormat('Y-m-d', '2018-05-10'));
-        $data[] = $this->buildData($userRei, $responseMovie5, \DateTime::createFromFormat('Y-m-d', '2018-05-10'));
-        $data[] = $this->buildData($userRei, $responseSerie1, \DateTime::createFromFormat('Y-m-d', '2018-05-11'));
-        $data[] = $this->buildData($userRei, $responseSerie2, \DateTime::createFromFormat('Y-m-d', '2018-05-11'));
-        $data[] = $this->buildData($userRei, $responseSerie3, \DateTime::createFromFormat('Y-m-d', '2018-05-12'));
-        $data[] = $this->buildData($userRei, $responseAnimation1, \DateTime::createFromFormat('Y-m-d', '2018-05-12'));
-        $data[] = $this->buildData($userRei, $responseAnimation2, \DateTime::createFromFormat('Y-m-d', '2018-05-12'));
+        $data[] = $this->buildData($userRay, $responseMovie1, \DateTime::createFromFormat('Y-m-d', '2018-05-09'));
+        $data[] = $this->buildData($userRay, $responseMovie2, \DateTime::createFromFormat('Y-m-d', '2018-05-09'));
+        $data[] = $this->buildData($userRay, $responseMovie3, \DateTime::createFromFormat('Y-m-d', '2018-05-09'));
+        $data[] = $this->buildData($userRay, $responseMovie4, \DateTime::createFromFormat('Y-m-d', '2018-05-10'));
+        $data[] = $this->buildData($userRay, $responseMovie5, \DateTime::createFromFormat('Y-m-d', '2018-05-10'));
+        $data[] = $this->buildData($userRay, $responseSerie1, \DateTime::createFromFormat('Y-m-d', '2018-05-11'));
+        $data[] = $this->buildData($userRay, $responseSerie2, \DateTime::createFromFormat('Y-m-d', '2018-05-11'));
+        $data[] = $this->buildData($userRay, $responseSerie3, \DateTime::createFromFormat('Y-m-d', '2018-05-12'));
+        $data[] = $this->buildData($userRay, $responseAnimation1, \DateTime::createFromFormat('Y-m-d', '2018-05-12'));
+        $data[] = $this->buildData($userRay, $responseAnimation2, \DateTime::createFromFormat('Y-m-d', '2018-05-12'));
         $data[] = $this->buildData($userTed, $responseMovie1, \DateTime::createFromFormat('Y-m-d', '2018-05-09'));
         $data[] = $this->buildData($userTed, $responseMovie2, \DateTime::createFromFormat('Y-m-d', '2018-05-10'));
         $data[] = $this->buildData($userTed, $responseMovie3, \DateTime::createFromFormat('Y-m-d', '2018-05-10'));

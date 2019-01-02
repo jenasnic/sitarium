@@ -16,8 +16,8 @@ class AccountType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstname', TextType::class, ['label' => 'Nom', 'required' => false])
-            ->add('lastname', TextType::class, ['label' => 'Prénom', 'required' => false])
+            ->add('lastname', TextType::class, ['label' => 'Nom', 'required' => false])
+            ->add('firstname', TextType::class, ['label' => 'Prénom', 'required' => false])
             ->add(
                 'newPassword',
                 RepeatedType::class,
@@ -28,7 +28,7 @@ class AccountType extends AbstractType
                     'constraints' => new Length(['min' => 3]),
                     'invalid_message' => 'La confirmation du mot de passe n\'est pas correcte.',
                     'first_options' => ['label' => 'Mot de passe'],
-                    'second_options' => ['label' => 'Confirmation mot de passe'],
+                    'second_options' => ['label' => 'Confirmation m.d.p.'],
                 ]
             )
         ;

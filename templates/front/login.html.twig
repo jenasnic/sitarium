@@ -3,17 +3,28 @@
 {% block body %}
 
     {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        <div class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <form action="{{ path('login_check') }}" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}" />
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password" />
-        <button type="submit">login</button>
-    </form>
+    <h1>Connexion</h1>
 
-    <p>Si vous le désirez, vous pouvez créer un compte <a href="{{ path('fo_account_new') }}">ici</a>.</p>
+    <form id="login-form" action="{{ path('login_check') }}" method="post" class="card center w-half">
+        <div class="field">
+            <label for="username">Login</label>
+            <div class="control">
+                <input type="text" id="username" name="_username" value="{{ last_username }}" />
+            </div>
+        </div>
+        <div class="field">
+            <label for="password">Mot de passe</label>
+            <div class="control">
+                <input type="password" id="password" name="_password" />
+            </div>
+        </div>
+        <div class="form-buttons">
+            <button type="submit" class="button">Se connecter</button>
+        </div>
+        <p class="margin-top">Si vous le désirez, vous pouvez créer un compte <a href="{{ path('fo_account_new') }}">ici</a>.</p>
+    </form>
 
 {% endblock %}

@@ -1,5 +1,9 @@
 
-*{
+/**********/
+/* Layout */
+/**********/
+
+* {
     font-family: Tahoma, Geneva, sans-serif;
     color: $color-text-default;
     margin: 0;
@@ -8,6 +12,8 @@
 
 body {
     background: url('../img/background_V2.jpg');
+    display:flex;
+    flex-direction: column;
     height: 100vh;
     line-height: 1.3em;
     text-align: justify;
@@ -16,14 +22,57 @@ body {
 #header {
     background: linear-gradient($color-background-header-1, $color-background-header-2);
     box-shadow: $color-shadow-default 0 3px 11px;
-    padding: 10px;
+    margin-bottom: 1em;
+    padding: 1em;
 }
+
+#footer {
+    background: linear-gradient($color-background-header-2, $color-background-header-1);
+    box-shadow: $color-shadow-default 0 -2px 8px;
+    margin-top: 2em;
+    padding: 1em;
+    text-align: center;
+    text-shadow: $text-shadow;
+}
+
+.container {
+    flex-grow: 1;
+    max-width : 1600px;
+    margin: 0 1.5em;
+}
+
+.card {
+    background-color: $transparent-background-default;
+    border-radius: 1em;
+    box-shadow: #222 0px 0px 2px;
+    padding: 1.5em;
+}
+
+.center {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.margin-top {margin-top: 1.5em;}
+.margin-bottom {margin-bottom: 1.5em;}
+
+.w-half {max-width: 600px;}
+
+/********************/
+/* Content elements */
+/********************/
 
 h1 {
     color: $color-text-title;
     font-size: 1.9em;
-    line-height: 1.4em;
-    margin: 15px;
+    margin: 0.5em 0 1em 0;
+    text-align: center;
+}
+
+h2 {
+    color: $color-text-default;
+    font-size: 1.7em;
+    margin: 0.4em 0 0.8em 0;
     text-align: center;
 }
 
@@ -32,44 +81,123 @@ a {
     color: $color-text-link;
 }
 
-input, select, textarea, button {
-    border: 1px solid $color-border-input;
-    border-radius: 5px;
-    color: $color-text-input;
-    font-size: 0.8em;
-    padding: 6px 13px;
-}
+.note {font-size: 0.8em;}
 
-.container {
-    max-width : 1600px;
-    margin: 10px 30px;
-}
-
-.center {
-    margin: 0 auto;
+.error {
+    background-color: $color-background-error;
+    border: 1px solid $color-border-error;
+    border-radius: 1em;
+    color: $color-text-error;
+    font-size: 1em;
+    font-style: italic;
+    padding: 0.5em;
     text-align: center;
 }
 
-.note {font-size: 0.8em;}
+/*****************/
+/* Form elements */
+/*****************/
 
-.card {
-    background-color: $transparent-background-white;
-    border-radius: 10px;
-    margin: 20px 0;
-    padding: 20px;
+form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+input, select, textarea, button {
+    background-color: $color-background-input;
+    border: 1px solid $color-border-input;
+    border-radius: 0.5em;
+    color: $color-text-input;
+    font-size: 0.8em;
+    padding: 0.5em 1em;
 }
 
 .button {
     background: linear-gradient($color-button-default-1, $color-button-default-2);
     border: none;
-    border-radius: 5px;
+    border-radius: 0.5em;
+    box-shadow: $color-shadow-default 1px 2px;
     color: $color-text-default;
     cursor: pointer;
+    font-size: 0.85em;
     font-weight: bold;
-    padding: 6px 18px;
+    padding: 0.7em 1.2em;
     text-transform: uppercase;
 
     &:hover {
         background: linear-gradient($color-button-active-1, $color-button-active-2);
     }
+}
+
+.field {
+    padding: 0.5em 0;
+
+    label {
+        display: inline-block;
+        margin-right: 1em;
+        text-align: right;
+        width: 110px;
+    }
+
+    .control {display: inline-block;}
+}
+
+.form-buttons {margin-top: 1.5em;}
+
+.select-wrapper {
+    position: relative;
+
+    select {
+        cursor: pointer;
+        padding: 6px 43px 6px 13px;
+        -moz-box-sizing: border-box;
+        -moz-appearance: none;
+        -webkit-box-sizing: border-box;
+        -webkit-appearance: none;
+    }
+
+    &:after {
+        border-left: 1px solid $color-border-input;
+        color: $color-button-default-1;
+        content: "\25BC";
+        display: block;
+        padding-left: 5px;
+        pointer-events: none;
+        position: absolute;
+        right: 15px;
+        top: 5px;
+    }
+
+    &:hover:after {color: $color-button-active-1;}
+}
+
+/**************/
+/* Responsive */
+/**************/
+
+@media #{$media-large}
+{
+}
+
+@media #{$media-medium}
+{
+    .container {margin: 0 1.0em;}
+}
+
+@media #{$media-small}
+{
+    .container {margin: 0 0.5em;}
+
+    .field {
+        label {
+            display:block;
+            margin-bottom: 0.3em;
+            margin-right: 0;
+            text-align: left;
+            width: auto;
+        }
+    }
+
+    .w-half {max-width: none;}
 }

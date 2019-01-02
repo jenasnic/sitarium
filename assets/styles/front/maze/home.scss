@@ -1,32 +1,31 @@
 
 #maze-home {
     .maze-selection-wrapper {
-        margin: 40px 10px 60px 10px;
         display: flex;
         justify-content: center;
+        margin-bottom: 2em;
+        margin-top: 2em;
+        max-width: 550px;
 
         .maze-selection-item {
             display: flex;
             flex-direction: column;
             font-size: 1.3em;
-            margin: 0 20px;
-            max-width: 40%;
+            margin: 0 2em;
+            text-shadow: $text-shadow-darker;
 
-            &:hover span, &:hover span i {color: $color-text-link;}
+            span, span i {color: $color-button-default-2;}
+
+            &:hover span, &:hover span i {color: $color-button-active-1;}
         }
     }
 }
 
 #maze-filmography, #maze-casting {
+    .card {margin-top: 2em;}
+
     form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        .selection-item {margin-bottom: 10px;}
-
-        input[type="submit"] {margin-top: 10px;}
+        select {width: 125px;}
     }
 }
 
@@ -37,8 +36,7 @@
             flex-direction: column;
 
             .maze-selection-item {
-                margin: 20px 0;
-                max-width: 100%;
+                margin: 1em 0;
 
                 &:hover span, &:hover span i {color: $color-text-link;}
             }

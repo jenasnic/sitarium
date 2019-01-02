@@ -17,34 +17,43 @@ Required :
 
     <h1>Mon compte</h1>
 
-    Bonjour <strong>{{ app.user.firstname }} {{ app.user.lastname }}</strong>,
+    <div id="account-infos" class="center">
 
-    {% if (quizInProgress|length > 0) %}
-        <h2>Quiz en cours</h2>
-        <ul>
-        {% for quiz in quizInProgress %}
-            <li><a href="{{ path('fo_quiz_play', {'quiz': quiz.id}) }}">{{ quiz.name }}</a></li>
-        {% endfor %}
-        </ul>
-    {% endif %}
+        <div id="account-statistics">
+        {% if (quizInProgress|length > 0) %}
+            <div class="card center">
+                <h2>Quiz en cours</h2>
+                <ul>
+                {% for quiz in quizInProgress %}
+                    <li><a href="{{ path('fo_quiz_play', {'quiz': quiz.id}) }}">{{ quiz.name }}</a></li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        {% if (quizOver|length > 0) %}
+            <div class="card center">
+                <h2>Quiz terminé(s)</h2>
+                <ul>
+                {% for quiz in quizOver %}
+                    <li><a href="{{ path('fo_quiz_play', {'quiz': quiz.id}) }}">{{ quiz.name }}</a></li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        </div>
 
-    {% if (quizOver|length > 0) %}
-        <h2>Quiz terminé(s)</h2>
-        <ul>
-        {% for quiz in quizOver %}
-            <li><a href="{{ path('fo_quiz_play', {'quiz': quiz.id}) }}">{{ quiz.name }}</a></li>
-        {% endfor %}
-        </ul>
-    {% endif %}
+        {{ form_start(account, {'attr': {'class': 'center card w-half'}}) }}
+            <section>
+                <p class="margin-bottom">Bonjour <strong>{{ app.user.firstname }} {{ app.user.lastname }}</strong>,</p>
+                <p>Vous pouvez mettre à jour vos informations personnelles.</p>
+                <p class="note margin-bottom"><strong>NOTE : </strong>Si vous ne souhaitez pas modifier votre mot de passe, laissez les champs vides.</p>
+            </section>
+            {{ form_rest(account) }}
+            <div class="form-buttons">
+                <input type="submit" class="button" value="Enregistrer"/>
+            </div>
+        {{ form_end(account) }}
 
-    <p>Vous pouvez mettre à jour vos informations personnelles.</p>
-    <p>NOTE : Si vous ne souhaitez pas modifier votre mot de passe, laissez les champs vides.</p>
-
-    {{ form_start(account) }}
-        {{ form_rest(account) }}
-        <input type="submit" class="button" value="Enregistrer"/>
-    {{ form_end(account) }}
-
-</div>
+    </div>
 
 {% endblock %}

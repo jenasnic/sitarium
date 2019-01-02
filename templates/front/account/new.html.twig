@@ -17,11 +17,17 @@ Required :
 
     <h1>Créer un compte</h1>
 
-    <p>Veuillez remplir les champs ci-dessous pour créer votre compte.</p>
+    <div id="account-new" class="card center w-half">
 
-    {{ form_start(account) }}
-        {{ form_rest(account) }}
-        <input type="submit" class="button" value="Enregistrer"/>
-    {{ form_end(account) }}
+        <p class="margin-bottom">Veuillez remplir les champs ci-dessous pour créer votre compte.</p>
+
+        {{ form_start(account) }}
+            {{ form_rest(account) }}
+            <div class="form-buttons">
+                <input type="submit" class="button" value="Enregistrer" />
+            </div>
+        {{ form_end(account) }}
+
+    </div>
 
 {% endblock %}

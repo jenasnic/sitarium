@@ -50,7 +50,7 @@ class WinnerFixtures extends Fixture implements DependentFixtureInterface
         $data = [];
 
         $data[] = $this->buildData(
-            $this->getReference(UserFixtures::USER_REI),
+            $this->getReference(UserFixtures::USER_RAY),
             'Rei powaaa',
             \DateTime::createFromFormat('Y-m-d', '2018-05-10'),
             1,

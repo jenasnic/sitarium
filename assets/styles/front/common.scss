@@ -1,26 +1,33 @@
 
-$color-background-default: #435B72;
-$color-background-header-1: #FF6712;
-$color-background-header-2: #FFB954;
-$color-button-default-1: #9E0F9E;
-$color-button-default-2: #DB75DB;
-$color-button-active-1: #3ACD13;
-$color-button-active-2: #97EF80;
-$color-border-default: #F59F22;
-$color-border-input: #9E0F9E;
-$color-shadow-default: #333333;
-$color-shadow-dark: #000000;
+$color-background-default: #435B72;     // ~blue
+$color-background-header-1: #FF6712;    // ~orange dark
+$color-background-header-2: #FFB954;    // ~orange light
+$color-background-input: #ECECEC;       // ~white
+$color-background-error: #FFEECB;       // ~orange light
+$color-button-default-1: #9E0F9E;       // ~purple dark
+$color-button-default-2: #DB75DB;       // ~purple light
+$color-button-active-1: #3ACD13;        // ~green dark
+$color-button-active-2: #97EF80;        // ~green light
+$color-border-default: #F59F22;         // ~orange
+$color-border-input: #9E0F9E;           // ~purple
+$color-border-error: #FFA043;         // ~orange
 
-$color-text-default: #E0EAEB;
-$color-text-input: #333333;
-$color-text-shadow: #858585;
-$color-text-shadow-darker: #747474;
-$color-text-menu: #E0EAEB;
-$color-text-link: #FF6712;
-$color-text-title: #B8CACB;
+$color-shadow-default: #333333;         // ~black light
+$color-shadow-dark: #000000;            // ~black
 
+$color-text-default: #E0EAEB;           // ~blue light
+$color-text-input: #333333;             // ~black light
+$color-text-link: #FFA043;              // ~orange
+$color-text-title: #B8CACB;             // ~blue light
+$color-text-error: #FFA043;             // ~orange
+
+$text-shadow: #858585 0.05em 0.05em 1px;
+$text-shadow-darker: #242424 0.05em 0.05em 1px;
+$box-shadow: #858585 0.05em 0.05em 1px;
+$box-shadow-darker: #242424 0.05em 0.05em 1px;
+
+$transparent-background-default: rgba(255, 255, 255, 0.22);
 $transparent-background-black: rgba(0, 0, 0, 0.22);
-$transparent-background-white: rgba(255, 255, 255, 0.09);
 
 $small-screen-up: 768px !default;
 $medium-screen-down: 769px !default;

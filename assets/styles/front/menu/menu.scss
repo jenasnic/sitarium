@@ -13,19 +13,19 @@
         justify-content: center;
 
         .navbar-item {
-            box-shadow: 0px 1px 2px $color-text-shadow;
-            color: $color-text-menu;
+            box-shadow: $box-shadow;
+            color: $color-text-default;
             font-weight: bold;
             margin: 0 12px;
             min-width: 140px;
             padding: 5px 25px;
             text-align: center;
-            text-shadow: $color-text-shadow 1px 1px;
+            text-shadow: $text-shadow;
             text-transform: uppercase;
 
             &:hover {
                 background-color: $transparent-background-black;
-                box-shadow: 0px 1px 3px $color-text-shadow-darker;
+                box-shadow: $box-shadow-darker;
             }
         }
 
@@ -44,11 +44,11 @@
         top: 15px;
 
         .navbar-item {
-            color: $color-text-menu;
+            color: $color-text-default;
             font-size: 0.75em;
             padding: 3px 5px;
 
-            &:hover {border-bottom: 1px solid $color-text-menu;}
+            &:hover {text-shadow: $text-shadow;}
         }
     }
 }
@@ -70,9 +70,7 @@
 {
     .burger-icon {
         display: block;
-        margin-bottom: 10px;
-        right: 10px;
-        top: 10px;
+        margin-bottom: 1em;
     }
 
     #menu {
@@ -96,21 +94,21 @@
             }
 
             .navbar-item {
-                box-shadow: 0px 1px 2px $color-text-shadow;
-                color: $color-text-menu;
+                box-shadow: $box-shadow;
+                color: $color-text-default;
                 font-size: 1em;
                 font-weight: bold;
                 margin: 5px 0;
                 min-width: 0;
                 padding: 10px 25px;
                 text-align: left;
-                text-shadow: $color-text-shadow 1px 1px;
+                text-shadow: $text-shadow;
                 text-transform: uppercase;
 
                 &:hover {
                     background-color: $transparent-background-black;
                     border: none;
-                    box-shadow: 0px 1px 3px $color-text-shadow-darker;
+                    box-shadow: $box-shadow-darker;
                 }
             }
         }

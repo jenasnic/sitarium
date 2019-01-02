@@ -1,0 +1,39 @@
+
+#account-infos {
+    #account-statistics {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        .card {
+            flex-grow: 1;
+            margin: 0 1em 2em 1em;
+            max-width: 350px;
+
+            h2 {margin: 0 0 0.8em 0;}
+            ul {
+                list-style: none;
+
+                li {margin-bottom: 0.3em;}
+            }
+        }
+    }
+
+    form {
+        label {width: 200px;}
+    }
+}
+
+@media #{$media-small}
+{
+    #account-infos {
+        #account-statistics {
+            flex-direction: column;
+
+            .card {
+                margin: 0 0 1.5em 0;
+                max-width: none;
+            }
+        }
+    }
+}
