@@ -1,11 +1,11 @@
 {#
 Allows to display list of actors we want to find common credit movie => path of actors.
 Required :
-- actorPath : list of actors linked by common credit movies (as Actor).
-- helpMovieList : list of movies used to help user to find path (as Movie).
+- MazeItem[] mazePath : list of actors linked by common credit movies (as Actor).
+- MazeItem[] helpList : list of movies used to help user to find path (as Movie).
 #}
 
-{% extends "base.html.twig" %}
+{% extends "front/maze/_play.html.twig" %}
 
 {% block meta %}
     {{ parent() }}
@@ -14,43 +14,9 @@ Required :
 
 {% block title %}Quiz filmographie{% endblock %}
 
-{% block body %}
+{% block mazeTitle %}Quiz filmographie{% endblock %}
 
-    <div id="actor-maze-play">
-
-        <h1>Quiz filmographie</h1>
-
-        <label class="f-n15">Nombre de coups : </label>
-        <span id="response-count">0</span>
-
-        <label for="actor-maze-response">Saisissez un titre de film : </label>
-        <input type="text" id="actor-maze-response" name="actor-maze-response" />
-
-        <input type="button" id="actor-maze-answer" name="actor-maze-answer" class="button" value="Envoyer" />
-        <input type="button" id="actor-maze-help" name="actor-maze-help" class="button" value="Joker" />
-
-        <section class="actor-maze-scroll-wrapper">
-            {% for actor in actorPath %}
-            <div data-order="{{ loop.index }}" data-tmdb-id="{{ actor.tmdbId }}">
-                <img src="{{ actor.pictureUrl|tmdbPictureUrl }}" alt="{{ actor.fullname|raw }}" />
-                <span>{{ actor.fullname }}</span>
-            </div>
-            {% endfor %}
-        </section>
-
-        <h2>Besoin d'aide ?</h2>
-
-        <section class="actor-maze-helper">
-            <p>Choisissez parmi les films ci-dessous celui qui vous permettra d'avancer.</p>
-            <p>Plusieurs réponses peuvent être possibles et une même réponse peut être utilisée plusieurs fois.</p>
-            {% for movie in helpMovieList %}
-            <div data-tmdb-id="{{ movie.tmdbId }}" data-title="{{ movie.title|raw }}">
-                <img src="{{ movie.pictureUrl|tmdbPictureUrl }}" alt="{{ movie.title|raw }}" />
-                <span>{{ movie.title }}</span>
-            </div>
-            {% endfor %}
-        </section>
-
-    </div>
-
+{% block mazeHelpText %}
+    <p>Choisissez parmi les films ci-dessous celui qui vous permettra d'avancer.</p>
+    <p>Plusieurs réponses peuvent être possibles et une même réponse peut être utilisée plusieurs fois.</p>
 {% endblock %}

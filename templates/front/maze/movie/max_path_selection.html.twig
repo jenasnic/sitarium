@@ -1,7 +1,7 @@
 {#
 Allows to display list of movies for selection => user can select 10 movies to play maze...
 Required :
-- movies : list of movies to select (as Movie).
+- MazeItem[] movies : list of movies to select.
 #}
 
 {% extends "base.html.twig" %}
@@ -17,25 +17,46 @@ Required :
 
     <h1>Construisez votre quiz</h1>
 
-    <p>Veuillez choisir 10 films parmi ceux proposés ci-dessous. Nous vous proposerons le plus long quiz trouvé pour votre sélection.</p>
-    <p>Bonne chance !</p>
+    <div id="maze-max-path" class="maze-item-path-selection">
 
-    <form action="{{ path('fo_maze_movie_play_max_path') }}" method="POST">
+        <div class="card center">
 
-        <input type="hidden" id="movieIds" name="movieIds" />
+            <p class="margin-bottom">Veuillez choisir 10 films parmi ceux proposés ci-dessous. Nous vous proposerons le plus long quiz trouvé pour votre sélection.</p>
+            <p class="margin-bottom"><strong>Bonne chance !</strong></p>
 
-        <label for="level">Difficulté : </label>
-        <select id="level" name="level">
-            <option value="0">Facile</option>
-            <option value="1" selected="selected">Moyen</option>
-            <option value="2">Difficile</option>
-        </select>
-        <p><strong>NOTE : </strong>La difficulté permet de réduire la sélection d'acteurs dans la rubrique "Besoin d'aide".</p>
+            <form action="{{ path('fo_maze_movie_play_max_path') }}" method="POST">
 
-        <input type="submit" value="Jouer"/>
+                <input type="hidden" id="movieIds" name="movieIds" />
 
-    </form>
+                <div class="field">
+                    <label for="level">Difficulté : </label>
+                    <div class="control select-wrapper">
+                        <select id="level" name="level">
+                            <option value="0">Facile</option>
+                            <option value="1" selected="selected">Moyen</option>
+                            <option value="2">Difficile</option>
+                        </select>
+                    </div>
+                </div>
 
-    {% include 'front/maze/movie/_selection.html.twig' %}
+                <p class="note"><strong>NOTE : </strong>Le degré de difficulté permet de modifier le nombre d'acteurs accessibles dans la rubrique "Besoin d'aide".</p>
+
+                <div class="form-buttons">
+                    <input type="submit" class="button" value="Jouer"/>
+                </div>
+
+            </form>
+
+        </div>
+
+        {%
+            include 'front/maze/_selection.html.twig'
+            with {
+                'mazeItems': movies,
+                'selectionId': 'selection-wrapper',
+            }
+        %}
+
+    </div>
 
 {% endblock %}

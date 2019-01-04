@@ -1,7 +1,7 @@
 {#
 Allows to display list of actors for selection => user can select 10 actors to play maze...
 Required :
-- actors : list of actors to select (as Actor).
+- MazeItem[] actors : list of actors to select.
 #}
 
 {% extends "base.html.twig" %}
@@ -17,26 +17,48 @@ Required :
 
     <h1>Construisez votre quiz</h1>
 
-    <p>Veuillez choisir 10 acteurs/actrices parmi ceux proposés ci-dessous. Nous vous proposerons le plus long quiz trouvé pour votre sélection.</p>
-    <p>Bonne chance !</p>
+    <div id="maze-max-path" class="maze-item-path-selection">
 
-    <form action="{{ path('fo_maze_actor_play_max_path') }}" method="POST">
+        <div class="card center">
 
-        <input type="hidden" id="actorIds" name="actorIds" />
+            <p class="margin-bottom">Veuillez choisir 10 acteurs/actrices parmi ceux proposés ci-dessous.<br/>
+            Nous vous proposerons le plus long quiz trouvé pour votre sélection.</p>
+            <p class="margin-bottom"><strong>Bonne chance !</strong></p>
 
-        <label for="level">Difficulté : </label>
-        <select id="level" name="level">
-            <option value="0">Facile</option>
-            <option value="1" selected="selected">Moyen</option>
-            <option value="2">Difficile</option>
-        </select>
-        <p><strong>NOTE : </strong>La difficulté porte sur la notoriété des films utilisés (selon le site TheMovieDB) pour mettre en relation les acteurs.<br/>
-        Elle permet également de réduire la sélection de films dans la rubrique "Besoin d'aide".</p>
+            <form action="{{ path('fo_maze_actor_play_max_path') }}" method="POST">
 
-        <input type="submit" value="Jouer"/>
+                <input type="hidden" id="actorIds" name="actorIds" />
 
-    </form>
+                <div class="field">
+                    <label for="level">Difficulté : </label>
+                    <div class="control select-wrapper">
+                        <select id="level" name="level">
+                            <option value="0">Facile</option>
+                            <option value="1" selected="selected">Moyen</option>
+                            <option value="2">Difficile</option>
+                        </select>
+                    </div>
+                </div>
 
-    {% include 'front/maze/actor/_selection.html.twig' %}
+                <p class="note"><strong>NOTE : </strong>Le degré de difficulté porte sur la notoriété des films utilisés (selon le site TheMovieDB) pour mettre en relation les acteurs.<br/>
+                Il permet également de modifier le nombre de films accessibles dans la rubrique "Besoin d'aide".</p>
+
+                <div class="form-buttons">
+                    <input type="submit" class="button" value="Jouer"/>
+                </div>
+
+            </form>
+
+        </div>
+
+        {%
+            include 'front/maze/_selection.html.twig'
+            with {
+                'mazeItems': actors,
+                'selectionId': 'selection-wrapper',
+            }
+        %}
+
+    </div>
 
 {% endblock %}

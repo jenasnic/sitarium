@@ -1,7 +1,7 @@
-import './back/popup.js';
-import './back/maze/list.js';
-import './back/maze/add.js';
-import './back/quiz/list.js';
-import './back/quiz/edit.js';
-import './back/quiz/winner.js';
-import './back/quiz/statistics.js';
+import './back/popup';
+import './back/maze/list';
+import './back/maze/add';
+import './back/quiz/list';
+import './back/quiz/edit';
+import './back/quiz/winner';
+import './back/quiz/statistics';

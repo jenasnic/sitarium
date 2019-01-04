@@ -3,6 +3,7 @@
 namespace App\Controller\Front\Maze;
 
 use App\Service\Maze\MaxPathFinder;
+use App\Service\Maze\MazeItemConverter;
 use App\Service\Maze\MinPathFinder;
 use App\Service\Maze\MovieGraphBuilder;
 use App\Service\Maze\MoviePathHelpFactory;
@@ -26,17 +27,27 @@ class MoviePlayController extends Controller
     protected $helpFactory;
 
     /**
+     * @var MazeItemConverter
+     */
+    protected $mazeItemConverter;
+
+    /**
      * @param MovieGraphBuilder $graphBuilder
      * @param MoviePathHelpFactory $helpFactory
+     * @param MazeItemConverter $mazeItemConverter
      */
-    public function __construct(MovieGraphBuilder $graphBuilder, MoviePathHelpFactory $helpFactory)
-    {
+    public function __construct(
+        MovieGraphBuilder $graphBuilder,
+        MoviePathHelpFactory $helpFactory,
+        MazeItemConverter $mazeItemConverter
+    ) {
         $this->graphBuilder = $graphBuilder;
         $this->helpFactory = $helpFactory;
+        $this->mazeItemConverter = $mazeItemConverter;
     }
 
     /**
-     * @Route("/quiz-casting/jouer", name="fo_maze_movie_play", methods="POST")
+     * @Route("/quiz-casting/jouer", name="fo_maze_movie_play", methods="GET")
      *
      * @param Request $request
      * @param RandomPathFinder $randomPathFinder
@@ -45,8 +56,8 @@ class MoviePlayController extends Controller
      */
     public function playAction(Request $request, RandomPathFinder $randomPathFinder): Response
     {
-        $count = $request->request->get('count');
-        $level = $request->request->get('level');
+        $count = $request->query->get('count');
+        $level = $request->query->get('level');
 
         if (!in_array($count, [3, 4, 5, 6, 7, 8, 9]) || !in_array($level, [0, 1, 2])) {
             $this->addFlash('warning', 'Les paramètres spécifiés pour la page sont incorrects.');
@@ -58,9 +69,10 @@ class MoviePlayController extends Controller
             $movieGraph = $this->graphBuilder->buildGraph();
             $moviePath = $randomPathFinder->find($movieGraph, $count);
 
+            $helpActorList = $this->helpFactory->getShuffledActors($moviePath, $level);
             return $this->render('front/maze/movie/play.html.twig', [
-                'moviePath' => $moviePath,
-                'helpActorList' => $this->helpFactory->getShuffledActors($moviePath, $level),
+                'mazePath' => $this->mazeItemConverter->convertMovies($moviePath),
+                'helpList' => $this->mazeItemConverter->convertCastingActors($helpActorList),
             ]);
         } catch (\Exception $ex) {
             $this->addFlash('error', 'Une erreur est survenue lors de l\'initialisation du quiz.');

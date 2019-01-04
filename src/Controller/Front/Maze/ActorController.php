@@ -4,6 +4,7 @@ namespace App\Controller\Front\Maze;
 
 use App\Enum\Maze\FilmographyStatus;
 use App\Repository\Maze\ActorRepository;
+use App\Service\Maze\MazeItemConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,16 +27,17 @@ class ActorController extends Controller
      * @Security("is_granted('ROLE_USER')")
      *
      * @param ActorRepository $actorRepository
+     * @param MazeItemConverter $mazeItemConverter
      *
      * @return Response
      */
-    public function selectMinPathAction(ActorRepository $actorRepository): Response
+    public function selectMinPathAction(ActorRepository $actorRepository, MazeItemConverter $mazeItemConverter): Response
     {
         $actors = $actorRepository->findBy(['status' => FilmographyStatus::INITIALIZED], ['fullname' => 'asc']);
 
-        dump($actors);
-
-        return $this->render('front/maze/actor/min_path_selection.html.twig', ['actors' => $actors]);
+        return $this->render('front/maze/actor/min_path_selection.html.twig', [
+            'actors' => $mazeItemConverter->convertActors($actors),
+        ]);
     }
 
     /**
@@ -43,13 +45,16 @@ class ActorController extends Controller
      * @Security("is_granted('ROLE_USER')")
      *
      * @param ActorRepository $actorRepository
+     * @param MazeItemConverter $mazeItemConverter
      *
      * @return Response
      */
-    public function selectMaxPathAction(ActorRepository $actorRepository): Response
+    public function selectMaxPathAction(ActorRepository $actorRepository, MazeItemConverter $mazeItemConverter): Response
     {
         $actors = $actorRepository->findBy(['status' => FilmographyStatus::INITIALIZED], ['fullname' => 'asc']);
 
-        return $this->render('front/maze/actor/max_path_selection.html.twig', ['actors' => $actors]);
+        return $this->render('front/maze/actor/max_path_selection.html.twig', [
+            'actors' => $mazeItemConverter->convertActors($actors),
+        ]);
     }
 }

@@ -1,7 +1,7 @@
 {#
 Allows to display list of actors for selection => user can select 2 actors for min path game...
 Required :
-- actors : list of actors to select (as Actor).
+- MazeItem[] actors : list of actors to select.
 #}
 
 {% extends "base.html.twig" %}
@@ -17,30 +17,51 @@ Required :
 
     <h1>Reliez 2 acteurs</h1>
 
-    <p>Choisissez simplement 2 acteurs parmi ceux proposés ci-dessous.<br/>
-    Le système cherchera le plus court chemin entre ces deux acteurs/actrices en passant par leur filmographie et les acteurs avec lesquels ils ont joué.<br/>
-    A vous de retrouver les films pour lier ces 2 acteurs/actrices.</p>
-    <p><strong>Attention : </strong>la solution proposée n'est pas unique et n'utilisera que la sélection d'acteurs proposés sur ce site (acteurs et leur filmographie respective).<br/>
-    Un chemin plus court peut donc exister en passant par d'autres films avec des acteurs non présents ici.</p>
+    <div id="maze-min-path" class="maze-item-path-selection">
 
-    <form action="{{ path('fo_maze_actor_play_min_path') }}" method="POST">
+        <div class="card center">
 
-        <input type="hidden" id="startActorId" name="startActorId" />
-        <input type="hidden" id="endActorId" name="endActorId" />
+            <p class="margin-bottom">Choisissez simplement 2 acteurs parmi ceux proposés ci-dessous.<br/>
+            Le système cherchera le plus court chemin entre ces deux acteurs (en fonction de leur filmographie...).<br/>
+            A vous de retrouver le(s) film(s) pour lier ces 2 acteurs.</p>
+            <p class="note margin-bottom"><strong>ATTENTION : </strong>la solution proposée n'est pas unique et n'utilisera que la sélection d'acteurs proposés sur ce site (et leur filmographie).<br/>
+            Un chemin plus court peut donc exister en passant par d'autres films avec des acteurs non présents ici.</p>
 
-        <label for="level">Difficulté : </label>
-        <select id="level" name="level">
-            <option value="0">Facile</option>
-            <option value="1" selected="selected">Moyen</option>
-            <option value="2">Difficile</option>
-        </select>
-        <p><strong>NOTE : </strong>La difficulté porte sur la notoriété des films utilisés (selon le site TheMovieDB) pour mettre en relation les acteurs.<br/>
-        Elle permet également de réduire la sélection de films dans la rubrique "Besoin d'aide".</p>
+            <form action="{{ path('fo_maze_actor_play_min_path') }}" method="POST">
 
-        <input type="submit" value="Jouer"/>
+                <input type="hidden" id="startActorId" name="startActorId" />
+                <input type="hidden" id="endActorId" name="endActorId" />
 
-    </form>
+                <div class="field">
+                    <label for="level">Difficulté : </label>
+                    <div class="control select-wrapper">
+                        <select id="level" name="level">
+                            <option value="0">Facile</option>
+                            <option value="1" selected="selected">Moyen</option>
+                            <option value="2">Difficile</option>
+                        </select>
+                    </div>
+                </div>
 
-    {% include 'front/maze/actor/_selection.html.twig' %}
+                <p class="note"><strong>NOTE : </strong>Le degré de difficulté porte sur la notoriété des films utilisés (selon le site TheMovieDB) pour mettre en relation les acteurs.<br/>
+                Il permet également de modifier le nombre de films accessibles dans la rubrique "Besoin d'aide".</p>
+
+                <div class="form-buttons">
+                    <input type="submit" class="button" value="Jouer"/>
+                </div>
+
+            </form>
+
+        </div>
+
+        {%
+            include 'front/maze/_selection.html.twig'
+            with {
+                'mazeItems': actors,
+                'selectionId': 'selection-wrapper',
+            }
+        %}
+
+    </div>
 
 {% endblock %}

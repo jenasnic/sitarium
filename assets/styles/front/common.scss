@@ -4,13 +4,18 @@ $color-background-header-1: #FF6712;    // ~orange dark
 $color-background-header-2: #FFB954;    // ~orange light
 $color-background-input: #ECECEC;       // ~white
 $color-background-error: #FFEECB;       // ~orange light
+$color-background-warning: #DB75DB;     // ~purple light
+$color-background-info: #CEFFC1;        // ~green light
 $color-button-default-1: #9E0F9E;       // ~purple dark
 $color-button-default-2: #DB75DB;       // ~purple light
 $color-button-active-1: #3ACD13;        // ~green dark
 $color-button-active-2: #97EF80;        // ~green light
 $color-border-default: #F59F22;         // ~orange
+$color-border-active: #3ACD13;          // ~orange
 $color-border-input: #9E0F9E;           // ~purple
-$color-border-error: #FFA043;         // ~orange
+$color-border-error: #FFA043;           // ~orange
+$color-border-warning: #9E0F9E;         // ~purple dark
+$color-border-info: #3ACD13;            // ~green dark
 
 $color-shadow-default: #333333;         // ~black light
 $color-shadow-dark: #000000;            // ~black
@@ -18,16 +23,22 @@ $color-shadow-dark: #000000;            // ~black
 $color-text-default: #E0EAEB;           // ~blue light
 $color-text-input: #333333;             // ~black light
 $color-text-link: #FFA043;              // ~orange
+$color-text-action: #DB75DB;            // ~purple
+$color-text-active: #3ACD13;            // ~green
 $color-text-title: #B8CACB;             // ~blue light
 $color-text-error: #FFA043;             // ~orange
+$color-text-warning: #9E0F9E;           // ~purple
+$color-text-info: #3ACD13;              // ~green
 
 $text-shadow: #858585 0.05em 0.05em 1px;
+$text-shadow-dark: #646464 0.05em 0.05em 1px;
 $text-shadow-darker: #242424 0.05em 0.05em 1px;
 $box-shadow: #858585 0.05em 0.05em 1px;
 $box-shadow-darker: #242424 0.05em 0.05em 1px;
 
 $transparent-background-default: rgba(255, 255, 255, 0.22);
 $transparent-background-black: rgba(0, 0, 0, 0.22);
+$transparent-background-dark: rgba(0, 0, 0, 0.77);
 
 $small-screen-up: 768px !default;
 $medium-screen-down: 769px !default;

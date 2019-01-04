@@ -1,0 +1,15 @@
+{#
+Allows to display list of maze items.
+Required :
+- MazeItem[] mazeItems : list of maze items to display (actors or movies).
+- string selectionId : CSS identifier for selection container.
+#}
+
+<section id="{{ selectionId }}">
+    {% for mazeItem in mazeItems %}
+    <div data-tmdb-id="{{ mazeItem.tmdbId }}" class="selection-item">
+        <img src="{{ mazeItem.pictureUrl }}" alt="{{ mazeItem.displayName|raw }}" />
+        <span>{{ mazeItem.displayName }}</span>
+    </div>
+    {% endfor %}
+</section>

@@ -1,0 +1,21 @@
+{% if(app.session.flashbag.has('error')) %}
+    <div class="error">
+    {% for message in app.session.flashbag.get('error') %}
+        <p>{{ message }}</p>
+    {% endfor %}
+    </div>
+{% endif %}
+{% if(app.session.flashbag.has('warning')) %}
+    <div class="warning">
+    {% for message in app.session.flashbag.get('warning') %}
+        <p>{{ message }}</p>
+    {% endfor %}
+    </div>
+{% endif %}
+{% if(app.session.flashbag.has('info')) %}
+    <div class="info">
+    {% for message in app.session.flashbag.get('info') %}
+        <p>{{ message }}</p>
+    {% endfor %}
+    </div>
+{% endif %}

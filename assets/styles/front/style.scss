@@ -83,15 +83,38 @@ a {
 
 .note {font-size: 0.8em;}
 
+.error, .warning, .info {
+    border-radius: 1em;
+    font-size: 1em;
+    font-style: italic;
+    margin: 1em auto 2em auto;
+    max-width : 1200px;
+    padding: 0.5em;
+    text-align: center;
+}
+
 .error {
     background-color: $color-background-error;
     border: 1px solid $color-border-error;
-    border-radius: 1em;
     color: $color-text-error;
-    font-size: 1em;
-    font-style: italic;
-    padding: 0.5em;
-    text-align: center;
+
+    p {color: $color-text-error;}
+}
+
+.warning {
+    background-color: $color-background-warning;
+    border: 1px solid $color-border-warning;
+    color: $color-text-warning;
+
+    p {color: $color-text-warning;}
+}
+
+.info {
+    background-color: $color-background-info;
+    border: 1px solid $color-border-info;
+    color: $color-text-info;
+
+    p {color: $color-text-info;}
 }
 
 /*****************/

@@ -1,0 +1,64 @@
+{#
+Allows to display list of maze items we want to find common info => path of actors or movies.
+Required :
+- MazeItem[] mazePath : list of maze items (actors or movies) linked by common info (credit movies or credit actors).
+- MazeItem[] helpList : list of maze items (movies or actors) used to help user to find path.
+#}
+
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <h1>{% block mazeTitle %}{% endblock %}</h1>
+
+    <div id="maze-play">
+
+        <div id="action-wrapper">
+            <input type="text" id="response" name="response" placeholder="Saisissez votre réponse" />
+            <span id="answer-button" class="button" title="Soumettre la réponse"><i class="fas fa-check"></i></span>
+            <span id="trick-button" class="button" title="Utiliser un joker"><i class="fas fa-question"></i></span>
+        </div>
+
+        <div id="info-wrapper">
+            <label>Nombre de coups : </label>
+            <span id="response-count">0</span>
+        </div>
+
+        <div id="maze-wrapper" class="card">
+            <div id="scroll-wrapper">
+                <div id="maze-items">
+                    <span id="maze-cursor"><i class="fas fa-share fa-5x"></i></span>
+                    {% for mazeItem in mazePath %}
+                    <div
+                        data-order="{{ loop.index }}"
+                        data-tmdb-id="{{ mazeItem.tmdbId }}"
+                        class="maze-item{{ loop.first ? ' active': '' }}"
+                    >
+                        <img src="{{ mazeItem.pictureUrl }}" alt="{{ mazeItem.displayName|raw }}" />
+                        <span>{{ mazeItem.displayName }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div id="helper-wrapper" class="card center">
+
+            <h2>Besoin d'aide ?<span id="toggle-button"><i class="fas fa-plus-circle fa-lg"></i></span></h2>
+
+            <div id="toggle-wrapper">
+                {% block mazeHelpText %}{% endblock %}
+                {%
+                    include 'front/maze/_selection.html.twig'
+                    with {
+                        'mazeItems': helpList,
+                        'selectionId': 'response-wrapper',
+                    }
+                %}
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

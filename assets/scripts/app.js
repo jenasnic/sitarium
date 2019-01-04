@@ -1,1 +1,2 @@
-import './front/menu.js';
+import './front/menu';
+import './front/maze/play';

@@ -17,7 +17,7 @@ class RandomPathFinder
      * Allows to build an array with linked items from specfied graph with specified size.
      * NOTE : If no path found, choose a smaller items count or increase items list in graph.
      *
-     * @param array $mzeGraph map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
+     * @param array $mazeGraph map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
      * @param int $mazeSize number of linked items we want to find (at least 2)
      *
      * @throws \InvalidArgumentException Throw exception if specified size doesn't allows to build path of items...
