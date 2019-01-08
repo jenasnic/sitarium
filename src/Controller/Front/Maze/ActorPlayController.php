@@ -72,11 +72,7 @@ class ActorPlayController extends Controller
             $actorGraph = $this->graphBuilder->buildGraph(null, $minVoteCount);
             $actorPath = $randomPathFinder->find($actorGraph, $count);
 
-            $helpMovieList = $this->helpFactory->getShuffledMovies($actorPath, $minVoteCount, $level);
-            return $this->render('front/maze/actor/play.html.twig', [
-                'mazePath' => $this->mazeItemConverter->convertActors($actorPath),
-                'helpList' => $this->mazeItemConverter->convertFilmographyMovies($helpMovieList),
-            ]);
+            return $this->renderPlayView($actorPath, $minVoteCount, $level);
         } catch (\Exception $ex) {
             $this->addFlash('error', 'Une erreur est survenue lors de l\'initialisation du quiz.');
 
@@ -105,10 +101,7 @@ class ActorPlayController extends Controller
             $actorGraph = $this->graphBuilder->buildGraph(null, $minVoteCount);
             $actorPath = $minPathFinder->find($actorGraph, $actorGraph[$startActorId], $actorGraph[$endActorId]);
 
-            return $this->render('front/maze/actor/play.html.twig', [
-                'actorPath' => $actorPath,
-                'helpMovieList' => $this->helpFactory->getShuffledMovies($actorPath, $minVoteCount, $level),
-            ]);
+            return $this->renderPlayView($actorPath, $minVoteCount, $level);
         } catch (\Exception $ex) {
             $this->addFlash('error', 'Une erreur est survenue lors de l\'initialisation du quiz.');
 
@@ -136,14 +129,31 @@ class ActorPlayController extends Controller
             $actorGraph = $this->graphBuilder->buildGraph($actorIds, $minVoteCount);
             $actorPath = $maxPathFinder->find($actorGraph);
 
-            return $this->render('front/maze/actor/play.html.twig', [
-                'actorPath' => $actorPath,
-                'helpMovieList' => $this->helpFactory->getShuffledMovies($actorPath, $minVoteCount, $level),
-            ]);
+            return $this->renderPlayView($actorPath, $minVoteCount, $level);
         } catch (\Exception $ex) {
             $this->addFlash('error', 'Une erreur est survenue lors de l\'initialisation du quiz.');
 
             return $this->redirectToRoute('actor_maze_fo');
         }
+    }
+
+    /**
+     * @param array $actorPath
+     * @param int $minVoteCount
+     * @param int $level
+     *
+     * @return Response
+     */
+    protected function renderPlayView(array $actorPath, int $minVoteCount, int $level): Response
+    {
+        $helpMovieList = $this->helpFactory->getMovies($actorPath, $minVoteCount, $level);
+
+        return $this->render('front/maze/actor/play.html.twig', [
+            'mazePath' => $this->mazeItemConverter->convertActors($actorPath),
+            'helpList' => $this->mazeItemConverter->convertFilmographyMovies($helpMovieList),
+            'responseRoute' => 'fo_maze_actor_progress',
+            'trickRoute' => 'fo_maze_actor_trick',
+            'level' => $level,
+        ]);
     }
 }

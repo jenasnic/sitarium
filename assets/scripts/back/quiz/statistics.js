@@ -6,7 +6,7 @@ import { displayModal, closeModal } from "../popup";
  * @param form
  */
 const initTabAction = () => {
-    document.querySelectorAll('#statistics-tabs .tab-item').forEach(
+    [...document.querySelectorAll('#statistics-tabs .tab-item')].forEach(
         (tab) => {
             tab.addEventListener('click', (event) => {
                 activeTab(tab);
@@ -19,7 +19,7 @@ const initTabAction = () => {
  * Allows to initialize action to display detail about statistics.
  */
 const initDetailAction = () => {
-    document.querySelectorAll('.show-statistics-detail-button').forEach(
+    [...document.querySelectorAll('.show-statistics-detail-button')].forEach(
         (element) => {
             element.addEventListener('click', (event) => {
                 viewStatisticsDetail(element.getAttribute('data-url'));
@@ -35,7 +35,7 @@ const initDetailAction = () => {
  * @param currentTab
  */
 const activeTab = (currentTab) => {
-    document.querySelectorAll('#statistics-tabs .tab-item').forEach(
+    [...document.querySelectorAll('#statistics-tabs .tab-item')].forEach(
         (tab) => {tab.classList.remove('is-active')}
     );
     currentTab.classList.add('is-active');
@@ -48,7 +48,7 @@ const activeTab = (currentTab) => {
  * @param currentPanel
  */
 const displayPanel = (currentPanel) => {
-    document.querySelectorAll('#statistics-tabs .tab-panel').forEach(
+    [...document.querySelectorAll('#statistics-tabs .tab-panel')].forEach(
         (panel) => {panel.classList.add('is-hidden')}
     );
     currentPanel.classList.remove('is-hidden');

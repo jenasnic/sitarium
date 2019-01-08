@@ -2,6 +2,8 @@
 
 namespace App\Service\Maze;
 
+use App\Entity\Maze\Actor;
+use App\Entity\Maze\Movie;
 use App\Model\Maze\MazeGraphItem;
 
 /**
@@ -22,7 +24,7 @@ class RandomPathFinder
      *
      * @throws \InvalidArgumentException Throw exception if specified size doesn't allows to build path of items...
      *
-     * @return array|null array of items linked together (size of array is 'mazeSize')
+     * @return Actor[]|Movie[]|array|null array of items linked together (size of array is 'mazeSize')
      */
     public function find(array $mazeGraph, int $mazeSize): ?array
     {
@@ -67,7 +69,7 @@ class RandomPathFinder
      * @param array $currentPath current path of MazeGraphItem (path we are building recursively)
      * @param int $pathSize Size of path (for previous argument $currentPath) we want to get (i.e. item count).
      *
-     * @return array array of MazeGraphItem matching current built path
+     * @return MazeGraphItem[]|array array of MazeGraphItem matching current built path
      */
     protected function findPathWithSize(array $mazeGraph, MazeGraphItem $graphItem, array $currentPath, int $pathSize): array
     {
@@ -98,9 +100,9 @@ class RandomPathFinder
     }
 
     /**
-     * @param array $array
+     * @param MazeGraphItem[]|array $array
      *
-     * @return array
+     * @return MazeGraphItem[]|array
      */
     private function shuffleArray(array $array): array
     {

@@ -2,6 +2,8 @@
 
 namespace App\Service\Maze;
 
+use App\Entity\Maze\CastingActor;
+use App\Entity\Maze\Movie;
 use Doctrine\Common\Collections\Collection;
 
 /**
@@ -12,12 +14,12 @@ class MoviePathHelpFactory
     /**
      * Allows to get list of actors to use to resolve specified movie path (used to display help for movie maze...).
      *
-     * @param array $moviePath array of movies we want to get casting as helper
+     * @param Movie[]|array $moviePath array of movies we want to get casting as helper
      * @param int $level difficulty level (0 easy, 1 medium, 2 difficult) used to reduce help list count
      *
-     * @return array array of actors matching specified parameters
+     * @return CastingActor[]|array array of actors matching specified parameters
      */
-    public function getShuffledActors(array $moviePath, int $level): array
+    public function getActors(array $moviePath, int $level): array
     {
         $actorList = [];
         $actorCountPerMovie = 2 * ($level + 1);
@@ -58,8 +60,10 @@ class MoviePathHelpFactory
             }
         }
 
-        // Mix result and return it
-        shuffle($actorList);
+        // Sort list alphabetically and return it
+        usort($actorList, function (CastingActor $actor1, CastingActor $actor2) {
+            return strcmp($actor1->getFullname(), $actor2->getFullname());
+        });
 
         return $actorList;
     }
@@ -68,8 +72,8 @@ class MoviePathHelpFactory
      * Allows to fill actor list using specified paramaters.
      * NOTE : Specified actor list to fill will be updated in this method.
      *
-     * @param array $actorListToFill array of actors we want to fill until reaching actor count per movie value
-     * @param array $actorListSource array of actors used to fill previous parameter
+     * @param CastingActor[]|array $actorListToFill array of actors we want to fill until reaching actor count per movie value
+     * @param CastingActor[]|array $actorListSource array of actors used to fill previous parameter
      * @param int $addedActorCount current actor count added to actor list we are filling
      * @param int $actorCountPerMovie number of actors we want to add to actor list we are filling
      *
@@ -95,8 +99,8 @@ class MoviePathHelpFactory
     /**
      * Allows to get common actors between 2 specified actors list.
      *
-     * @param Collection $actorList1
-     * @param Collection $actorList2
+     * @param CastingActor[]|Collection $actorList1
+     * @param CastingActor[]|Collection $actorList2
      *
      * @return array
      */

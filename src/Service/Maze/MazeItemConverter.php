@@ -29,9 +29,9 @@ class MazeItemConverter
     }
 
     /**
-     * @param array $actors
+     * @param Actor[]|array $actors
      *
-     * @return array
+     * @return MazeItem[]|array
      */
     public function convertActors(array $actors): array
     {
@@ -59,9 +59,9 @@ class MazeItemConverter
     }
 
     /**
-     * @param array $actors
+     * @param CastingActor[]|array $actors
      *
-     * @return array
+     * @return MazeItem[]|array
      */
     public function convertCastingActors(array $actors): array
     {
@@ -89,9 +89,9 @@ class MazeItemConverter
     }
 
     /**
-     * @param array $movies
+     * @param Movie[]|array $movies
      *
-     * @return array
+     * @return MazeItem[]|array
      */
     public function convertMovies(array $movies): array
     {
@@ -105,7 +105,7 @@ class MazeItemConverter
     }
 
     /**
-     * @param Movie $movie
+     * @param FilmographyMovie $movie
      *
      * @return MazeItem
      */
@@ -119,9 +119,9 @@ class MazeItemConverter
     }
 
     /**
-     * @param array $movies
+     * @param FilmographyMovie[]|array $movies
      *
-     * @return array
+     * @return MazeItem[]|array
      */
     public function convertFilmographyMovies(array $movies): array
     {

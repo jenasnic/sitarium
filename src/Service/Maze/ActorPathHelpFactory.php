@@ -2,6 +2,8 @@
 
 namespace App\Service\Maze;
 
+use App\Entity\Maze\Actor;
+use App\Entity\Maze\FilmographyMovie;
 use Doctrine\Common\Collections\Collection;
 
 /**
@@ -12,13 +14,13 @@ class ActorPathHelpFactory
     /**
      * Allows to get list of movies to use to resolve specified actor path (used to display help for actor maze...).
      *
-     * @param array $actorPath array of actors we want to get filmography as helper
+     * @param Actor[]|array $actorPath array of actors we want to get filmography as helper
      * @param int $minVoteCount minimum vote count value used to extract movies from specified actors (difficulty level)
      * @param int $level difficulty level (0 easy, 1 medium, 2 difficult) used to reduce help list count
      *
-     * @return array array of movies matching specified parameters
+     * @return FilmographyMovie[]|array array of movies matching specified parameters
      */
-    public function getShuffledMovies(array $actorPath, int $minVoteCount, int $level): array
+    public function getMovies(array $actorPath, int $minVoteCount, int $level): array
     {
         $movieList = [];
         $movieCountPerActor = 2 * ($level + 1);
@@ -59,8 +61,10 @@ class ActorPathHelpFactory
             }
         }
 
-        // Mix result and return it
-        shuffle($movieList);
+        // Sort list alphabetically and return it
+        usort($movieList, function (FilmographyMovie $movie1, FilmographyMovie $movie2) {
+            return strcmp($movie1->getTitle(), $movie2->getTitle());
+        });
 
         return $movieList;
     }
@@ -69,8 +73,8 @@ class ActorPathHelpFactory
      * Allows to fill movie list using specified paramaters.
      * NOTE : Specified movie list to fill will be updated in this method.
      *
-     * @param array $movieListToFill array of movies we want to fill until reaching movie count per actor value
-     * @param array $movieListSource array of movies used to fill previous parameter
+     * @param FilmographyMovie[]|array $movieListToFill array of movies we want to fill until reaching movie count per actor value
+     * @param FilmographyMovie[]|array $movieListSource array of movies used to fill previous parameter
      * @param int $addedMovieCount current movie count added to movie list we are filling
      * @param int $movieCountPerActor number of movies we want to add to movie list we are filling
      * @param int $minVoteCount minimum vote count value for movies used to build movie list (difficulty level)
@@ -98,8 +102,8 @@ class ActorPathHelpFactory
     /**
      * Allows to get common movies between 2 specified movie list.
      *
-     * @param Collection $movieList1
-     * @param Collection $movieList2
+     * @param FilmographyMovie[]|Collection $movieList1
+     * @param FilmographyMovie[]|Collection $movieList2
      * @param int $minVoteCount minimum vote count value for common movies to keep (difficulty level)
      *
      * @return array

@@ -2,6 +2,8 @@
 
 namespace App\Service\Maze;
 
+use App\Entity\Maze\Actor;
+use App\Entity\Maze\Movie;
 use App\Model\Maze\MazeGraphItem;
 
 /**
@@ -20,7 +22,7 @@ class MinPathFinder
      * @param MazeGraphItem $startItem mazeGraphItem to use as starting point to find shortest path
      * @param MazeGraphItem $endItem mazeGraphItem to use as ending point to find shortest path
      *
-     * @return array|null array of items linked together
+     * @return Actor[]|Movie[]|array|null array of items linked together
      */
     public function find(array $mazeGraph, MazeGraphItem $startItem, MazeGraphItem $endItem): ?array
     {
@@ -47,9 +49,9 @@ class MinPathFinder
      * @param array $mazeGraph map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
      * @param MazeGraphItem $currentItem mazeGraphItem to use as starting point to find shortest path
      * @param MazeGraphItem $itemToReach mazeGraphItem to use as ending point to find shortest path
-     * @param array $currentPath current path of MazeGraphItem (path we are building recursively)
+     * @param MazeGraphItem[]|array $currentPath current path of MazeGraphItem (path we are building recursively)
      *
-     * @return array|null array of MazeGraphItem matching shortest path or NULL if no path found
+     * @return MazeGraphItem[]|array|null array of MazeGraphItem matching shortest path or NULL if no path found
      */
     protected function findShortestPath(array $mazeGraph, MazeGraphItem $currentItem, MazeGraphItem $itemToReach, array $currentPath): ?array
     {
@@ -115,7 +117,7 @@ class MinPathFinder
      * @param array $mazeGraph
      * @param int $bestPathSize
      */
-    private function setBestPathSizeForGraphItem(array $mazeGraph, int $bestPathSize)
+    private function setBestPathSizeForGraphItem(array $mazeGraph, int $bestPathSize): void
     {
         /** @var MazeGraphItem $mazeGraphItem */
         foreach ($mazeGraph as $mazeGraphItem) {
@@ -124,9 +126,9 @@ class MinPathFinder
     }
 
     /**
-     * @param array $itemPath
+     * @param MazeGraphItem[]|array $itemPath
      */
-    private function updateBestPathPositionForGraphItem(array $itemPath)
+    private function updateBestPathPositionForGraphItem(array $itemPath): void
     {
         for ($i = 0; $i < count($itemPath); ++$i) {
             if (0 === $itemPath[$i]->getBestPathPosition() || $itemPath[$i]->getBestPathPosition() > $i) {

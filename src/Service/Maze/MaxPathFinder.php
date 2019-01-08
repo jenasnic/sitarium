@@ -2,6 +2,8 @@
 
 namespace App\Service\Maze;
 
+use App\Entity\Maze\Actor;
+use App\Entity\Maze\Movie;
 use App\Model\Maze\MazeGraphItem;
 
 /**
@@ -20,7 +22,7 @@ class MaxPathFinder
      *
      * @throws \Exception Throw exception if not enough items in specified graph...
      *
-     * @return array array of items linked together
+     * @return Actor[]|Movie[]|array array of items linked together
      */
     public function find(array $mazeGraph): array
     {
@@ -62,7 +64,7 @@ class MaxPathFinder
      * @param MazeGraphItem $currentItem mazeGraphItem to use as starting point to find longuest path
      * @param array $currentPath current path of MazeGraphItem (path we are building recursively)
      *
-     * @return array array of MazeGraphItem matching longest path found
+     * @return MazeGraphItem[]|array array of MazeGraphItem matching longest path found
      */
     protected function findLongestPath(array $mazeGraph, MazeGraphItem $currentItem, array $currentPath): array
     {

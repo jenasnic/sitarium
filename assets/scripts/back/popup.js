@@ -26,9 +26,9 @@ export const closeModal = (id) => {
  * Define action to close modal when clicking on background or on button to close.
  * NOTE : action allowed only for modal that define close button.
  */
-document.querySelector('.modal') && document.querySelectorAll('.modal').forEach(function(modalElement) {
+document.querySelector('.modal') && [...document.querySelectorAll('.modal')].forEach(function(modalElement) {
     modalElement.querySelector('.modal-close') 
-        && modalElement.querySelectorAll('.modal-background, .modal-close').forEach(function(closeItem) {
+        && [...modalElement.querySelectorAll('.modal-background, .modal-close')].forEach(function(closeItem) {
             closeItem.addEventListener('click', function() {
                 modalElement.classList.remove('is-active');
             });

@@ -69,11 +69,7 @@ class MoviePlayController extends Controller
             $movieGraph = $this->graphBuilder->buildGraph();
             $moviePath = $randomPathFinder->find($movieGraph, $count);
 
-            $helpActorList = $this->helpFactory->getShuffledActors($moviePath, $level);
-            return $this->render('front/maze/movie/play.html.twig', [
-                'mazePath' => $this->mazeItemConverter->convertMovies($moviePath),
-                'helpList' => $this->mazeItemConverter->convertCastingActors($helpActorList),
-            ]);
+            return $this->renderPlayView($moviePath, $level);
         } catch (\Exception $ex) {
             $this->addFlash('error', 'Une erreur est survenue lors de l\'initialisation du quiz.');
 
@@ -100,10 +96,7 @@ class MoviePlayController extends Controller
             $movieGraph = $this->graphBuilder->buildGraph();
             $moviePath = $minPathFinder->find($movieGraph, $movieGraph[$startMovieId], $movieGraph[$endMovieId]);
 
-            return $this->render('front/maze/movie/play.html.twig', [
-                'moviePath' => $moviePath,
-                'helpActorList' => $this->helpFactory->getShuffledActors($moviePath, $level),
-            ]);
+            return $this->renderPlayView($moviePath, $level);
         } catch (\Exception $ex) {
             $this->addFlash('error', 'Une erreur est survenue lors de l\'initialisation du quiz.');
 
@@ -129,14 +122,31 @@ class MoviePlayController extends Controller
             $movieGraph = $this->graphBuilder->buildGraph($movieIds);
             $moviePath = $maxPathFinder->find($movieGraph);
 
-            return $this->render('front/maze/movie/play.html.twig', [
-                'moviePath' => $moviePath,
-                'helpActorList' => $this->helpFactory->getShuffledActors($moviePath, $level),
-            ]);
+            return $this->renderPlayView($moviePath, $level);
         } catch (\Exception $ex) {
             $this->addFlash('error', 'Une erreur est survenue lors de l\'initialisation du quiz.');
 
             return $this->redirectToRoute('movie_maze_fo');
         }
+    }
+
+    /**
+     * @param array $actorPath
+     * @param int $level
+     *
+     * @return Response
+     */
+    protected function renderPlayView(array $moviePath, int $level): Response
+    {
+        $helpActorList = $this->helpFactory->getActors($moviePath, $level);
+
+        return $this->render('front/maze/movie/play.html.twig', [
+            'mazePath' => $this->mazeItemConverter->convertMovies($moviePath),
+            'helpList' => $this->mazeItemConverter->convertCastingActors($helpActorList),
+            'responseRoute' => 'fo_maze_movie_progress',
+            'trickRoute' => 'fo_maze_movie_trick',
+            'level' => $level,
+        ]);
+
     }
 }

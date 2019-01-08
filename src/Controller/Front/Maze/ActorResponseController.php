@@ -22,16 +22,18 @@ class ActorResponseController extends Controller
      */
     public function progressAction(Request $request, ActorPathResponseValidator $responseChecker): JsonResponse
     {
-        $previousActorId = $request->request->get('previousActorId');
-        $nextActorId = $request->request->get('nextActorId');
-        $movieTitle = trim(rawurldecode($request->request->get('response')));
+        $data = json_decode($request->getContent(), true);
+
+        $previousActorId = $data['currentTmdbId'];
+        $nextActorId = $data['nextTmdbId'];
+        $movieTitle = trim($data['response']);
 
         try {
-            if ($commonMovie = $responseChecker->execute($previousActorId, $nextActorId, $movieTitle)) {
+            if ($commonMovie = $responseChecker->check($previousActorId, $nextActorId, $movieTitle)) {
                 return new JsonResponse([
                     'success' => true,
-                    'tmdbId' => $commonMovie->getTmdbId(),
-                    'title' => $commonMovie->getTitle(),
+                    'displayName' => $commonMovie->getTitle(),
+                    'tmdbLink' => sprintf('https://www.themoviedb.org/movie/%d', $commonMovie->getTmdbId()),
                     'pictureUrl' => TmdbUtil::getBasePictureUrl().$commonMovie->getPictureUrl(),
                 ]);
             }
@@ -52,20 +54,23 @@ class ActorResponseController extends Controller
      */
     public function trickAction(Request $request, ActorRepository $actorRepository): JsonResponse
     {
-        $actorId = $request->request->get('actorId');
-        $level = $request->request->get('level');
+        $data = json_decode($request->getContent(), true);
+        $actorId = $data['tmdbId'];
+        $level = $data['level'];
 
         try {
             $minVoteCount = TmdbUtil::getMinVoteCountForLevel($level);
             $actor = $actorRepository->find($actorId);
 
             if ($actor) {
-                $htmlFlux = $this->renderView('front/maze/actor/trick.html.twig', [
-                    'actor' => $actor,
-                    'minVoteCount' => $minVoteCount,
-                ]);
+                $movies = [];
+                foreach ($actor->getMovies() as $movie) {
+                    if ($movie->getVoteCount() >= $minVoteCount) {
+                        $movies[] = $movie->getTitle();
+                    }
+                }
 
-                return new JsonResponse(['success' => true, 'message' => $htmlFlux]);
+                return new JsonResponse(['success' => true, 'responses' => $movies]);
             } else {
                 return new JsonResponse(['success' => false, 'message' => 'Acteur introuvable.']);
             }

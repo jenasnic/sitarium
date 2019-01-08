@@ -3,6 +3,10 @@ Allows to display list of actors we want to find common credit movie => path of 
 Required :
 - MazeItem[] mazePath : list of actors linked by common credit movies (as Actor).
 - MazeItem[] helpList : list of movies used to help user to find path (as Movie).
+- string responseRoute : Name of route to submit and check response.
+- string trickRoute : Name of route to request a trick.
+Optional
+- int level : Difficulty level for maze.
 #}
 
 {% extends "front/maze/_play.html.twig" %}

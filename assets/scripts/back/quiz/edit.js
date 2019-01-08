@@ -38,7 +38,7 @@ const initQuizResponseAction = () => {
         buildTmdbLink(event.target.getAttribute('data-link-url'), event.target.getAttribute('data-progress-url'))
     });
 
-    document.querySelectorAll('.edit-quiz-response-button').forEach(
+    [...document.querySelectorAll('.edit-quiz-response-button')].forEach(
         (element) => {
             element.addEventListener('click', (event) => {
                 editQuizResponse(element.getAttribute('data-url'));
@@ -46,7 +46,7 @@ const initQuizResponseAction = () => {
         }
     );
 
-    document.querySelectorAll('.delete-quiz-response-button').forEach(
+    [...document.querySelectorAll('.delete-quiz-response-button')].forEach(
         (element) => {
             element.addEventListener('click', (event) => {
                 deleteQuizResponse(element.getAttribute('data-url'));

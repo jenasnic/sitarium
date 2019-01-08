@@ -155,7 +155,7 @@ class Actor
     }
 
     /**
-     * @return Collection
+     * @return FilmographyMovie[]|Collection
      */
     public function getMovies(): Collection
     {

@@ -22,16 +22,18 @@ class MovieResponseController extends Controller
      */
     public function progressAction(Request $request, MoviePathResponseValidator $responseChecker): JsonResponse
     {
-        $previousMovieId = $request->request->get('previousMovieId');
-        $nextMovieId = $request->request->get('nextMovieId');
-        $actorName = trim(rawurldecode($request->request->get('response')));
+        $data = json_decode($request->getContent(), true);
+
+        $previousMovieId = $data['currentTmdbId'];
+        $nextMovieId = $data['nextTmdbId'];
+        $actorName = trim($data['response']);
 
         try {
-            if ($commonActor = $responseChecker->execute($previousMovieId, $nextMovieId, $actorName)) {
+            if ($commonActor = $responseChecker->check($previousMovieId, $nextMovieId, $actorName)) {
                 return new JsonResponse([
                     'success' => true,
-                    'tmdbId' => $commonActor->getTmdbId(),
-                    'fullname' => $commonActor->getFullname(),
+                    'displayName' => $commonActor->getFullname(),
+                    'tmdbLink' => sprintf('https://www.themoviedb.org/person/%d', $commonActor->getTmdbId()),
                     'pictureUrl' => TmdbUtil::getBasePictureUrl().$commonActor->getPictureUrl(),
                 ]);
             }
@@ -52,15 +54,19 @@ class MovieResponseController extends Controller
      */
     public function trickAction(MovieRepository $movieRepository, Request $request): JsonResponse
     {
-        $movieId = $request->request->get('movieId');
+        $data = json_decode($request->getContent(), true);
+        $movieId = $data['tmdbId'];
 
         try {
             $movie = $movieRepository->find($movieId);
 
             if ($movie) {
-                $htmlFlux = $this->renderView('front/maze/movie/trick.html.twig', ['movie' => $movie]);
+                $actors = [];
+                foreach ($movie->getActors() as $actor) {
+                    $actors[] = $actor->getFullname();
+                }
 
-                return new JsonResponse(['success' => true, 'message' => $htmlFlux]);
+                return new JsonResponse(['success' => true, 'responses' => $actors]);
             } else {
                 return new JsonResponse(['success' => false, 'message' => 'Film introuvable.']);
             }

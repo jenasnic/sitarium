@@ -199,7 +199,7 @@ class Movie
     }
 
     /**
-     * @return Collection
+     * @return CastingActor[]|Collection
      */
     public function getActors(): Collection
     {

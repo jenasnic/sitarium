@@ -2,10 +2,13 @@
 
 namespace App\Model\Maze;
 
+use App\Entity\Maze\Actor;
+use App\Entity\Maze\Movie;
+
 class MazeGraphItem
 {
     /**
-     * @var mixed
+     * @var Actor|Movie
      */
     private $item;
 
@@ -34,7 +37,7 @@ class MazeGraphItem
     }
 
     /**
-     * @return mixed
+     * @return Actor|Movie
      */
     public function getItem()
     {
@@ -42,7 +45,7 @@ class MazeGraphItem
     }
 
     /**
-     * @param mixed $item
+     * @param Actor|Movie $item
      */
     public function setItem($item)
     {

@@ -3,6 +3,10 @@ Allows to display list of maze items we want to find common info => path of acto
 Required :
 - MazeItem[] mazePath : list of maze items (actors or movies) linked by common info (credit movies or credit actors).
 - MazeItem[] helpList : list of maze items (movies or actors) used to help user to find path.
+- string responseRoute : Name of route to submit and check response.
+- string trickRoute : Name of route to request a trick.
+Optional
+- int level : Difficulty level for maze.
 #}
 
 {% extends "base.html.twig" %}
@@ -11,7 +15,7 @@ Required :
 
     <h1>{% block mazeTitle %}{% endblock %}</h1>
 
-    <div id="maze-play">
+    <div id="maze-play" data-response-url="{{ path(responseRoute) }}" data-trick-url="{{ path(trickRoute) }}">
 
         <div id="action-wrapper">
             <input type="text" id="response" name="response" placeholder="Saisissez votre réponse" />
@@ -22,9 +26,23 @@ Required :
         <div id="info-wrapper">
             <label>Nombre de coups : </label>
             <span id="response-count">0</span>
+            {% if level is defined %}
+                <input id="maze-level" type="hidden" value="{{ level }}" />
+            {% endif %}
         </div>
 
         <div id="maze-wrapper" class="card">
+
+            <div id="mobile-wrapper">
+                <span id="mobile-helper-button"><i class="fas fa-question-circle"></i></span>
+                {% for mazeItem in mazePath %}
+                <div data-order="{{ loop.index }}" class="mobile-maze-item">
+                    <img src="{{ mazeItem.pictureUrl }}" alt="{{ mazeItem.displayName|raw }}" />
+                    <span>{{ mazeItem.displayName }}</span>
+                </div>
+                {% endfor %}
+            </div>
+
             <div id="scroll-wrapper">
                 <div id="maze-items">
                     <span id="maze-cursor"><i class="fas fa-share fa-5x"></i></span>
@@ -32,7 +50,7 @@ Required :
                     <div
                         data-order="{{ loop.index }}"
                         data-tmdb-id="{{ mazeItem.tmdbId }}"
-                        class="maze-item{{ loop.first ? ' active': '' }}"
+                        class="maze-item{{ loop.first ? ' first active': '' }}{{ loop.last ? ' last': '' }}"
                     >
                         <img src="{{ mazeItem.pictureUrl }}" alt="{{ mazeItem.displayName|raw }}" />
                         <span>{{ mazeItem.displayName }}</span>
@@ -40,14 +58,15 @@ Required :
                     {% endfor %}
                 </div>
             </div>
+
         </div>
 
         <div id="helper-wrapper" class="card center">
 
-            <h2>Besoin d'aide ?<span id="toggle-button"><i class="fas fa-plus-circle fa-lg"></i></span></h2>
+            <h2>Besoin d'aide ?<span id="toggle-helper-button"><i class="fas fa-plus-circle fa-lg"></i></span></h2>
 
             <div id="toggle-wrapper">
-                {% block mazeHelpText %}{% endblock %}
+                <div id="helper-note">{% block mazeHelpText %}{% endblock %}</div>
                 {%
                     include 'front/maze/_selection.html.twig'
                     with {
@@ -57,6 +76,10 @@ Required :
                 %}
             </div>
 
+        </div>
+
+        <div id="replay-wrapper" class="center">
+            <span id="replay-button" class="button">Rejouer</span>
         </div>
 
     </div>

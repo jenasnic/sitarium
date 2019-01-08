@@ -5,7 +5,7 @@ import { displayModal, closeModal } from "../popup";
  */
 const initDetailAction = () => {
     const baseUrl = document.getElementById('maze-item-list').getAttribute('data-base-detail-url');
-    document.querySelectorAll('.show-maze-item-detail-button').forEach(
+    [...document.querySelectorAll('.show-maze-item-detail-button')].forEach(
         (element) => {
             element.addEventListener('click', (event) => {
                 viewMazeItemDetail(baseUrl, element.getAttribute('data-id'));

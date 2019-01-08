@@ -10,7 +10,7 @@ import { displayModal } from "../popup";
  */
 const reorderQuizRows = (from, to) => {
     let reorderedIds = [];
-    const rows = document.querySelectorAll('#quiz-list tbody tr');
+    const rows = [...document.querySelectorAll('#quiz-list tbody tr')];
 
     for (let i = from; i <= to; i++) {
         const row = rows[i - 1];

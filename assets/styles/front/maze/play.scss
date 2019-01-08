@@ -27,6 +27,8 @@
     #maze-wrapper {
         max-width: 100vw;
 
+        #mobile-wrapper {display: none;}
+
         #scroll-wrapper {
             overflow: hidden;
             position: relative;
@@ -36,7 +38,9 @@
             #maze-items {
                 display: flex;
                 flex-direction: row;
+                margin: 0 auto;
                 padding-top: 2em;
+                position: relative;
 
                 #maze-cursor {
                     position: absolute;
@@ -70,6 +74,18 @@
                         padding: 0.3em 0.3em 0.6em 0.3em;
                     }
                 }
+
+                .maze-response {
+                    position: absolute;
+                    top: 10px;
+
+                    img {
+                        border: 2px solid $color-border-input;
+                        border-radius: 5px;
+                        box-shadow: $box-shadow-input;
+                        width: 100px;
+                    }
+                }
             }
             
         }
@@ -78,16 +94,16 @@
     #helper-wrapper {
         margin-top: 2em;
 
-        #toggle-button {
+        #toggle-helper-button {
             float: right;
             cursor: pointer;
 
             i {
-                color: $color-text-action;
+                color: $color-button-default-2;
                 text-shadow: $text-shadow-dark;
             }
 
-            &:hover i {color: $color-text-active;}
+            &:hover i {color: $color-button-active-1;}
         }
 
         #toggle-wrapper {
@@ -136,6 +152,13 @@
             }
         }
     }
+
+    #replay-wrapper {
+        display: none;
+        margin-top: 2em;
+
+        &.active {display: block;}
+    }
 }
 
 @media #{$media-medium}
@@ -144,10 +167,98 @@
 
 @media #{$media-small}
 {
-    #actor-maze-play, #movie-maze-play {
-        #action-wrapper {
-            flex-wrap: wrap;
-            justify-content: center;
+    #maze-play {
+        #action-wrapper {display: none;}
+
+        #maze-wrapper {
+            #mobile-wrapper {
+                display: flex;
+                justify-content: center;
+                margin: 0 auto;
+                position: relative;
+
+                #mobile-helper-button {
+                    cursor: pointer;
+                    font-size: 10vw;
+                    order: 2;
+
+                    i {
+                        color: $color-button-default-2;
+                        text-shadow: $text-shadow-dark;
+                    }
+
+                    &:hover i {color: $color-button-active-1;}
+                }
+
+                .mobile-maze-item {
+                    background-color: $transparent-background-black;
+                    border: 2px solid $color-border-default;
+                    border-radius: 5px;
+                    box-shadow: 0px 0px 2px $color-border-default;
+                    display: none;
+                    margin: 0 1em;
+                    max-width: 180px;
+                    text-align: center;
+
+                    img {max-width: 100%;}
+
+                    span {
+                        display: block;
+                        font-size: 3vw;
+                        padding: 0.3em 0.3em 0.6em 0.3em;
+                    }
+
+                    &.current {
+                        display: block;
+                        order: 1;
+                    }
+
+                    &.next {
+                        display: block;
+                        order: 3;
+                    }
+                }
+
+                &.over {
+                    flex-wrap: wrap;
+
+                    #mobile-helper-button {display: none;}
+
+                    .mobile-maze-item {
+                        display: block;
+                        margin: 0.5em;
+                    }
+                }
+            }
+
+            #scroll-wrapper {display: none;}
+        }
+
+        #helper-wrapper {
+            background: none;
+            margin: 0;
+            padding: 0;
+
+            h2, #toggle-helper-button {display: none;}
+
+            #toggle-wrapper {
+                display: block;
+
+                #helper-note {display: none;}
+
+                #response-wrapper {
+                    display: none;
+                    &.mobile-active {
+                        background-color: $transparent-background-dark;
+                        display: flex;
+                        min-height: 100vh;
+                        padding: 30px 0;
+                        position: absolute;
+                        top: -30px;
+                        left: 0;
+                    }
+                }
+            }
         }
     }
 }

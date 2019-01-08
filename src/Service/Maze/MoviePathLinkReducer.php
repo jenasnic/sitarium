@@ -12,9 +12,9 @@ use App\Entity\Maze\Movie;
 class MoviePathLinkReducer
 {
     /**
-     * @param array $moviePath
+     * @param Movie[]|array $moviePath
      */
-    public function reduceLinks(array $moviePath)
+    public function reduceLinks(array $moviePath): void
     {
         // Process movies to keep only first common actor that allow a link with next movie
         for ($i = 0; $i < count($moviePath); ++$i) {

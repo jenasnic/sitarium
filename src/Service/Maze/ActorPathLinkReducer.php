@@ -12,9 +12,9 @@ use App\Entity\Maze\FilmographyMovie;
 class ActorPathLinkReducer
 {
     /**
-     * @param array $actorPath
+     * @param Actor[]|array $actorPath
      */
-    public function reduceLinks(array $actorPath)
+    public function reduceLinks(array $actorPath): void
     {
         // Process actors to keep only top rated movie that allow a link with next actor
         for ($i = 0; $i < count($actorPath); ++$i) {

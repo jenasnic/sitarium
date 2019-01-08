@@ -4,7 +4,7 @@ import { displayModal, closeModal } from "../popup";
  * Allows to initialize action to display detail about winner.
  */
 const initDetailAction = () => {
-    document.querySelectorAll('.show-winner-detail-button').forEach(
+    [...document.querySelectorAll('.show-winner-detail-button')].forEach(
         (element) => {
             element.addEventListener('click', (event) => {
                 viewWinnerDetail(element.getAttribute('data-url'));
