@@ -1,6 +1,6 @@
 .tingle-modal {
     &__close {
-        font-size: 3em;
+        font-size: 3rem;
         &:hover {
             .tingle-modal__closeIcon {color: $color-button-active-1;}
         }
@@ -16,7 +16,8 @@
         
         &__content {
             color: $color-text-popup;
-            padding: 1em 2em;
+            font-size: 1rem;
+            padding: 1rem 2rem;
 
             * {color: $color-text-popup;}
         }

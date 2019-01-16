@@ -3,15 +3,15 @@
     .maze-selection-wrapper {
         display: flex;
         justify-content: center;
-        margin-bottom: 2em;
-        margin-top: 2em;
+        margin-bottom: 2rem;
+        margin-top: 2rem;
         max-width: 550px;
 
         .maze-selection-item {
             display: flex;
             flex-direction: column;
-            font-size: 1.3em;
-            margin: 0 2em;
+            font-size: 1.3rem;
+            margin: 0 2rem;
             text-shadow: $text-shadow-darker;
 
             span, span i {color: $color-button-default-2;}
@@ -22,7 +22,7 @@
 }
 
 #maze-filmography, #maze-casting {
-    .card {margin-top: 2em;}
+    .card {margin-top: 2rem;}
 
     form {
         select {width: 125px;}
@@ -36,7 +36,7 @@
             flex-direction: column;
 
             .maze-selection-item {
-                margin: 1em 0;
+                margin: 1rem 0;
 
                 &:hover span, &:hover span i {color: $color-text-link;}
             }

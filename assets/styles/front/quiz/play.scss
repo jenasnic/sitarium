@@ -49,20 +49,20 @@
 
         #quiz-responses {
             flex-grow: 1;
-            font-size: 0.8em;
+            font-size: 0.8rem;
             list-style: none;
             min-height: 20px;
             text-align: left;
 
             li {
-                line-height: 1em;
-                margin-bottom: 0.4em;
+                line-height: 1rem;
+                margin-bottom: 0.4rem;
             }
         }
 
         #quiz-info {
             border-top: 1px solid $color-border-default;
-            font-size: 0.8em;
+            font-size: 0.8rem;
             min-width: 200px;
             padding-top: 8px;
             text-align: left;

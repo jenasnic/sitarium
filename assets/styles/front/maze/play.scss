@@ -4,7 +4,7 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
-        padding-top: 0.5em;
+        padding-top: 0.5rem;
 
         input[type="text"] {
             flex-grow: 1;
@@ -17,8 +17,8 @@
     }
 
     #info-wrapper {
-        font-size: 0.8em;
-        padding: 0.5em 0 1em 0;
+        font-size: 0.8rem;
+        padding: 0.5rem 0 1rem 0;
         text-align: center;
 
         span {color: $color-text-link;}
@@ -32,14 +32,14 @@
         #scroll-wrapper {
             overflow: hidden;
             position: relative;
-            margin: 0 1.5em;
-            padding-bottom: 2em;
+            margin: 0 1.5rem;
+            padding-bottom: 2rem;
 
             #maze-items {
                 display: flex;
                 flex-direction: row;
                 margin: 0 auto;
-                padding-top: 2em;
+                padding-top: 2rem;
                 position: relative;
 
                 #maze-cursor {
@@ -71,7 +71,7 @@
 
                     span {
                         display: block;
-                        padding: 0.3em 0.3em 0.6em 0.3em;
+                        padding: 0.3rem 0.3rem 0.6rem 0.3rem;
                     }
                 }
 
@@ -92,7 +92,7 @@
     }
 
     #helper-wrapper {
-        margin-top: 2em;
+        margin-top: 2rem;
 
         #toggle-helper-button {
             float: right;
@@ -116,7 +116,7 @@
                 flex-direction: row;
                 flex-wrap: wrap;
                 justify-content: center;
-                margin-top: 1.5em;
+                margin-top: 1.5rem;
 
                 .selection-item {
                     border: 2px solid $color-border-default;
@@ -136,7 +136,7 @@
                         background-color: $transparent-background-dark;
                         display: none;
                         flex-direction: column;
-                        font-size: 0.8em;
+                        font-size: 0.8rem;
                         font-weight: bold;
                         height: 161px;
                         justify-content: center;
@@ -196,7 +196,7 @@
                     border-radius: 5px;
                     box-shadow: 0px 0px 2px $color-border-default;
                     display: none;
-                    margin: 0 1em;
+                    margin: 0 1rem;
                     max-width: 180px;
                     text-align: center;
 
@@ -226,7 +226,7 @@
 
                     .mobile-maze-item {
                         display: block;
-                        margin: 0.5em;
+                        margin: 0.5rem;
                     }
                 }
             }

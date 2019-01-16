@@ -45,7 +45,7 @@
 
         .navbar-item {
             color: $color-text-default;
-            font-size: 0.75em;
+            font-size: 0.75rem;
             padding: 3px 5px;
 
             &:hover {text-shadow: $text-shadow;}
@@ -70,7 +70,7 @@
 {
     .burger-icon {
         display: block;
-        margin-bottom: 1em;
+        margin-bottom: 1rem;
     }
 
     #menu {
@@ -96,7 +96,6 @@
             .navbar-item {
                 box-shadow: $box-shadow;
                 color: $color-text-default;
-                font-size: 1em;
                 font-weight: bold;
                 margin: 5px 0;
                 min-width: 0;
