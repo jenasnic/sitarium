@@ -1,0 +1,7 @@
+
+div.actor-details, div.movie-details {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}

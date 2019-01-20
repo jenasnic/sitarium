@@ -11,16 +11,18 @@
             <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
         {% endblock %}
     </head>
-    <body class="tingle-content-wrapper">
-        <div id="header" class="tingle-content-wrapper">
-            {% include 'front/_menu.html.twig' %}
-        </div>
-        <div class="container tingle-content-wrapper">
-            {% include 'front/_message.html.twig' %}
-            {% block body %}{% endblock %}
-        </div>
-        <div id="footer" class="tingle-content-wrapper">
-            &copy; 2018 sitarium.com
+    <body>
+        <div id="page" class="tingle-content-wrapper">
+            <div id="header">
+                {% include 'front/_menu.html.twig' %}
+            </div>
+            <div class="container">
+                {% include 'front/_message.html.twig' %}
+                {% block body %}{% endblock %}
+            </div>
+            <div id="footer">
+                &copy; 2018 sitarium.com
+            </div>
         </div>
         {% block javascripts %}
             <script src="{{ asset('build/js/app.js') }}"></script>

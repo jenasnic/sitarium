@@ -164,4 +164,30 @@ class QuizController extends Controller
             'total' => $request->getSession()->get(SessionValues::SESSION_BUILD_TMDB_LINK_TOTAL),
         ]);
     }
+
+    /**
+     * @Route("/admin/quiz/set-picture-size", name="bo_quiz_set_picture_size", methods="GET")
+     *
+     * @param QuizRepository $repository
+     * @param EntityManagerInterface $entityManager
+     * @param string $rootDir
+     *
+     * @return Response
+     */
+    public function setPictureSizeAction(QuizRepository $repository, EntityManagerInterface $entityManager, string $rootDir): Response
+    {
+        $quizList = $repository->findAll();
+
+        /* @var Quiz $quiz */
+        foreach ($quizList as $quiz) {
+            $imageSize = getimagesize(sprintf('%s/public%s', $rootDir, $quiz->getPictureUrl()));
+            $quiz->setPictureWidth($imageSize[0]);
+            $quiz->setPictureHeight($imageSize[1]);
+
+            $entityManager->persist($quiz);
+        }
+        $entityManager->flush();
+
+        return new JsonResponse('Mise à jour de la taille des images pour tous les quiz !');
+    }
 }

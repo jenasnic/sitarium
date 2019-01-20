@@ -1,0 +1,18 @@
+
+#canvas {
+    background-size: cover;
+    margin: 0 auto 2rem auto;
+    position: relative;
+    text-align: center;
+
+    .selection {
+        border: 1px solid #FFE100;
+        position: absolute;
+    }
+
+    .location {
+        border: 3px solid #FFE100;
+        border-radius: 5px;
+        position: absolute;
+    }
+}

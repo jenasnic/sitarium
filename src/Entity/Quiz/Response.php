@@ -52,23 +52,30 @@ class Response
     /**
      * @var int
      *
-     * @ORM\Column(name="positionX", type="integer")
+     * @ORM\Column(name="positionX", type="float", nullable=true)
      */
     private $positionX;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="positionY", type="integer")
+     * @ORM\Column(name="positionY", type="float", nullable=true)
      */
     private $positionY;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="size", type="integer")
+     * @ORM\Column(name="width", type="float", nullable=true)
      */
-    private $size;
+    private $width;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="height", type="float", nullable=true)
+     */
+    private $height;
 
     /**
      * @var string
@@ -180,51 +187,67 @@ class Response
     }
 
     /**
-     * @return int
+     * @return float|null
      */
-    public function getPositionX(): int
+    public function getPositionX(): ?float
     {
         return $this->positionX;
     }
 
     /**
-     * @param int $positionX
+     * @param float $positionX
      */
-    public function setPositionX(int $positionX)
+    public function setPositionX(float $positionX)
     {
         $this->positionX = $positionX;
     }
 
     /**
-     * @return int
+     * @return float|null
      */
-    public function getPositionY(): int
+    public function getPositionY(): ?float
     {
         return $this->positionY;
     }
 
     /**
-     * @param int $positionY
+     * @param float $positionY
      */
-    public function setPositionY(int $positionY)
+    public function setPositionY(float $positionY)
     {
         $this->positionY = $positionY;
     }
 
     /**
-     * @return int
+     * @return float|null
      */
-    public function getSize(): int
+    public function getWidth(): ?float
     {
-        return $this->size;
+        return $this->width;
     }
 
     /**
-     * @param int $size
+     * @param float $width
      */
-    public function setSize(int $size)
+    public function setWidth(float $width)
     {
-        $this->size = $size;
+        $this->width = $width;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getHeight(): ?float
+    {
+        return $this->height;
+    }
+
+    /**
+     * @param float $height
+     */
+    public function setHeight(float $height)
+    {
+        $this->height = $height;
     }
 
     /**

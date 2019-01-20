@@ -5,19 +5,22 @@
 
 body {
     background: url('../img/background_V2.jpg');
-    display:flex;
-    flex-direction: column;
+    font-family: Tahoma, Geneva, sans-serif;
     font-size: 10px;
-    height: 100vh;
     line-height: 1.3rem;
     text-align: justify;
 }
 
 * {
-    font-family: Tahoma, Geneva, sans-serif;
     color: $color-text-default;
     margin: 0;
     padding: 0;
+}
+
+#page {
+    display:flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 #header {
@@ -41,8 +44,9 @@ body {
 .container {
     flex-grow: 1;
     font-size: 1rem;
+    margin: 0 auto;
     max-width : 1600px;
-    margin: 0 1.5rem;
+    padding: 0 1.5rem;
 }
 
 .card {

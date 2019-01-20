@@ -42,14 +42,7 @@ $table-striped-row-even-background-color: $sitarium-grey-light-1;
 $table-row-hover-background-color: $sitarium-grey-light-3;
 $table-striped-row-even-hover-background-color: $sitarium-grey-light-3;
 
-/* Custom CSS */
-
-div.actor-details, div.movie-details {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
+/* Override Sindu (drag&drop) */
 
 .sindu_dragger table{
     background: #eee !important;

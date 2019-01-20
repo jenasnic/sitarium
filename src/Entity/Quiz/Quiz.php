@@ -67,6 +67,20 @@ class Quiz
     private $pictureUrl;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="pictureWidth", type="integer", nullable=true)
+     */
+    private $pictureWidth;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="pictureHeight", type="integer", nullable=true)
+     */
+    private $pictureHeight;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="thumbnailUrl", type="text", nullable=true)
@@ -201,6 +215,38 @@ class Quiz
     public function setPictureUrl(?string $pictureUrl)
     {
         $this->pictureUrl = $pictureUrl;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPictureWidth(): ?int
+    {
+        return $this->pictureWidth;
+    }
+
+    /**
+     * @param int $pictureWidth
+     */
+    public function setPictureWidth(int $pictureWidth)
+    {
+        $this->pictureWidth = $pictureWidth;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPictureHeight(): ?int
+    {
+        return $this->pictureHeight;
+    }
+
+    /**
+     * @param int $pictureHeight
+     */
+    public function setPictureHeight(int $pictureHeight)
+    {
+        $this->pictureHeight = $pictureHeight;
     }
 
     /**

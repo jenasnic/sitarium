@@ -39,6 +39,10 @@ class SaveQuizHandler
         // Process upload
         $this->processUpload($command->getQuiz());
 
+        $imageSize = getimagesize(sprintf('%s/public%s', $this->rootDir, $command->getQuiz()->getPictureUrl()));
+        $command->getQuiz()->setPictureWidth($imageSize[0]);
+        $command->getQuiz()->setPictureHeight($imageSize[1]);
+
         $this->entityManager->persist($command->getQuiz());
         $this->entityManager->flush();
     }

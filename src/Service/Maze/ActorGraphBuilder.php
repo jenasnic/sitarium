@@ -26,16 +26,16 @@ class ActorGraphBuilder
     /**
      * Allows to build a graph with actors and links between them.
      * This graph is returned as a map with an entry for each point of the graph (i.e. each actor).
-     * => Entry point of the graph (representing an actor) can be reach using TMDB identifier of actor.
+     * => Entry point of the graph (representing an actor) can be reached using TMDB identifier of actor.
      *
-     * @param array $actorIds Array of TMDB identifiers (as integer) for actors to use to build graph.
+     * @param int[]|array|null $actorIds Array of TMDB identifiers for actors to use to build graph.
      * Default value null means that we build full graph for all existing actors.
      * @param int $minVoteCount (default = 0) Minimum vote count value for movies used to build actor graph. This allows to use only famous movie when building graph using movies as link between actors.
      * Default value 0 means that we ignore vote count (i.e. use all movies to link actors...)
      *
      * @return array map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
      */
-    public function buildGraph($actorIds = null, $minVoteCount = 0): array
+    public function buildGraph(?array $actorIds = null, int $minVoteCount = 0): array
     {
         $actorMap = [];
         $mazeGraphItemMap = [];

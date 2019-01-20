@@ -1,0 +1,65 @@
+{#
+Allows to locate reposnes of quiz (i.e. set position X and Y on picture + define size).
+Required :
+- quiz : quiz we want to display responses (as Quiz).
+#}
+
+{% extends "admin.html.twig" %}
+
+{% block body %}
+
+    <h1 class="title">Positionnement des réponses</h1>
+
+    <div id="locate-responses">
+
+        <nav class="level">
+
+            <div class="level-left">
+                <div class="field">
+                    <label for="quiz-responses" class="label">Réponses pour le quiz "{{ quiz.name }}"</label>
+                    <div class="select">
+                        <select id="quiz-responses" name="quiz-responses" data-location-url="{{ path('bo_quiz_response_location') }}">
+                        {% for response in quiz.responses %}
+                            <option value="{{ response.id }}">{{ response.title }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="level-right">
+                <div class="column">
+                    <button id="next-button" class="button is-primary">Suivant</button>
+                </div>
+                <div class="column">
+                    <button id="validate-button" class="button is-primary" data-locate-url="{{ path('bo_quiz_locate_response') }}">Valider</button>
+                    <input id="selection-position-x" type="hidden" />
+                    <input id="selection-position-y" type="hidden" />
+                    <input id="selection-width" type="hidden" />
+                    <input id="selection-height" type="hidden" />
+                </div>
+            </div>
+
+        </nav>
+
+        <div
+            id="canvas"
+            data-picture-width="{{ quiz.pictureWidth }}"
+            data-picture-height="{{ quiz.pictureHeight }}"
+            data-picture-url="{{ quiz.pictureUrl }}"
+        >
+        </div>
+
+    </div>
+
+    {# Allows to display form to add/edit response using Ajax #}
+    <div id="quiz-locate-modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <div class="modal-card-body has-text-centered">
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
+{% endblock %}
