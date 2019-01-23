@@ -55,24 +55,23 @@ class ResponseRepository extends ServiceEntityRepository
      *
      * @return array Array of responses matching specified paramters (as Response)
      */
-    public function getResponsesWithCoordonates(int $coordonateX, int $coordonateY, int $quizId): array
+    public function getResponsesWithCoordonates(int $positionX, int $positionY, int $quizId): array
     {
-        return $this
+        $queryBuilder = $this
             ->createQueryBuilder('response')
             ->join('response.quiz', 'quiz')
             ->where('quiz.id = :quizId')
-            //->andWhere('(POWER(:coordonateX - qr.positionX, 2) + POWER(:coordonateY - qr.positionY, 2)) <= POWER(25 * POWER(2, (qr.size - 1)), 2)')
-            ->andWhere(':coordonateX >= response.positionX')
-            ->andWhere(':coordonateX <= response.positionX + 25 * POWER(2, (response.size))')
-            ->andWhere(':coordonateY >= response.positionY')
-            ->andWhere(':coordonateY <= response.positionY + 25 * POWER(2, (response.size))')
+            ->andWhere(':positionX >= response.positionX')
+            ->andWhere(':positionX <= (response.positionX + response.width)')
+            ->andWhere(':positionY >= response.positionY')
+            ->andWhere(':positionY <= (response.positionY + response.height)')
             ->setParameters([
                 'quizId' => $quizId,
-                'coordonateX' => $coordonateX,
-                'coordonateY' => $coordonateY,
+                'positionX' => $positionX,
+                'positionY' => $positionY,
             ])
-            ->getQuery()
-            ->getResult()
         ;
+
+        return $queryBuilder->getQuery()->getResult();
     }
 }

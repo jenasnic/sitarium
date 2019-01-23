@@ -26,30 +26,9 @@ class Winner
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="comment", type="text", nullable=true)
-     */
-    private $comment;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date", type="datetime")
-     */
-    private $date;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="trickCount", type="integer")
-     */
-    private $trickCount;
 
     /**
      * @var Quiz
@@ -60,6 +39,13 @@ class Winner
     private $quiz;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     */
+    private $date;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -68,67 +54,19 @@ class Winner
     }
 
     /**
-     * @return User|null
+     * @return User
      */
-    public function getUser(): ?User
+    public function getUser(): User
     {
         return $this->user;
     }
 
     /**
-     * @param User|null $user
+     * @param User $user
      */
-    public function setUser(?User $user)
+    public function setUser(User $user)
     {
         $this->user = $user;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getComment(): ?string
-    {
-        return $this->comment;
-    }
-
-    /**
-     * @param string|null $comment
-     */
-    public function setComment(?string $comment)
-    {
-        $this->comment = $comment;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getDate(): ?\DateTime
-    {
-        return $this->date;
-    }
-
-    /**
-     * @param \DateTime $date
-     */
-    public function setDate(\DateTime $date)
-    {
-        $this->date = $date;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTrickCount(): int
-    {
-        return $this->trickCount;
-    }
-
-    /**
-     * @param int $trickCount
-     */
-    public function setTrickCount(int $trickCount)
-    {
-        $this->trickCount = $trickCount;
     }
 
     /**
@@ -145,5 +83,21 @@ class Winner
     public function setQuiz(Quiz $quiz)
     {
         $this->quiz = $quiz;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDate(): \DateTime
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate(\DateTime $date)
+    {
+        $this->date = $date;
     }
 }

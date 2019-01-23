@@ -20,49 +20,64 @@ Required :
 
         <h1>{{ quiz.name }}</h1>
 
-        <div id="quiz-play">
+        <div
+            id="quiz-play"
+            data-quiz-id="{{ quiz.id }}"
+            data-picture-width="{{ quiz.pictureWidth }}"
+            data-picture-height="{{ quiz.pictureHeight }}"
+            data-response-count="{{ quiz.responses|length }}"
+            data-response-url="{{ path('fo_quiz_check_response') }}"
+            data-trick-url="{{ path('fo_quiz_trick') }}"
+            data-resolve-url="{{ path('fo_quiz_resolved', {'quiz': quiz.id}) }}"
+            {% if (quiz.responses|length == userResponses|length) %}
+                data-resolved
+            {% endif %}
+        >
 
             <div id="main-wrapper">
 
                 <div id="action-wrapper">
-                    <input type="text" id="response-input" name="response-input" placeholder="Saisissez votre réponse" />
-                    <span id="response-submit" class="button" title="Soumettre la réponse"><i class="fas fa-check"></i></span>
-                    {% if (quiz.displayTrick) %}
-                        <span id="quiz-trick" class="button" title="Demander un indice"><i class="fas fa-question"></i></span>
+                    {% if (quiz.responses|length == userResponses|length) %}
+                        <a href="{{ path('fo_quiz_replay', {'quiz': quiz.id}) }}" class="button">Rejouer</a>
+                    {% else %}
+                        <input type="text" id="response-input" name="response-input" placeholder="Saisissez votre réponse" />
+                        <span id="response-submit" class="button" title="Soumettre la réponse"><i class="fas fa-check"></i></span>
+                        {% if (quiz.displayTrick) %}
+                            <span id="quiz-trick" class="button" title="Demander un indice"><i class="fas fa-question"></i></span>
+                        {% endif %}
+                        <input type="hidden" id="quiz-response-count" name="quiz-response-count" value="{{ quiz.responses|length }}" />
                     {% endif %}
-                    <input type="hidden" id="quiz-id" name="quiz-id" value="{{ quiz.id }}" />
-                    <input type="hidden" id="quiz-response-count" name="quiz-response-count" value="{{ quiz.responses|length }}" />
-                    <input type="hidden" id="quiz-response-display" name="quiz-response-display" value="{{ quiz.displayResponse ? '1' : '0' }}" />
                 </div>
 
                 <div id="picture-wrapper">
-                    <img src="{{ asset(quiz.pictureUrl) }}" alt="" />
-                    {% if (quiz.displayResponse) %}
-                        {% for userResponse in userResponses %}
-                            <div
-                                id="response-location-{{ userResponse.response.id }}"
-                                class="response-position response-size-{{ userResponse.response.size }}"
-                                style="left:{{ userResponse.response.positionX }}px;top:{{ userResponse.response.positionY }}px;" data-id="{{ userResponse.response.id }}"
-                            >
-                            </div>
-                        {% endfor %}
-                    {% endif %}
+                    <img
+                        id="picture-quiz"
+                        src="{{ asset(quiz.pictureUrl) }}"
+                        data-zoom="{{ asset(quiz.pictureUrl) }}"
+                        alt="{{ quiz.name }}"
+                    />
                 </div>
 
             </div>
 
             <div id="data-wrapper">
-                <ul id="quiz-responses">
-                    {% for userResponse in userResponses %}
-                        <li id="response-value-{{ userResponse.response.id }}">{{ userResponse.response.title }}</li>
-                    {% endfor %}
-                </ul>
+                <div id="scroll-wrapper">
+                    <ul id="quiz-responses">
+                        {% for userResponse in userResponses %}
+                            <li
+                                data-response
+                                data-id="{{ userResponse.response.id }}"
+                                data-position-x="{{ userResponse.response.positionX }}"
+                                data-position-y="{{ userResponse.response.positionY }}"
+                                data-width="{{ userResponse.response.width }}"
+                                data-height="{{ userResponse.response.height }}"
+                            >{{ userResponse.response.title }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
                 <div id="quiz-info">
                     <div>
                         <label>Réponses trouvées : </label><span id="quiz-response-count">{{ userResponses|length }}</span> / <span>{{ quiz.responses|length }}</span>
-                    </div>
-                    <div>
-                        <label>Indices utilisés : </label><span id="quiz-trick-count">0</span>
                     </div>
                 </div>
             </div>

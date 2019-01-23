@@ -32,9 +32,7 @@ class RegisterWinnerHandler
         $winner = new Winner();
         $winner->setQuiz($command->getQuiz());
         $winner->setUser($command->getUser());
-        $winner->setTrickCount($command->getTrickCount());
-        // NOTE : for comment => replace break lines with HTML tag
-        $winner->setComment(str_replace("\n", '<br/>', $command->getComment()));
+        $winner->setDate(new \DateTime());
 
         $this->entityManager->persist($winner);
         $this->entityManager->flush();

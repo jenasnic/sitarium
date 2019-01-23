@@ -3,4 +3,4 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     form_themes:
-        - 'form/bulma_layout.html.twig'
+        - 'back/form/bulma_layout.html.twig'

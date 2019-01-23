@@ -15,7 +15,7 @@ class ResolveQuizValidator
      *
      * @return bool
      */
-    public function validate(Quiz $quiz, $responses): bool
+    public function validate(Quiz $quiz, array $responses): bool
     {
         if (count($responses) != count($quiz->getResponses())) {
             return false;

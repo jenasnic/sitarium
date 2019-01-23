@@ -3,15 +3,6 @@ import { displayModal } from "../popup";
 
 /**
  * Class to initialize response localizer (i.e. picture with mouse selection to localize some response items).
- * @param canvas element used as canvas with following data properties :
- *     - pictureWidth : width of picture used as background for canvas
- *     - pictureHeight : height of picture used as background for canvas
- *     - pictureUrl : URL of picture used as background for canvas
- * @param callbackSelection callback function called after selection done, taken one parameter with :
- *     - positionX : starting offset left for localisation
- *     - positionY : starting offset top for localisation
- *     - width : width of selection for localisation
- *     - height : height of selection for localisation
  */
 class ResponseLocalizer {
     canvas;
@@ -20,6 +11,17 @@ class ResponseLocalizer {
     selectionElement;
     callbackSelection;
 
+    /**
+     * @param canvas element used as canvas with following data properties :
+     *     - pictureWidth : width of picture used as background for canvas
+     *     - pictureHeight : height of picture used as background for canvas
+     *     - pictureUrl : URL of picture used as background for canvas
+     * @param callbackSelection callback function called after selection done, taken one parameter with :
+     *     - positionX : starting offset left for localisation
+     *     - positionY : starting offset top for localisation
+     *     - width : width of selection for localisation
+     *     - height : height of selection for localisation
+     */
     constructor(canvas, callbackSelection) {
         this.canvas = canvas;
         this.cursorInfo = {isDrawing: false};

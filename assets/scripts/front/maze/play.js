@@ -1,6 +1,6 @@
 import axios from 'axios';
 import PerfectScrollbar from 'perfect-scrollbar';
-import { displayPopup } from '../component/popup';
+import { displayPopup } from '../../component/popup';
 
 class MazePlayer {
     mazeItemWidth;
@@ -9,7 +9,6 @@ class MazePlayer {
     popupDelay;
 
     /**
-     * 
      * @param int mazeItemWidth Total width of items in scrollable element.
      * @param int mazeResponseWidth Total width of response in scrollable element.
      * @param int mazeItemMargin Width of margin used on items in scrollable element.
@@ -137,7 +136,7 @@ class MazePlayer {
         }
 
         axios.post(trickUrl, parameters)
-            .then(function (response) {
+            .then((response) => {
                 if (response.data.success) {
                     const list = document.createElement('ul');
                     response.data.responses.forEach((trick) => {

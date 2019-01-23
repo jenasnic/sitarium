@@ -214,6 +214,6 @@ class User implements UserInterface
      */
     public function getDisplayName(): string
     {
-        return sprintf('%s %s', $this->firstname, $this->lastname);
+        return sprintf('%s %s', ucfirst($this->firstname), strtoupper($this->lastname));
     }
 }

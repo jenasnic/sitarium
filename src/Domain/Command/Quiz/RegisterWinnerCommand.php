@@ -18,27 +18,13 @@ class RegisterWinnerCommand
     protected $user;
 
     /**
-     * @var string
-     */
-    protected $comment;
-
-    /**
-     * @var int
-     */
-    protected $trickCount;
-
-    /**
      * @param Quiz $quiz
      * @param User $user
-     * @param string|null $comment
-     * @param int $trickCount
      */
-    public function __construct(Quiz $quiz, User $user, ?string $comment, int $trickCount)
+    public function __construct(Quiz $quiz, User $user)
     {
         $this->quiz = $quiz;
         $this->user = $user;
-        $this->comment = $comment;
-        $this->trickCount = $trickCount;
     }
 
     /**
@@ -55,21 +41,5 @@ class RegisterWinnerCommand
     public function getUser(): User
     {
         return $this->user;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getComment(): ?string
-    {
-        return $this->comment;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTrickCount(): int
-    {
-        return $this->trickCount;
     }
 }

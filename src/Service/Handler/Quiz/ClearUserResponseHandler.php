@@ -37,7 +37,7 @@ class ClearUserResponseHandler
     public function handle(ClearUserResponseCommand $command)
     {
         $responses = $this->userResponseRepository->getResponsesForUserIdAndQuizId(
-            $command->getUser->getId(),
+            $command->getUser()->getId(),
             $command->getQuiz()->getId()
         );
 
