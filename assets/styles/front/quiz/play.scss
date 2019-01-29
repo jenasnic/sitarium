@@ -11,14 +11,16 @@
         flex-direction: column;
 
         #action-wrapper {
+            align-items: center;
             display: flex;
             flex-direction: row;
             justify-content: center;
-            padding: 20px 20px 0 20px;
+            padding: 1rem 1rem 0 1rem;
 
             input[type="text"] {
                 flex-grow: 1;
                 max-width: 350px;
+                margin-right: 0.5rem;
 
                 &::placeholder {font-style: italic;}
             }
@@ -52,7 +54,7 @@
         border-radius: 0 10px 10px 0;
         display: flex;
         flex-direction: column;
-        padding: 20px;
+        padding: 1rem;
 
         #scroll-wrapper {
             flex-grow: 1;
@@ -96,9 +98,28 @@
             border-radius: 0 0 10px 10px;
             border-top: 1px solid $color-border-default;
             flex-direction: row;
-            padding: 0 20px 20px 20px;
 
-            #quiz-info {border: none};
+            #scroll-wrapper {
+                max-height: 50vh;
+
+                #quiz-responses {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+
+                    li {width: 45%;}
+                }
+            }
+
+            #quiz-info {
+                border-top: none;
+                border-left: 1px solid $color-border-default;
+                margin: 0 0 0 1rem;
+                padding: 0 1rem 0 0;
+                text-align: right;
+
+                label {display: block;}
+            };
         }
     }
 }
@@ -112,8 +133,19 @@
             border-radius: 10px 10px 0 0;
 
             #action-wrapper {
-                flex-wrap: wrap;
+                align-items: stretch;
+                flex-direction: column;
                 justify-content: center;
+
+                input[type="text"] {
+                    max-width: none;
+                    margin: 0 0.3rem 1rem 0.3rem;
+
+                    &::placeholder {font-style: italic;}
+                }
+
+                .button {margin: 0 1rem;}
+
             }
         }
 
@@ -121,7 +153,10 @@
             border: none;
             border-radius: 0 0 10px 10px;
             border-top: 1px solid $color-border-default;
-            padding: 0 20px 20px 20px;
+
+            #scroll-wrapper {max-height: 50vh;}
+
+            #quiz-info {text-align: right;}
         }
     }
 }

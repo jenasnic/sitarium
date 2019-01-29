@@ -16,23 +16,32 @@
             box-shadow: $box-shadow;
             color: $color-text-default;
             font-weight: bold;
-            margin: 0 12px;
+            margin: 0 1.2rem;
             min-width: 140px;
-            padding: 5px 25px;
+            padding: 0.3rem 1.3rem;
             text-align: center;
             text-shadow: $text-shadow;
             text-transform: uppercase;
 
-            &:hover {
-                background-color: $transparent-background-black;
-                box-shadow: $box-shadow-darker;
-            }
+            &:hover {box-shadow: $box-shadow-darker;}
         }
 
         .navbar-logo {
             box-shadow: none;
+            transition: 0.3s ease-in-out;
+
+            img {width: 390px;}
 
             span {display: none;}
+
+            &:hover {
+                box-shadow: none;
+                transform: scaleY(1.2);
+//                 transition: 0.5s ease-in-out;
+
+//                 img {box-shadow: $box-shadow-darker;}
+            }
+
         }
     }
 
@@ -46,7 +55,7 @@
         .navbar-item {
             color: $color-text-default;
             font-size: 0.75rem;
-            padding: 3px 5px;
+            padding: 0.2rem 0.4rem;
 
             &:hover {text-shadow: $text-shadow;}
         }
@@ -57,6 +66,18 @@
 {
     #menu {
         flex-direction: column;
+
+        .navbar-main {
+            .navbar-item {
+                margin: 0 1rem;
+                min-width: 140px;
+                padding: 0.3rem 0.8rem;
+            }
+
+            .navbar-logo {
+                img {width: 270px;}
+            }
+        }
 
         .navbar-login {
             position: inherit;
@@ -97,9 +118,9 @@
                 box-shadow: $box-shadow;
                 color: $color-text-default;
                 font-weight: bold;
-                margin: 5px 0;
+                margin: 0.4rem 0;
                 min-width: 0;
-                padding: 10px 25px;
+                padding: 0.6rem 1.3rem;
                 text-align: left;
                 text-shadow: $text-shadow;
                 text-transform: uppercase;

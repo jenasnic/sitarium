@@ -87,9 +87,12 @@ h2 {
 }
 
 a {
-    text-decoration: none;
     color: $color-text-link;
+    outline: 0;
+    text-decoration: none;
 }
+
+img {border: none;}
 
 .note {font-size: 0.8rem;}
 
