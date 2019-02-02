@@ -2,12 +2,12 @@
 
 namespace App\Service\Maze;
 
-use App\Model\Maze\MazeItem;
 use App\Entity\Maze\Actor;
-use App\Tool\TmdbUtil;
 use App\Entity\Maze\Movie;
 use App\Entity\Maze\CastingActor;
 use App\Entity\Maze\FilmographyMovie;
+use App\Model\Maze\MazeItem;
+use App\Tool\TmdbUtil;
 
 /**
  * This class allows to convert Actor or Movie as MazeItem keeping common properties with single acces name.
@@ -55,7 +55,7 @@ class MazeItemConverter
             $actor->getTmdbId(),
             $actor->getFullname(),
             TmdbUtil::getBasePictureUrl() . $actor->getPictureUrl()
-            );
+        );
     }
 
     /**

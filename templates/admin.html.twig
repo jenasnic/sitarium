@@ -14,6 +14,17 @@
             {% include 'back/_message.html.twig' %}
             {% block body %}{% endblock %}
         </div>
+
+        {# Bulma popup to display informations through modal window #}
+        <div id="popup" class="modal">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <div class="modal-card-body">
+                </div>
+            </div>
+            <button class="modal-close is-large" aria-label="close"></button>
+        </div>
+
         {% block javascripts %}
             <script src="{{ asset('build/js/admin.js') }}"></script>
         {% endblock %}

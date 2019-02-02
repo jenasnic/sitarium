@@ -1,14 +1,16 @@
 
 /**
- * Allows to display modal with specific content.
+ * Allows to display modal with specific text/html content or DOM element.
  *
- * @param string id identifier of modal to display.
- * @param string content text (or HTML content) to display in modal or null if no sepcific content.
+ * @param string|Element content Text or DOM element to display in modal.
  */
-export const displayModal = (id, content = null) => {
-    const modal = document.querySelector('#' + id);
-    if (null !== content) {
+export const displayModal = (content) => {
+    const modal = document.getElementById('popup');
+    if ('string' === typeof(content)) {
         modal.querySelector('.modal-card-body').innerHTML = content;
+    } else {
+        modal.querySelector('.modal-card-body').innerHTML = '';
+        modal.querySelector('.modal-card-body').appendChild(content);
     }
     modal.classList.add('is-active');
 };
@@ -18,8 +20,8 @@ export const displayModal = (id, content = null) => {
  *
  * @param string id identifier of modal to close.
  */
-export const closeModal = (id) => {
-    document.querySelector('#' + id).classList.remove('is-active');
+export const closeModal = () => {
+    document.getElementById('popup').classList.remove('is-active');
 };
 
 /**

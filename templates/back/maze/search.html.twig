@@ -1,0 +1,21 @@
+{#
+Allows to display search result for maze items.
+Required :
+- mazeItems : list of maze items to display.
+- addRouteName : name of route used to add maze item (Actor or Movie).
+#}
+
+{% if (mazeItems|length == 0) %}
+    <p>Aucun résultat trouvé</p>
+{% endif %}
+
+<div class="tile is-ancestor is-12" style="flex-wrap: wrap;">
+{% for mazeItem in mazeItems %}
+    <a href="{{ path(addRouteName, { 'tmdbId': mazeItem.tmdbId }) }}"
+        onclick="return confirm('Confirmer la sélection ?');"
+        class="tile is-child is-2">
+            <p>{{ mazeItem.displayName }}</p>
+            <img src="{{ mazeItem.pictureUrl }}" alt="-" />
+    </a>
+{% endfor %}
+</div>

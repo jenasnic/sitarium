@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class FilmographyController extends Controller
 {
     /**
-     * @Route("/admin/maze/actor/filmography/build", name="bo_maze_actor_filmography_build")
+     * @Route("/admin/maze/actor/filmography/build", name="bo_maze_actor_filmography_build", methods="POST")
      *
      * @param ActorFilmographyBuilder $filmographyBuilder
      *

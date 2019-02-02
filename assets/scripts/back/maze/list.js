@@ -1,31 +1,33 @@
+import axios from 'axios';
 import { displayModal, closeModal } from "../popup";
 
 /**
  * Allows to initialize action to display detail about maze item (actor or movie).
  */
-const initDetailAction = () => {
-    const baseUrl = document.getElementById('maze-item-list').getAttribute('data-base-detail-url');
+const initActions = () => {
     [...document.querySelectorAll('.show-maze-item-detail-button')].forEach(
         (element) => {
             element.addEventListener('click', (event) => {
-                viewMazeItemDetail(baseUrl, element.getAttribute('data-id'));
+                viewMazeItemDetail(element.dataset.detailUrl);
             });
         }
     );
+
+    document.getElementById('build-credits-button')
+        && document.getElementById('build-credits-button').addEventListener('click', (event) => {
+            buildCredits(event.target.dataset.buildCreditsUrl, event.target.getAttribute('data-progress-url'));
+        });
 };
 
 /**
  * Allows to display maze item informations in popup.
  * 
- * @param baseUrl Base url to call to get detail. `/admin/maze/actor/view/${actorId}` // `/admin/maze/movie/view/${movieId}`
- * @param id Identifier of maze item we want to display detail.
+ * @param detailUrl Url to call to get detail.
  */
-const viewMazeItemDetail = (baseUrl, id) => {
-    const detailUrl = baseUrl + id;
-    fetch(detailUrl, {credentials: 'same-origin'})
-        .then(response => response.text())
+const viewMazeItemDetail = (detailUrl) => {
+    axios.get(detailUrl)
         .then(response => {
-            displayModal('maze-item-detail-modal', response);
+            displayModal(response.data);
         })
     ;
 };
@@ -37,43 +39,40 @@ const viewMazeItemDetail = (baseUrl, id) => {
  * @parma progressUrl Url to call to get progress when building credits.
  */
 const buildCredits = (buildUrl, progressUrl) => {
-    fetch(buildUrl, {credentials: 'same-origin'})
-        .then(response => response.json())
+    axios.post(buildUrl)
         .then(response => {
-            closeModal('progress-bar-modal');
+            closeModal();
             document.location.reload();
         })
     ;
 
-    displayModal('progress-bar-modal');
-    setTimeout(updateProgressBar, 500, progressUrl);
+    const progressBar = document.createElement('progress');
+    progressBar.classList.add('progress', 'is-large');
+    progressBar.setAttribute('value', 0);
+    progressBar.setAttribute('max', 100);
+
+    displayModal(progressBar);
+    setTimeout(updateProgressBar, 500, progressBar, progressUrl);
 };
 
 /**
- * Allows to update progress bar when building filmogrpahy.
+ * Allows to update progress bar when building filmograhy.
  *
  * @parma progressUrl Url to call to get progress when building credits.
  */
-const updateProgressBar = (progressUrl) => {
-    fetch(progressUrl, {credentials: 'same-origin'})
-        .then(response => response.json())
+const updateProgressBar = (progressBar, progressUrl) => {
+    axios.get(progressUrl)
         .then(response => {
-            const { current, total } = response;
+            const { current, total } = response.data;
             if (current > 0 && total > 0) {
-                const progressBar = document.querySelector('#progress-bar-modal progress.progress');
                 progressBar.setAttribute('max', total);
                 progressBar.setAttribute('value', current);
             }
             if (current < total) {
-                setTimeout(updateProgressBar, 700, progressUrl);
+                setTimeout(updateProgressBar, 700, progressBar, progressUrl);
             }
         })
     ;
 };
 
-document.getElementById('maze-item-list') && initDetailAction();
-
-document.getElementById('build-credits-button')
-    && document.getElementById('build-credits-button').addEventListener('click', (event) => {
-        buildCredits(event.target.getAttribute('data-build-url'), event.target.getAttribute('data-progress-url'));
-    });
+document.getElementById('maze-item-list') && initActions();

@@ -10,79 +10,66 @@ Required :
 
     <h1 class="title">Gestion des films</h1>
 
-    <nav class="level">
-        <div class="level-left">
-            <span>{{ movies|length }} film(s)</span>
-        </div>
-        <div class="level-right">
-            <div class="column">
-                <a class="button is-primary" href="{{ path('bo_maze_movie_add') }}">Ajouter</a>
-                <span
-                    id="build-credits-button"
-                    class="button is-primary"
-                    data-build-url="{{ path('bo_maze_movie_casting_build') }}"
-                    data-progress-url="{{ path('bo_maze_movie_casting_progress') }}"
-                >
-                    Construire le casting
-                </span>
-            </div>
-        </div>
-    </nav>
+    <div id="maze-item-list">
 
-    {# Display all movies found #}
-    <table id="maze-item-list" class="table is-striped is-hoverable is-fullwidth" data-base-detail-url="/admin/maze/movie/view/">
-        <thead>
-            <tr>
-                <th>Titre</th>
-                <th>ID TMDB</th>
-                <th>Casting</th>
-                <th>Détails</th>
-                <th>Supprimer</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for movie in movies %}
-            <tr>
-                <td>{{ movie.title }}</td>
-                <td>{{ movie.tmdbId}}</td>
-                <td>
-                    {% include 'back/maze/movie/_casting_status.html.twig' with {'status': movie.status} %}
-                </td>
-                <td>
-                    <span class="icon has-text-info button show-maze-item-detail-button" data-id="{{ movie.tmdbId }}">
-                        <i class="fas fa-search"></i>
+        <nav class="level">
+            <div class="level-left">
+                <span>{{ movies|length }} film(s)</span>
+            </div>
+            <div class="level-right">
+                <div class="column">
+                    <a class="button is-primary" href="{{ path('bo_maze_movie_new') }}">Ajouter</a>
+                    <span
+                        id="build-credits-button"
+                        class="button is-primary"
+                        data-build-credits-url="{{ path('bo_maze_movie_casting_build') }}"
+                        data-progress-url="{{ path('bo_maze_movie_casting_progress') }}"
+                    >
+                        Construire le casting
                     </span>
-                </td>
-                <td>
-                    <a href="{{ path('bo_maze_movie_delete', { 'movie': movie.tmdbId }) }}" onclick="return confirm('Confirmer la suppression ?');" >
-                        <span class="icon has-text-danger button">
-                            <i class="fas fa-trash-alt"></i>
+                </div>
+            </div>
+        </nav>
+
+        {# Display all movies found #}
+        <table id="maze-item-list" class="table is-striped is-hoverable is-fullwidth">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>ID TMDB</th>
+                    <th>Casting</th>
+                    <th>Détails</th>
+                    <th>Supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for movie in movies %}
+                <tr>
+                    <td>{{ movie.title }}</td>
+                    <td>{{ movie.tmdbId}}</td>
+                    <td>
+                        {% include 'back/maze/movie/_casting_status.html.twig' with {'status': movie.status} %}
+                    </td>
+                    <td>
+                        <span
+                            class="icon has-text-info button show-maze-item-detail-button"
+                            data-detail-url="{{ path('bo_maze_movie_view', { 'movie': movie.tmdbId }) }}"
+                        >
+                            <i class="fas fa-search"></i>
                         </span>
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    </td>
+                    <td>
+                        <a href="{{ path('bo_maze_movie_delete', { 'movie': movie.tmdbId }) }}" onclick="return confirm('Confirmer la suppression ?');" >
+                            <span class="icon has-text-danger button">
+                                <i class="fas fa-trash-alt"></i>
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    {# Allows to display informations about movies using Ajax #}
-    <div id="maze-item-detail-modal" class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <div class="modal-card-body">
-            </div>
-        </div>
-        <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-
-    {# Allows to display progress bar when building casting using Ajax #}
-    <div id="progress-bar-modal" class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <div class="modal-card-body">
-                <progress class="progress is-large" value="0" max="100"></progress>
-            </div>
-        </div>
     </div>
 
 {% endblock %}

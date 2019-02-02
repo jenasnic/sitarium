@@ -6,10 +6,12 @@ use App\Domain\Command\Maze\AddMovieCommand;
 use App\Entity\Maze\Movie;
 use App\Repository\Maze\MovieRepository;
 use App\Service\Handler\Maze\AddMovieHandler;
+use App\Service\Maze\MazeItemConverter;
 use App\Service\Tmdb\TmdbApiService;
 use App\Validator\Maze\MovieValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -49,7 +51,17 @@ class MovieController extends Controller
     }
 
     /**
-     * @Route("/admin/maze/movie/add/{tmdbId}", requirements={"tmdbId" = "\d+"}, defaults={"tmdbId" = 0}, name="bo_maze_movie_add")
+     * @Route("/admin/maze/movie/new", name="bo_maze_movie_new")
+     *
+     * @return Response
+     */
+    public function newAction(): Response
+    {
+        return $this->render('back/maze/movie/add.html.twig');
+    }
+
+    /**
+     * @Route("/admin/maze/movie/add/{tmdbId}", requirements={"tmdbId" = "\d+"}, name="bo_maze_movie_add")
      *
      * @param AddMovieHandler $handler
      * @param int $tmdbId
@@ -58,11 +70,6 @@ class MovieController extends Controller
      */
     public function addAction(AddMovieHandler $handler, int $tmdbId): Response
     {
-        // If no ID => allows user to search movie using TMDB API
-        if (0 === $tmdbId) {
-            return $this->render('back/maze/movie/add.html.twig');
-        }
-
         try {
             $handler->handle(new AddMovieCommand($tmdbId));
             $this->addFlash('info', 'Le film a bien été ajouté à la liste');
@@ -70,31 +77,38 @@ class MovieController extends Controller
             $this->addFlash('error', 'Erreur lors de l\'ajout');
         }
 
-        return $this->redirectToRoute('bo_maze_movie_add');
+        return $this->redirectToRoute('bo_maze_movie_new');
     }
 
     /**
-     * @Route("/admin/maze/movie/search/{title}", name="bo_maze_movie_search")
+     * @Route("/admin/maze/movie/search", name="bo_maze_movie_search")
      *
+     * @param Request $request
      * @param TmdbApiService $tmdbService
-     * @param string $name
      *
      * @return Response
      */
-    public function searchAction(TmdbApiService $tmdbService, string $title): Response
-    {
+    public function searchAction(
+        Request $request,
+        TmdbApiService $tmdbService,
+        MazeItemConverter $mazeItemConverter
+    ): Response {
+        $title = $request->query->get('value', '');
         $movies = [];
 
         if (strlen($title) > 2) {
             try {
                 $result = $tmdbService->searchEntity(Movie::class, $title, new MovieValidator(), self::MAX_MOVIE_RESULT_COUNT);
-                $movies = $result['results'];
+                $movies = $mazeItemConverter->convertMovies($result['results']);
             } catch (\Exception $e) {
                 return new Response('Erreur lors de la recherche', Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
 
-        return $this->render('back/maze/movie/search.html.twig', ['movies' => $movies]);
+        return $this->render('back/maze/search.html.twig', [
+            'mazeItems' => $movies,
+            'addRouteName' => 'bo_maze_movie_add',
+        ]);
     }
 
     /**
@@ -113,7 +127,7 @@ class MovieController extends Controller
 
             $this->addFlash('info', 'Suppression OK');
         } catch (\Exception $e) {
-            $this->add('error', 'Erreur lors de la suppression');
+            $this->addFlash('error', 'Erreur lors de la suppression');
         }
 
         return $this->redirectToRoute('bo_maze_movie_list');

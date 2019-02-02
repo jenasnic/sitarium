@@ -1,44 +1,41 @@
-
-/**
- * Allows to display result list of maze items matching search.
- *
- * @param baseUrl Url to call using ajax to get maze items matching search.
- * @param value Search value for maze item we are looking for.
- */
-const searchMazeItem = (baseUrl, value) => {
-    const searchUrl = baseUrl + value;
-    fetch(searchUrl, {credentials: 'same-origin'})
-        .then(response => response.text())
-        .then(response => {
-            document.getElementById('maze-item-add-result').innerHTML = response;
-        })
-    ;
-};
+import axios from 'axios';
 
 /**
  * Allows to initiliaze action when searching maze item.
  */
-const initAddAction = () => {
-    const baseUrl = document.getElementById('maze-item-add').getAttribute('data-base-url');
+const initActions = () => {
     const addButton = document.getElementById('maze-item-add-button');
+    const searchUrl = addButton.dataset.searchUrl;
 
-    // Define action when user fill search field
     document.getElementById('maze-item-add-search').addEventListener('keyup', (event) => {
         const searchValue = event.target.value;
         if (searchValue.length > 2) {
             addButton.disabled = false;
-            if (event.keyCode == 13) {
-                searchMazeItem(baseUrl, searchValue);
+            if ('Enter' === event.key || 13 === event.keyCode) {
+                searchMazeItem(searchUrl, searchValue);
             }
         } else {
             addButton.disabled = true;
         }
     });
 
-    // Define action when user click on search button to add an item
     addButton.addEventListener('click', (event) => {
-        searchMazeItem(baseUrl, document.getElementById('maze-item-add-search').value);
+        searchMazeItem(searchUrl, document.getElementById('maze-item-add-search').value);
     });
 };
 
-document.getElementById('maze-item-add') && initAddAction();
+/**
+ * Allows to display result list of maze items matching search.
+ *
+ * @param searchUrl Url to call using ajax to get maze items matching search.
+ * @param value Search value for maze item we are looking for.
+ */
+const searchMazeItem = (searchUrl, value) => {
+    axios.get(searchUrl, {params: {value: value}})
+        .then(response => {
+            document.getElementById('maze-item-add-result').innerHTML = response.data;
+        })
+    ;
+};
+
+document.getElementById('maze-item-add') && initActions();

@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CastingController extends Controller
 {
     /**
-     * @Route("/admin/maze/movie/casting/build", name="bo_maze_movie_casting_build")
+     * @Route("/admin/maze/movie/casting/build", name="bo_maze_movie_casting_build", methods="POST")
      *
      * @param MovieCastingBuilder $castingBuilder
      *
