@@ -9,13 +9,20 @@ Required :
     <p>Aucun résultat trouvé</p>
 {% endif %}
 
-<div class="tile is-ancestor is-12" style="flex-wrap: wrap;">
+<div id="maze-item-result-wrapper" class="tile is-ancestor is-12">
 {% for mazeItem in mazeItems %}
-    <a href="{{ path(addRouteName, { 'tmdbId': mazeItem.tmdbId }) }}"
-        onclick="return confirm('Confirmer la sélection ?');"
-        class="tile is-child is-2">
-            <p>{{ mazeItem.displayName }}</p>
-            <img src="{{ mazeItem.pictureUrl }}" alt="-" />
-    </a>
+    <div class="tile is-2">
+        <a href="{{ path(addRouteName, { 'tmdbId': mazeItem.tmdbId }) }}"
+            onclick="return confirm('Confirmer la sélection ?');"
+            class="card"
+        >
+            <div class="card-image">
+                <img src="{{ mazeItem.pictureUrl }}" alt="-" />
+            </div>
+            <div class="card-header">
+                <p class="card-header-title">{{ mazeItem.displayName }}</p>
+            </div>
+        </a>
+    </div>
 {% endfor %}
 </div>

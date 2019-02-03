@@ -1,49 +1,20 @@
 
-/* Set own variables */
-
-$sitarium-green-1: #C0F8B1;
-$sitarium-green-2: #97EF80;
-$sitarium-green-3: #76E559;
-$sitarium-green-4: #5BDB39;
-$sitarium-green-5: #3ACD13;
-$sitarium-purple-1: #EFAAEF;
-$sitarium-purple-2: #DB75DB;
-$sitarium-purple-3: #C64DC6;
-$sitarium-purple-4: #AF2EAF;
-$sitarium-purple-5: #9E0F9E;
-$sitarium-orange-1: #FFDAB6;
-$sitarium-orange-2: #FFC388;
-$sitarium-orange-3: #FFB163;
-$sitarium-orange-4: #FFA043;
-$sitarium-orange-5: #F48417;
-$sitarium-blue-1: #4923d5;
-$sitarium-grey-light-1: #F7F7F7;
-$sitarium-grey-light-2: #E7E7E7;
-$sitarium-grey-light-3: #D7D7D7;
-$sitarium-grey-dark-1: #555555;
-$sitarium-grey-dark-2: #444444;
-$sitarium-grey-dark-3: #333333;
-$sitarium-grey-dark-4: #222222;
-$sitarium-grey-red-1: #c01010;
-
-/* Override Bulma variables */
-
-$background: $sitarium-orange-1;
-$primary: $sitarium-green-3;
-$link: $sitarium-blue-1;
-$info: $sitarium-blue-1;
-$success: $sitarium-green-5;
-$warning: $sitarium-orange-5;
-$danger: $sitarium-grey-red-1;
-$dark: $sitarium-grey-dark-4;
-$text: $sitarium-grey-dark-3;
-
-$table-striped-row-even-background-color: $sitarium-grey-light-1;
-$table-row-hover-background-color: $sitarium-grey-light-3;
-$table-striped-row-even-hover-background-color: $sitarium-grey-light-3;
-
 /* Override Sindu (drag&drop) */
-
 .sindu_dragger table{
     background: #eee !important;
+}
+
+#menu {
+    margin-bottom: 1.5rem;
+
+    .navbar-item .icon {margin-right: 0.5rem;}
+}
+
+#home {
+    align-items: start;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .card {margin: 1rem 2rem;}
 }

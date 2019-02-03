@@ -9,18 +9,17 @@
         {% endblock %}
     </head>
     <body>
+        {% include 'back/_menu.html.twig' %}
         <div class="container">
-            {% include 'back/_menu.html.twig' %}
             {% include 'back/_message.html.twig' %}
             {% block body %}{% endblock %}
         </div>
+        {% include 'back/_footer.html.twig' %}
 
         {# Bulma popup to display informations through modal window #}
         <div id="popup" class="modal">
             <div class="modal-background"></div>
-            <div class="modal-card">
-                <div class="modal-card-body">
-                </div>
+            <div class="modal-content box">
             </div>
             <button class="modal-close is-large" aria-label="close"></button>
         </div>

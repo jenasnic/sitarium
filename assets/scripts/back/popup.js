@@ -7,10 +7,10 @@
 export const displayModal = (content) => {
     const modal = document.getElementById('popup');
     if ('string' === typeof(content)) {
-        modal.querySelector('.modal-card-body').innerHTML = content;
+        modal.querySelector('.modal-content').innerHTML = content;
     } else {
-        modal.querySelector('.modal-card-body').innerHTML = '';
-        modal.querySelector('.modal-card-body').appendChild(content);
+        modal.querySelector('.modal-content').innerHTML = '';
+        modal.querySelector('.modal-content').appendChild(content);
     }
     modal.classList.add('is-active');
 };

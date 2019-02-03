@@ -4,19 +4,32 @@ Required :
 - actor : actor we want to display information (as Actor).
 #}
 
-<div class="actor-details">
+<div class="maze-item-details">
 
-    <div>
-        <p><strong>Nom complet</strong> : {{ actor.fullname }}</p>
-        <p><strong>Date de naissance</strong> : {{ actor.birthdate|date('d-m-Y') }}</p>
-        <p><img src="{{ actor.pictureUrl|tmdbPictureUrl }}" alt="-" /></p>
-        <p><strong>Identifiant TMDB</strong> : {{ actor.tmdbId }}</p>
+    <div class="card">
+        <div class="card-image">
+            <figure>
+                <img src="{{ actor.pictureUrl|tmdbPictureUrl }}" alt="-">
+            </figure>
+        </div>
+        <div class="card-content">
+            <div class="media">
+                <div class="media-content">
+                    <p class="title is-4">{{ actor.fullname }}</p>
+                </div>
+            </div>
+            <div class="content subtitle is-6">
+                <time datetime="{{ actor.birthdate|date('d-m-Y') }}">
+                    {{ actor.birthdate|date('d-m-Y') }}
+                </time>
+                <p><strong>TMDB</strong> : {{ actor.tmdbId }}</p>
+            </div>
+        </div>
     </div>
 
     {% if (actor.movies|length > 0) %}
-    <div>
-        <p><strong>Filmographie</strong> :</p>
-        <ul>
+    <div class="maze-item-credits content">
+        <ul class="is-size-6">
         {% for movie in actor.movies %}
             <li>{{ movie.title }}</li>
         {% endfor %}
