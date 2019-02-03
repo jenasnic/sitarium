@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { displayModal } from "../popup";
 
 /**
  * Class to initialize response localizer (i.e. picture with mouse selection to localize some response items).
@@ -84,6 +83,8 @@ class ResponseLocalizer {
         if (null !== this.selectionElement) {
             this.selectionElement.parentNode.removeChild(this.selectionElement);
         }
+
+        clearLocationState();
 
         this.cursorInfo = {
             startX: e.clientX - this.canvasInfo.offsetX,
@@ -180,6 +181,7 @@ const refreshSelectionInfo = (selectionInfo) => {
 const processNextResponse = (event) => {
     const selectedOption = document.querySelector('#quiz-responses option:checked');
     document.getElementById('quiz-responses').value = selectedOption.nextElementSibling.value;
+    document.getElementById('quiz-responses').dispatchEvent(new Event('change'));
 };
 
 /**
@@ -198,7 +200,9 @@ const submitResponseLocation = (event) => {
     axios.post(locateUrl, parameters)
         .then((response) => {
             if (1 === response.data) {
-                displayModal('quiz-locate-modal', 'Réponse localisée !');
+                setLocationStateOK();
+            } else {
+                setLocationStateKO();
             }
         })
     ;
@@ -229,12 +233,29 @@ const displayResponseLocation = (event) => {
             locationElement.style.height = `${height}px`;
 
             canvas.appendChild(locationElement);
+            setLocationStateOK();
+
             setTimeout(
                 () => {locationElement.parentNode.removeChild(locationElement);},
                 2200
             );
         })
     ;
+};
+
+const setLocationStateOK = () => {
+    clearLocationState();
+    document.getElementById('location-state').classList.add('has-text-success');
+};
+
+const setLocationStateKO = () => {
+    clearLocationState();
+    document.getElementById('location-state').classList.add('has-text-danger');
+};
+
+const clearLocationState = () => {
+    document.getElementById('location-state').classList.remove('has-text-success');
+    document.getElementById('location-state').classList.remove('has-text-danger');
 };
 
 document.getElementById('locate-responses') && initialize();

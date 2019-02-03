@@ -1,18 +1,21 @@
-import { displayModal, closeModal } from "../popup";
+import axios from 'axios';
+import { displayModal } from '../popup';
 
 /**
- * Allows to define action when clicking on tabs
+ * Allows to define action for statistics.
  *
  * @param form
  */
-const initTabAction = () => {
-    [...document.querySelectorAll('#statistics-tabs .tab-item')].forEach(
+const initActions = () => {
+    [...document.querySelectorAll('#statistics .tab-item')].forEach(
         (tab) => {
             tab.addEventListener('click', (event) => {
                 activeTab(tab);
             });
         }
     );
+
+    initDetailAction();
 }
 
 /**
@@ -22,7 +25,7 @@ const initDetailAction = () => {
     [...document.querySelectorAll('.show-statistics-detail-button')].forEach(
         (element) => {
             element.addEventListener('click', (event) => {
-                viewStatisticsDetail(element.getAttribute('data-url'));
+                viewStatisticsDetail(element.dataset.statisticsUrl);
             });
         }
     );
@@ -35,11 +38,11 @@ const initDetailAction = () => {
  * @param currentTab
  */
 const activeTab = (currentTab) => {
-    [...document.querySelectorAll('#statistics-tabs .tab-item')].forEach(
-        (tab) => {tab.classList.remove('is-active')}
+    [...document.querySelectorAll('#statistics .tab-item')].forEach(
+        (tab) => { tab.classList.remove('is-active'); }
     );
     currentTab.classList.add('is-active');
-    displayPanel(document.getElementById(currentTab.getAttribute('data-panel')));
+    displayPanel(document.getElementById(currentTab.dataset.panel));
 };
 
 /**
@@ -48,7 +51,7 @@ const activeTab = (currentTab) => {
  * @param currentPanel
  */
 const displayPanel = (currentPanel) => {
-    [...document.querySelectorAll('#statistics-tabs .tab-panel')].forEach(
+    [...document.querySelectorAll('#statistics .tab-panel')].forEach(
         (panel) => {panel.classList.add('is-hidden')}
     );
     currentPanel.classList.remove('is-hidden');
@@ -60,14 +63,11 @@ const displayPanel = (currentPanel) => {
  * @param url Url to call to get detail.
  */
 const viewStatisticsDetail = (url) => {
-    fetch(url, {credentials: 'same-origin'})
-        .then(response => response.text())
+    axios.get(url)
         .then(response => {
-            displayModal('quiz-statistics-detail-modal', response);
+            displayModal(response.data);
         })
     ;
 };
 
-document.getElementById('statistics-tabs') && initTabAction();
-
-document.getElementById('quiz-statistics-detail-modal') && initDetailAction();
+document.getElementById('statistics') && initActions();

@@ -14,7 +14,7 @@ Required :
 
     <h2 class="subtitle">{{ quiz.name }}</h2>
 
-    <div id="statistics-tabs">
+    <div id="statistics">
 
         <div class="tabs is-boxed is-centered">
             <ul>
@@ -42,7 +42,7 @@ Required :
                         <td>
                             <span
                                 class="icon has-text-info button show-statistics-detail-button"
-                                data-url="{{ path('bo_quiz_statistics_response', {'response': responseInfo['id']}) }}"
+                                data-statistics-url="{{ path('bo_quiz_statistics_response', {'response': responseInfo['id']}) }}"
                             >
                                 <i class="fas fa-search"></i>
                             </span>
@@ -72,7 +72,7 @@ Required :
                         <td>
                             <span
                                 class="icon has-text-info button show-statistics-detail-button"
-                                data-url="{{ path('bo_quiz_statistics_user_response', {'user': userInfo['id'], 'quiz': quiz.id}) }}"
+                                data-statistics-url="{{ path('bo_quiz_statistics_user_response', {'user': userInfo['id'], 'quiz': quiz.id}) }}"
                             >
                                 <i class="fas fa-search"></i>
                             </span>
@@ -83,16 +83,6 @@ Required :
             </table>
         </div>
 
-    </div>
-
-    {# Allows to display detail for statistics using Ajax #}
-    <div id="quiz-statistics-detail-modal" class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <div class="modal-card-body">
-            </div>
-        </div>
-        <button class="modal-close is-large" aria-label="close"></button>
     </div>
 
 {% endblock %}

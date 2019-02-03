@@ -16,28 +16,11 @@ Required :
     {{ form_end(form) }}
 
     {# Allows to display all responses linked to quiz #}
-    <div id="quiz-responses-wrapper" data-responses-url="{{ path('bo_quiz_response_list', {'quiz' : form.vars.value.id}) }}">
+    <div
+        id="quiz-responses-wrapper"
+        data-responses-url="{{ path('bo_quiz_response_list', {'quiz' : form.vars.value.id}) }}"
+    >
         {% include 'back/quiz/response_list.html.twig' with {'quiz': form.vars.value} %}
-    </div>
-
-    {# Allows to display form to add/edit response using Ajax #}
-    <div id="quiz-form-response-modal" class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <div class="modal-card-body">
-            </div>
-        </div>
-        <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-
-    {# Allows to display progress bar when linking responses with TMDB using Ajax #}
-    <div id="progress-bar-modal" class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <div class="modal-card-body">
-                <progress class="progress is-large" value="0" max="100"></progress>
-            </div>
-        </div>
     </div>
 
 {% endblock %}

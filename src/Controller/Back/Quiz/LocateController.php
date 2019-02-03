@@ -27,7 +27,7 @@ class LocateController extends Controller
     }
 
     /**
-     * @Route("/admin/quiz/locate-response", name="bo_quiz_locate_response", methods="POST")
+     * @Route("/admin/quiz/response/set-location", name="bo_quiz_locate_response", methods="POST")
      *
      * @param Request $request
      * @param ResponseRepository $repository
@@ -35,7 +35,7 @@ class LocateController extends Controller
      *
      * @return Response
      */
-    public function locateAction(Request $request, ResponseRepository $repository, EntityManagerInterface $entityManager): Response
+    public function setLocationAction(Request $request, ResponseRepository $repository, EntityManagerInterface $entityManager): Response
     {
         $data = json_decode($request->getContent(), true);
 
@@ -57,14 +57,14 @@ class LocateController extends Controller
     }
 
     /**
-     * @Route("/admin/quiz/response-location", name="bo_quiz_response_location", methods="GET")
+     * @Route("/admin/quiz/response/get-location", name="bo_quiz_response_location", methods="GET")
      *
      * @param Request $request
      * @param ResponseRepository $repository
      *
      * @return Response
      */
-    public function locationAction(Request $request, ResponseRepository $repository): Response
+    public function getLocationAction(Request $request, ResponseRepository $repository): Response
     {
         try {
             /* @var QuizResponse $response */

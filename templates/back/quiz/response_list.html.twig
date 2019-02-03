@@ -12,6 +12,13 @@ Required :
     </div>
     <div class="level-right">
         <div>
+            <span
+                id="add-quiz-response-button"
+                class="button is-primary"
+                data-add-response-url="{{ path('bo_quiz_response_new', {'quiz': quiz.id}) }}"
+            >
+                Ajouter une réponse
+            </span>
             <a
                 href="{{ path('bo_quiz_response_locate', {'quiz': quiz.id}) }}"
                 class="button is-primary"
@@ -19,16 +26,9 @@ Required :
                 Positionner les réponses
             </a>
             <span
-                id="add-quiz-response-button"
-                class="button is-primary"
-                data-url="{{ path('bo_quiz_response_new', {'quiz': quiz.id}) }}"
-            >
-                Ajouter une réponse
-            </span>
-            <span
                 id="link-tmdb-button"
                 class="button is-primary"
-                data-link-url="{{ path('bo_quiz_link_tmdb_start', {'quiz': quiz.id}) }}"
+                data-tmdb-link-url="{{ path('bo_quiz_link_tmdb_start', {'quiz': quiz.id}) }}"
                 data-progress-url="{{ path('bo_quiz_link_tmdb_progress') }}"
             >
                 Créer les liens TMDB
@@ -48,8 +48,6 @@ Required :
     </thead>
     <tbody>
     {% for response in quiz.responses %}
-        {% set editUrl = path('bo_quiz_response_edit', {'quiz': quiz.id, 'response': response.id}) %}
-        {% set deleteUrl = path('bo_quiz_response_delete', {'quiz': quiz.id, 'response': response.id}) %}
         <tr data-id="{{ response.id }}">
             <td>{{ response.title }}</td>
             <td>
@@ -62,12 +60,18 @@ Required :
             {% endif %}
             </td>
             <td>
-                <span class="icon has-text-warning button edit-quiz-response-button" data-url="{{ editUrl }}">
+                <span
+                    class="icon has-text-warning button edit-quiz-response-button"
+                    data-edit-response-url="{{ path('bo_quiz_response_edit', {'quiz': quiz.id, 'response': response.id}) }}"
+                >
                     <i class="fas fa-edit"></i>
                 </span>
             </td>
             <td>
-                <span class="icon has-text-danger button delete-quiz-response-button" data-url="{{ deleteUrl }}">
+                <span
+                    class="icon has-text-danger button delete-quiz-response-button"
+                    data-delete-response-url="{{ path('bo_quiz_response_delete', {'quiz': quiz.id, 'response': response.id}) }}"
+                >
                     <i class="fas fa-trash-alt"></i>
                 </span>
             </td>
@@ -75,13 +79,3 @@ Required :
     {% endfor %}
     </tbody>
 </table>
-
-{# Allows to display progress bar when linking movies to TMDB using Ajax #}
-<div id="progress-bar-modal" class="modal">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-        <div class="modal-card-body">
-            <progress class="progress is-large" value="0" max="100"></progress>
-        </div>
-    </div>
-</div>

@@ -36,14 +36,16 @@ class SaveQuizHandler
      */
     public function handle(SaveQuizCommand $command)
     {
-        // Process upload
-        $this->processUpload($command->getQuiz());
+        $quiz = $command->getQuiz();
+        $this->processUpload($quiz);
 
-        $imageSize = getimagesize(sprintf('%s/public%s', $this->rootDir, $command->getQuiz()->getPictureUrl()));
-        $command->getQuiz()->setPictureWidth($imageSize[0]);
-        $command->getQuiz()->setPictureHeight($imageSize[1]);
+        if (null !== $quiz->getPictureUrl()) {
+            $imageSize = getimagesize(sprintf('%s/public%s', $this->rootDir, $quiz->getPictureUrl()));
+            $quiz->setPictureWidth($imageSize[0]);
+            $quiz->setPictureHeight($imageSize[1]);
+        }
 
-        $this->entityManager->persist($command->getQuiz());
+        $this->entityManager->persist($quiz);
         $this->entityManager->flush();
     }
 

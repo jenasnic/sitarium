@@ -13,42 +13,36 @@ Required :
 
     <h2 class="subtitle">{{ user.firstname }} {{ user.lastname }}</h2>
 
-    <table class="table is-striped is-hoverable is-fullwidth">
-        <thead>
-            <tr>
-                <th>Quiz</th>
-                <th>Nb. réponses trouvées</th>
-                <th>Dernière session de jeu</th>
-                <th>Détail</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for quizInfo in quizInfos %}
-            <tr>
-                <td>{{ quizInfo['name'] }}</td>
-                <td>{{ quizInfo['responseCount'] }}</td>
-                <td>{{ quizInfo['lastDate']|date("d/m/Y") }}</td>
-                <td>
-                    <span
-                                class="icon has-text-info button show-statistics-detail-button"
-                                data-url="{{ path('bo_quiz_statistics_user_response', {'user': user.id, 'quiz': quizInfo['id']}) }}"
-                    >
-                        <i class="fas fa-search"></i>
-                    </span>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div id="statistics">
 
-    {# Allows to display detail for statistics using Ajax #}
-    <div id="quiz-statistics-detail-modal" class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <div class="modal-card-body">
-            </div>
-        </div>
-        <button class="modal-close is-large" aria-label="close"></button>
+        <table class="table is-striped is-hoverable is-fullwidth">
+            <thead>
+                <tr>
+                    <th>Quiz</th>
+                    <th>Nb. réponses trouvées</th>
+                    <th>Dernière session de jeu</th>
+                    <th>Détail</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for quizInfo in quizInfos %}
+                <tr>
+                    <td>{{ quizInfo['name'] }}</td>
+                    <td>{{ quizInfo['responseCount'] }}</td>
+                    <td>{{ quizInfo['lastDate']|date("d/m/Y") }}</td>
+                    <td>
+                        <span
+                            class="icon has-text-info button show-statistics-detail-button"
+                            data-statistics-url="{{ path('bo_quiz_statistics_user_response', {'user': user.id, 'quiz': quizInfo['id']}) }}"
+                        >
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
     </div>
 
 {% endblock %}

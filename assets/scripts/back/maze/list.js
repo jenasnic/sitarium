@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { displayModal, closeModal } from "../popup";
+import { displayModal, closeModal } from '../popup';
+import { displayProgressBar } from '../progress-bar';
 
 /**
  * Allows to initialize action to display detail about maze item (actor or movie).
@@ -46,33 +47,7 @@ const buildCredits = (buildUrl, progressUrl) => {
         })
     ;
 
-    const progressBar = document.createElement('progress');
-    progressBar.classList.add('progress', 'is-large');
-    progressBar.setAttribute('value', 0);
-    progressBar.setAttribute('max', 100);
-
-    displayModal(progressBar);
-    setTimeout(updateProgressBar, 500, progressBar, progressUrl);
-};
-
-/**
- * Allows to update progress bar when building filmograhy.
- *
- * @parma progressUrl Url to call to get progress when building credits.
- */
-const updateProgressBar = (progressBar, progressUrl) => {
-    axios.get(progressUrl)
-        .then(response => {
-            const { current, total } = response.data;
-            if (current > 0 && total > 0) {
-                progressBar.setAttribute('max', total);
-                progressBar.setAttribute('value', current);
-            }
-            if (current < total) {
-                setTimeout(updateProgressBar, 700, progressBar, progressUrl);
-            }
-        })
-    ;
+    displayProgressBar(progressUrl);
 };
 
 document.getElementById('maze-item-list') && initActions();

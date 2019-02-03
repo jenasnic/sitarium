@@ -1,14 +1,64 @@
+import axios from 'axios';
 import tableDragger from 'table-dragger'
-import { displayModal } from "../popup";
+import { displayModal } from '../popup';
+
+/**
+ * Allows to initialize actions on quiz list.
+ */
+const initActions = () => {
+    document.getElementById('new-quiz-button').addEventListener('click', (event) => {
+        displayModal(document.getElementById('new-quiz-form'));
+    });
+
+    initNewQuizFormBehavior();
+    initListReordering();
+};
+
+/**
+ * Allows to define behavior for new quiz form.
+ */
+const initNewQuizFormBehavior = () => {
+    const newQuizForm = document.getElementById('new-quiz-form');
+
+    newQuizForm.querySelector('input[type=text]').addEventListener('keyup', (event) => {
+        const name = event.target.value;
+        if (name.length > 2) {
+            newQuizForm.querySelector('input[type=submit]').disabled = false;
+            if ('Enter' === event.key || 13 === event.keyCode) {
+                newQuizForm.submit();
+            }
+        } else {
+            newQuizForm.querySelector('input[type=submit]').disabled = true;
+        }
+    });
+};
+
+/**
+ * Allows to initialize drag and drop feature to reorder quiz list.
+ */
+const initListReordering = () => {
+    const dragger = tableDragger(document.getElementById('quiz-list'), {
+        mode: 'row',
+        onlyBody: true,
+    });
+
+    const reorderUrl = document.getElementById('quiz-list').dataset.reorderUrl;
+    dragger.on('drop', (from, to) => {
+        const start = Math.min(from, to);
+        const end = Math.max(from, to);
+        reorderQuizRows(reorderUrl, start, end);
+    });
+};
 
 /**
  * Allows to reorder quiz after drag and drop on list.
  * NOTE : new order is directly saved in BO using ajax call...
  *
+ * @param reorderUrl URL to call to reorder quiz.
  * @param from Index of first row we are changing order (starting 1 for first row, not 0).
  * @param end Index of last row we are changing order.
  */
-const reorderQuizRows = (from, to) => {
+const reorderQuizRows = (reorderUrl, from, to) => {
     let reorderedIds = [];
     const rows = [...document.querySelectorAll('#quiz-list tbody tr')];
 
@@ -17,42 +67,13 @@ const reorderQuizRows = (from, to) => {
         reorderedIds.push({id: parseInt(row.getAttribute('data-id')), rank: i});
     }
 
-    fetch('/admin/quiz/reorder', {
-        credentials: 'same-origin',
-        method: 'POST',
-        body: JSON.stringify(reorderedIds),
-    });
-};
-
-const initQuizList = () => {
-    // Define action when user click on new quiz
-    document.getElementById('new-quiz-button').addEventListener('click', (event) => {
-        displayModal('new-quiz-modal');
-    });
-
-    // Define behavior for new quiz form
-    document.querySelector('#new-quiz-modal input[type=text]').addEventListener('keyup', (event) => {
-        const name = event.target.value;
-        if (name.length > 2) {
-            document.querySelector('#new-quiz-modal input[type=submit]').disabled = false;
-            if (event.keyCode == 13) {
-                document.getElementById('new-quiz-form').submit();
+    axios.post(reorderUrl, {reorderedIds: JSON.stringify(reorderedIds)})
+        .then((response) => {
+            if (!response.data.success) {
+                displayModal(response.data.message);
             }
-        } else {
-            document.querySelector('#new-quiz-modal input[type=submit]').disabled = true;
-        }
-    });
-
-    const dragger = tableDragger(document.getElementById('quiz-list'), {
-        mode: 'row',
-        onlyBody: true,
-    });
-
-    dragger.on('drop', (from, to) => {
-        const start = Math.min(from, to);
-        const end = Math.max(from, to);
-        reorderQuizRows(start, end);
-    });
+        })
+    ;
 };
 
-document.getElementById('quiz-list') && initQuizList();
+document.getElementById('quiz-list') && initActions();

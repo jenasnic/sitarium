@@ -23,7 +23,11 @@ Required :
     </nav>
 
     {# Display all quiz found #}
-    <table id="quiz-list" class="table is-striped is-hoverable is-fullwidth">
+    <table
+        id="quiz-list"
+        class="table is-striped is-hoverable is-fullwidth"
+        data-reorder-url="{{ path('bo_quiz_reorder') }}"
+    >
         <thead>
             <tr>
                 <th>Nom</th>
@@ -67,24 +71,18 @@ Required :
         </tbody>
     </table>
 
-    {# Allows to display modal when creating new quiz #}
-    <div id="new-quiz-modal" class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <div class="modal-card-body">
-                <form id="new-quiz-form" action="{{ path('bo_quiz_new') }}" method="POST">
-                    <div class="field has-addons">
-                        <div class="control is-expanded">
-                            <input id="name" name="name" type="text" class="input" placeholder="Nom du quiz" />
-                        </div>
-                        <div class="control">
-                            <input type="submit" class="button" value="Créer" disabled/>
-                        </div>
-                    </div>
-                </form>
+    <div class="hide">
+        {# Form to add new quiz (displayed through popup) #}
+        <form id="new-quiz-form" action="{{ path('bo_quiz_new') }}" method="POST">
+            <div class="field has-addons">
+                <div class="control is-expanded">
+                    <input id="name" name="name" type="text" class="input" placeholder="Nom du quiz" />
+                </div>
+                <div class="control">
+                    <input type="submit" class="button" value="Créer" disabled/>
+                </div>
             </div>
-        </div>
-        <button class="modal-close is-large" aria-label="close"></button>
+        </form>
     </div>
 
 {% endblock %}

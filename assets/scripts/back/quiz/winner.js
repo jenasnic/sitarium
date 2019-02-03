@@ -1,13 +1,14 @@
-import { displayModal, closeModal } from "../popup";
+import axios from 'axios';
+import { displayModal } from '../popup';
 
 /**
  * Allows to initialize action to display detail about winner.
  */
-const initDetailAction = () => {
+const initActions = () => {
     [...document.querySelectorAll('.show-winner-detail-button')].forEach(
         (element) => {
             element.addEventListener('click', (event) => {
-                viewWinnerDetail(element.getAttribute('data-url'));
+                viewWinnerDetail(element.dataset.winnerDetailUrl);
             });
         }
     );
@@ -19,12 +20,11 @@ const initDetailAction = () => {
  * @param url Url to call to get detail.
  */
 const viewWinnerDetail = (url) => {
-    fetch(url, {credentials: 'same-origin'})
-        .then(response => response.text())
+    axios.get(url)
         .then(response => {
-            displayModal('winner-detail-modal', response);
+            displayModal(response.data);
         })
     ;
 };
 
-document.getElementById('quiz-winner-list') && initDetailAction();
+document.getElementById('quiz-winner-list') && initActions();
