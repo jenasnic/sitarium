@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getOffsetElement } from '../../component/position';
 
 /**
  * Class to initialize response localizer (i.e. picture with mouse selection to localize some response items).
@@ -57,14 +58,14 @@ class ResponseLocalizer {
         this.canvas.style.height = `${maxHeight}px`;
         this.canvas.style.backgroundImage = `url('${pictureUrl}')`;
 
+        const canvasOffset = getOffsetElement(this.canvas);
+
         this.canvasInfo = {
-            offsetX: this.canvas.offsetLeft,
-            offsetY: this.canvas.offsetTop,
+            offsetX: canvasOffset.left,
+            offsetY: canvasOffset.top,
             width: maxWidth,
             height: maxHeight
         };
-
-        this.fixOffsetX(this.canvas);
     };
 
     /**
@@ -126,18 +127,6 @@ class ResponseLocalizer {
             this.refreshSelection();
         }
     };
-
-    /**
-     * Allows to add parent offset X recursively to fix final offset on canvas.
-     */
-    fixOffsetX(element) {
-        if ('BODY' === element.parentNode.tagName) {
-            return;
-        }
-
-        this.canvasInfo.offsetX += element.parentNode.offsetLeft;
-        this.fixOffsetX(element.parentNode);
-    }
 
     /**
      * Allows to refresh selection render after mouse position has changed.
@@ -217,28 +206,32 @@ const displayResponseLocation = (event) => {
 
     axios.get(locationUrl, { params: parameters })
         .then((response) => {
-            const location = response.data.info;
-            const canvas = document.getElementById('canvas');
+            if (response.data.success) {
+                const location = response.data.info;
+                const canvas = document.getElementById('canvas');
 
-            const locationElement = document.createElement('div');
-            const left = (canvas.offsetWidth * location.positionX) / +canvas.dataset.pictureWidth;
-            const top = (canvas.offsetHeight * location.positionY) / +canvas.dataset.pictureHeight;
-            const width = (canvas.offsetWidth * location.width) / +canvas.dataset.pictureWidth;
-            const height = (canvas.offsetHeight * location.height) / +canvas.dataset.pictureHeight;
+                const locationElement = document.createElement('div');
+                const left = (canvas.offsetWidth * location.positionX) / +canvas.dataset.pictureWidth;
+                const top = (canvas.offsetHeight * location.positionY) / +canvas.dataset.pictureHeight;
+                const width = (canvas.offsetWidth * location.width) / +canvas.dataset.pictureWidth;
+                const height = (canvas.offsetHeight * location.height) / +canvas.dataset.pictureHeight;
 
-            locationElement.classList.add('location');
-            locationElement.style.top = `${top}px`;
-            locationElement.style.left = `${left}px`;
-            locationElement.style.width = `${width}px`;
-            locationElement.style.height = `${height}px`;
+                locationElement.classList.add('location');
+                locationElement.style.top = `${top}px`;
+                locationElement.style.left = `${left}px`;
+                locationElement.style.width = `${width}px`;
+                locationElement.style.height = `${height}px`;
 
-            canvas.appendChild(locationElement);
-            setLocationStateOK();
+                canvas.appendChild(locationElement);
+                setLocationStateOK();
 
-            setTimeout(
-                () => {locationElement.parentNode.removeChild(locationElement);},
-                2200
-            );
+                setTimeout(
+                        () => {locationElement.parentNode.removeChild(locationElement);},
+                        2200
+                );
+            } else {
+                clearLocationState();
+            }
         })
     ;
 };
