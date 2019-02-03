@@ -29,7 +29,7 @@ Required :
             <div id="quiz-list">
                 {% for quiz in quizs %}
                 <figure class="quiz-item">
-                    <a href="{{ path('fo_quiz_play', { 'quiz': quiz.id }) }}">
+                    <a href="{{ path('fo_quiz_play', { 'slug': quiz.slug }) }}">
                         <img src="{{ quiz.thumbnailUrl }}" alt="{{ quiz.name }}"/>
                         <figcaption class="quiz-infos">
                             <h2>{{ quiz.name }}</h2>

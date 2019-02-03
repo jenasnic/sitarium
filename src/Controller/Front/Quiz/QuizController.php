@@ -29,7 +29,7 @@ class QuizController extends Controller
     }
 
     /**
-     * @Route("/quiz/jouer/{quiz}", requirements={"quiz" = "\d+"}, name="fo_quiz_play")
+     * @Route("/quiz/jouer/{slug}", name="fo_quiz_play")
      *
      * @param UserResponseRepository $userResponseRepository
      * @param Quiz $quiz
@@ -66,6 +66,6 @@ class QuizController extends Controller
             $this->addFlash('error', 'Erreur lors de la remise à zéro de vos réponses.');
         }
 
-        return $this->redirectToRoute('fo_quiz_play', ['quiz' => $quiz->getId()]);
+        return $this->redirectToRoute('fo_quiz_play', ['slug' => $quiz->getSlug()]);
     }
 }

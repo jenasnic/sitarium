@@ -33,20 +33,23 @@ class QuizFixtures extends Fixture
     {
         $data = [];
 
-        $data[] = $this->buildData('Quiz films', true, true, true, 1, '0001_main.jpg', '0001_thumbnail.jpg', self::QUIZ_MOVIES);
-        $data[] = $this->buildData('Quiz séries', true, true, true, 2, '0002_main.jpg', '0002_thumbnail.jpg', self::QUIZ_SERIES);
-        $data[] = $this->buildData('Quiz divers', true, true, false, 3, '0003_main.jpg', '0003_thumbnail.jpg', self::QUIZ_ANIMATION);
+        $data[] = $this->buildData('Quiz films', 'film', true, true, true, 1, '0001_main.jpg', 2500, 1600, '0001_thumbnail.jpg', self::QUIZ_MOVIES);
+        $data[] = $this->buildData('Quiz séries', 'series', true, true, true, 2, '0002_main.jpg', 1500, 2200, '0002_thumbnail.jpg', self::QUIZ_SERIES);
+        $data[] = $this->buildData('Quiz divers', 'divers', true, true, false, 3, '0003_main.jpg', 1900, 1900, '0003_thumbnail.jpg', self::QUIZ_ANIMATION);
 
         return $data;
     }
 
     /**
      * @param string $name
+     * @param string $slug
      * @param bool $displayResponse
      * @param bool $displayTrick
      * @param bool $published
      * @param int $rank
      * @param string $pictureUrl
+     * @param int $pictureWidth
+     * @param int $pictureHeight
      * @param string $thumbnailUrl
      * @param string $reference
      *
@@ -54,21 +57,27 @@ class QuizFixtures extends Fixture
      */
     protected function buildData(
         string $name,
+        string $slug,
         bool $displayResponse,
         bool $displayTrick,
         bool $published,
         int $rank,
         string $pictureUrl,
+        int $pictureWidth,
+        int $pictureHeight,
         string $thumbnailUrl,
         string $reference
     ): Quiz {
         $data = new Quiz();
         $data->setName($name);
+        $data->setSlug($slug);
         $data->setDisplayResponse($displayResponse);
         $data->setDisplayTrick($displayTrick);
         $data->setPublished($published);
         $data->setRank($rank);
         $data->setPictureUrl($pictureUrl);
+        $data->setPictureWidth($pictureWidth);
+        $data->setPictureHeight($pictureHeight);
         $data->setThumbnailUrl($thumbnailUrl);
 
         $this->addReference($reference, $data);

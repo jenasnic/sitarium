@@ -1,7 +1,6 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: 'fr'
     tmdb_api_key: '%env(tmdb_api_key)%'
     tmdb_base_uri: 'https://api.themoviedb.org/3'
     tmdb_picture_base_uri: 'https://image.tmdb.org/t/p/w185'

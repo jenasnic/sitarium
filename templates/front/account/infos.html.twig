@@ -25,7 +25,7 @@ Required :
                 <h2>Quiz en cours</h2>
                 <ul>
                 {% for quiz in quizInProgress %}
-                    <li><a href="{{ path('fo_quiz_play', {'quiz': quiz.id}) }}">{{ quiz.name }}</a></li>
+                    <li><a href="{{ path('fo_quiz_play', {'slug': quiz.slug}) }}">{{ quiz.name }}</a></li>
                 {% endfor %}
                 </ul>
             </div>
@@ -35,7 +35,7 @@ Required :
                 <h2>Quiz terminé(s)</h2>
                 <ul>
                 {% for quiz in quizOver %}
-                    <li><a href="{{ path('fo_quiz_play', {'quiz': quiz.id}) }}">{{ quiz.name }}</a></li>
+                    <li><a href="{{ path('fo_quiz_play', {'slug': quiz.slug}) }}">{{ quiz.name }}</a></li>
                 {% endfor %}
                 </ul>
             </div>

@@ -62,23 +62,23 @@ class ResponseFixtures extends Fixture implements DependentFixtureInterface
         $quizSeries = $this->getReference(QuizFixtures::QUIZ_SERIES);
         $quizAnimation = $this->getReference(QuizFixtures::QUIZ_ANIMATION);
 
-        $data[] = $this->buildData('Deadpool 2', 100, 100, 1, $quizMovies, self::RESPONSE_MOVIE_1);
-        $data[] = $this->buildData('Rampage : Hors de contrôle', 200, 200, 1, $quizMovies, self::RESPONSE_MOVIE_2);
-        $data[] = $this->buildData('Avengers : Infinity War', 300, 300, 2, $quizMovies, self::RESPONSE_MOVIE_3);
-        $data[] = $this->buildData('Tomb Raider', 400, 400, 2, $quizMovies, self::RESPONSE_MOVIE_4);
-        $data[] = $this->buildData('Ready Player One', 500, 500, 3, $quizMovies, self::RESPONSE_MOVIE_5);
+        $data[] = $this->buildData('Deadpool 2', 100, 100, 20, 20, $quizMovies, self::RESPONSE_MOVIE_1);
+        $data[] = $this->buildData('Rampage : Hors de contrôle', 200, 200, 30, 30, $quizMovies, self::RESPONSE_MOVIE_2);
+        $data[] = $this->buildData('Avengers : Infinity War', 300, 300, 40, 40, $quizMovies, self::RESPONSE_MOVIE_3);
+        $data[] = $this->buildData('Tomb Raider', 400, 400, 50, 50, $quizMovies, self::RESPONSE_MOVIE_4);
+        $data[] = $this->buildData('Ready Player One', 500, 500, 60, 60, $quizMovies, self::RESPONSE_MOVIE_5);
 
-        $data[] = $this->buildData('Breaking Bad', 100, 100, 1, $quizSeries, self::RESPONSE_SERIE_1);
-        $data[] = $this->buildData('The Young Pope', 200, 200, 1, $quizSeries, self::RESPONSE_SERIE_2);
-        $data[] = $this->buildData('Sherlock', 300, 300, 2, $quizSeries, self::RESPONSE_SERIE_3);
-        $data[] = $this->buildData('Battlestar Galactica', 400, 400, 2, $quizSeries, self::RESPONSE_SERIE_4);
-        $data[] = $this->buildData('Counterpart', 500, 500, 3, $quizSeries, self::RESPONSE_SERIE_5);
+        $data[] = $this->buildData('Breaking Bad', 100, 100, 30, 30, $quizSeries, self::RESPONSE_SERIE_1);
+        $data[] = $this->buildData('The Young Pope', 200, 200, 30, 30, $quizSeries, self::RESPONSE_SERIE_2);
+        $data[] = $this->buildData('Sherlock', 300, 300, 50, 50, $quizSeries, self::RESPONSE_SERIE_3);
+        $data[] = $this->buildData('Battlestar Galactica', 400, 400, 50, 50, $quizSeries, self::RESPONSE_SERIE_4);
+        $data[] = $this->buildData('Counterpart', 500, 500, 50, 50, $quizSeries, self::RESPONSE_SERIE_5);
 
-        $data[] = $this->buildData('Zombillénium', 100, 100, 1, $quizAnimation, self::RESPONSE_ANIMATION_1);
-        $data[] = $this->buildData('Monstres Academy', 200, 200, 1, $quizAnimation, self::RESPONSE_ANIMATION_2);
-        $data[] = $this->buildData('Le voyage d\'Arlo', 300, 300, 2, $quizAnimation, self::RESPONSE_ANIMATION_3);
-        $data[] = $this->buildData('Vice-versa', 400, 400, 2, $quizAnimation, self::RESPONSE_ANIMATION_4);
-        $data[] = $this->buildData('Coco', 500, 500, 3, $quizAnimation, self::RESPONSE_ANIMATION_5);
+        $data[] = $this->buildData('Zombillénium', 100, 100, 30, 30, $quizAnimation, self::RESPONSE_ANIMATION_1);
+        $data[] = $this->buildData('Monstres Academy', 200, 200, 30, 30, $quizAnimation, self::RESPONSE_ANIMATION_2);
+        $data[] = $this->buildData('Le voyage d\'Arlo', 300, 300, 50, 50, $quizAnimation, self::RESPONSE_ANIMATION_3);
+        $data[] = $this->buildData('Vice-versa', 400, 400, 50, 50, $quizAnimation, self::RESPONSE_ANIMATION_4);
+        $data[] = $this->buildData('Coco', 500, 500, 50, 50, $quizAnimation, self::RESPONSE_ANIMATION_5);
 
         return $data;
     }
@@ -87,7 +87,8 @@ class ResponseFixtures extends Fixture implements DependentFixtureInterface
      * @param string $title
      * @param int $positionX
      * @param int $positionY
-     * @param int $size
+     * @param int $width
+     * @param int $height
      * @param Quiz $quiz
      * @param string $reference
      *
@@ -97,7 +98,8 @@ class ResponseFixtures extends Fixture implements DependentFixtureInterface
         string $title,
         int $positionX,
         int $positionY,
-        int $size,
+        int $width,
+        int $height,
         Quiz $quiz,
         string $reference
     ): Response {
@@ -107,7 +109,8 @@ class ResponseFixtures extends Fixture implements DependentFixtureInterface
         $data->setTrick(strrev(TextUtil::sanitize($title)));
         $data->setPositionX($positionX);
         $data->setPositionY($positionY);
-        $data->setSize($size);
+        $data->setWidth($width);
+        $data->setHeight($height);
         $data->setQuiz($quiz);
 
         $this->addReference($reference, $data);
