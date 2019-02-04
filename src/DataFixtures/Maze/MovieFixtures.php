@@ -97,6 +97,7 @@ class MovieFixtures extends Fixture
         $data[] = $this->buildData(19995, 'Avatar', '2009-12-10 22:00:58', '/kXlrGioGfFKOvibpsPzzGx16cP2.jpg');
         $data[] = $this->buildData(24428, 'Avengers', '2012-04-25 12:58:18', '/s9UPgyelWtEqjS3HT3TUuHU9BHU.jpg');
         $data[] = $this->buildData(27205, 'Inception', '2010-07-14 12:58:47', '/n9dwu1p5G4qJ4DI5eHJMUbAdOfA.jpg');
+        $data[] = $this->buildData(37724, '007 Skyfall', '2012-10-25 13:00:57', '/47UC1BvAKJbpvGXu78bnwlvhFis.jpg');
         $data[] = $this->buildData(45269, 'Le Discours d\'un Roi', '2010-09-06 21:59:34', '/2TEL0a7xJFBORxz5RDeUpwKgh5O.jpg');
         $data[] = $this->buildData(49026, 'The Dark Knight Rises', '2012-07-16 12:58:40', '/1e5V4EBrhuO83JyxQZxOz83xX2Q.jpg');
         $data[] = $this->buildData(49047, 'Gravity', '2013-09-27 22:18:46', '/c5YnXyGEZbLZiSftuHjwSO9kdHK.jpg');
