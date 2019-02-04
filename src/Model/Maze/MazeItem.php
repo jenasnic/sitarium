@@ -44,7 +44,7 @@ class MazeItem
      *
      * @return MazeItem
      */
-    public function setTmdbId(int$tmdbId): self
+    public function setTmdbId(int $tmdbId): self
     {
         $this->tmdbId = $tmdbId;
 
@@ -90,5 +90,4 @@ class MazeItem
 
         return $this;
     }
-
 }

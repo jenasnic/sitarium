@@ -147,6 +147,5 @@ class MoviePlayController extends Controller
             'trickRoute' => 'fo_maze_movie_trick',
             'level' => $level,
         ]);
-
     }
 }

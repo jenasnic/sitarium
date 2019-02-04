@@ -36,7 +36,7 @@ class MovieController extends Controller
         $movies = $movieRepository->findBy(['status' => CastingStatus::INITIALIZED], ['title' => 'asc']);
 
         return $this->render('front/maze/movie/min_path_selection.html.twig', [
-            'movies' => $mazeItemConverter->convertMovies($movies)
+            'movies' => $mazeItemConverter->convertMovies($movies),
         ]);
     }
 
@@ -54,7 +54,7 @@ class MovieController extends Controller
         $movies = $movieRepository->findBy(['status' => CastingStatus::INITIALIZED], ['title' => 'asc']);
 
         return $this->render('front/maze/movie/max_path_selection.html.twig', [
-            'movies' => $mazeItemConverter->convertMovies($movies)
+            'movies' => $mazeItemConverter->convertMovies($movies),
         ]);
     }
 }

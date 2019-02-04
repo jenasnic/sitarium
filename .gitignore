@@ -1,9 +1,10 @@
 
-###> IDE ###
+###> IDE & tools ###
 .buildpath
 .project
 .settings
-###< IDE ###
+.php_cs.cache
+###< IDE & tools ###
 
 ###> symfony/framework-bundle ###
 /.env

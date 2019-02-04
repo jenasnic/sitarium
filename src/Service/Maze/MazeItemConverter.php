@@ -24,7 +24,7 @@ class MazeItemConverter
         return new MazeItem(
             $actor->getTmdbId(),
             $actor->getFullname(),
-            TmdbUtil::getBasePictureUrl() . $actor->getPictureUrl()
+            TmdbUtil::getBasePictureUrl().$actor->getPictureUrl()
         );
     }
 
@@ -54,7 +54,7 @@ class MazeItemConverter
         return new MazeItem(
             $actor->getTmdbId(),
             $actor->getFullname(),
-            TmdbUtil::getBasePictureUrl() . $actor->getPictureUrl()
+            TmdbUtil::getBasePictureUrl().$actor->getPictureUrl()
         );
     }
 
@@ -84,7 +84,7 @@ class MazeItemConverter
         return new MazeItem(
             $movie->getTmdbId(),
             $movie->getTitle(),
-            TmdbUtil::getBasePictureUrl() . $movie->getPictureUrl()
+            TmdbUtil::getBasePictureUrl().$movie->getPictureUrl()
         );
     }
 
@@ -114,7 +114,7 @@ class MazeItemConverter
         return new MazeItem(
             $movie->getTmdbId(),
             $movie->getTitle(),
-            TmdbUtil::getBasePictureUrl() . $movie->getPictureUrl()
+            TmdbUtil::getBasePictureUrl().$movie->getPictureUrl()
         );
     }
 
