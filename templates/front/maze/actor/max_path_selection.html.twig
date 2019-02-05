@@ -25,9 +25,9 @@ Required :
             Nous vous proposerons le plus long quiz trouvé pour votre sélection.</p>
             <p class="margin-bottom"><strong>Bonne chance !</strong></p>
 
-            <form action="{{ path('fo_maze_actor_play_max_path') }}" method="POST">
+            <form id="path-selection-form" action="{{ path('fo_maze_actor_play_max_path') }}" method="POST">
 
-                <input type="hidden" id="actorIds" name="actorIds" />
+                <input type="hidden" id="tmdbIds" name="tmdbIds" />
 
                 <div class="field">
                     <label for="level">Difficulté : </label>
@@ -44,7 +44,7 @@ Required :
                 Il permet également de modifier le nombre de films accessibles dans la rubrique "Besoin d'aide".</p>
 
                 <div class="form-buttons">
-                    <input type="submit" class="button" value="Jouer"/>
+                    <input id="selection-submit" type="submit" class="button" disabled value="Jouer"/>
                 </div>
 
             </form>

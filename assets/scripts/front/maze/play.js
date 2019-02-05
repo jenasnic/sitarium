@@ -75,7 +75,7 @@ class MazePlayer {
             this.displayTrick(document.querySelector('.maze-item.active').dataset.tmdbId, level);
         });
         document.getElementById('replay-button').addEventListener('click', (event) => {
-            window.location.reload();
+            window.location.assign(event.target.dataset.replayUrl);
         });
     };
 

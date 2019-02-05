@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class MoviePlayController extends Controller
 {
@@ -32,18 +33,26 @@ class MoviePlayController extends Controller
     protected $mazeItemConverter;
 
     /**
+     * @var UrlGeneratorInterface
+     */
+    protected $urlGenerator;
+
+    /**
      * @param MovieGraphBuilder $graphBuilder
      * @param MoviePathHelpFactory $helpFactory
      * @param MazeItemConverter $mazeItemConverter
+     * @param UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         MovieGraphBuilder $graphBuilder,
         MoviePathHelpFactory $helpFactory,
-        MazeItemConverter $mazeItemConverter
+        MazeItemConverter $mazeItemConverter,
+        UrlGeneratorInterface $urlGenerator
     ) {
         $this->graphBuilder = $graphBuilder;
         $this->helpFactory = $helpFactory;
         $this->mazeItemConverter = $mazeItemConverter;
+        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -68,8 +77,12 @@ class MoviePlayController extends Controller
         try {
             $movieGraph = $this->graphBuilder->buildGraph();
             $moviePath = $randomPathFinder->find($movieGraph, $count);
+            $replayUrl = $this->urlGenerator->generate('fo_maze_movie_play', [
+                'count' => $count,
+                'level' => $level,
+            ]);
 
-            return $this->renderPlayView($moviePath, $level);
+            return $this->renderPlayView($moviePath, $level, $replayUrl);
         } catch (\Exception $ex) {
             $this->addFlash('error', 'Une erreur est survenue lors de l\'initialisation du quiz.');
 
@@ -88,15 +101,16 @@ class MoviePlayController extends Controller
      */
     public function minPathAction(Request $request, MinPathFinder $minPathFinder): Response
     {
-        $startMovieId = $request->request->get('startMovieId');
-        $endMovieId = $request->request->get('endMovieId');
+        $startMovieId = $request->request->get('startTmdbId');
+        $endMovieId = $request->request->get('endTmdbId');
         $level = $request->request->get('level');
 
         try {
             $movieGraph = $this->graphBuilder->buildGraph();
             $moviePath = $minPathFinder->find($movieGraph, $movieGraph[$startMovieId], $movieGraph[$endMovieId]);
+            $replayUrl = $this->urlGenerator->generate('fo_maze_movie_select_min_path');
 
-            return $this->renderPlayView($moviePath, $level);
+            return $this->renderPlayView($moviePath, $level, $replayUrl);
         } catch (\Exception $ex) {
             $this->addFlash('error', 'Une erreur est survenue lors de l\'initialisation du quiz.');
 
@@ -115,14 +129,15 @@ class MoviePlayController extends Controller
      */
     public function maxPathAction(Request $request, MaxPathFinder $maxPathFinder): Response
     {
-        $movieIds = explode(',', $request->request->get('movieIds'));
+        $movieIds = explode(',', $request->request->get('tmdbIds'));
         $level = $request->request->get('level');
 
         try {
             $movieGraph = $this->graphBuilder->buildGraph($movieIds);
             $moviePath = $maxPathFinder->find($movieGraph);
+            $replayUrl = $this->urlGenerator->generate('fo_maze_movie_select_max_path');
 
-            return $this->renderPlayView($moviePath, $level);
+            return $this->renderPlayView($moviePath, $level, $replayUrl);
         } catch (\Exception $ex) {
             $this->addFlash('error', 'Une erreur est survenue lors de l\'initialisation du quiz.');
 
@@ -133,10 +148,11 @@ class MoviePlayController extends Controller
     /**
      * @param array $actorPath
      * @param int $level
+     * @param string $replayUrl
      *
      * @return Response
      */
-    protected function renderPlayView(array $moviePath, int $level): Response
+    protected function renderPlayView(array $moviePath, int $level, string $replayUrl): Response
     {
         $helpActorList = $this->helpFactory->getActors($moviePath, $level);
 
@@ -146,6 +162,7 @@ class MoviePlayController extends Controller
             'responseRoute' => 'fo_maze_movie_progress',
             'trickRoute' => 'fo_maze_movie_trick',
             'level' => $level,
+            'replayUrl' => $replayUrl,
         ]);
     }
 }

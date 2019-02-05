@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ActorController extends Controller
+class ActorMazeController extends Controller
 {
     /**
      * @Route("/quiz-filmographie", name="fo_maze_actor")

@@ -27,10 +27,10 @@ Required :
             <p class="note margin-bottom"><strong>ATTENTION : </strong>la solution proposée n'est pas unique et n'utilisera que la sélection d'acteurs proposés sur ce site (et leur filmographie).<br/>
             Un chemin plus court peut donc exister en passant par d'autres films avec des acteurs non présents ici.</p>
 
-            <form action="{{ path('fo_maze_actor_play_min_path') }}" method="POST">
+            <form id="path-selection-form" action="{{ path('fo_maze_actor_play_min_path') }}" method="POST">
 
-                <input type="hidden" id="startActorId" name="startActorId" />
-                <input type="hidden" id="endActorId" name="endActorId" />
+                <input type="hidden" id="startTmdbId" name="startTmdbId" />
+                <input type="hidden" id="endTmdbId" name="endTmdbId" />
 
                 <div class="field">
                     <label for="level">Difficulté : </label>
@@ -47,7 +47,7 @@ Required :
                 Il permet également de modifier le nombre de films accessibles dans la rubrique "Besoin d'aide".</p>
 
                 <div class="form-buttons">
-                    <input type="submit" class="button" value="Jouer"/>
+                    <input id="selection-submit" type="submit" class="button" disabled value="Jouer"/>
                 </div>
 
             </form>

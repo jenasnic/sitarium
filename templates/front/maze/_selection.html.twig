@@ -9,7 +9,7 @@ Required :
     {% for mazeItem in mazeItems %}
     <div data-tmdb-id="{{ mazeItem.tmdbId }}" data-display-name="{{ mazeItem.displayName|raw }}" class="selection-item">
         <img src="{{ mazeItem.pictureUrl }}" alt="{{ mazeItem.displayName|raw }}" />
-        <span>{{ mazeItem.displayName }}</span>
+        <div class="info-wrapper"><span>{{ mazeItem.displayName }}</span></div>
     </div>
     {% endfor %}
 </section>

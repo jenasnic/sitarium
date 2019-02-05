@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ActorPlayController extends Controller
 {
@@ -33,18 +34,26 @@ class ActorPlayController extends Controller
     protected $mazeItemConverter;
 
     /**
+     * @var UrlGeneratorInterface
+     */
+    protected $urlGenerator;
+
+    /**
      * @param ActorGraphBuilder $graphBuilder
      * @param ActorPathHelpFactory $helpFactory
      * @param MazeItemConverter $mazeItemConverter
+     * @param UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         ActorGraphBuilder $graphBuilder,
         ActorPathHelpFactory $helpFactory,
-        MazeItemConverter $mazeItemConverter
+        MazeItemConverter $mazeItemConverter,
+        UrlGeneratorInterface $urlGenerator
     ) {
         $this->graphBuilder = $graphBuilder;
         $this->helpFactory = $helpFactory;
         $this->mazeItemConverter = $mazeItemConverter;
+        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -71,8 +80,12 @@ class ActorPlayController extends Controller
 
             $actorGraph = $this->graphBuilder->buildGraph(null, $minVoteCount);
             $actorPath = $randomPathFinder->find($actorGraph, $count);
+            $replayUrl = $this->urlGenerator->generate('fo_maze_actor_play', [
+                'count' => $count,
+                'level' => $level,
+            ]);
 
-            return $this->renderPlayView($actorPath, $minVoteCount, $level);
+            return $this->renderPlayView($actorPath, $minVoteCount, $level, $replayUrl);
         } catch (\Exception $ex) {
             $this->addFlash('error', 'Une erreur est survenue lors de l\'initialisation du quiz.');
 
@@ -91,8 +104,8 @@ class ActorPlayController extends Controller
      */
     public function minPathAction(Request $request, MinPathFinder $minPathFinder): Response
     {
-        $startActorId = $request->request->get('startActorId');
-        $endActorId = $request->request->get('endActorId');
+        $startActorId = $request->request->get('startTmdbId');
+        $endActorId = $request->request->get('endTmdbId');
         $level = $request->request->get('level');
 
         try {
@@ -100,8 +113,9 @@ class ActorPlayController extends Controller
 
             $actorGraph = $this->graphBuilder->buildGraph(null, $minVoteCount);
             $actorPath = $minPathFinder->find($actorGraph, $actorGraph[$startActorId], $actorGraph[$endActorId]);
+            $replayUrl = $this->urlGenerator->generate('fo_maze_actor_select_min_path');
 
-            return $this->renderPlayView($actorPath, $minVoteCount, $level);
+            return $this->renderPlayView($actorPath, $minVoteCount, $level, $replayUrl);
         } catch (\Exception $ex) {
             $this->addFlash('error', 'Une erreur est survenue lors de l\'initialisation du quiz.');
 
@@ -120,7 +134,7 @@ class ActorPlayController extends Controller
      */
     public function maxPathAction(Request $request, MaxPathFinder $maxPathFinder): Response
     {
-        $actorIds = explode(',', $request->request->get('actorIds'));
+        $actorIds = explode(',', $request->request->get('tmdbIds'));
         $level = $request->request->get('level');
 
         try {
@@ -128,8 +142,9 @@ class ActorPlayController extends Controller
 
             $actorGraph = $this->graphBuilder->buildGraph($actorIds, $minVoteCount);
             $actorPath = $maxPathFinder->find($actorGraph);
+            $replayUrl = $this->urlGenerator->generate('fo_maze_actor_select_max_path');
 
-            return $this->renderPlayView($actorPath, $minVoteCount, $level);
+            return $this->renderPlayView($actorPath, $minVoteCount, $level, $replayUrl);
         } catch (\Exception $ex) {
             $this->addFlash('error', 'Une erreur est survenue lors de l\'initialisation du quiz.');
 
@@ -141,10 +156,11 @@ class ActorPlayController extends Controller
      * @param array $actorPath
      * @param int $minVoteCount
      * @param int $level
+     * @param string $replayUrl
      *
      * @return Response
      */
-    protected function renderPlayView(array $actorPath, int $minVoteCount, int $level): Response
+    protected function renderPlayView(array $actorPath, int $minVoteCount, int $level, string $replayUrl): Response
     {
         $helpMovieList = $this->helpFactory->getMovies($actorPath, $minVoteCount, $level);
 
@@ -154,6 +170,7 @@ class ActorPlayController extends Controller
             'responseRoute' => 'fo_maze_actor_progress',
             'trickRoute' => 'fo_maze_actor_trick',
             'level' => $level,
+            'replayUrl' => $replayUrl,
         ]);
     }
 }
