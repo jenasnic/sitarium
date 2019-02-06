@@ -27,9 +27,9 @@ class TmdbField
     /**
      * Type of value for cast (if not specified, property will be set as defined in JSon flux => string or JSon array).
      * NOTE 1 : For date, specify date format (using dateFormat property).
-     * NOTE 2 : For object or array, specify class to use to build sub entities (using subClass property).
+     * NOTE 2 : For object or object_array, specify class to use to build sub entities (using subClass property).
      *
-     * @Enum({"string", "integer", "float", "datetime", "object", "array"})
+     * @Enum({"string", "integer", "float", "datetime", "object", "array", "object_array"})
      *
      * @var string
      */

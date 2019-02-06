@@ -70,8 +70,8 @@ class MovieCastingBuilder
         /** @var Movie $movie */
         foreach ($movieList as $movie) {
             $actorList = $this->tmdbService->getCastingForMovieId(
-                CastingActor::class,
                 $movie->getTmdbId(),
+                CastingActor::class,
                 new CastingActorValidator()
             );
 

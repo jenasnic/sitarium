@@ -4,6 +4,9 @@ namespace App\Service\Tmdb;
 
 use App\Annotation\Tmdb\TmdbType;
 use App\Annotation\Tmdb\TmdbField;
+use App\Model\Tmdb\Actor;
+use App\Model\Tmdb\Genre;
+use App\Model\Tmdb\Movie;
 use App\Validator\Tmdb\TmdbValidatorInterface;
 use Doctrine\Common\Annotations\CachedReader;
 use Doctrine\Common\Annotations\AnnotationReader;
@@ -48,7 +51,11 @@ class TmdbApiService
         'PERSON' => 'person',
     ];
 
-    public function __construct($baseUri, $apiKey)
+    /**
+     * @param string $baseUri
+     * @param string $apiKey
+     */
+    public function __construct(string $baseUri, string $apiKey)
     {
         $this->apiKey = $apiKey;
         $this->baseUri = $baseUri;
@@ -100,7 +107,7 @@ class TmdbApiService
      *
      * @return array associative array with total count (key 'total') and array with first max count actors found (key 'results')
      */
-    public function searchEntity(string $entityClass, string $search, TmdbValidatorInterface $validator = null, $maxCount = 20)
+    public function searchEntity(string $entityClass, string $search, TmdbValidatorInterface $validator = null, $maxCount = 20): array
     {
         $reflectionClass = new \ReflectionClass($entityClass);
         $annotation = $this->annotationReader->getClassAnnotation($reflectionClass, TmdbType::class);
@@ -141,20 +148,20 @@ class TmdbApiService
     /**
      * Allows to get filmography for specified actor identifier (TMDB).
      *
-     * @param string $entityMovieClass class of entity used to build movies
      * @param int $tmdbId identifier of actor in TMDB database
      * @param string $filmographyType 'movie' or 'tv' : allows to specifiy if we want movie credits or tv credits
+     * @param string|null $entityMovieClass class of entity used to build movies (default is Movie)
      * @param TmdbValidatorInterface|null $validator validator used to check if movies are valide or not (useful to filter filmography)
      *
      * @return array list of movies of specified type
      */
     public function getFilmographyForActorId(
-        string $entityMovieClass,
         int $tmdbId,
         $filmographyType = 'movie',
+        string $entityMovieClass = Movie::class,
         TmdbValidatorInterface $validator = null
     ): array {
-        $url = $this->baseUri.'/person/'.$tmdbId.'/'.$filmographyType.'_credits?api_key='.$this->apiKey.'&language=fr';
+        $url = sprintf('%s/person/%d/%s_credits?api_key=%s&language=fr', $this->baseUri, $tmdbId, $filmographyType, $this->apiKey);
         $response = $this->guzzleClient->request('GET', $url);
 
         if (200 !== $response->getStatusCode()) {
@@ -180,15 +187,18 @@ class TmdbApiService
     /**
      * Allows to get casting for specified movie identifier (TMDB).
      *
-     * @param string $entityActorClass class of entity used to build actors
      * @param int $tmdbId identifier of movie in TMDB database
+     * @param string|null $entityActorClass class of entity used to build actors (default is Actor)
      * @param TmdbValidatorInterface|null $validator validator used to check if actors are valide or not (useful to filter casting)
      *
      * @return array list of actors of specified type
      */
-    public function getCastingForMovieId(string $entityActorClass, int $tmdbId, TmdbValidatorInterface $validator = null)
-    {
-        $url = $this->baseUri.'/movie/'.$tmdbId.'/credits?api_key='.$this->apiKey.'&language=fr';
+    public function getCastingForMovieId(
+        int $tmdbId,
+        string $entityActorClass = Actor::class,
+        TmdbValidatorInterface $validator = null
+    ): array {
+        $url = sprintf('%s/movie/%d/%credits?api_key=%s&language=fr', $this->baseUri, $tmdbId, $this->apiKey);
         $response = $this->guzzleClient->request('GET', $url);
 
         if (200 !== $response->getStatusCode()) {
@@ -206,6 +216,63 @@ class TmdbApiService
             if (null === $validator || $validator->isValid($entity)) {
                 $result[] = $entity;
             }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Allows to get all available genres for movies in TMDB.
+     *
+     * @param int $tmdbId identifier of movie in TMDB database
+     * @param string|null $entityMovieClass class of entity used to build similar movies (default is Movie)
+     *
+     * @return array
+     */
+    public function getSimilarMovies(int $tmdbId, string $entityMovieClass = Movie::class): array
+    {
+        $url = sprintf('%s/movie/%d/similar?api_key=%s&language=fr', $this->baseUri, $tmdbId, $this->apiKey);
+        $response = $this->guzzleClient->request('GET', $url);
+
+        if (200 !== $response->getStatusCode()) {
+            throw new \Exception($response->getReasonPhrase(), $response->getStatusCode());
+        }
+
+        $result = [];
+        $jsonResponse = json_decode($response->getBody(), true);
+        $reflectionGenreClass = new \ReflectionClass($entityMovieClass);
+
+        foreach ($jsonResponse['results'] as $similarMovie) {
+            $entity = $this->buildEntity($reflectionGenreClass, $similarMovie);
+            $result[] = $entity;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Allows to get all available genres for movies in TMDB.
+     *
+     * @param string|null $entityGenreClass class of entity used to build genres (default is Genre)
+     *
+     * @return Genre[]|array
+     */
+    public function getGenres(string $entityGenreClass = Genre::class): array
+    {
+        $url = sprintf('%s/genre/movie/list?api_key=%s&language=fr', $this->baseUri, $this->apiKey);
+        $response = $this->guzzleClient->request('GET', $url);
+
+        if (200 !== $response->getStatusCode()) {
+            throw new \Exception($response->getReasonPhrase(), $response->getStatusCode());
+        }
+
+        $result = [];
+        $jsonResponse = json_decode($response->getBody(), true);
+        $reflectionGenreClass = new \ReflectionClass($entityGenreClass);
+
+        foreach ($jsonResponse['genres'] as $genre) {
+            $entity = $this->buildEntity($reflectionGenreClass, $genre);
+            $result[] = $entity;
         }
 
         return $result;
@@ -262,10 +329,12 @@ class TmdbApiService
                 return floatval($value);
             case 'datetime':
                 return \DateTime::createFromFormat($annotation->dateFormat, $value) ?: null;
+            case 'array':
+                return is_array($value) ? $value : [$value];
             case 'object':
                 return $this->processObjectValueForAnnotation($value, $annotation);
-            case 'array':
-                return $this->processArrayValueForAnnotation($value, $annotation);
+            case 'object_array':
+                return $this->processObjectArrayValueForAnnotation($value, $annotation);
             // NOTE : Should never occurs
             default:
                 return $value;
@@ -297,7 +366,7 @@ class TmdbApiService
      *
      * @return array result containing sub entities initialized with JSon data
      */
-    protected function processArrayValueForAnnotation(array $arrayValue, TmdbField $annotation): array
+    protected function processObjectArrayValueForAnnotation(array $arrayValue, TmdbField $annotation): array
     {
         $reflectionClass = new \ReflectionClass($annotation->subClass);
         $resultArray = [];

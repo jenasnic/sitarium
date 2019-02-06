@@ -70,9 +70,9 @@ class ActorFilmographyBuilder
         /** @var Actor $actor */
         foreach ($actorList as $actor) {
             $movieList = $this->tmdbService->getFilmographyForActorId(
-                FilmographyMovie::class,
                 $actor->getTmdbId(),
                 'movie',
+                FilmographyMovie::class,
                 new FilmographyMovieValidator()
             );
 
