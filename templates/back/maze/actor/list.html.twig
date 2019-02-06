@@ -46,7 +46,7 @@ Required :
             {% for actor in actors %}
                 <tr>
                     <td>{{ actor.fullname }}</td>
-                    <td>{{ actor.tmdbId}}</td>
+                    <td>{{ actor.tmdbId }}</td>
                     <td>
                         {% include 'back/maze/actor/_filmography_status.html.twig' with {'status': actor.status} %}
                     </td>

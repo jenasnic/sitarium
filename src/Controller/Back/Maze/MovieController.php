@@ -95,14 +95,12 @@ class MovieController extends Controller
      * @Route("/admin/maze/movie/search", name="bo_maze_movie_search")
      *
      * @param Request $request
-     * @param TranslatorInterface $translator
      * @param TmdbApiService $tmdbService
      *
      * @return Response
      */
     public function searchAction(
         Request $request,
-        TranslatorInterface $translator,
         TmdbApiService $tmdbService
     ): Response {
         $title = $request->query->get('value', '');

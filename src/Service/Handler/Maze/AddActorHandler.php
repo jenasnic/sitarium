@@ -39,7 +39,7 @@ class AddActorHandler
     public function handle(AddActorCommand $command)
     {
         // Check if actor already exist
-        if ($this->entityManager->getRepository(Actor::class)->findBy(['tmdbId' => $command->getTmdbId()])) {
+        if (null !== $this->entityManager->getRepository(Actor::class)->find($command->getTmdbId())) {
             return;
         }
 

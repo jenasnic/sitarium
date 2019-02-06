@@ -46,7 +46,7 @@ Required :
             {% for movie in movies %}
                 <tr>
                     <td>{{ movie.title }}</td>
-                    <td>{{ movie.tmdbId}}</td>
+                    <td>{{ movie.tmdbId }}</td>
                     <td>
                         {% include 'back/maze/movie/_casting_status.html.twig' with {'status': movie.status} %}
                     </td>

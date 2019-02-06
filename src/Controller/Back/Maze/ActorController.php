@@ -95,14 +95,12 @@ class ActorController extends Controller
      * @Route("/admin/maze/actor/search", name="bo_maze_actor_search")
      *
      * @param Request $request
-     * @param TranslatorInterface $translator
      * @param TmdbApiService $tmdbService
      *
      * @return Response
      */
     public function searchAction(
         Request $request,
-        TranslatorInterface $translator,
         TmdbApiService $tmdbService
     ): Response {
         $name = $request->query->get('value', '');

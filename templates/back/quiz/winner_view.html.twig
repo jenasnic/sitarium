@@ -5,7 +5,7 @@ Required :
 #}
 
 <div class="winner-details">
-    <p><strong>{{ 'back.quiz.winner.detail.name'|trans }}</strong> : {{ winner.user.displayName }}</p>
-    <p><strong>{{ 'back.quiz.winner.detail.email'|trans }}</strong> : {{ winner.user.email }}</p>
-    <p><strong>{{ 'back.quiz.winner.detail.resolved_at'|trans }}</strong> : {{ winner.date|date('d-m-Y') }}</p>
+    <p><strong>{{ 'back.quiz.winner.detail.name'|trans }}</strong>{{ winner.user.displayName }}</p>
+    <p><strong>{{ 'back.quiz.winner.detail.email'|trans }}</strong>{{ winner.user.email }}</p>
+    <p><strong>{{ 'back.quiz.winner.detail.resolved_at'|trans }}</strong>{{ winner.date|date('d-m-Y') }}</p>
 </div>

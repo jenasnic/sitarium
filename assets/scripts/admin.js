@@ -1,6 +1,8 @@
 import './back/popup';
 import './back/tmdb/search';
 import './back/maze/list';
+import './back/tagline/list';
+import './back/tagline/selection';
 import './back/quiz/list';
 import './back/quiz/edit';
 import './back/quiz/locate';

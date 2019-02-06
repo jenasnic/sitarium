@@ -39,7 +39,7 @@ class AddMovieHandler
     public function handle(AddMovieCommand $command)
     {
         // Check if movie already exist
-        if ($this->entityManager->getRepository(Movie::class)->findBy(['tmdbId' => $command->getTmdbId()])) {
+        if (null !== $this->entityManager->getRepository(Movie::class)->find($command->getTmdbId())) {
             return;
         }
 

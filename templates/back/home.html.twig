@@ -109,6 +109,27 @@
         </footer>
     </div>
 
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">{{ 'back.home.card.tagline.title'|trans }}</p>
+            <span class="card-header-icon">
+                <a href="{{ path('bo_tagline_movie_list') }}">
+                    <span class="icon">
+                        <i class="fas fa-highlighter fa-lg"></i>
+                    </span>
+                </a>
+            </span>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                {{ 'back.home.card.tagline.content'|trans|raw }}
+            </div>
+        </div>
+        <footer class="card-footer">
+            <a href="{{ path('bo_tagline_movie_list') }}" class="card-footer-item">{{ 'back.home.card.tagline.link'|trans }}</a>
+        </footer>
+    </div>
+
 </div>
 
 {% endblock %}

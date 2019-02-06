@@ -1,0 +1,20 @@
+
+#tagline-movie-selection {
+    #main-movie {
+        display: flex;
+        justify-content: center;
+        margin-bottom : 2rem;
+    }
+
+    #tagline-similar-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .similar-movie {
+            margin: 0.5rem;
+
+            label {max-width: 185px;}
+        }
+    }
+}

@@ -1,0 +1,73 @@
+{#
+Allows to list all genres available. It allows to synchronize with TMDB.
+Required :
+- genreInfos : info about genres as array with TMDB id, name and number of movies linked to this genre.
+- unusedGenres : list of genre (as Genre) not used in any movie.
+#}
+
+{% extends "admin.html.twig" %}
+
+{% block body %}
+
+    <h1 class="title">{{ 'back.tagline.genre.list.title'|trans }}</h1>
+
+    <div id="tagline-genre-list">
+
+        <nav class="level">
+            <div class="level-left">
+                <span>{{ 'back.tagline.genre.list.used'|transchoice(genreInfos|length) }}</span>
+                <span>&nbsp;|&nbsp;</span>
+                <span>{{ 'back.tagline.genre.list.unused'|transchoice(unusedGenres|length) }}</span>
+            </div>
+            <div class="level-right">
+                <div class="column">
+                    <a class="button is-primary" href="{{ path('bo_tagline_genre_synchronize') }}">{{ 'global.synchronize'|trans }}</a>
+                </div>
+            </div>
+        </nav>
+
+        {# Display all genres found #}
+        <table class="table is-striped is-hoverable is-fullwidth">
+            <thead>
+                <tr>
+                    <th>{{ 'back.tagline.genre.list.column.name'|trans }}</th>
+                    <th>{{ 'back.tagline.genre.list.column.id'|trans }}</th>
+                    <th>{{ 'back.tagline.genre.list.column.link_count'|trans }}</th>
+                    <th>{{ 'global.delete'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for genreInfo in genreInfos %}
+                <tr>
+                    <td>{{ genreInfo['name'] }}</td>
+                    <td>{{ genreInfo['tmdbId'] }}</td>
+                    <td>{{ genreInfo['movieCount'] }}</td>
+                    <td>
+                        <a href="{{ path('bo_tagline_genre_delete', { 'genre': genreInfo['tmdbId'] }) }}" onclick="return confirm('{{ 'global.delete.confirm'|trans }}');" >
+                            <span class="icon has-text-danger button">
+                                <i class="fas fa-trash-alt"></i>
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            {% for genre in unusedGenres %}
+                <tr>
+                    <td>{{ genre.name }}</td>
+                    <td>{{ genre.tmdbId }}</td>
+                    <td>{{ 'back.tagline.genre.list.column.none'|trans }}</td>
+                    <td>
+                        <a href="{{ path('bo_tagline_genre_delete', { 'genre': genre.tmdbId }) }}" onclick="return confirm('{{ 'global.delete.confirm'|trans }}');" >
+                            <span class="icon has-text-danger button">
+                                <i class="fas fa-trash-alt"></i>
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}

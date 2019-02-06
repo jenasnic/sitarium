@@ -1,0 +1,32 @@
+{#
+Allows to view movie information.
+Required :
+- movie : movie we want to display information (as Movie).
+#}
+<div class="columns">
+
+    <div class="column is-narrow">
+        <figure>
+            <img src="{{ movie.pictureUrl|tmdbPictureUrl }}" alt="-">
+        </figure>
+    </div>
+
+    <div class="column">
+        <div class="content">
+            <p class="title is-5">{{ movie.title }}</p>
+            <p>
+                <strong>{{ 'back.tagline.movie.detail.release_date'|trans }}</strong>
+                <time datetime="{{ movie.releaseDate|date('d-m-Y') }}">
+                    {{ movie.releaseDate|date('d-m-Y') }}
+                </time>
+            </p>
+            <p><strong>{{ 'back.tagline.movie.detail.id'|trans }}</strong>{{ movie.tmdbId }}</p>
+        </div>
+        <ul class="is-size-6">
+            {% for genre in movie.genres %}
+            <li class="tag is-info is-medium">{{ genre.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>

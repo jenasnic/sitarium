@@ -1,0 +1,75 @@
+{#
+Allows to display a movie and similar movies found. It allows to select movies to add for tagline quiz.
+Required :
+- movie : base movie we want to add (as Movie).
+- movies : list of similar movies found (as Movie).
+#}
+
+{% extends "admin.html.twig" %}
+
+{% block body %}
+
+    <h1 class="title">{{ 'back.tagline.similar.title'|trans }}</h1>
+
+    <div id="tagline-movie-selection">
+
+        <div class="is-pulled-right is-clearfix">
+            <form id="movie-selection-form" action="{{ path('bo_tagline_movie_add_selection') }}" method="POST">
+                <input id="movie-selection-ids" name="movie-selection-ids" type="hidden" value="" />
+                <input id="movie-selection-submit" type="submit" class="button is-primary" value="{{ 'back.tagline.similar.validate'|trans }}" />
+            </form>
+        </div>
+
+        <h2 class="subtitle">{{ 'back.tagline.similar.subtitle.primary'|trans }}</h2>
+
+        <div id="main-movie">
+            <label class="checkbox">
+            <div class="box media">
+                <div class="media-left">
+                    <figure class="image">
+                        <img src="{{ movie.pictureUrl|tmdbPictureUrl }}" alt="-">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <div class="content">
+                        <p><strong>{{ movie.title }}</strong></p>
+                        {% if movie.tagline %}
+                            <p>{{ movie.tagline }}</p>
+                        {% else %}
+                            <p class="has-text-danger is-italic">{{ 'back.tagline.similar.no_tagline'|trans }}</p>
+                        {% endif %}
+                        <div class="content">
+                            {% for genre in movie.tmdbGenres %}
+                            <span class="tag is-info is-medium">{{ genre.name }}</span>
+                            {% endfor %}
+                        </div>
+                        <input data-movie-selection data-tmdb-id={{ movie.tmdbId }} type="checkbox">
+                        <span class="is-size-6">{{ 'back.tagline.similar.add'|trans }}</span>
+                    </div>
+                </div>
+            </div>
+            </label>
+        </div>
+
+        <h2 class="subtitle">{{ 'back.tagline.similar.subtitle.secondary'|trans }}</h2>
+
+        <div id="tagline-similar-list">
+            {% for movie in movies %}
+            <div class="box similar-movie">
+                <label class="checkbox is-size-6">
+                    <figure>
+                        <img src="{{ movie.pictureUrl|tmdbPictureUrl }}" alt="-">
+                    </figure>
+                    <div class="content has-text-centered is-size-7">
+                        {{ movie.title }}
+                    </div>
+                    <input data-movie-selection data-tmdb-id={{ movie.tmdbId }} type="checkbox">
+                    {{ 'back.tagline.similar.add'|trans }}
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+{% endblock %}

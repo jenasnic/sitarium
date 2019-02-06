@@ -4,67 +4,89 @@ namespace App\Entity\Tagline;
 
 use App\Annotation\Tmdb\TmdbField;
 use App\Annotation\Tmdb\TmdbType;
+use App\Model\Tmdb\Search\DisplayableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Movie.
- *
  * @ORM\Table(name="tagline_movie")
  * @ORM\Entity(repositoryClass="App\Repository\Tagline\MovieRepository")
  * @TmdbType("MOVIE")
  */
-class Movie
+class Movie implements DisplayableInterface
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="tmdbId", type="integer")
      * @ORM\Id
      * @TmdbField(name="id", type="integer")
+     * @ORM\Column(name="tmdbId", type="integer")
+     *
+     * @var int
      */
     private $tmdbId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="title", type="string", length=255)
      * @TmdbField(name="title")
+     *
+     * @var string
      */
     private $title;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="pictureUrl", type="string", length=255, nullable=true)
      * @TmdbField(name="poster_path")
+     *
+     * @var string
      */
     private $pictureUrl;
 
     /**
-     * @var int
-     * @TmdbField(name="vote_count", type="integer")
+     * @ORM\Column(name="tagline", type="text", nullable=true)
+     * @TmdbField(name="tagline")
+     *
+     * @var string
      */
-    private $voteCount;
+    private $tagline;
 
     /**
-     * @var array
-     *
-     * @TmdbField(name="genre_ids", type="array")
-     */
-    private $genreIds;
-
-    /**
-     * @var Genre[]|Collection
-     *
      * @ORM\ManyToMany(targetEntity="Genre")
      * @ORM\JoinTable(name="tagline_movie_genre",
      *      joinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="tmdbId", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="genre_id", referencedColumnName="tmdbId", onDelete="CASCADE")}
      * )
+     *
+     * @var Genre[]|Collection
      */
     private $genres;
+
+    /**
+     * @TmdbField(name="vote_count", type="integer")
+     *
+     * @var int
+     */
+    private $voteCount;
+
+    /**
+     * @TmdbField(name="release_date", type="datetime", dateFormat="Y-m-d")
+     *
+     * @var \DateTime
+     */
+    private $releaseDate;
+
+    /**
+     * @TmdbField(name="genre_ids", type="array")
+     *
+     * @var array
+     */
+    private $genreIds;
+
+    /**
+     * @TmdbField(name="genres", type="object_array", subClass="App\Entity\Tagline\Genre")
+     *
+     * @var Genre[]|array
+     */
+    private $tmdbGenres;
 
     public function __construct()
     {
@@ -72,7 +94,7 @@ class Movie
     }
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
     public function getTmdbId(): int
     {
@@ -104,7 +126,7 @@ class Movie
     }
 
     /**
-     * @return string|null
+     * {@inheritdoc}
      */
     public function getPictureUrl(): ?string
     {
@@ -120,35 +142,19 @@ class Movie
     }
 
     /**
-     * @return int
+     * @return string|null
      */
-    public function getVoteCount(): int
+    public function getTagline(): ?string
     {
-        return $this->voteCount;
+        return $this->tagline;
     }
 
     /**
-     * @param int $voteCount
+     * @param string|null $tagline
      */
-    public function setVoteCount(int $voteCount)
+    public function setTagline(?string $tagline)
     {
-        $this->voteCount = $voteCount;
-    }
-
-    /**
-     * @return array
-     */
-    public function getGenreIds(): array
-    {
-        return $this->genreIds;
-    }
-
-    /**
-     * @param array $genreIds
-     */
-    public function setGenreIds(array $genreIds)
-    {
-        $this->genreIds = $genreIds;
+        $this->tagline = $tagline;
     }
 
     /**
@@ -181,5 +187,45 @@ class Movie
         $this->genres->removeElement($genre);
 
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVoteCount(): int
+    {
+        return $this->voteCount;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getReleaseDate(): ?\DateTime
+    {
+        return $this->releaseDate;
+    }
+
+    /**
+     * @return array
+     */
+    public function getGenreIds(): array
+    {
+        return $this->genreIds;
+    }
+
+    /**
+     * @return Genre[]|array
+     */
+    public function getTmdbGenres(): array
+    {
+        return $this->tmdbGenres;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDisplayName(): string
+    {
+        return $this->title;
     }
 }
