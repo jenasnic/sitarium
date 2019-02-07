@@ -3,7 +3,6 @@
 namespace App\Service\Handler\User;
 
 use App\Domain\Command\User\ResetPasswordCommand;
-use App\Entity\User;
 use App\Event\UserEvents;
 use App\Event\User\ResetPasswordEvent;
 use App\Tool\PasswordUtil;
@@ -42,7 +41,7 @@ class ResetUserPasswordHandler
     {
         $password = PasswordUtil::generatePassword(6, true, true, true, false);
 
-        $user = $this->entityManager->getRepository(User::class)->find($command->getUserId());
+        $user = $command->getUser();
         $user->setPassword(PasswordUtil::encodePassword($password));
 
         $this->entityManager->persist($user);

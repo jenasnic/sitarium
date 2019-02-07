@@ -1,32 +1,30 @@
 
-<table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+<table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#435b72" align="center">
 
-    <tr style="background-color: #333;">
-        <td>
+    <tr style="background-color: #ff6712; border-bottom: 1px solid #fefefe;">
+        <td style="color: #fefefe; padding: 25px;">
             <a href="{{ app.request.scheme ~  '://' ~  app.request.host }}" target="_blank">
-            <img src="{{ app.request.scheme ~  '://' ~  app.request.host  ~ asset('resources/images/sitarium.png') }}" alt="" width="298" height="68" border="0" style="Statut;" />
+                <img src="{{ app.request.scheme ~  '://' ~  app.request.host  ~ asset('logo.png') }}" alt="Sitarium" width="421" height="52" border="0" />
             </a>
         </td>
     </tr>
 
-    <tr style="border: 1px solid #333;">
-
-        <td style="padding:25px 0; border:1px solid #CCC;">
-
+    <tr style="">
+        <td style="padding: 25px;">
             <table border="0" cellspacing="0" cellpadding="0" align="center" width="520">
-
                 <tr>
-
-                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px;" align="left">
+                    <td style="color: #fefefe;font-family:Arial, Helvetica, sans-serif; font-size:14px; " align="left">
                         {% block message %}{% endblock %}
                     </td>
-
                 </tr>
-
             </table>
-
         </td>
+    </tr>
 
+    <tr style="background-color: #ff6712; border-top: 1px solid #fefefe; color: #fefefe; text-align: center;">
+        <td style="padding:25px;">
+            &copy; 2018 www.sitarium.com
+        </td>
     </tr>
 
 </table>

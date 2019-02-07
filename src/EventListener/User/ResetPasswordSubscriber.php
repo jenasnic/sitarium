@@ -75,8 +75,7 @@ class ResetPasswordSubscriber implements EventSubscriberInterface
                 ->setSubject($subject)
                 ->setFrom($this->mailerFrom, $this->mailerSender)
                 ->setTo($event->getUser()->getEmail())
-                ->setContentType('text/html')
-                ->setBody($messageContent)
+                ->setBody($messageContent, 'text/html')
             ;
 
             $this->mailer->send($mailMessage);

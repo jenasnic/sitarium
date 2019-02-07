@@ -2,26 +2,28 @@
 
 namespace App\Domain\Command\User;
 
+use App\Entity\User;
+
 class ResetPasswordCommand
 {
     /**
-     * @var int
+     * @var User
      */
-    protected $userId;
+    protected $user;
 
     /**
-     * @param int $userId
+     * @param User $user
      */
-    public function __construct(int $userId)
+    public function __construct(User $user)
     {
-        $this->userId = $userId;
+        $this->user = $user;
     }
 
     /**
-     * @return int
+     * @return User
      */
-    public function getUserId(): int
+    public function getUser(): User
     {
-        return $this->userId;
+        return $this->user;
     }
 }
