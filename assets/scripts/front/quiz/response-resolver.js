@@ -78,5 +78,8 @@ export default class ResponseResolver {
         } else {
             this.responseLocator.displayResponseLocation(responseElement.dataset);
         }
+
+        document.getElementById('quiz-response-count').innerHTML
+            = document.querySelectorAll('#quiz-responses li[data-response]').length;
     };
 }

@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Actor.
  *
- * @ORM\Table(name="actor")
+ * @ORM\Table(name="maze_actor")
  * @ORM\Entity(repositoryClass="App\Repository\Maze\ActorRepository")
  * @TmdbType("PERSON")
  */

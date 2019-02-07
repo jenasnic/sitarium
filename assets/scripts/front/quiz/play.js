@@ -68,22 +68,33 @@ const initActions = (responseHelper, responseLocator, responseResolver) => {
         }
     );
 
-    [...document.querySelectorAll('li[data-response]')].forEach((element) => {
-        element.addEventListener('click', (event) => {
-            responseLocator.displayResponseLocation(event.target.dataset);
-        });
-    });
+    document.getElementById('response-input') && document.getElementById('response-input').focus();
+
+    document.getElementById('quiz-trick') && document.getElementById('quiz-trick').addEventListener(
+        'touchstart',
+        (event) => {
+            event.preventDefault();
+            responseHelper.toggleTrickingMode();
+        }
+    );
 
     document.getElementById('quiz-trick') && document.getElementById('quiz-trick').addEventListener(
         'click',
         (event) => {responseHelper.toggleTrickingMode();}
     );
 
-    document.getElementById('picture-quiz').addEventListener('click', (event) => {
-        responseHelper.triggerTrickEvent(event)
+    [...document.querySelectorAll('li[data-response]')].forEach((element) => {
+        element.addEventListener(type, (event) => {
+            responseLocator.displayResponseLocation(event.target.dataset);
+        });
     });
 
-    document.getElementById('response-input') && document.getElementById('response-input').focus();
+    document.getElementById('picture-quiz').addEventListener('click', (event) => {
+        responseHelper.triggerTrickEvent(event, false)
+    });
+    document.getElementById('picture-quiz').addEventListener('touchstart', (event) => {
+        responseHelper.triggerTrickEvent(event, true)
+    });
 };
 
 document.getElementById('quiz-play') && initQuiz(1400, 2200);

@@ -44,10 +44,13 @@ export default class ResponseHelper {
 
     /**
      * Allows to process 'trick' when clicking on picture.
+     *
+     * @param Event event
+     * @param bool isMobile TRUE for event from mobile (touchstart), FALSE either (click)
      */
-    triggerTrickEvent(event) {
+    triggerTrickEvent(event, isMobile) {
         if (this.isTricking) {
-            const currentPosition = getRelativePosition(event);
+            const currentPosition = getRelativePosition(event, isMobile);
             const pictureQuiz = document.getElementById('picture-quiz');
             const positionInTruePicture = {
                 positionX: currentPosition.positionX * this.pictureWidth / pictureQuiz.offsetWidth,

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * FilmographyMovie.
  *
- * @ORM\Table(name="filmography_movie")
+ * @ORM\Table(name="maze_filmography_movie")
  * @ORM\Entity(repositoryClass="App\Repository\Maze\FilmographyMovieRepository")
  */
 class FilmographyMovie
@@ -70,7 +70,7 @@ class FilmographyMovie
     /**
      * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="Actor", inversedBy="movies", cascade={"persist"})
-     * @ORM\JoinTable(name="actor_filmography_movie",
+     * @ORM\JoinTable(name="maze_actor_filmography_movie",
      *      joinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="tmdbId", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="actor_id", referencedColumnName="tmdbId", onDelete="CASCADE")}
      * )

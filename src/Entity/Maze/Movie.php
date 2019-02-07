@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Movie.
  *
- * @ORM\Table(name="movie")
+ * @ORM\Table(name="maze_movie")
  * @ORM\Entity(repositoryClass="App\Repository\Maze\MovieRepository")
  * @TmdbType("MOVIE")
  */

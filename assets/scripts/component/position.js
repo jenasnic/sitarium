@@ -24,14 +24,18 @@ export const getOffsetElement = (element) => {
 /**
  * Allows to get position for an event relative to its parent element.
  *
- * @param event
+ * @param Event event
+ * @param bool isMobile TRUE for event from mobile (touchstart), FALSE either (click)
  *
  * @return object with positionX and positionY
  */
-export const getRelativePosition = (event) => {
+export const getRelativePosition = (event, isMobile) => {
+    const posX = isMobile ? event.touches[0].clientX : event.clientX;
+    const posY = isMobile ? event.touches[0].clientY : event.clientY;
+
     const position = {
-        positionX: event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft,
-        positionY: event.clientY + document.body.scrollTop + document.documentElement.scrollTop
+        positionX: posX + document.body.scrollLeft + document.documentElement.scrollLeft,
+        positionY: posY + document.body.scrollTop + document.documentElement.scrollTop
     };
 
     const offsetToRemove = getOffsetElement(event.target);

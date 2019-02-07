@@ -41,7 +41,7 @@ Required :
                         <a href="{{ path('fo_quiz_replay', {'quiz': quiz.id}) }}" class="button">Rejouer</a>
                     {% else %}
                         <input type="text" id="response-input" name="response-input" placeholder="Saisissez votre réponse" />
-                        <div>
+                        <div class="action-buttons">
                             <span id="response-submit" class="button" title="Soumettre la réponse"><i class="fas fa-check"></i></span>
                             {% if (quiz.displayTrick) %}
                                 <span id="quiz-trick" class="button" title="Demander un indice"><i class="fas fa-question"></i></span>
