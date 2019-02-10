@@ -25,6 +25,13 @@ class Actor
     private $name;
 
     /**
+     * @TmdbField(name="biography")
+     *
+     * @var string
+     */
+    private $biography;
+
+    /**
      * @TmdbField(name="birthday", type="datetime", dateFormat="Y-m-d")
      *
      * @var \DateTime
@@ -71,33 +78,49 @@ class Actor
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
-    public function getBirthdate(): \DateTime
+    public function getBiography()
+    {
+        return $this->biography;
+    }
+
+    /**
+     * @param string $biography
+     */
+    public function setBiography($biography)
+    {
+        $this->biography = $biography;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getBirthdate(): ?\DateTime
     {
         return $this->birthdate;
     }
 
     /**
-     * @param \DateTime $birthdate
+     * @param \DateTime|null $birthdate
      */
-    public function setBirthdate(\DateTime $birthdate)
+    public function setBirthdate(?\DateTime $birthdate)
     {
         $this->birthdate = $birthdate;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPictureUrl(): string
+    public function getPictureUrl(): ?string
     {
         return $this->pictureUrl;
     }
 
     /**
-     * @param string $pictureUrl
+     * @param string|null $pictureUrl
      */
-    public function setPictureUrl(string $pictureUrl)
+    public function setPictureUrl(?string $pictureUrl)
     {
         $this->pictureUrl = $pictureUrl;
     }

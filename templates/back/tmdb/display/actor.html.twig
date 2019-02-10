@@ -1,0 +1,44 @@
+{#
+Allows to view actor information.
+Required :
+- actor : actor we want to display information (as Actor).
+#}
+
+{% extends "admin.html.twig" %}
+
+{% block body %}
+
+    <h1 class="title">{{ actor.name }}</h1>
+
+    <div class="columns">
+
+        <div class="column is-narrow">
+            <div class="card">
+                <div class="card-image">
+                    <figure>
+                        <img src="{{ actor.pictureUrl|tmdbPictureUrl }}" alt="-">
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-4">{{ actor.name }}</p>
+                        </div>
+                    </div>
+                    <div class="content subtitle is-6">
+                        <time datetime="{{ actor.birthdate|date('d-m-Y') }}">
+                            {{ actor.birthdate|date('d-m-Y') }}
+                        </time>
+                        <p><strong>{{ 'back.maze.actor.detail.id'|trans }}</strong> : {{ actor.tmdbId }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            {{ actor.biography }}
+        </div>
+
+    </div>
+
+{% endblock %}

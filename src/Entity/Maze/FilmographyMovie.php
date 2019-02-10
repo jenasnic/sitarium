@@ -3,6 +3,7 @@
 namespace App\Entity\Maze;
 
 use App\Annotation\Tmdb\TmdbField;
+use App\Model\Tmdb\Search\DisplayableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="maze_filmography_movie")
  * @ORM\Entity(repositoryClass="App\Repository\Maze\FilmographyMovieRepository")
  */
-class FilmographyMovie
+class FilmographyMovie implements DisplayableInterface
 {
     /**
      * @var int
@@ -83,7 +84,7 @@ class FilmographyMovie
     }
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
     public function getTmdbId(): int
     {
@@ -147,7 +148,7 @@ class FilmographyMovie
     }
 
     /**
-     * @return string|null
+     * {@inheritdoc}
      */
     public function getPictureUrl(): ?string
     {
@@ -224,5 +225,13 @@ class FilmographyMovie
         $this->actors->removeElement($actor);
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDisplayName(): string
+    {
+        return $this->title;
     }
 }

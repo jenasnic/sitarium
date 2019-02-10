@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Model\Tmdb;
+namespace App\Model\Tmdb\Search;
 
+use App\Annotation\Tmdb\TmdbType;
 use App\Annotation\Tmdb\TmdbField;
 
-class MovieCollection
+/**
+ * @TmdbType("PERSON")
+ */
+class Actor implements DisplayableInterface
 {
     /**
      * @TmdbField(name="id", type="integer")
@@ -18,17 +22,17 @@ class MovieCollection
      *
      * @var string
      */
-    private $title;
+    private $name;
 
     /**
-     * @TmdbField(name="poster_path")
+     * @TmdbField(name="profile_path")
      *
      * @var string
      */
     private $pictureUrl;
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
     public function getTmdbId(): int
     {
@@ -46,21 +50,21 @@ class MovieCollection
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getName(): string
     {
-        return $this->title;
+        return $this->name;
     }
 
     /**
-     * @param string $title
+     * @param string $name
      */
-    public function setTitle(string $title)
+    public function setName(string $name)
     {
-        $this->title = $title;
+        $this->name = $name;
     }
 
     /**
-     * @return string|null
+     * {@inheritdoc}
      */
     public function getPictureUrl(): ?string
     {
@@ -68,10 +72,18 @@ class MovieCollection
     }
 
     /**
-     * @param string|null $pictureUrl
+     * @param string $pictureUrl
      */
     public function setPictureUrl(?string $pictureUrl)
     {
         $this->pictureUrl = $pictureUrl;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDisplayName(): string
+    {
+        return $this->name;
     }
 }

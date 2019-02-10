@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Model\Tmdb;
+namespace App\Model\Tmdb\Search;
 
 use App\Annotation\Tmdb\TmdbType;
 use App\Annotation\Tmdb\TmdbField;
 
 /**
- * @TmdbType("TV")
+ * @TmdbType("MOVIE")
  */
-class TvShow
+class Movie implements DisplayableInterface
 {
     /**
      * @TmdbField(name="id", type="integer")
@@ -18,18 +18,11 @@ class TvShow
     private $tmdbId;
 
     /**
-     * @TmdbField(name="name")
+     * @TmdbField(name="title")
      *
      * @var string
      */
     private $title;
-
-    /**
-     * @TmdbField(name="last_air_date", type="datetime", dateFormat="Y-m-d")
-     *
-     * @var \DateTime
-     */
-    private $lastAiringDate;
 
     /**
      * @TmdbField(name="poster_path")
@@ -39,14 +32,7 @@ class TvShow
     private $pictureUrl;
 
     /**
-     * @TmdbField(name="seasons", type="array", subClass="App\Model\Tmdb\TvSeason")
-     *
-     * @var array
-     */
-    private $seasonList;
-
-    /**
-     * @return int
+     * {@inheritdoc}
      */
     public function getTmdbId(): int
     {
@@ -78,23 +64,7 @@ class TvShow
     }
 
     /**
-     * @return \DateTime|null
-     */
-    public function getLastAiringDate(): ?\DateTime
-    {
-        return $this->lastAiringDate;
-    }
-
-    /**
-     * @param \DateTime|null $lastAiringDate
-     */
-    public function setLastAiringDate(?\DateTime $lastAiringDate)
-    {
-        $this->lastAiringDate = $lastAiringDate;
-    }
-
-    /**
-     * @return string|null
+     * {@inheritdoc}
      */
     public function getPictureUrl(): ?string
     {
@@ -102,7 +72,7 @@ class TvShow
     }
 
     /**
-     * @param string $pictureUrl
+     * @param string|null $pictureUrl
      */
     public function setPictureUrl(?string $pictureUrl)
     {
@@ -110,18 +80,10 @@ class TvShow
     }
 
     /**
-     * @return array|null
+     * {@inheritdoc}
      */
-    public function getSeasonList(): ?array
+    public function getDisplayName(): string
     {
-        return $this->seasonList;
-    }
-
-    /**
-     * @param array|null $seasonList
-     */
-    public function setSeasonList(?array $seasonList)
-    {
-        $this->seasonList = $seasonList;
+        return $this->title;
     }
 }

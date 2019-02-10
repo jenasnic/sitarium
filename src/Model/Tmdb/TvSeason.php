@@ -67,33 +67,33 @@ class TvSeason
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getAiringDate(): \DateTime
+    public function getAiringDate(): ?\DateTime
     {
         return $this->airingDate;
     }
 
     /**
-     * @param \DateTime $airingDate
+     * @param \DateTime|null $airingDate
      */
-    public function setAiringDate(\DateTime $airingDate)
+    public function setAiringDate(?\DateTime $airingDate)
     {
         $this->airingDate = $airingDate;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPictureUrl(): string
+    public function getPictureUrl(): ?string
     {
         return $this->pictureUrl;
     }
 
     /**
-     * @param string $pictureUrl
+     * @param string|null $pictureUrl
      */
-    public function setPictureUrl(string $pictureUrl)
+    public function setPictureUrl(?string $pictureUrl)
     {
         $this->pictureUrl = $pictureUrl;
     }

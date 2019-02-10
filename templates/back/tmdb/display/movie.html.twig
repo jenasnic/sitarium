@@ -1,0 +1,47 @@
+{#
+Allows to view movie information.
+Required :
+- movie : movie we want to display information (as Movie).
+#}
+
+{% extends "admin.html.twig" %}
+
+{% block body %}
+
+    <h1 class="title">{{ movie.title }}</h1>
+
+    <div class="columns">
+
+        <div class="column is-narrow">
+            <div class="card">
+                <div class="card-image">
+                    <figure>
+                        <img src="{{ movie.pictureUrl|tmdbPictureUrl }}" alt="-">
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-5">{{ movie.title }}</p>
+                        </div>
+                    </div>
+                    <div class="content subtitle is-6">
+                        <time datetime="{{ movie.releaseDate|date('d-m-Y') }}">
+                            {{ movie.releaseDate|date('d-m-Y') }}
+                        </time>
+                        <p><strong>{{ 'back.maze.movie.detail.id'|trans }}</strong> : {{ movie.tmdbId }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            {% if movie.tagline %}
+                <div class="box">{{ movie.tagline }}</div>
+            {% endif %}
+            <div class="content">{{ movie.overview }}</div>
+        </div>
+
+    </div>
+
+{% endblock %}

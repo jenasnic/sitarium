@@ -3,6 +3,7 @@
 namespace App\Entity\Maze;
 
 use App\Annotation\Tmdb\TmdbField;
+use App\Model\Tmdb\Search\DisplayableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="maze_casting_actor")
  * @ORM\Entity(repositoryClass="App\Repository\Maze\CastingActorRepository")
  */
-class CastingActor
+class CastingActor implements DisplayableInterface
 {
     /**
      * @var int
@@ -61,7 +62,7 @@ class CastingActor
     }
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
     public function getTmdbId(): int
     {
@@ -93,7 +94,7 @@ class CastingActor
     }
 
     /**
-     * @return string|null
+     * {@inheritdoc}
      */
     public function getPictureUrl(): ?string
     {
@@ -154,5 +155,13 @@ class CastingActor
         $this->movies->removeElement($movie);
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDisplayName(): string
+    {
+        return $this->fullname;
     }
 }

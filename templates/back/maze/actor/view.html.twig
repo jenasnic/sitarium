@@ -4,36 +4,40 @@ Required :
 - actor : actor we want to display information (as Actor).
 #}
 
-<div class="maze-item-details">
+<div class="columns">
 
-    <div class="card">
-        <div class="card-image">
-            <figure>
-                <img src="{{ actor.pictureUrl|tmdbPictureUrl }}" alt="-">
-            </figure>
-        </div>
-        <div class="card-content">
-            <div class="media">
-                <div class="media-content">
-                    <p class="title is-4">{{ actor.fullname }}</p>
-                </div>
+    <div class="column is-narrow">
+        <div class="card">
+            <div class="card-image">
+                <figure>
+                    <img src="{{ actor.pictureUrl|tmdbPictureUrl }}" alt="-">
+                </figure>
             </div>
-            <div class="content subtitle is-6">
-                <time datetime="{{ actor.birthdate|date('d-m-Y') }}">
-                    {{ actor.birthdate|date('d-m-Y') }}
-                </time>
-                <p><strong>{{ 'back.maze.actor.detail.id'|trans }}</strong> : {{ actor.tmdbId }}</p>
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-content">
+                        <p class="title is-4">{{ actor.fullname }}</p>
+                    </div>
+                </div>
+                <div class="content subtitle is-6">
+                    <time datetime="{{ actor.birthdate|date('d-m-Y') }}">
+                        {{ actor.birthdate|date('d-m-Y') }}
+                    </time>
+                    <p><strong>{{ 'back.maze.actor.detail.id'|trans }}</strong> : {{ actor.tmdbId }}</p>
+                </div>
             </div>
         </div>
     </div>
 
     {% if (actor.movies|length > 0) %}
-    <div class="maze-item-credits content">
-        <ul class="is-size-6">
-        {% for movie in actor.movies %}
-            <li>{{ movie.title }}</li>
-        {% endfor %}
-        </ul>
+    <div class="column">
+        <div class="content">
+            <ul class="is-size-6">
+            {% for movie in actor.movies %}
+                <li>{{ movie.title }}</li>
+            {% endfor %}
+            </ul>
+        </div>
     </div>
     {% endif %}
 

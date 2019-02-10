@@ -5,7 +5,6 @@ namespace App\Controller\Front\Maze;
 use App\Service\Maze\ActorGraphBuilder;
 use App\Service\Maze\ActorPathHelpFactory;
 use App\Service\Maze\MaxPathFinder;
-use App\Service\Maze\MazeItemConverter;
 use App\Service\Maze\MinPathFinder;
 use App\Service\Maze\RandomPathFinder;
 use App\Tool\TmdbUtil;
@@ -35,11 +34,6 @@ class ActorPlayController extends Controller
     protected $helpFactory;
 
     /**
-     * @var MazeItemConverter
-     */
-    protected $mazeItemConverter;
-
-    /**
      * @var UrlGeneratorInterface
      */
     protected $urlGenerator;
@@ -48,20 +42,17 @@ class ActorPlayController extends Controller
      * @param TranslatorInterface $translator
      * @param ActorGraphBuilder $graphBuilder
      * @param ActorPathHelpFactory $helpFactory
-     * @param MazeItemConverter $mazeItemConverter
      * @param UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         TranslatorInterface $translator,
         ActorGraphBuilder $graphBuilder,
         ActorPathHelpFactory $helpFactory,
-        MazeItemConverter $mazeItemConverter,
         UrlGeneratorInterface $urlGenerator
     ) {
         $this->translator = $translator;
         $this->graphBuilder = $graphBuilder;
         $this->helpFactory = $helpFactory;
-        $this->mazeItemConverter = $mazeItemConverter;
         $this->urlGenerator = $urlGenerator;
     }
 
@@ -174,8 +165,8 @@ class ActorPlayController extends Controller
         $helpMovieList = $this->helpFactory->getMovies($actorPath, $minVoteCount, $level);
 
         return $this->render('front/maze/actor/play.html.twig', [
-            'mazePath' => $this->mazeItemConverter->convertActors($actorPath),
-            'helpList' => $this->mazeItemConverter->convertFilmographyMovies($helpMovieList),
+            'mazePath' => $actorPath,
+            'helpList' => $helpMovieList,
             'responseRoute' => 'fo_maze_actor_progress',
             'trickRoute' => 'fo_maze_actor_trick',
             'level' => $level,

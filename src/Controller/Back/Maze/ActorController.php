@@ -4,9 +4,9 @@ namespace App\Controller\Back\Maze;
 
 use App\Domain\Command\Maze\AddActorCommand;
 use App\Entity\Maze\Actor;
+use App\Enum\Tmdb\Types;
 use App\Repository\Maze\ActorRepository;
 use App\Service\Handler\Maze\AddActorHandler;
-use App\Service\Maze\MazeItemConverter;
 use App\Service\Tmdb\TmdbApiService;
 use App\Validator\Maze\ActorValidator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ActorController extends Controller
@@ -54,11 +55,16 @@ class ActorController extends Controller
     /**
      * @Route("/admin/maze/actor/new", name="bo_maze_actor_new")
      *
+     * @param UrlGeneratorInterface $urlGenerator
+     *
      * @return Response
      */
-    public function newAction(): Response
+    public function newAction(UrlGeneratorInterface $urlGenerator): Response
     {
-        return $this->render('back/maze/actor/add.html.twig');
+        return $this->render('back/tmdb/search.html.twig', [
+            'type' => Types::ACTOR,
+            'searchUrl' => $urlGenerator->generate('bo_maze_actor_search')
+        ]);
     }
 
     /**
@@ -91,31 +97,25 @@ class ActorController extends Controller
      * @param Request $request
      * @param TranslatorInterface $translator
      * @param TmdbApiService $tmdbService
-     * @param MazeItemConverter $mazeItemConverter
      *
      * @return Response
      */
     public function searchAction(
         Request $request,
         TranslatorInterface $translator,
-        TmdbApiService $tmdbService,
-        MazeItemConverter $mazeItemConverter
+        TmdbApiService $tmdbService
     ): Response {
         $name = $request->query->get('value', '');
         $actors = [];
 
         if (strlen($name) > 2) {
-            try {
-                $result = $tmdbService->searchEntity(Actor::class, $name, new ActorValidator(), self::MAX_ACTOR_RESULT_COUNT);
-                $actors = $mazeItemConverter->convertActors($result['results']);
-            } catch (\Exception $e) {
-                return new Response($translator->trans('back.global.search.error'), Response::HTTP_INTERNAL_SERVER_ERROR);
-            }
+            $result = $tmdbService->searchEntity(Actor::class, $name, new ActorValidator(), self::MAX_ACTOR_RESULT_COUNT);
+            $actors = $result['results'];
         }
 
-        return $this->render('back/maze/search.html.twig', [
-            'mazeItems' => $actors,
-            'addRouteName' => 'bo_maze_actor_add',
+        return $this->render('back/tmdb/search_result.html.twig', [
+            'items' => $actors,
+            'callback' => 'bo_maze_actor_add',
         ]);
     }
 

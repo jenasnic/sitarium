@@ -4,19 +4,18 @@ namespace App\Entity\Maze;
 
 use App\Annotation\Tmdb\TmdbField;
 use App\Annotation\Tmdb\TmdbType;
+use App\Model\Tmdb\Search\DisplayableInterface;
 use App\Enum\Maze\FilmographyStatus;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Actor.
- *
  * @ORM\Table(name="maze_actor")
  * @ORM\Entity(repositoryClass="App\Repository\Maze\ActorRepository")
  * @TmdbType("PERSON")
  */
-class Actor
+class Actor implements DisplayableInterface
 {
     /**
      * @var int
@@ -71,7 +70,7 @@ class Actor
     }
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
     public function getTmdbId(): int
     {
@@ -119,7 +118,7 @@ class Actor
     }
 
     /**
-     * @return string|null
+     * {@inheritdoc}
      */
     public function getPictureUrl(): ?string
     {
@@ -184,5 +183,13 @@ class Actor
         $this->movies->removeElement($movie);
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDisplayName(): string
+    {
+        return $this->fullname;
     }
 }

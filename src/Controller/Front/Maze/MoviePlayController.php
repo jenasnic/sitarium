@@ -3,7 +3,6 @@
 namespace App\Controller\Front\Maze;
 
 use App\Service\Maze\MaxPathFinder;
-use App\Service\Maze\MazeItemConverter;
 use App\Service\Maze\MinPathFinder;
 use App\Service\Maze\MovieGraphBuilder;
 use App\Service\Maze\MoviePathHelpFactory;
@@ -34,11 +33,6 @@ class MoviePlayController extends Controller
     protected $helpFactory;
 
     /**
-     * @var MazeItemConverter
-     */
-    protected $mazeItemConverter;
-
-    /**
      * @var UrlGeneratorInterface
      */
     protected $urlGenerator;
@@ -47,20 +41,17 @@ class MoviePlayController extends Controller
      * @param TranslatorInterface $translator
      * @param MovieGraphBuilder $graphBuilder
      * @param MoviePathHelpFactory $helpFactory
-     * @param MazeItemConverter $mazeItemConverter
      * @param UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         TranslatorInterface $translator,
         MovieGraphBuilder $graphBuilder,
         MoviePathHelpFactory $helpFactory,
-        MazeItemConverter $mazeItemConverter,
         UrlGeneratorInterface $urlGenerator
     ) {
         $this->translator = $translator;
         $this->graphBuilder = $graphBuilder;
         $this->helpFactory = $helpFactory;
-        $this->mazeItemConverter = $mazeItemConverter;
         $this->urlGenerator = $urlGenerator;
     }
 
@@ -166,8 +157,8 @@ class MoviePlayController extends Controller
         $helpActorList = $this->helpFactory->getActors($moviePath, $level);
 
         return $this->render('front/maze/movie/play.html.twig', [
-            'mazePath' => $this->mazeItemConverter->convertMovies($moviePath),
-            'helpList' => $this->mazeItemConverter->convertCastingActors($helpActorList),
+            'mazePath' => $moviePath,
+            'helpList' => $helpActorList,
             'responseRoute' => 'fo_maze_movie_progress',
             'trickRoute' => 'fo_maze_movie_trick',
             'level' => $level,

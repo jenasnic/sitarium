@@ -92,81 +92,81 @@ class Movie
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getReleaseDate(): \DateTime
+    public function getReleaseDate(): ?\DateTime
     {
         return $this->releaseDate;
     }
 
     /**
-     * @param \DateTime $releaseDate
+     * @param \DateTime|null $releaseDate
      */
-    public function setReleaseDate(\DateTime $releaseDate)
+    public function setReleaseDate(?\DateTime $releaseDate)
     {
         $this->releaseDate = $releaseDate;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPictureUrl(): string
+    public function getPictureUrl(): ?string
     {
         return $this->pictureUrl;
     }
 
     /**
-     * @param string $pictureUrl
+     * @param string|null $pictureUrl
      */
-    public function setPictureUrl(string $pictureUrl)
+    public function setPictureUrl(?string $pictureUrl)
     {
         $this->pictureUrl = $pictureUrl;
     }
 
     /**
-     * @return MovieCollection
+     * @return MovieCollection|null
      */
-    public function getCollection(): MovieCollection
+    public function getCollection(): ?MovieCollection
     {
         return $this->collection;
     }
 
     /**
-     * @param MovieCollection $collection
+     * @param MovieCollection|null $collection
      */
-    public function setCollection(MovieCollection $collection)
+    public function setCollection(?MovieCollection $collection)
     {
         $this->collection = $collection;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTagline(): string
+    public function getTagline(): ?string
     {
         return $this->tagline;
     }
 
     /**
-     * @param string $tagline
+     * @param string|null $tagline
      */
-    public function setTagline(string $tagline)
+    public function setTagline(?string $tagline)
     {
         $this->tagline = $tagline;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOverview(): string
+    public function getOverview(): ?string
     {
         return $this->overview;
     }
 
     /**
-     * @param string $overview
+     * @param string|null $overview
      */
-    public function setOverview(string $overview)
+    public function setOverview(?string $overview)
     {
         $this->overview = $overview;
     }

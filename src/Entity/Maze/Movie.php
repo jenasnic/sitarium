@@ -5,18 +5,17 @@ namespace App\Entity\Maze;
 use App\Annotation\Tmdb\TmdbField;
 use App\Annotation\Tmdb\TmdbType;
 use App\Enum\Maze\CastingStatus;
+use App\Model\Tmdb\Search\DisplayableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Movie.
- *
  * @ORM\Table(name="maze_movie")
  * @ORM\Entity(repositoryClass="App\Repository\Maze\MovieRepository")
  * @TmdbType("MOVIE")
  */
-class Movie
+class Movie implements DisplayableInterface
 {
     /**
      * @var int
@@ -83,7 +82,7 @@ class Movie
     }
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
     public function getTmdbId(): int
     {
@@ -131,7 +130,7 @@ class Movie
     }
 
     /**
-     * @return string|null
+     * {@inheritdoc}
      */
     public function getPictureUrl(): ?string
     {
@@ -228,5 +227,13 @@ class Movie
         $this->actors->removeElement($actor);
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDisplayName(): string
+    {
+        return $this->title;
     }
 }

@@ -1,8 +1,8 @@
 {#
 Allows to display list of maze items we want to find common info => path of actors or movies.
 Required :
-- MazeItem[] mazePath : list of maze items (actors or movies) linked by common info (credit movies or credit actors).
-- MazeItem[] helpList : list of maze items (movies or actors) used to help user to find path.
+- array mazePath : list of maze items (actors or movies) linked by common info (credit movies or credit actors).
+- array helpList : list of maze items (movies or actors) used to help user to find path.
 - string responseRoute : Name of route to submit and check response.
 - string trickRoute : Name of route to request a trick.
 Optional
@@ -39,7 +39,7 @@ Optional
                 <span id="mobile-helper-button"><i class="fas fa-question-circle"></i></span>
                 {% for mazeItem in mazePath %}
                 <div data-order="{{ loop.index }}" class="mobile-maze-item">
-                    <img src="{{ mazeItem.pictureUrl }}" alt="{{ mazeItem.displayName|raw }}" />
+                    <img src="{{ mazeItem.pictureUrl|tmdbPictureUrl }}" alt="{{ mazeItem.displayName|raw }}" />
                     <span>{{ mazeItem.displayName }}</span>
                 </div>
                 {% endfor %}
@@ -54,7 +54,7 @@ Optional
                         data-tmdb-id="{{ mazeItem.tmdbId }}"
                         class="maze-item{{ loop.first ? ' first active': '' }}{{ loop.last ? ' last': '' }}"
                     >
-                        <img src="{{ mazeItem.pictureUrl }}" alt="{{ mazeItem.displayName|raw }}" />
+                        <img src="{{ mazeItem.pictureUrl|tmdbPictureUrl }}" alt="{{ mazeItem.displayName|raw }}" />
                         <span>{{ mazeItem.displayName }}</span>
                     </div>
                     {% endfor %}

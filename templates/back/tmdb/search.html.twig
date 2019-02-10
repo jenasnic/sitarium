@@ -1,0 +1,37 @@
+{#
+Allows to search items using TMDB API.
+Required :
+- string type : Type of entity to search from enum 'App/Enum/Tmdb/Types' (actor, movie...)
+- string searchUrl : URL to call to search result (ajax call with query parameter 'value').
+#}
+
+{% extends "admin.html.twig" %}
+
+{% block body %}
+
+    <h1 class="title">{{ ('back.tmdb.search.title.'~type)|trans }}</h1>
+
+    <div id="tmdb-search">
+
+        <div id="tmdb-search-actions" class="field has-addons">
+            <div class="control">
+                <input id="tmdb-search-input" type="text" class="input" placeholder="{{ ('back.tmdb.search.placeholder.'~type)|trans }}" />
+            </div>
+            <div class="control">
+                <button
+                    id="tmdb-search-button"
+                    class="button is-primary"
+                    data-search-url="{{ searchUrl }}"
+                    disabled
+                 >
+                    {{ 'global.search'|trans }}
+                </button>
+            </div>
+        </div>
+
+        {# Allows to display search result #}
+        <div id="tmdb-search-result"></div>
+
+    </div>
+
+{% endblock %}

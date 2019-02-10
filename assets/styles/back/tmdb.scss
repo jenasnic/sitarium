@@ -1,0 +1,11 @@
+
+#tmdb-result-wrapper {
+    align-items: normal;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 2rem 0;
+
+    > .tile {
+        margin: 0.5rem;
+    }
+}

@@ -7,7 +7,6 @@ back.global.order.error: Erreur lors du réordonnancement
 back.global.order.success: Réordonnancement des quiz OK
 back.global.save.error: Erreur lors de la sauvegarde
 back.global.save.success: Sauvegarde OK
-back.global.search.error: Erreur lors de la recherche
 
 global.add: Ajouter
 global.create: Créer
@@ -261,9 +260,6 @@ front.quiz.winner.quiz_resolve_error: Erreur lors de la résolution du quiz.
 # Maze #
 ########
 
-back.maze.actor.add.placeholder: Saisissez le nom de l'acteur
-back.maze.actor.add.title: Ajout d'un acteur
-
 back.maze.actor.detail.id: ID TMDB
 
 back.maze.actor.list.build_filmography: Construire la filmographie
@@ -278,9 +274,6 @@ back.maze.casting.success: Construction du casting OK
 
 back.maze.filmography.error: Erreur lors de la construction de la filmographie
 back.maze.filmography.success: Construction de la filmographie OK
-
-back.maze.movie.add.placeholder: Saisissez le titre du film
-back.maze.movie.add.title: Ajout d'un film
 
 back.maze.movie.detail.id: ID TMDB
 
@@ -371,3 +364,14 @@ front.maze.movie.level.comment: "<strong>NOTE : </strong>Le degré de difficult�
 front.maze.movie.not_found: Film introuvable.
 front.maze.movie.play.help_content: "<p>Choisissez parmi les acteurs ci-dessous celui qui vous permettra d'avancer.</p>
 <p>Plusieurs réponses peuvent être possibles et une même réponse peut être utilisée plusieurs fois.</p>"
+
+
+
+########
+# TMDB #
+########
+
+back.tmdb.search.placeholder.actor: Saisissez le nom de l'acteur
+back.tmdb.search.placeholder.movie: Saisissez le titre du film
+back.tmdb.search.title.actor: Recherche d'un acteur
+back.tmdb.search.title.movie: Recherche d'un film

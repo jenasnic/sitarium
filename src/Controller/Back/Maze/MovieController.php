@@ -4,9 +4,9 @@ namespace App\Controller\Back\Maze;
 
 use App\Domain\Command\Maze\AddMovieCommand;
 use App\Entity\Maze\Movie;
+use App\Enum\Tmdb\Types;
 use App\Repository\Maze\MovieRepository;
 use App\Service\Handler\Maze\AddMovieHandler;
-use App\Service\Maze\MazeItemConverter;
 use App\Service\Tmdb\TmdbApiService;
 use App\Validator\Maze\MovieValidator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MovieController extends Controller
@@ -54,11 +55,16 @@ class MovieController extends Controller
     /**
      * @Route("/admin/maze/movie/new", name="bo_maze_movie_new")
      *
+     * @param UrlGeneratorInterface $urlGenerator
+     *
      * @return Response
      */
-    public function newAction(): Response
+    public function newAction(UrlGeneratorInterface $urlGenerator): Response
     {
-        return $this->render('back/maze/movie/add.html.twig');
+        return $this->render('back/tmdb/search.html.twig', [
+            'type' => Types::MOVIE,
+            'searchUrl' => $urlGenerator->generate('bo_maze_movie_search')
+        ]);
     }
 
     /**
@@ -91,31 +97,25 @@ class MovieController extends Controller
      * @param Request $request
      * @param TranslatorInterface $translator
      * @param TmdbApiService $tmdbService
-     * @param MazeItemConverter $mazeItemConverter
      *
      * @return Response
      */
     public function searchAction(
         Request $request,
         TranslatorInterface $translator,
-        TmdbApiService $tmdbService,
-        MazeItemConverter $mazeItemConverter
+        TmdbApiService $tmdbService
     ): Response {
         $title = $request->query->get('value', '');
         $movies = [];
 
         if (strlen($title) > 2) {
-            try {
-                $result = $tmdbService->searchEntity(Movie::class, $title, new MovieValidator(), self::MAX_MOVIE_RESULT_COUNT);
-                $movies = $mazeItemConverter->convertMovies($result['results']);
-            } catch (\Exception $e) {
-                return new Response($translator->trans('back.global.search.error'), Response::HTTP_INTERNAL_SERVER_ERROR);
-            }
+            $result = $tmdbService->searchEntity(Movie::class, $title, new MovieValidator(), self::MAX_MOVIE_RESULT_COUNT);
+            $movies = $result['results'];
         }
 
-        return $this->render('back/maze/search.html.twig', [
-            'mazeItems' => $movies,
-            'addRouteName' => 'bo_maze_movie_add',
+        return $this->render('back/tmdb/search_result.html.twig', [
+            'items' => $movies,
+            'callback' => 'bo_maze_movie_add',
         ]);
     }
 

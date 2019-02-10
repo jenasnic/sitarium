@@ -4,7 +4,6 @@ namespace App\Controller\Front\Maze;
 
 use App\Enum\Maze\CastingStatus;
 use App\Repository\Maze\MovieRepository;
-use App\Service\Maze\MazeItemConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,16 +26,13 @@ class MovieMazeController extends Controller
      * @Security("is_granted('ROLE_USER')")
      *
      * @param MovieRepository $movieRepository
-     * @param MazeItemConverter $mazeItemConverter
      *
      * @return Response
      */
-    public function selectMinPathAction(MovieRepository $movieRepository, MazeItemConverter $mazeItemConverter): Response
+    public function selectMinPathAction(MovieRepository $movieRepository): Response
     {
-        $movies = $movieRepository->findBy(['status' => CastingStatus::INITIALIZED], ['title' => 'asc']);
-
         return $this->render('front/maze/movie/min_path_selection.html.twig', [
-            'movies' => $mazeItemConverter->convertMovies($movies),
+            'movies' => $movieRepository->findBy(['status' => CastingStatus::INITIALIZED], ['title' => 'asc']),
         ]);
     }
 
@@ -45,16 +41,13 @@ class MovieMazeController extends Controller
      * @Security("is_granted('ROLE_USER')")
      *
      * @param MovieRepository $movieRepository
-     * @param MazeItemConverter $mazeItemConverter
      *
      * @return Response
      */
-    public function selectMaxPathAction(MovieRepository $movieRepository, MazeItemConverter $mazeItemConverter): Response
+    public function selectMaxPathAction(MovieRepository $movieRepository): Response
     {
-        $movies = $movieRepository->findBy(['status' => CastingStatus::INITIALIZED], ['title' => 'asc']);
-
         return $this->render('front/maze/movie/max_path_selection.html.twig', [
-            'movies' => $mazeItemConverter->convertMovies($movies),
+            'movies' => $movieRepository->findBy(['status' => CastingStatus::INITIALIZED], ['title' => 'asc']),
         ]);
     }
 }
