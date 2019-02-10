@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class QuizController extends Controller
 {
@@ -53,17 +54,18 @@ class QuizController extends Controller
      * @Route("/quiz/rejouer/{quiz}", requirements={"quiz" = "\d+"}, name="fo_quiz_replay")
      * @Security("is_granted('ROLE_USER')")
      *
+     * @param TranslatorInterface $translator
      * @param ClearUserResponseHandler $handler
      * @param Quiz $quiz
      *
      * @return Response
      */
-    public function replayAction(ClearUserResponseHandler $handler, Quiz $quiz): Response
+    public function replayAction(TranslatorInterface $translator, ClearUserResponseHandler $handler, Quiz $quiz): Response
     {
         try {
             $handler->handle(new ClearUserResponseCommand($this->getUser(), $quiz));
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur lors de la remise à zéro de vos réponses.');
+            $this->addFlash('error', $translator->trans('front.quiz.response.reset_error'));
         }
 
         return $this->redirectToRoute('fo_quiz_play', ['slug' => $quiz->getSlug()]);

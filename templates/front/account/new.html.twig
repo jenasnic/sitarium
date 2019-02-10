@@ -11,20 +11,20 @@ Required :
     <meta name="robots" content="noindex" />
 {% endblock %}
 
-{% block title %}Création d'un compte{% endblock %}
+{% block title %}{{ 'front.account.create.title'|trans }}{% endblock %}
 
 {% block body %}
 
-    <h1>Créer un compte</h1>
+    <h1>{{ 'front.account.create.title'|trans }}</h1>
 
     <div id="account-new" class="card center w-half">
 
-        <p class="margin-bottom">Veuillez remplir les champs ci-dessous pour créer votre compte.</p>
+        <p class="margin-bottom">{{ 'front.account.create.content'|trans }}</p>
 
         {{ form_start(account) }}
             {{ form_rest(account) }}
             <div class="form-buttons">
-                <input type="submit" class="button" value="Enregistrer" />
+                <input type="submit" class="button" value="{{ 'global.save'|trans }}" />
             </div>
         {{ form_end(account) }}
 

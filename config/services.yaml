@@ -6,6 +6,7 @@ parameters:
     tmdb_picture_base_uri: 'https://image.tmdb.org/t/p/w185'
     mailer_from: '%env(mailer_from)%'
     mailer_sender: '%env(mailer_sender)%'
+    locale: 'fr'
 
 services:
     # default configuration for services in *this* file

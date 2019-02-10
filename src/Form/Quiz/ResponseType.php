@@ -14,16 +14,11 @@ class ResponseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class, ['label' => 'Réponse'])
+            ->add('title')
             ->add('responses', TextareaType::class, [
-                'label' => 'Valeurs autorisées',
-                'help' => 'Permet d\'indiquer toutes les réponses acceptées séparées par des \';\'.<br/>
-                    Les accents ne sont pas pris en compte lors des comparaisons.',
+                'help' => 'form.quiz.response.help.title',
             ])
-            ->add('trick', TextType::class, [
-                'label' => 'Indice',
-                'required' => false,
-            ])
+            ->add('trick', TextType::class, ['required' => false])
         ;
     }
 
@@ -31,6 +26,7 @@ class ResponseType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Response::class,
+            'label_format' => 'form.quiz.response.edit.label.%name%',
         ]);
     }
 }

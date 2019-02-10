@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LoginController extends Controller
 {
@@ -32,12 +33,18 @@ class LoginController extends Controller
      * @Route("/mot-de-passe-oublie", name="fo_forgotten_password")
      *
      * @param Request $request
+     * @param TranslatorInterface $translator
+     * @param UserRepository $userRepository
      * @param ResetUserPasswordHandler $handler
      *
      * @return Response
      */
-    public function infosAction(Request $request, UserRepository $userRepository, ResetUserPasswordHandler $handler): Response
-    {
+    public function infosAction(
+        Request $request,
+        TranslatorInterface $translator,
+        UserRepository $userRepository,
+        ResetUserPasswordHandler $handler
+    ): Response {
         if ($request->isMethod(Request::METHOD_POST)) {
             $email = $request->request->get('email');
             $user = $userRepository->findOneBy(['email' => $email]);
@@ -45,15 +52,15 @@ class LoginController extends Controller
             if (null !== $user) {
                 try {
                     $handler->handle(new ResetPasswordCommand($user));
-                    $this->addFlash('info', 'Votre nouveau mot de passe vous a été envoyé par mail.');
+                    $this->addFlash('info', $translator->trans('front.login.password.reset.send'));
 
                     return $this->redirectToRoute('login');
                 }
                 catch (\Exception $e) {
-                    $this->addFlash('error', 'Erreur lors du renouvellement de mot de passe.');
+                    $this->addFlash('error', $translator->trans('front.login.password.reset.error'));
                 }
             } else {
-                $this->addFlash('warning', 'Aucun utilisateur trouvé pour l\'email saisie.');
+                $this->addFlash('warning', $translator->trans('front.login.password.reset.user_not_found'));
             }
         }
 

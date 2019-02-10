@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ActorController extends Controller
 {
@@ -63,18 +64,22 @@ class ActorController extends Controller
     /**
      * @Route("/admin/maze/actor/add/{tmdbId}", requirements={"tmdbId" = "\d+"}, name="bo_maze_actor_add")
      *
+     * @param TranslatorInterface $translator
      * @param AddActorHandler $handler
      * @param int $tmdbId
      *
      * @return Response
      */
-    public function addAction(AddActorHandler $handler, int $tmdbId): Response
-    {
+    public function addAction(
+        TranslatorInterface $translator,
+        AddActorHandler $handler,
+        int $tmdbId
+    ): Response {
         try {
             $handler->handle(new AddActorCommand($tmdbId));
-            $this->addFlash('info', 'L\'acteur a bien été ajouté à la liste');
+            $this->addFlash('info', $translator->trans('back.global.add.success'));
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur lors de l\'ajout');
+            $this->addFlash('error', $translator->trans('back.global.add.error'));
         }
 
         return $this->redirectToRoute('bo_maze_actor_new');
@@ -84,12 +89,15 @@ class ActorController extends Controller
      * @Route("/admin/maze/actor/search", name="bo_maze_actor_search")
      *
      * @param Request $request
+     * @param TranslatorInterface $translator
      * @param TmdbApiService $tmdbService
+     * @param MazeItemConverter $mazeItemConverter
      *
      * @return Response
      */
     public function searchAction(
         Request $request,
+        TranslatorInterface $translator,
         TmdbApiService $tmdbService,
         MazeItemConverter $mazeItemConverter
     ): Response {
@@ -101,7 +109,7 @@ class ActorController extends Controller
                 $result = $tmdbService->searchEntity(Actor::class, $name, new ActorValidator(), self::MAX_ACTOR_RESULT_COUNT);
                 $actors = $mazeItemConverter->convertActors($result['results']);
             } catch (\Exception $e) {
-                return new Response('Erreur lors de la recherche', Response::HTTP_INTERNAL_SERVER_ERROR);
+                return new Response($translator->trans('back.global.search.error'), Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
 
@@ -114,20 +122,24 @@ class ActorController extends Controller
     /**
      * @Route("/admin/maze/actor/delete/{actor}", requirements={"actor" = "\d+"}, name="bo_maze_actor_delete")
      *
+     * @param TranslatorInterface $translator
      * @param EntityManagerInterface $entityManager
      * @param Actor $actor
      *
      * @return Response
      */
-    public function deleteAction(EntityManagerInterface $entityManager, Actor $actor): Response
-    {
+    public function deleteAction(
+        TranslatorInterface $translator,
+        EntityManagerInterface $entityManager,
+        Actor $actor
+    ): Response {
         try {
             $entityManager->remove($actor);
             $entityManager->flush();
 
-            $this->addFlash('info', 'Suppression OK');
+            $this->addFlash('info', $translator->trans('back.global.delete.success'));
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur lors de la suppression');
+            $this->addFlash('error', $translator->trans('back.global.delete.error'));
         }
 
         return $this->redirectToRoute('bo_maze_actor_list');

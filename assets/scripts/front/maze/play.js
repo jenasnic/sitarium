@@ -110,8 +110,10 @@ class MazePlayer {
 
                     if (mazeResolved) {
                         this.terminateMaze();
+                        // @todo use translation
                         displayPopup('Bravo vous avez résolu ce quiz !');
                     } else {
+                        // @todo use translation
                         displayPopup('Félicitations !', {autoCloseDelay: this.popupDelay});
                     }
                 } else {

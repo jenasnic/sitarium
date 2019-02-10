@@ -6,14 +6,14 @@ Required :
 #}
 
 {% if (mazeItems|length == 0) %}
-    <p>Aucun résultat trouvé</p>
+    <p>{{ 'global.no_result_found'|trans }}</p>
 {% endif %}
 
 <div id="maze-item-result-wrapper" class="tile is-ancestor is-12">
 {% for mazeItem in mazeItems %}
     <div class="tile is-2">
         <a href="{{ path(addRouteName, { 'tmdbId': mazeItem.tmdbId }) }}"
-            onclick="return confirm('Confirmer la sélection ?');"
+            onclick="return confirm('{{ 'global.select.confirm'|trans }}');"
             class="card"
         >
             <div class="card-image">

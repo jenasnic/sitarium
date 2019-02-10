@@ -11,21 +11,17 @@ Required :
     <meta name="description" content="Quiz casting : plus court chemin entre 2 films !"/>
 {% endblock %}
 
-{% block title %}Quiz casting{% endblock %}
+{% block title %}{{ 'front.maze.movie.min_path.title'|trans }}{% endblock %}
 
 {% block body %}
 
-    <h1>Reliez 2 films</h1>
+    <h1>{{ 'front.maze.movie.min_path.title'|trans }}</h1>
 
     <div id="maze-min-path" class="maze-item-path-selection">
 
         <div class="card center">
 
-            <p class="margin-bottom">Choisissez simplement 2 films parmi ceux proposés ci-dessous.<br/>
-            Le système cherchera le plus court chemin entre ces deux films (en fonction du casting...).<br/>
-            A vous de retrouver le(s) acteur(s) pour lier ces 2 films.</p>
-            <p class="note margin-bottom"><strong>ATTENTION : </strong>la solution proposée n'est pas unique et n'utilisera que la sélection de films proposés sur ce site (et leur casting).<br/>
-            Un chemin plus court peut donc exister en passant par d'autres acteurs ayant joués dans des films non présents ici.</p>
+            {{ 'front.maze.movie.min_path.content'|trans|raw }}
 
             <form id="path-selection-form" action="{{ path('fo_maze_movie_play_min_path') }}" method="POST">
 
@@ -33,20 +29,20 @@ Required :
                 <input type="hidden" id="endTmdbId" name="endTmdbId" />
 
                 <div class="field">
-                    <label for="level">Difficulté : </label>
+                    <label for="level">{{ 'front.maze.play.level'|trans }}</label>
                     <div class="control select-wrapper">
                         <select id="level" name="level">
-                            <option value="0">Facile</option>
-                            <option value="1" selected="selected">Moyen</option>
-                            <option value="2">Difficile</option>
+                            <option value="0">{{ 'front.maze.play.level.easy'|trans }}</option>
+                            <option value="1" selected="selected">{{ 'front.maze.play.level.medium'|trans }}</option>
+                            <option value="2">{{ 'front.maze.play.level.hard'|trans }}</option>
                         </select>
                     </div>
                 </div>
 
-                <p class="note"><strong>NOTE : </strong>Le degré de difficulté permet de modifier le nombre d'acteurs accessibles dans la rubrique "Besoin d'aide".</p>
+                <p class="note">{{ 'front.maze.movie.level.comment'|trans|raw }}</p>
 
                 <div class="form-buttons">
-                    <input id="selection-submit" type="submit" class="button" disabled value="Jouer"/>
+                    <input id="selection-submit" type="submit" class="button" disabled value="{{ 'global.play'|trans }}"/>
                 </div>
 
             </form>

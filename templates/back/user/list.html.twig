@@ -8,15 +8,15 @@ Required :
 
 {% block body %}
 
-    <h1 class="title">Gestion des comptes utilisateurs</h1>
+    <h1 class="title">{{ 'back.user.list.title'|trans }}</h1>
 
     <nav class="level">
         <div class="level-left">
-            <span>{{ users|length }} utilisateur(s)</span>
+            <span>{{ 'back.user.list.count'|transchoice(users|length) }}</span>
         </div>
         <div class="level-right">
             <div>
-                <a id="new-quiz-button" class="button is-primary" href="{{ path('bo_user_add') }}">Nouveau</a>
+                <a id="new-quiz-button" class="button is-primary" href="{{ path('bo_user_add') }}">{{ 'global.new'|trans }}</a>
             </div>
         </div>
     </nav>
@@ -25,9 +25,9 @@ Required :
     <table class="table is-striped is-hoverable is-fullwidth">
         <thead>
             <tr>
-                <th>Nom complet</th>
-                <th>Modifier</th>
-                <th>Supprimer</th>
+                <th>{{ 'back.user.list.column.name'|trans }}</th>
+                <th>{{ 'global.edit'|trans }}</th>
+                <th>{{ 'global.delete'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -44,7 +44,7 @@ Required :
                     </a>
                 </td>
                 <td>
-                    <a href="{{ path('bo_user_delete', { 'user': user.id }) }}" onclick="return confirm('Confirmer la suppression ?');" >
+                    <a href="{{ path('bo_user_delete', { 'user': user.id }) }}" onclick="return confirm('{{ 'global.delete.confirm'|trans }}');" >
                         <span class="icon has-text-danger button">
                             <i class="fas fa-trash-alt"></i>
                         </span>

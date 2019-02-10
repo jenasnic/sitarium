@@ -8,6 +8,7 @@ use App\Repository\Quiz\WinnerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class WinnerController extends Controller
 {
@@ -42,18 +43,22 @@ class WinnerController extends Controller
     /**
      * @Route("/admin/quiz/{quiz}/winner/clear", requirements={"quiz" = "\d+"}, name="bo_quiz_winner_clear")
      *
+     * @param TranslatorInterface $translator
      * @param WinnerRepository $winnerRepository
      * @param Quiz $quiz
      *
      * @return Response
      */
-    public function clearWinnerAction(WinnerRepository $winnerRepository, Quiz $quiz): Response
-    {
+    public function clearWinnerAction(
+        TranslatorInterface $translator,
+        WinnerRepository $winnerRepository,
+        Quiz $quiz
+    ): Response {
         try {
             $winnerRepository->removeWinnersForQuizId($quiz->getId());
-            $this->addFlash('info', 'Suppression OK');
+            $this->addFlash('info', $translator->trans('back.global.delete.success'));
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur lors de la suppression');
+            $this->addFlash('error', $translator->trans('back.global.delete.error'));
         }
 
         return $this->redirectToRoute('bo_quiz_list');

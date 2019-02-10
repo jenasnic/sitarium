@@ -9,7 +9,7 @@ Required :
 
 {% block body %}
 
-    <h1 class="title">Statistiques du joueur</h1>
+    <h1 class="title">{{ 'back.quiz.statistics.player_statistics'|trans }}</h1>
 
     <h2 class="subtitle">{{ user.firstname }} {{ user.lastname }}</h2>
 
@@ -18,10 +18,10 @@ Required :
         <table class="table is-striped is-hoverable is-fullwidth">
             <thead>
                 <tr>
-                    <th>Quiz</th>
-                    <th>Nb. réponses trouvées</th>
-                    <th>Dernière session de jeu</th>
-                    <th>Détail</th>
+                    <th>{{ 'back.quiz.statistics.quiz'|trans }}</th>
+                    <th>{{ 'back.quiz.statistics.response_count'|trans }}</th>
+                    <th>{{ 'back.quiz.statistics.last_session'|trans }}</th>
+                    <th>{{ 'global.detail'|trans }}</th>
                 </tr>
             </thead>
             <tbody>

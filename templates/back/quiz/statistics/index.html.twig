@@ -9,15 +9,15 @@ Required :
 
 {% block body %}
 
-    <h1 class="title">Statistiques</h1>
+    <h1 class="title">{{ 'back.quiz.statistics'|trans }}</h1>
 
     {# Display statistics about quiz #}
     <div id="statistics">
 
         <div class="tabs is-boxed is-centered">
             <ul>
-                <li class="tab-item" data-panel="statistics-quiz"><a>Quiz</a></li>
-                <li class="tab-item" data-panel="statistics-user"><a>Joueur</a></li>
+                <li class="tab-item" data-panel="statistics-quiz"><a>{{ 'back.quiz.statistics.quiz'|trans }}</a></li>
+                <li class="tab-item" data-panel="statistics-user"><a>{{ 'back.quiz.statistics.player'|trans }}</a></li>
             </ul>
         </div>
 
@@ -25,9 +25,9 @@ Required :
             <table class="table is-striped is-hoverable is-fullwidth">
                 <thead>
                     <tr>
-                        <th>Quiz</th>
-                        <th>Nb. participants</th>
-                        <th>Détail</th>
+                        <th>{{ 'back.quiz.statistics.quiz'|trans }}</th>
+                        <th>{{ 'back.quiz.statistics.participant_count'|trans }}</th>
+                        <th>{{ 'global.detail'|trans }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,10 +53,10 @@ Required :
             <table class="table is-striped is-hoverable is-fullwidth">
                 <thead>
                     <tr>
-                        <th>Joueur</th>
-                        <th>Nb. réponses trouvées</th>
-                        <th>Dernière session de jeu</th>
-                        <th>Détail</th>
+                        <th>{{ 'back.quiz.statistics.player'|trans }}</th>
+                        <th>{{ 'back.quiz.statistics.response_count'|trans }}</th>
+                        <th>{{ 'back.quiz.statistics.last_session'|trans }}</th>
+                        <th>{{ 'global.detail'|trans }}</th>
                     </tr>
                 </thead>
                 <tbody>

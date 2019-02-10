@@ -10,30 +10,30 @@
                 <span class="icon">
                     <i class="fas fa-user"></i>
                 </span>
-                <span>Utilisateurs</span>
+                <span>{{ 'back.layout.menu.user'|trans }}</span>
             </a>
             <a href="{{ path('bo_quiz_list') }}" class="navbar-item">
                 <span class="icon">
                     <i class="fas fa-image"></i>
                 </span>
-                <span>Quiz</span>
+                <span>{{ 'back.layout.menu.quiz'|trans }}</span>
             </a>
             <a href="{{ path('bo_maze_actor_list') }}" class="navbar-item">
                 <span class="icon">
                     <i class="fas fa-users"></i>
                 </span>
-                <span>Acteurs</span>
+                <span>{{ 'back.layout.menu.actor'|trans }}</span>
             </a>
             <a href="{{ path('bo_maze_movie_list') }}" class="navbar-item">
                 <span class="icon">
                     <i class="fas fa-film"></i>
                 </span>
-                <span>Films</span>
+                <span>{{ 'back.layout.menu.movie'|trans }}</span>
             </a>
         </div>
         <div class="navbar-end">
-            <a href="{{ path('fo_home') }}" class="navbar-item is-size-7">Retour au site</a>
-            <a href="{{ path('logout') }}" class="navbar-item is-size-7">Se déconnecter</a>
+            <a href="{{ path('fo_home') }}" class="navbar-item is-size-7">{{ 'back.layout.menu.back'|trans }}</a>
+            <a href="{{ path('logout') }}" class="navbar-item is-size-7">{{ 'global.logout'|trans }}</a>
         </div>
     </div>
 </nav>

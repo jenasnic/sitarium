@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ResponseController extends Controller
 {
@@ -17,6 +18,7 @@ class ResponseController extends Controller
      * @Route("/quiz/ajax/valider-reponse", name="fo_quiz_check_response", methods="POST")
      *
      * @param Request $request
+     * @param TranslatorInterface $translator
      * @param ResponseRepository $responseRepository
      * @param UserResponseRepository $userResponseRepository
      * @param AddUserResponseHandler $handler
@@ -25,6 +27,7 @@ class ResponseController extends Controller
      */
     public function checkResponseAction(
         Request $request,
+        TranslatorInterface $translator,
         ResponseRepository $responseRepository,
         UserResponseRepository $userResponseRepository,
         AddUserResponseHandler $handler
@@ -49,7 +52,7 @@ class ResponseController extends Controller
                         if ($responseAlreadyFound) {
                             return new JsonResponse([
                                 'success' => false,
-                                'message' => 'Réponse déjà trouvée.',
+                                'message' => $translator->trans('front.quiz.response.already_found'),
                             ]);
                         }
 
@@ -68,9 +71,9 @@ class ResponseController extends Controller
                 }
             }
 
-            return new JsonResponse(['success' => false, 'message' => 'Réponse incorrecte.']);
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.response.incorrect')]);
         } catch (\Exception $e) {
-            return new JsonResponse(['success' => false, 'message' => 'Erreur lors du traitement de la réponse.']);
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.response.process_error')]);
         }
     }
 
@@ -78,11 +81,12 @@ class ResponseController extends Controller
      * @Route("/quiz/ajax/indice", name="fo_quiz_trick", methods="POST")
      *
      * @param Request $request
+     * @param TranslatorInterface $translator
      * @param ResponseRepository $responseRepository
      *
      * @return JsonResponse
      */
-    public function quizTrick(Request $request, ResponseRepository $responseRepository): JsonResponse
+    public function quizTrick(Request $request, TranslatorInterface $translator, ResponseRepository $responseRepository): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -100,10 +104,10 @@ class ResponseController extends Controller
 
                 return new JsonResponse(['success' => true, 'trick' => $responses]);
             } else {
-                return new JsonResponse(['success' => false, 'message' => 'Aucun indice trouvé pour la zone indiquée.']);
+                return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.trick.no_trick_on_location')]);
             }
         } catch (\Exception $e) {
-            return new JsonResponse(['success' => false, 'message' => 'Erreur lors de la récupération des indices.']);
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.trick.process_error')]);
         }
     }
 }

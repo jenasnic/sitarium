@@ -1,0 +1,369 @@
+back.global.add.error: Erreur lors de l'ajout
+back.global.add.success: Ajout OK
+back.global.delete.error: Erreur lors de la suppression
+back.global.delete.success: Suppression OK
+back.global.form.errors: Certains champs ne sont pas remplis correctement
+back.global.order.error: Erreur lors du réordonnancement
+back.global.order.success: Réordonnancement des quiz OK
+back.global.save.error: Erreur lors de la sauvegarde
+back.global.save.success: Sauvegarde OK
+back.global.search.error: Erreur lors de la recherche
+
+global.add: Ajouter
+global.create: Créer
+global.delete: Supprimer
+global.delete_all: Supprimer tout
+global.detail: Details
+global.edit: Modifier
+global.login: Se connecter
+global.logout: Se déconnecter
+global.new: Nouveau
+global.next: Suivant
+global.no_result_found: Aucun résultat trouvé
+global.play: Jouer
+global.previous: Précedent
+global.replay: Rejouer
+global.save: Engregistrer
+global.search: Rechercher
+global.send: Envoyer
+global.validate: Valider
+
+global.delete.confirm: Confirmer la suppression ?
+global.select.confirm: Confirmer la sélection ?
+
+
+
+##########
+# Layout #
+##########
+
+back.layout.footer: © 2019 www.sitarium.com
+back.layout.menu.actor: Acteurs
+back.layout.menu.back: Retour au site
+back.layout.menu.movie: Films
+back.layout.menu.quiz: Quiz
+back.layout.menu.user: Utilisateurs
+
+front.layout.footer: © 2019 www.sitarium.com
+front.layout.menu.home: Accueil
+front.layout.menu.quiz: Quiz en image
+front.layout.menu.other: Autres quiz
+front.layout.menu.account: Mon compte
+
+
+
+#############
+# Back home #
+#############
+
+back.home.card.actor.title: Acteurs
+back.home.card.actor.link: Gérer les acteurs
+back.home.card.actor.content: "Gestion des acteurs pour les quiz :
+<ul>
+    <li>Ajout de nouveaux acteurs</li>
+    <li>Construction de la filmographie</li>
+</ul>"
+
+back.home.card.movie.title: Films
+back.home.card.movie.link: Gérer les films
+back.home.card.movie.content: "Gestion des films pour les quiz :
+<ul>
+    <li>Ajout de nouveaux films</li>
+    <li>Construction du casting</li>
+</ul>"
+
+back.home.card.quiz.title: Quiz
+back.home.card.quiz.link: Gérer les quiz
+back.home.card.quiz.content: "Gestion des quiz en image :
+<ul>
+    <li>Création de quiz</li>
+    <li>Affichage des statistiques</li>
+</ul>"
+
+back.home.card.statistics.title: Statistiques
+back.home.card.statistics.link: Voir les statistiques
+back.home.card.statistics.content: "Gestion des statistiques :
+<ul>
+    <li>Par quiz résolus</li>
+    <li>Par réponses trouvées</li>
+    <li>Par utilisateurs</li>
+</ul>"
+
+back.home.card.user.title: Utilisateurs
+back.home.card.user.link: Gérer les utilisateurs
+back.home.card.user.content: "Gestion des comptes utilisateurs :
+<ul>
+    <li>Création de comptes</li>
+    <li>Modification des données utilisateur</li>
+    <li>Suppression/désactivation des comptes</li>
+</ul>"
+
+
+
+#############
+# Front home #
+#############
+
+front.home.title: Bienvenue sur le Sitarium
+front.home.content: "<p>Ce site vous propose différents <strong>quiz</strong> autour du <strong>cinéma</strong> (plutôt américain !).</p>
+<p>Vous trouverez des <strong>quiz</strong> en image basés sur le même principe que <a href='http://www.popcorngarage.com/' target='_blank'>PopCorn Garage</a>.</p>
+<p class='margin-bottom'>Vous pouvez aussi tester vos connaissances sur la <strong>filmographie</strong> des acteurs ou le <strong>casting</strong> des films.</p>
+<p class='margin-bottom'>Un grand merci au site <a href='https://www.themoviedb.org/'>The Movie DB</a> qui m'a permis de recueillir les informations nécessaires pour vous proposer ces <strong>quiz</strong>.</p>
+<p><strong>Amusez-vous bien !</strong></p>"
+
+
+
+#########
+# Login #
+#########
+
+front.login.password.reset.error: Erreur lors du renouvellement de mot de passe.
+front.login.password.reset.send: Votre nouveau mot de passe vous a été envoyé par mail.
+front.login.password.reset.user_not_found: Aucun utilisateur trouvé pour l'email saisie.
+front.login.form.title: Connexion
+front.login.form.login: Login
+front.login.form.password: Mot de passe
+
+front.login.form.create_account: 'Si vous le désirez, vous pouvez créer un compte %link_start%ici%link_end%.'
+front.login.form.forgotten_password: Mot de passe oublié.
+
+
+
+###########
+# Account #
+###########
+
+back.user.edit.title: Modification de l'utilisateur
+
+back.user.list.column.name: Nom complet
+back.user.list.count: '{0} Aucun compte|{1} 1 compte|]1,Inf[ %count% comptes'
+back.user.list.title: Gestion des comptes utilisateurs
+
+form.account.edit.label.email: Email
+form.account.edit.label.lastname: Nom
+form.account.edit.label.firstname: Prénom
+form.account.edit.label.password.first: Mot de passe
+form.account.edit.label.password.second: Confirmation m.d.p.
+form.account.edit.label.roles: Rôles
+form.account.edit.label.username: Login
+
+front.account.create.content: Veuillez remplir les champs ci-dessous pour créer votre compte.
+front.account.create.error: Erreur lors de la création de votre compte.
+front.account.create.success: Votre compte a bien été créé.
+front.account.create.title: Créer un compte
+
+front.account.update.error: Erreur lors de la mise à jour de votre compte.
+front.account.update.quiz_in_progress: Quiz en cours
+front.account.update.quiz_over: Quiz terminé(s)
+front.account.update.success: Votre compte a bien été mis à jour.
+front.account.update.title: Mon compte
+front.account.update.update_content: "<p class='margin-bottom'>Bonjour <strong>%name%</strong>,</p>
+<p>Vous pouvez mettre à jour vos informations personnelles.</p>
+<p class='note margin-bottom'><strong>NOTE : </strong>Si vous ne souhaitez pas modifier votre mot de passe, laissez les champs vides.</p>"
+
+front.forgotten_password.title: Mot de passe oublié
+front.forgotten_password.content: Veuillez saisir votre adresse mail. Un nouveau mot de passe vous sera envoyé par mail.
+front.forgotten_password.form.email: Email
+
+
+
+########
+# Quiz #
+########
+
+back.quiz.edit.title: Modification du quiz
+
+back.quiz.list.column.name: Nom
+back.quiz.list.column.winner: Vainqueurs
+back.quiz.list.count: '%count% quiz'
+back.quiz.list.create_form.placeholder: Nom du quiz
+back.quiz.list.show_statistics: Statistiques
+back.quiz.list.title: Gestion des quiz
+
+back.quiz.response.list.add: Ajouter une réponse
+back.quiz.response.list.column.name: Nom
+back.quiz.response.list.column.tmdb_link: Lien TMDB
+back.quiz.response.list.count: '{0} Aucune réponse|{1} 1 réponse|]1,Inf[ %count% réponses'
+back.quiz.response.list.locate: Positionner les réponses
+back.quiz.response.list.title: Liste des réponses
+back.quiz.response.list.tmdb_link: Créer les liens TMDB
+
+back.quiz.response.locate.response_choice: 'Réponses pour le quiz "%name%"'
+back.quiz.response.locate.title: Positionnement des réponses
+
+back.quiz.winner.detail.name: Nom complet
+back.quiz.winner.detail.email: Adresse mail
+back.quiz.winner.detail.resolved_at: Résolu le
+
+back.quiz.winner.list.column.name: Nom
+back.quiz.winner.list.count: '{0} Aucun vainqueur|{1} 1 vainqueur|]1,Inf[ %count% vainqueurs'
+back.quiz.winner.list.title: 'Liste des vainqueurs du quiz "%name%"'
+
+back.quiz.location.error: Erreur lors de la récupération des données de localisation
+back.quiz.location.not_found: Données de localisation introuvables
+
+back.quiz.tmdb_link.error: Erreur lors de la création des liens TMDB
+back.quiz.tmdb_link.success: Création des liens TMDB OK
+
+back.quiz.statistics: Statistiques
+back.quiz.statistics.found_at: Trouvée le
+back.quiz.statistics.frequency: Fréquence
+back.quiz.statistics.last_session: Dernière session de jeu
+back.quiz.statistics.participant_count: Nb. participants
+back.quiz.statistics.player: Joueur
+back.quiz.statistics.player_statistics: Statistiques du joueur
+back.quiz.statistics.quiz_statistics: Statistiques du quiz
+back.quiz.statistics.quiz: Quiz
+back.quiz.statistics.response: Réponse
+back.quiz.statistics.response_count: Nb. réponses trouvées
+
+form.quiz.edit.label.displayResponse: Afficher les réponses
+form.quiz.edit.label.displayTrick: Autoriser les indices
+form.quiz.edit.label.name: Nom du quiz
+form.quiz.edit.label.pictureFile: Image du quiz
+form.quiz.edit.label.published: Publication
+form.quiz.edit.label.thumbnailFile: Vignette
+form.quiz.edit.help.displayResponse: Permet de visualiser sur l'image les éléments du quiz relatifs aux réponses trouvées.<br/>Si cette option est activée, les réponses doivents définir les coordonées permettant de localiser les éléments associés.
+form.quiz.edit.help.displayTrick: Permet de donner un indice sur les films à trouver.<br/>Si cette option est activée, les réponses doivents définir les coordonées permettant de localiser les éléments associés.
+
+form.quiz.response.edit.label.responses: Valeurs autorisées
+form.quiz.response.edit.label.title: Réponse
+form.quiz.response.edit.label.trick: Indice
+form.quiz.response.help.title: "Permet d'indiquer toutes les réponses acceptées séparées par des ';'.<br/>Les accents ne sont pas pris en compte lors des comparaisons."
+
+front.quiz.home.title: Quiz objets cachés
+front.quiz.home.content: Retrouvez dans les images ci-dessous, des objets issus de films et donnez le titre du film correspondant.
+front.quiz.home.content_anonymous: "Pour sauvegarder vos réponses, pensez à vous créer un compte %link_start%ici%link_end%."
+front.quiz.home.find: "Trouvez les %count% objets cachés dans l'image."
+
+front.quiz.play.response.found: "Réponses trouvées : "
+front.quiz.play.response.placeholder: Saisissez votre réponse
+front.quiz.play.response.submit: Soumettre la réponse
+front.quiz.play.trick.request: Demander un indice
+
+front.quiz.response.already_found: Réponse déjà trouvée.
+front.quiz.response.incorrect: Réponse incorrecte.
+front.quiz.response.process_error: Erreur lors du traitement de la réponse.
+front.quiz.response.reset_error: Erreur lors de la remise à zéro de vos réponses.
+
+front.quiz.trick.no_trick_on_location: Aucun indice trouvé pour la zone indiquée.
+front.quiz.trick.process_error: Erreur lors de la récupération des indices.
+
+front.quiz.winner.quiz_not_resolved: Vous n'avez pas résolu le quiz.
+front.quiz.winner.quiz_resolved: Félicitations ! Vous avez résolu ce quiz.
+front.quiz.winner.quiz_resolve_error: Erreur lors de la résolution du quiz.
+
+
+
+########
+# Maze #
+########
+
+back.maze.actor.add.placeholder: Saisissez le nom de l'acteur
+back.maze.actor.add.title: Ajout d'un acteur
+
+back.maze.actor.detail.id: ID TMDB
+
+back.maze.actor.list.build_filmography: Construire la filmographie
+back.maze.actor.list.column.filmography: Filmographie
+back.maze.actor.list.column.id: ID TMDB
+back.maze.actor.list.column.name: Nom
+back.maze.actor.list.count: '{0} Aucun résultat|{1} 1 acteur|]1,Inf[ %count% acteurs'
+back.maze.actor.list.title: Gestion des acteurs
+
+back.maze.casting.error: Erreur lors de la construction du casting
+back.maze.casting.success: Construction du casting OK
+
+back.maze.filmography.error: Erreur lors de la construction de la filmographie
+back.maze.filmography.success: Construction de la filmographie OK
+
+back.maze.movie.add.placeholder: Saisissez le titre du film
+back.maze.movie.add.title: Ajout d'un film
+
+back.maze.movie.detail.id: ID TMDB
+
+back.maze.movie.list.build_casting: Construire le casting
+back.maze.movie.list.column.casting: Casting
+back.maze.movie.list.column.id: ID TMDB
+back.maze.movie.list.column.title: Titre
+back.maze.movie.list.count: '{0} Aucun résultat|{1} 1 film|]1,Inf[ %count% films'
+back.maze.movie.list.title: Gestion des films
+
+front.maze.initialization_error: Une erreur est survenue lors de l'initialisation du quiz.
+front.maze.invalid_parameters: Les paramètres spécifiés pour la page sont incorrects..
+front.maze.quiz_casting: Quiz casting
+front.maze.quiz_filmography: Quiz filmographie
+front.maze.response.incorrect: Réponse incorrecte.
+front.maze.response.process_error: Impossible de vérifier votre réponse.
+
+front.maze.home.content: "<p>Nous vous proposons ici 2 autres quiz, le premier basé sur la filmographie des acteurs et le second sur le casting des films.</p>
+<p class='margin-bottom'>Le but de ces quiz est de relier les acteurs via un film commun ou de relier les films via un acteur commun...</p>
+<p><strong>Amusez-vous bien !</strong></p>"
+front.maze.home.content_anonymous: "Pensez à vous créer un compte %link_start%ici%link_end%."
+front.maze.home.title: Quiz casting et filmographie
+
+front.maze.play.count: "Nombre de coups : "
+front.maze.play.help: Besoin d'aide ?
+front.maze.play.level: Difficulté
+front.maze.play.level.easy: Facile
+front.maze.play.level.hard: Difficile
+front.maze.play.level.medium: Moyen
+front.maze.play.min_path: Jouer sur le plus court chemin
+front.maze.play.play_with: Jouer avec
+front.maze.play.response.placeholder: Saisissez votre réponse
+front.maze.play.response.submit: Soumettre la réponse
+front.maze.play.select_actor: Choisir mes acteurs
+front.maze.play.select_movie: Choisir mes films
+front.maze.play.trick.request: Utiliser un joker
+
+front.maze.actor.filmography_error: Impossible de charger la filmographie de l'acteur.
+
+front.maze.actor.home.actor_count: "%count% acteurs"
+front.maze.actor.home.content: "<p>Le but du jeu est d'avancer d'acteur en acteur en trouvant un film commun.</p>
+<p class='margin-bottom'>Ce quiz se base sur une sélection d'une centaine d'acteurs.</p>
+<p><strong>Bonne chance !</strong></p>"
+front.maze.actor.home.content_anonymous: "Pour accéder à plus de fonctionnalités, pensez à vous créer un compte %link_start%ici%link_end%."
+front.maze.actor.home.max_path_content: Si vous le souhaitez, vous pouvez également jouer avec votre propre sélection d'acteurs parmi ceux proposés sur ce site.
+front.maze.actor.home.min_path_content: Si vous êtes curieux, vous pouvez aussi découvrir "le plus court chemin" reliant 2 acteurs.
+
+front.maze.actor.level.comment: "<strong>NOTE : </strong>Le degré de difficulté porte sur la notoriété des films utilisés (selon le site TheMovieDB) pour mettre en relation les acteurs.<br/>
+Il permet également de modifier le nombre de films accessibles dans la rubrique 'Besoin d'aide'."
+front.maze.actor.not_found: Acteur introuvable.
+front.maze.actor.play.help_content: "<p>Choisissez parmi les films ci-dessous celui qui vous permettra d'avancer.</p>
+<p>Plusieurs réponses peuvent être possibles et une même réponse peut être utilisée plusieurs fois.</p>"
+
+front.maze.actor.max_path.content: "<p class='margin-bottom'>Veuillez choisir 10 acteurs/actrices parmi ceux proposés ci-dessous.<br/>
+Nous vous proposerons le plus long quiz trouvé pour votre sélection.</p>
+<p class='margin-bottom'><strong>Bonne chance !</strong></p>"
+front.maze.actor.max_path.title: Construisez votre quiz
+front.maze.actor.min_path.content: "<p class='margin-bottom'>Choisissez simplement 2 acteurs parmi ceux proposés ci-dessous.<br/>
+Le système cherchera le plus court chemin entre ces deux acteurs (en fonction de leur filmographie...).<br/>
+A vous de retrouver le(s) film(s) pour lier ces 2 acteurs.</p>
+<p class='note margin-bottom'><strong>ATTENTION : </strong>la solution proposée n'est pas unique et n'utilisera que la sélection d'acteurs proposés sur ce site (et leur filmographie).<br/>
+Un chemin plus court peut donc exister en passant par d'autres films avec des acteurs non présents ici.</p>"
+front.maze.actor.min_path.title: Reliez 2 acteurs
+
+front.maze.movie.casting_error: Impossible de charger le casting du film.
+
+front.maze.movie.home.movie_count: "%count% films"
+front.maze.movie.home.content: "<p>Le but du jeu est d'avancer de film en film en trouvant un acteur commun.</p>
+<p class='margin-bottom'>Ce quiz se base sur une sélection d'une centaine de films.</p>
+<p><strong>Bonne chance !</strong></p>"
+front.maze.movie.home.content_anonymous: "Pour accéder à plus de fonctionnalités, pensez à vous créer un compte %link_start%ici%link_end%."
+front.maze.movie.home.max_path_content: Si vous le souhaitez, vous pouvez également jouer avec votre propre sélection de films parmi ceux proposés sur ce site.
+front.maze.movie.home.min_path_content: Si vous êtes curieux, vous pouvez aussi découvrir "le plus court chemin" reliant 2 films.
+
+front.maze.movie.max_path.content: "<p class='margin-bottom'>Veuillez choisir 10 films parmi ceux proposés ci-dessous. Nous vous proposerons le plus long quiz trouvé pour votre sélection.</p>
+<p class='margin-bottom'><strong>Bonne chance !</strong></p>"
+front.maze.movie.max_path.title: Construisez votre quiz
+front.maze.movie.min_path.content: "<p class='margin-bottom'>Choisissez simplement 2 films parmi ceux proposés ci-dessous.<br/>
+Le système cherchera le plus court chemin entre ces deux films (en fonction du casting...).<br/>
+A vous de retrouver le(s) acteur(s) pour lier ces 2 films.</p>
+<p class='note margin-bottom'><strong>ATTENTION : </strong>la solution proposée n'est pas unique et n'utilisera que la sélection de films proposés sur ce site (et leur casting).<br/>
+Un chemin plus court peut donc exister en passant par d'autres acteurs ayant joués dans des films non présents ici.</p>"
+front.maze.movie.min_path.title: Reliez 2 films
+
+front.maze.movie.level.comment: "<strong>NOTE : </strong>Le degré de difficulté permet de modifier le nombre d'acteurs accessibles dans la rubrique 'Besoin d'aide'."
+front.maze.movie.not_found: Film introuvable.
+front.maze.movie.play.help_content: "<p>Choisissez parmi les acteurs ci-dessous celui qui vous permettra d'avancer.</p>
+<p>Plusieurs réponses peuvent être possibles et une même réponse peut être utilisée plusieurs fois.</p>"

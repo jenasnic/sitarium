@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LocateController extends Controller
 {
@@ -60,12 +61,16 @@ class LocateController extends Controller
      * @Route("/admin/quiz/response/get-location", name="bo_quiz_response_location", methods="GET")
      *
      * @param Request $request
+     * @param TranslatorInterface $translator
      * @param ResponseRepository $repository
      *
      * @return Response
      */
-    public function getLocationAction(Request $request, ResponseRepository $repository): Response
-    {
+    public function getLocationAction(
+        Request $request,
+        TranslatorInterface $translator,
+        ResponseRepository $repository
+    ): Response {
         try {
             /* @var QuizResponse $response */
             $response = $repository->find($request->query->get('id'));
@@ -77,7 +82,7 @@ class LocateController extends Controller
                 || null === $response->getWidth()
                 || null === $response->getHeight()
             ) {
-                return new JsonResponse(['success' => false, 'message' => 'Données introuvables']);
+                return new JsonResponse(['success' => false, 'message' => $translator->trans('back.quiz.location.not_found')]);
             }
 
             $location = [
@@ -89,7 +94,7 @@ class LocateController extends Controller
 
             return new JsonResponse(['success' => true, 'info' => $location]);
         } catch (\Exception $e) {
-            return new JsonResponse(['success' => false, 'message' => 'Erreur lors de la récupération des données']);
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('back.quiz.location.error')]);
         }
     }
 }

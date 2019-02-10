@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class QuizListController extends Controller
 {
@@ -31,21 +32,25 @@ class QuizListController extends Controller
      * @Route("/admin/quiz/reorder", name="bo_quiz_reorder", methods="POST")
      *
      * @param Request $request
+     * @param TranslatorInterface $translator
      * @param ReorderQuizHandler $handler
      *
      * @return Response
      */
-    public function reorderAction(Request $request, ReorderQuizHandler $handler): Response
-    {
+    public function reorderAction(
+        Request $request,
+        TranslatorInterface $translator,
+        ReorderQuizHandler $handler
+    ): Response {
         try {
             $data = json_decode($request->getContent(), true);
             $reorderedIds = json_decode($data['reorderedIds']);
 
             $handler->handle(new ReorderQuizCommand($reorderedIds));
 
-            return new JsonResponse(['success' => true, 'message' => 'Réordonnancement des quiz OK']);
+            return new JsonResponse(['success' => true, 'message' => $translator->trans('back.global.order.success')]);
         } catch (\Exception $e) {
-            return new JsonResponse(['success' => false, 'message' => 'Erreur lors du réordonnancement des quiz']);
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('back.global.order.error')]);
         }
     }
 }

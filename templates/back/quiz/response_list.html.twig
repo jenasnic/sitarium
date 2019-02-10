@@ -4,11 +4,11 @@ Required :
 - quiz : quiz we want to display responses (as Quiz).
 #}
 
-<h1 class="title">Liste des réponses</h1>
+<h1 class="title">{{ 'back.quiz.response.list.title'|trans }}</h1>
 
 <nav class="level">
     <div class="level-left">
-        <span>{{ quiz.responses|length }} réponse(s)</span>
+        <span>{{ 'back.maze.movie.list.count'|transchoice(quiz.responses|length) }}</span>
     </div>
     <div class="level-right">
         <div>
@@ -17,13 +17,13 @@ Required :
                 class="button is-primary"
                 data-add-response-url="{{ path('bo_quiz_response_new', {'quiz': quiz.id}) }}"
             >
-                Ajouter une réponse
+                {{ 'back.quiz.response.list.add'|trans }}
             </span>
             <a
                 href="{{ path('bo_quiz_response_locate', {'quiz': quiz.id}) }}"
                 class="button is-primary"
             >
-                Positionner les réponses
+                {{ 'back.quiz.response.list.locate'|trans }}
             </a>
             <span
                 id="link-tmdb-button"
@@ -31,7 +31,7 @@ Required :
                 data-tmdb-link-url="{{ path('bo_quiz_link_tmdb_start', {'quiz': quiz.id}) }}"
                 data-progress-url="{{ path('bo_quiz_link_tmdb_progress') }}"
             >
-                Créer les liens TMDB
+                {{ 'back.quiz.response.list.tmdb_link'|trans }}
             </span>
         </div>
     </div>
@@ -40,10 +40,10 @@ Required :
 <table id="quiz-response-list" class="table is-striped is-hoverable is-fullwidth">
     <thead>
         <tr>
-            <th>Réponse</th>
-            <th>Lien TMDB</th>
-            <th>Modifier</th>
-            <th>Supprimer</th>
+            <th>{{ 'back.quiz.response.list.column.name'|trans }}</th>
+            <th>{{ 'back.quiz.response.list.column.tmdb_link'|trans }}</th>
+            <th>{{ 'global.edit'|trans }}</th>
+            <th>{{ 'global.delete'|trans }}</th>
         </tr>
     </thead>
     <tbody>

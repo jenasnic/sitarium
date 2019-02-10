@@ -9,25 +9,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TmdbLinkController extends Controller
 {
     /**
      * @Route("/admin/quiz/tmdb-link/{quiz}", requirements={"quiz" = "\d+"}, name="bo_quiz_link_tmdb_start", methods="POST")
      *
+     * @param TranslatorInterface $translator
      * @param TmdbLinkBuilder $tmdbLinkBuilder
      * @param Quiz $quiz
      *
      * @return JsonResponse
      */
-    public function tmdbLinkAction(TmdbLinkBuilder $tmdbLinkBuilder, Quiz $quiz): JsonResponse
-    {
+    public function tmdbLinkAction(
+        TranslatorInterface $translator,
+        TmdbLinkBuilder $tmdbLinkBuilder,
+        Quiz $quiz
+    ): JsonResponse {
         try {
             $tmdbLinkBuilder->build($quiz->getId());
 
-            return new JsonResponse(['success' => true, 'message' => 'Création des liens TMDB OK']);
+            return new JsonResponse(['success' => true, 'message' => $translator->trans('back.quiz.tmdb_link.success')]);
         } catch (\Exception $e) {
-            return new JsonResponse(['success' => false, 'message' => 'Erreur lors de la création des liens TMDB']);
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('back.quiz.tmdb_link.error')]);
         }
     }
 

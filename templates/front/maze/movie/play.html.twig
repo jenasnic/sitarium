@@ -16,11 +16,10 @@ Optional
     <meta name="description" content="Quiz casting : avancez de film en film en trouvant les acteurs/actrices communs !"/>
 {% endblock %}
 
-{% block title %}Quiz casting{% endblock %}
+{% block title %}{{ 'front.maze.quiz_casting'|trans }}{% endblock %}
 
-{% block mazeTitle %}Quiz casting{% endblock %}
+{% block mazeTitle %}{{ 'front.maze.quiz_casting'|trans }}{% endblock %}
 
 {% block mazeHelpText %}
-    <p>Choisissez parmi les acteurs ci-dessous celui qui vous permettra d'avancer.</p>
-    <p>Plusieurs réponses peuvent être possibles et une même réponse peut être utilisée plusieurs fois.</p>
+    {{ 'front.maze.movie.play.help_content'|trans|raw }}
 {% endblock %}

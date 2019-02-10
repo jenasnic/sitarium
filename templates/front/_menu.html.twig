@@ -4,19 +4,19 @@
 
 <nav id="menu">
     <div class="navbar-main">
-        <a href="{{ path('fo_quiz') }}" class="navbar-item">Quiz en image</a>
+        <a href="{{ path('fo_quiz') }}" class="navbar-item">{{ 'front.layout.menu.quiz'|trans }}</a>
         <a href="{{ path('fo_home') }}" class="navbar-item navbar-logo">
             <img src="{{ asset('build/images/logo.svg') }}" alt="Sitarium" />
-            <span>Accueil</span>
+            <span>{{ 'front.layout.menu.home'|trans }}</span>
         </a>
-        <a href="{{ path('fo_maze') }}" class="navbar-item">Autres quiz</a>
+        <a href="{{ path('fo_maze') }}" class="navbar-item">{{ 'front.layout.menu.other'|trans }}</a>
     </div>
     <div class="navbar-login">
         {% if (app.user) %}
-            <a href="{{ path('fo_account_infos') }}" class="navbar-item">Mon compte</a> 
-            <a href="{{ path('logout') }}" class="navbar-item">Se déconnecter</a>
+            <a href="{{ path('fo_account_infos') }}" class="navbar-item">{{ 'front.layout.menu.account'|trans }}</a> 
+            <a href="{{ path('logout') }}" class="navbar-item">{{ 'global.logout'|trans }}</a>
         {% else %}
-            <a href="{{ path('login') }}" class="navbar-item">Se connecter</a></span>
+            <a href="{{ path('login') }}" class="navbar-item">{{ 'global.login'|trans }}</a></span>
         {% endif %}
     </div>
 </nav>

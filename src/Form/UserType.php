@@ -36,6 +36,7 @@ class UserType extends AccountType
         $resolver->setDefaults([
             'data_class' => User::class,
             'ignore_email' => false,
+            'label_format' => 'form.account.edit.label.%name%',
         ]);
     }
 }

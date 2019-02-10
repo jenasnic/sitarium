@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MovieController extends Controller
 {
@@ -63,18 +64,22 @@ class MovieController extends Controller
     /**
      * @Route("/admin/maze/movie/add/{tmdbId}", requirements={"tmdbId" = "\d+"}, name="bo_maze_movie_add")
      *
+     * @param TranslatorInterface $translator
      * @param AddMovieHandler $handler
      * @param int $tmdbId
      *
      * @return Response
      */
-    public function addAction(AddMovieHandler $handler, int $tmdbId): Response
-    {
+    public function addAction(
+        TranslatorInterface $translator,
+        AddMovieHandler $handler,
+        int $tmdbId
+    ): Response {
         try {
             $handler->handle(new AddMovieCommand($tmdbId));
-            $this->addFlash('info', 'Le film a bien été ajouté à la liste');
+            $this->addFlash('info', $translator->trans('back.global.add.success'));
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur lors de l\'ajout');
+            $this->addFlash('error', $translator->trans('back.global.add.error'));
         }
 
         return $this->redirectToRoute('bo_maze_movie_new');
@@ -84,12 +89,15 @@ class MovieController extends Controller
      * @Route("/admin/maze/movie/search", name="bo_maze_movie_search")
      *
      * @param Request $request
+     * @param TranslatorInterface $translator
      * @param TmdbApiService $tmdbService
+     * @param MazeItemConverter $mazeItemConverter
      *
      * @return Response
      */
     public function searchAction(
         Request $request,
+        TranslatorInterface $translator,
         TmdbApiService $tmdbService,
         MazeItemConverter $mazeItemConverter
     ): Response {
@@ -101,7 +109,7 @@ class MovieController extends Controller
                 $result = $tmdbService->searchEntity(Movie::class, $title, new MovieValidator(), self::MAX_MOVIE_RESULT_COUNT);
                 $movies = $mazeItemConverter->convertMovies($result['results']);
             } catch (\Exception $e) {
-                return new Response('Erreur lors de la recherche', Response::HTTP_INTERNAL_SERVER_ERROR);
+                return new Response($translator->trans('back.global.search.error'), Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
 
@@ -114,20 +122,24 @@ class MovieController extends Controller
     /**
      * @Route("/admin/maze/movie/delete/{movie}", requirements={"movie" = "\d+"}, name="bo_maze_movie_delete")
      *
+     * @param TranslatorInterface $translator
      * @param EntityManagerInterface $entityManager
-     * @param Movie $move
+     * @param Movie $movie
      *
      * @return Response
      */
-    public function deleteAction(EntityManagerInterface $entityManager, Movie $movie): Response
-    {
+    public function deleteAction(
+        TranslatorInterface $translator,
+        EntityManagerInterface $entityManager,
+        Movie $movie
+    ): Response {
         try {
             $entityManager->remove($movie);
             $entityManager->flush();
 
-            $this->addFlash('info', 'Suppression OK');
+            $this->addFlash('info', $translator->trans('back.global.delete.success'));
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur lors de la suppression');
+            $this->addFlash('error', $translator->trans('back.global.delete.error'));
         }
 
         return $this->redirectToRoute('bo_maze_movie_list');

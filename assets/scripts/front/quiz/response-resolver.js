@@ -42,6 +42,7 @@ export default class ResponseResolver {
                 }
 
                 document.getElementById('response-input').value = '';
+                // @todo use translation
                 displayPopup('Félicitations !', {autoCloseDelay: this.popupDelay});
                 setTimeout(
                     () => {this.addNewResponse(response.data);},

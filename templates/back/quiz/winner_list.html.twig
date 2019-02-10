@@ -9,14 +9,14 @@ Required :
 
 {% block body %}
 
-    <h1 class="title">Liste des vainqueurs du quiz '{{ quiz.name }}'</h1>
+    <h1 class="title">{{ 'back.quiz.winner.list.title'|trans({'%name%': quiz.name}) }}</h1>
 
     <nav class="level">
         <div class="level-left">
-            <span>{{ winners|length }} vainqueur(s)</span>
+            <span>{{ 'back.quiz.winner.list.count'|transchoice(winners|length) }}</span>
         </div>
         <div class="level-right">
-            <a class="button is-primary" href="{{ path('bo_quiz_winner_clear', { 'quiz': quiz.id }) }}">Tout supprimer</a>
+            <a class="button is-primary" href="{{ path('bo_quiz_winner_clear', { 'quiz': quiz.id }) }}">{{ 'global.delete_all'|trans }}</a>
             <div>
             </div>
         </div>
@@ -25,8 +25,8 @@ Required :
     <table id="quiz-winner-list" class="table is-striped is-hoverable is-fullwidth">
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>Détails</th>
+                <th>{{ 'back.quiz.winner.list.column.name'|trans }}</th>
+                <th>{{ 'global.detail'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -45,15 +45,5 @@ Required :
         {% endfor %}
         </tbody>
     </table>
-
-    {# Allows to display informations about winner using Ajax #}
-    <div id="winner-detail-modal" class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <div class="modal-card-body">
-            </div>
-        </div>
-        <button class="modal-close is-large" aria-label="close"></button>
-    </div>
 
 {% endblock %}

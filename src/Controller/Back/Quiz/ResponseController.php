@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ResponseController extends Controller
 {
@@ -30,34 +31,45 @@ class ResponseController extends Controller
      * @Route("/admin/quiz/{quiz}/response/new", requirements={"quiz" = "\d+"}, name="bo_quiz_response_new")
      *
      * @param Request $request
+     * @param TranslatorInterface $translator
      * @param EntityManagerInterface $entityManager
      * @param Quiz $quiz
      *
      * @return Response
      */
-    public function newAction(Request $request, EntityManagerInterface $entityManager, Quiz $quiz): Response
-    {
+    public function newAction(
+        Request $request,
+        TranslatorInterface $translator,
+        EntityManagerInterface $entityManager,
+        Quiz $quiz
+    ): Response {
         $response = new QuizResponse();
         $response->setQuiz($quiz);
         $response->setPositionX(0);
         $response->setPositionY(0);
 
-        return $this->addOrEditResponseAction($request, $entityManager, $response);
+        return $this->addOrEditResponseAction($request, $translator, $entityManager, $response);
     }
 
     /**
      * @Route("/admin/quiz/{quiz}/response/edit/{response}", requirements={"quiz" = "\d+", "response" = "\d+"}, name="bo_quiz_response_edit")
      *
      * @param Request $request
+     * @param TranslatorInterface $translator
      * @param EntityManagerInterface $entityManager
      * @param Quiz $quiz
      * @param QuizResponse $response
      *
      * @return Response
      */
-    public function editAction(Request $request, EntityManagerInterface $entityManager, Quiz $quiz, QuizResponse $response): Response
-    {
-        return $this->addOrEditResponseAction($request, $entityManager, $response);
+    public function editAction(
+        Request $request,
+        TranslatorInterface $translator,
+        EntityManagerInterface $entityManager,
+        Quiz $quiz,
+        QuizResponse $response
+    ): Response {
+        return $this->addOrEditResponseAction($request, $translator, $entityManager, $response);
     }
 
     /**
@@ -82,6 +94,7 @@ class ResponseController extends Controller
 
     /**
      * @param Request $request
+     * @param TranslatorInterface $translator
      * @param EntityManagerInterface $entityManager
      * @param QuizResponse $response
      *
@@ -89,6 +102,7 @@ class ResponseController extends Controller
      */
     protected function addOrEditResponseAction(
         Request $request,
+        TranslatorInterface $translator,
         EntityManagerInterface $entityManager,
         QuizResponse $response
     ): Response {
@@ -101,14 +115,14 @@ class ResponseController extends Controller
                     $entityManager->persist($response);
                     $entityManager->flush();
 
-                    return new JsonResponse(['success' => true, 'message' => 'Sauvegarde OK']);
+                    return new JsonResponse(['success' => true, 'message' => $translator->trans('back.global.save.success')]);
                 } catch (\Exception $e) {
-                    return new JsonResponse(['success' => false, 'message' => 'Erreur lors de la sauvegarde']);
+                    return new JsonResponse(['success' => false, 'message' => $translator->trans('back.global.save.error')]);
                 }
             } else {
                 return new JsonResponse([
                     'success' => false,
-                    'message' => 'Certains champs ne sont pas remplis correctement',
+                    'message' => $translator->trans('back.global.form.errors'),
                 ]);
             }
         }

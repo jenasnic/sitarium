@@ -11,19 +11,19 @@ Required :
     <meta name="description" content="Quiz en image : trouvez les films ou séries auxquels font références les objets cachés dans l'image !"/>
 {% endblock %}
 
-{% block title %}Quiz objets cachés{% endblock %}
+{% block title %}{{ 'front.quiz.home.title'|trans }}{% endblock %}
 
 {% block body %}
 
     <div id="quiz-home" class="center">
 
-        <h1>Quiz objets cachés</h1>
+        <h1>{{ 'front.quiz.home.title'|trans }}</h1>
 
         <section>
 
-            <p>Retrouvez dans les images ci-dessous, des objets issus de films et donnez le titre du film correspondant.</p>
+            <p>{{ 'front.quiz.home.content'|trans }}</p>
             {% if (not app.user) %}
-                <p>Pour sauvegarder vos réponses, pensez à vous créer un compte <a href="{{ path('fo_account_new') }}">ici</a>.</p>
+                <p>{{ 'front.quiz.home.content_anonymous'|trans({'%link_start%': '<a href="'~path('fo_account_new')~'">', '%link_end%': '</a>'})|raw }}</p>
             {% endif %}
 
             <div id="quiz-list">
@@ -33,7 +33,7 @@ Required :
                         <img src="{{ quiz.thumbnailUrl }}" alt="{{ quiz.name }}"/>
                         <figcaption class="quiz-infos">
                             <h2>{{ quiz.name }}</h2>
-                            <p>Trouvez les {{ quiz.responses|length }} objets cachés dans l'image.</p>
+                            <p>{{ 'front.quiz.home.find'|trans({'%count%': quiz.responses|length}) }}</p>
                         </figcaption>
                     </a>
                 </figure>

@@ -8,11 +8,11 @@ Required :
 
 {% block body %}
 
-    <h1 class="title">Modification de l'utilisateur</h1>
+    <h1 class="title">{{ 'back.user.edit.title'|trans }}</h1>
 
     {{ form_start(user) }}
         {{ form_rest(user) }}
-        <input type="submit" class="button is-primary" value="Enregistrer"/>
+        <input type="submit" class="button is-primary" value="{{ 'global.save'|trans }}"/>
     {{ form_end(user) }}
 
 {% endblock %}

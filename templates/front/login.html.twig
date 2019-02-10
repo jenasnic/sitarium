@@ -6,26 +6,26 @@
         <div class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <h1>Connexion</h1>
+    <h1>{{ 'front.login.form.title'|trans }}</h1>
 
     <form id="login-form" action="{{ path('login_check') }}" method="post" class="card center w-half">
         <div class="field">
-            <label for="username">Login</label>
+            <label for="username">{{ 'front.login.form.login'|trans }}</label>
             <div class="control">
                 <input type="text" id="username" name="_username" value="{{ last_username }}" />
             </div>
         </div>
         <div class="field">
-            <label for="password">Mot de passe</label>
+            <label for="password">{{ 'front.login.form.password'|trans }}</label>
             <div class="control">
                 <input type="password" id="password" name="_password" />
             </div>
         </div>
         <div class="form-buttons">
-            <button type="submit" class="button">Se connecter</button>
+            <button type="submit" class="button">{{ 'global.login'|trans }}</button>
         </div>
-        <p class="margin-top">Si vous le désirez, vous pouvez créer un compte <a href="{{ path('fo_account_new') }}">ici</a>.</p>
-        <p class="note"><a href="{{ path('fo_forgotten_password') }}">Mot de passe oublié</a>.</p>
+        <p class="margin-top">{{ 'front.login.form.create_account'|trans({'%link_start%': '<a href="'~path('fo_account_new')~'">', '%link_end%': '</a>'})|raw }}</p>
+        <p class="note"><a href="{{ path('fo_forgotten_password') }}">{{ 'front.login.form.forgotten_password'|trans }}</a></p>
     </form>
 
 {% endblock %}

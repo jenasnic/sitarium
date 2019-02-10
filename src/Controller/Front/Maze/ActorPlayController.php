@@ -15,9 +15,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ActorPlayController extends Controller
 {
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
     /**
      * @var ActorGraphBuilder
      */
@@ -39,17 +45,20 @@ class ActorPlayController extends Controller
     protected $urlGenerator;
 
     /**
+     * @param TranslatorInterface $translator
      * @param ActorGraphBuilder $graphBuilder
      * @param ActorPathHelpFactory $helpFactory
      * @param MazeItemConverter $mazeItemConverter
      * @param UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
+        TranslatorInterface $translator,
         ActorGraphBuilder $graphBuilder,
         ActorPathHelpFactory $helpFactory,
         MazeItemConverter $mazeItemConverter,
         UrlGeneratorInterface $urlGenerator
     ) {
+        $this->translator = $translator;
         $this->graphBuilder = $graphBuilder;
         $this->helpFactory = $helpFactory;
         $this->mazeItemConverter = $mazeItemConverter;
@@ -70,7 +79,7 @@ class ActorPlayController extends Controller
         $level = $request->query->get('level');
 
         if (!in_array($count, [3, 4, 5, 6, 7, 8, 9]) || !in_array($level, [0, 1, 2])) {
-            $this->addFlash('warning', 'Les paramètres spécifiés pour la page sont incorrects.');
+            $this->addFlash('warning', $this->translator->trans('front.maze.invalid_parameters'));
 
             return $this->redirectToRoute('fo_maze_actor');
         }
@@ -87,7 +96,7 @@ class ActorPlayController extends Controller
 
             return $this->renderPlayView($actorPath, $minVoteCount, $level, $replayUrl);
         } catch (\Exception $ex) {
-            $this->addFlash('error', 'Une erreur est survenue lors de l\'initialisation du quiz.');
+            $this->addFlash('error', $this->translator->trans('front.maze.initialization_error'));
 
             return $this->redirectToRoute('fo_maze_actor');
         }
@@ -117,7 +126,7 @@ class ActorPlayController extends Controller
 
             return $this->renderPlayView($actorPath, $minVoteCount, $level, $replayUrl);
         } catch (\Exception $ex) {
-            $this->addFlash('error', 'Une erreur est survenue lors de l\'initialisation du quiz.');
+            $this->addFlash('error', $this->translator->trans('front.maze.initialization_error'));
 
             return $this->redirectToRoute('actor_maze_fo');
         }
@@ -146,7 +155,7 @@ class ActorPlayController extends Controller
 
             return $this->renderPlayView($actorPath, $minVoteCount, $level, $replayUrl);
         } catch (\Exception $ex) {
-            $this->addFlash('error', 'Une erreur est survenue lors de l\'initialisation du quiz.');
+            $this->addFlash('error', $this->translator->trans('front.maze.initialization_error'));
 
             return $this->redirectToRoute('actor_maze_fo');
         }

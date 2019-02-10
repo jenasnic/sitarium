@@ -10,7 +10,7 @@ Required :
 
 {% block body %}
 
-    <h1 class="title">Statistiques du quiz</h1>
+    <h1 class="title">{{ 'back.quiz.statistics.quiz_statistics'|trans }}</h1>
 
     <h2 class="subtitle">{{ quiz.name }}</h2>
 
@@ -18,8 +18,8 @@ Required :
 
         <div class="tabs is-boxed is-centered">
             <ul>
-                <li class="tab-item" data-panel="statistics-response"><a>Réponses</a></li>
-                <li class="tab-item" data-panel="statistics-user"><a>Joueurs</a></li>
+                <li class="tab-item" data-panel="statistics-response"><a>{{ 'back.quiz.statistics.response'|trans }}</a></li>
+                <li class="tab-item" data-panel="statistics-user"><a>{{ 'back.quiz.statistics.player'|trans }}</a></li>
             </ul>
         </div>
 
@@ -27,10 +27,10 @@ Required :
             <table class="table is-striped is-hoverable is-fullwidth">
                 <thead>
                     <tr>
-                        <th>Réponse</th>
-                        <th>Fréquence</th>
-                        <th>Dernière session</th>
-                        <th>Détail</th>
+                        <th>{{ 'back.quiz.statistics.response'|trans }}</th>
+                        <th>{{ 'back.quiz.statistics.frequency'|trans }}</th>
+                        <th>{{ 'back.quiz.statistics.last_session'|trans }}</th>
+                        <th>{{ 'global.detail'|trans }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,10 +57,10 @@ Required :
             <table class="table is-striped is-hoverable is-fullwidth">
                 <thead>
                     <tr>
-                        <th>Joueur</th>
-                        <th>Nb. réponses trouvées</th>
-                        <th>Dernière session de jeu</th>
-                        <th>Détail</th>
+                        <th>{{ 'back.quiz.statistics.player'|trans }}</th>
+                        <th>{{ 'back.quiz.statistics.response_count'|trans }}</th>
+                        <th>{{ 'back.quiz.statistics.last_session'|trans }}</th>
+                        <th>{{ 'global.detail'|trans }}</th>
                     </tr>
                 </thead>
                 <tbody>

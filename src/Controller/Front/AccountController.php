@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AccountController extends Controller
 {
@@ -24,12 +25,18 @@ class AccountController extends Controller
      * @Route("/creer-compte", name="fo_account_new")
      *
      * @param Request $request
+     * @param TranslatorInterface $translator
+     * @param TokenStorageInterface $tokenStorageInterface
      * @param AddUserHandler $handler
      *
      * @return Response
      */
-    public function newAction(Request $request, TokenStorageInterface $tokenStorageInterface, AddUserHandler $handler): Response
-    {
+    public function newAction(
+        Request $request,
+        TranslatorInterface $translator,
+        TokenStorageInterface $tokenStorageInterface,
+        AddUserHandler $handler
+    ): Response {
         $user = new User();
         $form = $this->createForm(AccountType::class, $user);
         $form->handleRequest($request);
@@ -49,9 +56,9 @@ class AccountController extends Controller
                     $user->getRoles()
                 ));
 
-                $this->addFlash('info', 'Votre compte a bien été créé.');
+                $this->addFlash('info', $translator->trans('front.account.create.success'));
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Erreur lors de la création de votre compte.');
+                $this->addFlash('error', $translator->trans('front.account.create.error'));
             }
 
             return $this->redirectToRoute('fo_home');
@@ -65,12 +72,18 @@ class AccountController extends Controller
      * @Security("is_granted('ROLE_USER')")
      *
      * @param Request $request
+     * @param TranslatorInterface $translator
+     * @param QuizRepository $quizRepository
      * @param UpdateUserHandler $handler
      *
      * @return Response
      */
-    public function infosAction(Request $request, QuizRepository $quizRepository, UpdateUserHandler $handler): Response
-    {
+    public function infosAction(
+        Request $request,
+        TranslatorInterface $translator,
+        QuizRepository $quizRepository,
+        UpdateUserHandler $handler
+    ): Response {
         $user = $this->getUser();
         $form = $this->createForm(AccountType::class, $user, ['ignore_email' => true]);
         $form->handleRequest($request);
@@ -80,9 +93,9 @@ class AccountController extends Controller
                 $newPassword = $form->get('newPassword')->getData();
                 $handler->handle(new UpdateUserCommand($user, $newPassword));
 
-                $this->addFlash('info', 'Votre compte a bien été mis à jour.');
+                $this->addFlash('info', $translator->trans('front.account.update.success'));
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Erreur lors de la mise à jour de votre compte sauvegarde.');
+                $this->addFlash('error', $translator->trans('front.account.update.error'));
             }
 
             return $this->redirectToRoute('fo_account_infos');

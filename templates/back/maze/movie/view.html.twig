@@ -22,7 +22,7 @@ Required :
                 <time datetime="{{ movie.releaseDate|date('d-m-Y') }}">
                     {{ movie.releaseDate|date('d-m-Y') }}
                 </time>
-                <p><strong>TMDB</strong> : {{ movie.tmdbId }}</p>
+                <p><strong>{{ 'back.maze.movie.detail.id'|trans }}</strong> : {{ movie.tmdbId }}</p>
             </div>
         </div>
     </div>

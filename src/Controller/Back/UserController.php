@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserController extends Controller
 {
@@ -42,11 +43,12 @@ class UserController extends Controller
      * @Route("/admin/user/add", name="bo_user_add")
      *
      * @param Request $request
+     * @param TranslatorInterface $translator
      * @param AddUserHandler $handler
      *
      * @return Response
      */
-    public function addAction(Request $request, AddUserHandler $handler): Response
+    public function addAction(Request $request, TranslatorInterface $translator, AddUserHandler $handler): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -57,9 +59,9 @@ class UserController extends Controller
                 $newPassword = $form->get('newPassword')->getData();
                 $handler->handle(new AddUserCommand($user, $newPassword));
 
-                $this->addFlash('info', 'Sauvegarde OK');
+                $this->addFlash('info', $translator->trans('back.global.save.success'));
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Erreur lors de la sauvegarde');
+                $this->addFlash('error', $translator->trans('back.global.save.error'));
             }
 
             return $this->redirectToRoute('bo_user_list');
@@ -72,13 +74,18 @@ class UserController extends Controller
      * @Route("/admin/user/edit/{user}", requirements={"user" = "\d+"}, name="bo_user_edit")
      *
      * @param Request $request
+     * @param TranslatorInterface $translator
      * @param UpdateUserHandler $handler
      * @param User $user
      *
      * @return Response
      */
-    public function editAction(Request $request, UpdateUserHandler $handler, User $user): Response
-    {
+    public function editAction(
+        Request $request,
+        TranslatorInterface $translator,
+        UpdateUserHandler $handler,
+        User $user
+    ): Response {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -87,9 +94,9 @@ class UserController extends Controller
                 $newPassword = $form->get('newPassword')->getData();
                 $handler->handle(new UpdateUserCommand($user, $newPassword));
 
-                $this->addFlash('info', 'Sauvegarde OK');
+                $this->addFlash('info', $translator->trans('back.global.save.success'));
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Erreur lors de la sauvegarde');
+                $this->addFlash('error', $translator->trans('back.global.save.error'));
             }
 
             return $this->redirectToRoute('bo_user_list');
@@ -101,18 +108,19 @@ class UserController extends Controller
     /**
      * @Route("/admin/user/delete/{user}", requirements={"user" = "\d+"}, name="bo_user_delete")
      *
+     * @param TranslatorInterface $translator
      * @param DeleteUserHandler $handler
      * @param User $user
      *
      * @return Response
      */
-    public function deleteAction(DeleteUserHandler $handler, User $user): Response
+    public function deleteAction(TranslatorInterface $translator, DeleteUserHandler $handler, User $user): Response
     {
         try {
             $handler->handle(new DeleteUserCommand($user));
-            $this->addFlash('info', 'Suppression OK');
+            $this->addFlash('info', $translator->trans('back.global.delete.success'));
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur lors de la suppression');
+            $this->addFlash('error', $translator->trans('back.global.delete.error'));
         }
 
         return $this->redirectToRoute('bo_user_list');

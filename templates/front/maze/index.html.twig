@@ -6,25 +6,23 @@
 
     <div id="maze-home" class="center">
 
-        <h1>Quiz casting et filmographie</h1>
+        <h1>{{ 'front.maze.home.title'|trans }}</h1>
 
-        <p>Nous vous proposons ici 2 autres quiz, le premier basé sur la filmographie des acteurs et le second sur le casting des films.</p>
-        <p class="margin-bottom">Le but de ces quiz est de relier les acteurs via un film commun ou de relier les films via un acteur commun...</p>
-        <p><strong>Amusez-vous bien !</strong></p>
+        {{ 'front.maze.home.content'|trans|raw }}
 
         <div class="maze-selection-wrapper card center">
             <a href="{{ path('fo_maze_actor') }}" class="maze-selection-item">
                 <span class="is-large"><i class="fas fa-3x fa-film"></i></span>
-                <span>Quiz filmographie</span>
+                <span>{{ 'front.maze.quiz_filmography'|trans }}</span>
             </a>
             <a href="{{ path('fo_maze_movie') }}" class="maze-selection-item">
                 <span class="is-large"><i class="fas fa-3x fa-users"></i></span>
-                <span>Quiz casting</span>
+                <span>{{ 'front.maze.quiz_casting'|trans }}</span>
             </a>
         </div>
 
         {% if not app.user %}
-            <p>Pensez à vous créer un compte <a href="{{ path('fo_account_new') }}">ici</a>.</p>
+            <p>{{ 'front.maze.home.content_anonymous'|trans({'%link_start%': '<a href="'~path('fo_account_new')~'">', '%link_end%': '</a>'})|raw }}</p>
         {% endif %}
 
     </div>

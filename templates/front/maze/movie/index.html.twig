@@ -5,65 +5,63 @@
     <meta name="description" content="Quiz casting : trouvez les acteurs/actrices communs entre les films !"/>
 {% endblock %}
 
-{% block title %}Quiz casting{% endblock %}
+{% block title %}{{ 'front.maze.quiz_casting'|trans }}{% endblock %}
 
 {% block body %}
 
     <div id="maze-casting" class="center">
 
-        <h1>Quiz casting</h1>
+        <h1>{{ 'front.maze.quiz_casting'|trans }}</h1>
 
-        <p>Le but du jeu est d'avancer de film en film en trouvant un acteur commun.</p>
-        <p class="margin-bottom">Ce quiz se base sur une sélection d'une centaine de films.</p>
-
-        <p><strong>Bonne chance !</strong></p>
+        {{ 'front.maze.movie.home.content'|trans|raw }}
 
         <form action="{{ path('fo_maze_movie_play') }}" method="GET" class="card">
 
             <div class="field">
-                <label for="count">Jouer avec</label>
+                <label for="count">{{ 'front.maze.play.play_with'|trans }}</label>
                 <div class="control select-wrapper">
                     <select id="count" name="count">
-                        <option value="3">3 films</option>
-                        <option value="4">4 films</option>
-                        <option value="5" selected="selected">5 films</option>
-                        <option value="6">6 films</option>
-                        <option value="7">7 films</option>
-                        <option value="8">8 films</option>
-                        <option value="9">9 films</option>
+                    {% for count in range(3, 9) %}
+                        <option
+                            value="{{ count }}"
+                            {% if (count == 5) %}selected="selected"{% endif %}
+                        >
+                            {{ 'front.maze.movie.home.movie_count'|trans({'%count%': count}) }}
+                        </option>
+                    {% endfor %}
                     </select>
                 </div>
             </div>
 
             <div class="field">
-                <label for="level">Difficulté</label>
+                <label for="level">{{ 'front.maze.play.level'|trans }}</label>
                 <div class="control select-wrapper">
                     <select id="level" name="level">
-                        <option value="0">Facile</option>
-                        <option value="1" selected="selected">Moyen</option>
-                        <option value="2">Difficile</option>
+                        <option value="0">{{ 'front.maze.play.level.easy'|trans }}</option>
+                        <option value="1" selected="selected">{{ 'front.maze.play.level.medium'|trans }}</option>
+                        <option value="2">{{ 'front.maze.play.level.hard'|trans }}</option>
                     </select>
                 </div>
             </div>
-            <p class="note"><strong>NOTE : </strong>Le degré de difficulté permet de modifier le nombre d'acteurs accessibles dans la rubrique "Besoin d'aide".</p>
+            <p class="note">{{ 'front.maze.movie.level.comment'|trans|raw }}</p>
 
             <div class="form-buttons">
-                <input type="submit" class="button" value="Jouer"/>
+                <input type="submit" class="button" value="{{ 'global.play'|trans }}"/>
             </div>
 
         </form>
 
         {% if app.user %}
             <div class="card">
-                <p class="margin-bottom">Si vous le souhaitez, vous pouvez également jouer avec votre propre sélection de films parmi ceux proposés sur ce site.</p>
-                <a href="{{ path('fo_maze_movie_select_max_path') }}" class="button">Choisir mes films</a>
+                <p class="margin-bottom">{{ 'front.maze.movie.home.max_path_content'|trans }}</p>
+                <a href="{{ path('fo_maze_movie_select_max_path') }}" class="button">{{ 'front.maze.play.select_movie'|trans }}</a>
             </div>
             <div class="card">
-                <p class="margin-bottom">Si vous êtes curieux, vous pouvez aussi découvrir "le plus court chemin" reliant 2 films.</p>
-                <a href="{{ path('fo_maze_movie_select_min_path') }}" class="button">Jouer sur le plus court chemin</a>
+                <p class="margin-bottom">{{ 'front.maze.movie.home.min_path_content'|trans }}</p>
+                <a href="{{ path('fo_maze_movie_select_min_path') }}" class="button">{{ 'front.maze.play.min_path'|trans }}</a>
             </div>
         {% else %}
-            <p class="margin-top">Pour accéder à plus de fonctionnalités, pensez à vous créer un compte <a href="{{ path('fo_account_new') }}">ici</a>.</p>
+            <p class="margin-top">{{ 'front.maze.actor.home.content_anonymous'|trans({'%link_start%': '<a href="'~path('fo_account_new')~'">', '%link_end%': '</a>'})|raw }}</p>
         {% endif %}
 
     </div>

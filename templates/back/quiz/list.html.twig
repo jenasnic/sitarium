@@ -8,16 +8,16 @@ Required :
 
 {% block body %}
 
-    <h1 class="title">Gestion des quiz</h1>
+    <h1 class="title">{{ 'back.quiz.list.title'|trans }}</h1>
 
     <nav class="level">
         <div class="level-left">
-            <span>{{ quizs|length }} quiz</span>
+            <span>{{ 'back.quiz.list.count'|trans({'%count%': quizs|length}) }}</span>
         </div>
         <div class="level-right">
             <div>
-                <span id="new-quiz-button" class="button is-primary">Nouveau</span>
-                <a class="button is-primary" href="{{ path('bo_quiz_statistics') }}">Afficher les statistiques</a>
+                <span id="new-quiz-button" class="button is-primary">{{ 'global.new'|trans }}</span>
+                <a class="button is-primary" href="{{ path('bo_quiz_statistics') }}">{{ 'back.quiz.list.show_statistics'|trans }}</a>
             </div>
         </div>
     </nav>
@@ -30,10 +30,10 @@ Required :
     >
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>Vainqueurs</th>
-                <th>Modifier</th>
-                <th>Supprimer</th>
+                <th>{{ 'back.quiz.list.column.name'|trans }}</th>
+                <th>{{ 'back.quiz.list.column.winner'|trans }}</th>
+                <th>{{ 'global.edit'|trans }}</th>
+                <th>{{ 'global.delete'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -60,7 +60,7 @@ Required :
                     </a>
                 </td>
                 <td>
-                    <a href="{{ path('bo_quiz_delete', { 'quiz': quiz.id }) }}" onclick="return confirm('Confirmer la suppression ?');" >
+                    <a href="{{ path('bo_quiz_delete', { 'quiz': quiz.id }) }}" onclick="return confirm('{{ 'global.delete.confirm'|trans }}');" >
                         <span class="icon has-text-danger button">
                             <i class="fas fa-trash-alt"></i>
                         </span>
@@ -76,10 +76,10 @@ Required :
         <form id="new-quiz-form" action="{{ path('bo_quiz_new') }}" method="POST">
             <div class="field has-addons">
                 <div class="control is-expanded">
-                    <input id="name" name="name" type="text" class="input" placeholder="Nom du quiz" />
+                    <input id="name" name="name" type="text" class="input" placeholder="{{ 'back.quiz.list.create_form.placeholder'|trans }}" />
                 </div>
                 <div class="control">
-                    <input type="submit" class="button" value="Créer" disabled/>
+                    <input type="submit" class="button" value="{{ 'global.create'|trans }}" disabled/>
                 </div>
             </div>
         </form>

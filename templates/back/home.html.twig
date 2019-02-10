@@ -6,7 +6,7 @@
 
     <div class="card">
         <header class="card-header">
-            <p class="card-header-title">Utilisateurs</p>
+            <p class="card-header-title">{{ 'back.home.card.user.title'|trans }}</p>
             <span class="card-header-icon">
                 <a href="{{ path('bo_user_list') }}">
                     <span class="icon">
@@ -17,22 +17,17 @@
         </header>
         <div class="card-content">
             <div class="content">
-                Gestion des comptes utilisateurs :
-                <ul>
-                    <li>Création de comptes</li>
-                    <li>Modification des données utilisateur</li>
-                    <li>Suppression/désactivation des comptes</li>
-                </ul>
+                {{ 'back.home.card.user.content'|trans|raw }}
             </div>
         </div>
         <footer class="card-footer">
-            <a href="{{ path('bo_user_list') }}" class="card-footer-item">Gérer les utilisateurs</a>
+            <a href="{{ path('bo_user_list') }}" class="card-footer-item">{{ 'back.home.card.movie.link'|trans }}</a>
         </footer>
     </div>
 
     <div class="card">
         <header class="card-header">
-            <p class="card-header-title">Quiz</p>
+            <p class="card-header-title">{{ 'back.home.card.quiz.title'|trans }}</p>
             <span class="card-header-icon">
                 <a href="{{ path('bo_quiz_list') }}">
                     <span class="icon">
@@ -43,21 +38,17 @@
         </header>
         <div class="card-content">
             <div class="content">
-                Gestion des quiz en image :
-                <ul>
-                    <li>Création de quiz</li>
-                    <li>Affichage des statistiques</li>
-                </ul>
+                {{ 'back.home.card.quiz.content'|trans|raw }}
             </div>
         </div>
         <footer class="card-footer">
-            <a href="{{ path('bo_quiz_list') }}" class="card-footer-item">Gérer les quiz</a>
+            <a href="{{ path('bo_quiz_list') }}" class="card-footer-item">{{ 'back.home.card.quiz.link'|trans }}</a>
         </footer>
     </div>
 
     <div class="card">
         <header class="card-header">
-            <p class="card-header-title">Statistiques</p>
+            <p class="card-header-title">{{ 'back.home.card.statistics.title'|trans }}</p>
             <span class="card-header-icon">
                 <a href="{{ path('bo_quiz_statistics') }}">
                     <span class="icon">
@@ -68,22 +59,17 @@
         </header>
         <div class="card-content">
             <div class="content">
-                Gestion des statistiques :
-                <ul>
-                    <li>Par quiz résolus</li>
-                    <li>Par réponses trouvées</li>
-                    <li>Par utilisateurs</li>
-                </ul>
+                {{ 'back.home.card.statistics.content'|trans|raw }}
             </div>
         </div>
         <footer class="card-footer">
-            <a href="{{ path('bo_quiz_statistics') }}" class="card-footer-item">Voir les statistiques</a>
+            <a href="{{ path('bo_quiz_statistics') }}" class="card-footer-item">{{ 'back.home.card.statistics.link'|trans }}</a>
         </footer>
     </div>
 
     <div class="card">
         <header class="card-header">
-            <p class="card-header-title">Acteurs</p>
+            <p class="card-header-title">{{ 'back.home.card.actor.title'|trans }}</p>
             <span class="card-header-icon">
                 <a href="{{ path('bo_maze_actor_list') }}">
                     <span class="icon">
@@ -94,21 +80,17 @@
         </header>
         <div class="card-content">
             <div class="content">
-                Gestion des acteurs pour les quiz :
-                <ul>
-                    <li>Ajout de nouveaux acteurs</li>
-                    <li>Construction de la filmographie</li>
-                </ul>
+                {{ 'back.home.card.actor.content'|trans|raw }}
             </div>
         </div>
         <footer class="card-footer">
-            <a href="{{ path('bo_maze_actor_list') }}" class="card-footer-item">Gérer les acteurs</a>
+            <a href="{{ path('bo_maze_actor_list') }}" class="card-footer-item">{{ 'back.home.card.actor.link'|trans }}</a>
         </footer>
     </div>
 
     <div class="card">
         <header class="card-header">
-            <p class="card-header-title">Films</p>
+            <p class="card-header-title">{{ 'back.home.card.movie.title'|trans }}</p>
             <span class="card-header-icon">
                 <a href="{{ path('bo_maze_movie_list') }}">
                     <span class="icon">
@@ -119,15 +101,11 @@
         </header>
         <div class="card-content">
             <div class="content">
-                Gestion des films pour les quiz :
-                <ul>
-                    <li>Ajout de nouveaux films</li>
-                    <li>Construction du casting</li>
-                </ul>
+                {{ 'back.home.card.movie.content'|trans|raw }}
             </div>
         </div>
         <footer class="card-footer">
-            <a href="{{ path('bo_maze_movie_list') }}" class="card-footer-item">Gérer les films</a>
+            <a href="{{ path('bo_maze_movie_list') }}" class="card-footer-item">{{ 'back.home.card.movie.link'|trans }}</a>
         </footer>
     </div>
 

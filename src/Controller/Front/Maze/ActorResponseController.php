@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ActorResponseController extends Controller
 {
@@ -16,12 +17,16 @@ class ActorResponseController extends Controller
      * @Route("/quiz-filmographie/ajax/valider-response", name="fo_maze_actor_progress", methods="POST")
      *
      * @param Request $request
+     * @param TranslatorInterface $translator
      * @param ActorPathResponseValidator $responseChecker
      *
      * @return JsonResponse
      */
-    public function progressAction(Request $request, ActorPathResponseValidator $responseChecker): JsonResponse
-    {
+    public function progressAction(
+        Request $request,
+        TranslatorInterface $translator,
+        ActorPathResponseValidator $responseChecker
+    ): JsonResponse {
         $data = json_decode($request->getContent(), true);
 
         $previousActorId = $data['currentTmdbId'];
@@ -38,9 +43,9 @@ class ActorResponseController extends Controller
                 ]);
             }
 
-            return new JsonResponse(['success' => false, 'message' => 'Réponse incorrecte.']);
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.response.incorrect')]);
         } catch (\Exception $ex) {
-            return new JsonResponse(['success' => false, 'message' => 'Impossible de vérifier votre réponse.']);
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.response.process_error')]);
         }
     }
 
@@ -48,12 +53,16 @@ class ActorResponseController extends Controller
      * @Route("/quiz-filmographie/ajax/indice", name="fo_maze_actor_trick", methods="POST")
      *
      * @param Request $request
+     * @param TranslatorInterface $translator
      * @param ActorRepository $actorRepository
      *
      * @return JsonResponse
      */
-    public function trickAction(Request $request, ActorRepository $actorRepository): JsonResponse
-    {
+    public function trickAction(
+        Request $request,
+        TranslatorInterface $translator,
+        ActorRepository $actorRepository
+    ): JsonResponse {
         $data = json_decode($request->getContent(), true);
         $actorId = $data['tmdbId'];
         $level = $data['level'];
@@ -72,10 +81,10 @@ class ActorResponseController extends Controller
 
                 return new JsonResponse(['success' => true, 'responses' => $movies]);
             } else {
-                return new JsonResponse(['success' => false, 'message' => 'Acteur introuvable.']);
+                return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.actor.not_found')]);
             }
         } catch (\Exception $ex) {
-            return new JsonResponse(['success' => false, 'message' => 'Impossible de charger la filmographie de l\'acteur.']);
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.actor.filmography_error')]);
         }
     }
 }

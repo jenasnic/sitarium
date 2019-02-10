@@ -6,7 +6,6 @@ use App\Entity\Quiz\Quiz;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -32,13 +31,12 @@ class QuizType extends AbstractType
         }
 
         $builder
-            ->add('name', TextType::class, ['label' => 'Nom du quiz'])
+            ->add('name')
             ->add(
                 'pictureFile',
                 FileType::class,
                 [
                     'required' => false,
-                    'label' => 'Image du quiz',
                     'help' => $helpPictureFile,
                 ]
             )
@@ -47,26 +45,16 @@ class QuizType extends AbstractType
                 FileType::class,
                 [
                     'required' => false,
-                    'label' => 'Vignette',
                     'help' => $helpThumbnailFile,
                 ]
             )
-            ->add(
-                'published',
-                CheckboxType::class,
-                [
-                    'required' => false,
-                    'label' => 'Publication',
-                ]
-            )
+            ->add('published', CheckboxType::class, ['required' => false])
             ->add(
                 'displayResponse',
                 CheckboxType::class,
                 [
                     'required' => false,
-                    'label' => 'Afficher les réponses',
-                    'help' => 'Permet de visualiser sur l\'image les éléments du quiz relatifs aux réponses trouvées.<br/>
-                        Si cette option est activée, les réponses doivents définir les coordonées permettant de localiser les éléments associés.',
+                    'help' => 'form.quiz.edit.help.displayResponse'
                 ]
             )
             ->add(
@@ -74,9 +62,7 @@ class QuizType extends AbstractType
                 CheckboxType::class,
                 [
                     'required' => false,
-                    'label' => 'Autoriser les indices',
-                    'help' => 'Permet de donner un indice sur les films à trouver.<br/>
-                        Si cette option est activée, les réponses doivents définir les coordonées permettant de localiser les éléments associés.',
+                    'help' => 'form.quiz.edit.help.displayTrick'
                 ]
             )
             ->add('pictureUrl', HiddenType::class)
@@ -89,6 +75,7 @@ class QuizType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Quiz::class,
+            'label_format' => 'form.quiz.edit.label.%name%',
         ]);
     }
 }

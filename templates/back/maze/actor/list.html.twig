@@ -8,24 +8,24 @@ Required :
 
 {% block body %}
 
-    <h1 class="title">Gestion des acteurs</h1>
+    <h1 class="title">{{ 'back.maze.actor.list.title'|trans }}</h1>
 
     <div id="maze-item-list">
 
         <nav class="level">
             <div class="level-left">
-                <span>{{ actors|length }} acteur(s)</span>
+                <span>{{ 'back.maze.actor.list.count'|transchoice(actors|length) }}</span>
             </div>
             <div class="level-right">
                 <div class="column">
-                    <a class="button is-primary" href="{{ path('bo_maze_actor_new') }}">Ajouter</a>
+                    <a class="button is-primary" href="{{ path('bo_maze_actor_new') }}">{{ 'global.add'|trans }}</a>
                     <span
                         id="build-credits-button"
                         class="button is-primary"
                         data-build-credits-url="{{ path('bo_maze_actor_filmography_build') }}"
                         data-progress-url="{{ path('bo_maze_actor_filmography_progress') }}"
                     >
-                        Construire la filmographie
+                        {{ 'back.maze.actor.list.build_filmography'|trans }}
                     </span>
                 </div>
             </div>
@@ -35,11 +35,11 @@ Required :
         <table class="table is-striped is-hoverable is-fullwidth">
             <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>ID TMDB</th>
-                    <th>Filmographie</th>
-                    <th>Détails</th>
-                    <th>Supprimer</th>
+                    <th>{{ 'back.maze.actor.list.column.name'|trans }}</th>
+                    <th>{{ 'back.maze.actor.list.column.id'|trans }}</th>
+                    <th>{{ 'back.maze.actor.list.column.filmography'|trans }}</th>
+                    <th>{{ 'global.detail'|trans }}</th>
+                    <th>{{ 'global.delete'|trans }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -59,7 +59,7 @@ Required :
                         </span>
                     </td>
                     <td>
-                        <a href="{{ path('bo_maze_actor_delete', { 'actor': actor.tmdbId }) }}" onclick="return confirm('Confirmer la suppression ?');" >
+                        <a href="{{ path('bo_maze_actor_delete', { 'actor': actor.tmdbId }) }}" onclick="return confirm('{{ 'global.delete.confirm'|trans }}');" >
                             <span class="icon has-text-danger button">
                                 <i class="fas fa-trash-alt"></i>
                             </span>

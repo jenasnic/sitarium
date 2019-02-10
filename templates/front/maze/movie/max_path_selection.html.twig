@@ -11,38 +11,37 @@ Required :
     <meta name="description" content="Quiz personnalisé sur le casting avec votre propre sélection de films."/>
 {% endblock %}
 
-{% block title %}Quiz casting{% endblock %}
+{% block title %}{{ 'front.maze.movie.max_path.title'|trans }}{% endblock %}
 
 {% block body %}
 
-    <h1>Construisez votre quiz</h1>
+    <h1>{{ 'front.maze.movie.max_path.title'|trans }}</h1>
 
     <div id="maze-max-path" class="maze-item-path-selection">
 
         <div class="card center">
 
-            <p class="margin-bottom">Veuillez choisir 10 films parmi ceux proposés ci-dessous. Nous vous proposerons le plus long quiz trouvé pour votre sélection.</p>
-            <p class="margin-bottom"><strong>Bonne chance !</strong></p>
+            {{ 'front.maze.movie.max_path.content'|trans|raw }}
 
             <form id="path-selection-form" action="{{ path('fo_maze_movie_play_max_path') }}" method="POST">
 
                 <input type="hidden" id="tmdbIds" name="tmdbIds" />
 
                 <div class="field">
-                    <label for="level">Difficulté : </label>
+                    <label for="level">{{ 'front.maze.play.level'|trans }}</label>
                     <div class="control select-wrapper">
                         <select id="level" name="level">
-                            <option value="0">Facile</option>
-                            <option value="1" selected="selected">Moyen</option>
-                            <option value="2">Difficile</option>
+                            <option value="0">{{ 'front.maze.play.level.easy'|trans }}</option>
+                            <option value="1" selected="selected">{{ 'front.maze.play.level.medium'|trans }}</option>
+                            <option value="2">{{ 'front.maze.play.level.hard'|trans }}</option>
                         </select>
                     </div>
                 </div>
 
-                <p class="note"><strong>NOTE : </strong>Le degré de difficulté permet de modifier le nombre d'acteurs accessibles dans la rubrique "Besoin d'aide".</p>
+                <p class="note">{{ 'front.maze.movie.level.comment'|trans|raw }}</p>
 
                 <div class="form-buttons">
-                    <input id="selection-submit" type="submit" class="button" disabled value="Jouer"/>
+                    <input id="selection-submit" type="submit" class="button" disabled value="{{ 'global.play'|trans }}"/>
                 </div>
 
             </form>

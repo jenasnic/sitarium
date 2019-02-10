@@ -8,24 +8,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FilmographyController extends Controller
 {
     /**
      * @Route("/admin/maze/actor/filmography/build", name="bo_maze_actor_filmography_build", methods="POST")
      *
+     * @param TranslatorInterface $translator
      * @param ActorFilmographyBuilder $filmographyBuilder
      *
      * @return JsonResponse
      */
-    public function filmographyBuildAction(ActorFilmographyBuilder $filmographyBuilder): JsonResponse
+    public function filmographyBuildAction(TranslatorInterface $translator, ActorFilmographyBuilder $filmographyBuilder): JsonResponse
     {
         try {
             $filmographyBuilder->build();
 
-            return new JsonResponse(['success' => true, 'message' => 'Construction de la filmographie OK']);
+            return new JsonResponse(['success' => true, 'message' => $translator->trans('back.maze.filmography.success')]);
         } catch (\Exception $e) {
-            return new JsonResponse(['success' => false, 'message' => 'Erreur lors de la construction de la filmographie']);
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('back.maze.filmography.error')]);
         }
     }
 

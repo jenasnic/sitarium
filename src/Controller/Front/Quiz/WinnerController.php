@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class WinnerController extends Controller
 {
@@ -18,6 +19,7 @@ class WinnerController extends Controller
      * @Route("/quiz/ajax/quiz-resolu/{quiz}", name="fo_quiz_resolved", methods="POST")
      *
      * @param Request $request
+     * @param TranslatorInterface $translator
      * @param ResolveQuizValidator $validator
      * @param RegisterWinnerHandler $handler
      * @param Quiz $quiz
@@ -26,6 +28,7 @@ class WinnerController extends Controller
      */
     public function quizResolvedAction(
         Request $request,
+        TranslatorInterface $translator,
         ResolveQuizValidator $validator,
         RegisterWinnerHandler $handler,
         Quiz $quiz
@@ -40,12 +43,12 @@ class WinnerController extends Controller
                     $handler->handle($command);
                 }
 
-                return new JsonResponse(['success' => true, 'message' => 'Félicitations ! Vous avez résolu ce quiz.']);
+                return new JsonResponse(['success' => true, 'message' => $translator->trans('front.quiz.winner.quiz_resolved')]);
             } else {
-                return new JsonResponse(['success' => false, 'message' => 'Vous n\'avez pas résolu le quiz.']);
+                return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.winner.quiz_not_resolved')]);
             }
         } catch (\Exception $e) {
-            return new JsonResponse(['success' => false, 'message' => 'Erreur lors de la résolution du quiz.']);
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.winner.quiz_resolve_error')]);
         }
     }
 }

@@ -12,7 +12,7 @@ Required :
     <meta name="description" content="Quiz objets cachés : {{ quiz.name }}, trouvez les {{ quiz.responses|length }} références cachés dans cette image !"/>
 {% endblock %}
 
-{% block title %}{% endblock %}
+{% block title %}{{ quiz.name }}{% endblock %}
 
 {% block body %}
 
@@ -38,13 +38,13 @@ Required :
 
                 <div id="action-wrapper">
                     {% if (quiz.responses|length == userResponses|length) %}
-                        <a href="{{ path('fo_quiz_replay', {'quiz': quiz.id}) }}" class="button">Rejouer</a>
+                        <a href="{{ path('fo_quiz_replay', {'quiz': quiz.id}) }}" class="button">{{ 'global.replay'|trans }}</a>
                     {% else %}
-                        <input type="text" id="response-input" name="response-input" placeholder="Saisissez votre réponse" />
+                        <input type="text" id="response-input" name="response-input" placeholder="{{ 'front.quiz.play.response.placeholder'|trans }}" />
                         <div class="action-buttons">
-                            <span id="response-submit" class="button" title="Soumettre la réponse"><i class="fas fa-check"></i></span>
+                            <span id="response-submit" class="button" title="{{ 'front.quiz.play.response.submit'|trans }}"><i class="fas fa-check"></i></span>
                             {% if (quiz.displayTrick) %}
-                                <span id="quiz-trick" class="button" title="Demander un indice"><i class="fas fa-question"></i></span>
+                                <span id="quiz-trick" class="button" title="{{ 'front.quiz.play.trick.request'|trans }}"><i class="fas fa-question"></i></span>
                             {% endif %}
                         </div>
                     {% endif %}
@@ -77,7 +77,7 @@ Required :
                     </ul>
                 </div>
                 <div id="quiz-info">
-                    <label>Réponses trouvées : </label><span id="quiz-response-count">{{ userResponses|length }}</span> / <span>{{ quiz.responses|length }}</span>
+                    <label>{{ 'front.quiz.play.response.found'|trans }}</label><span id="quiz-response-count">{{ userResponses|length }}</span> / <span>{{ quiz.responses|length }}</span>
                 </div>
             </div>
 

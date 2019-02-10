@@ -8,7 +8,7 @@ Required :
 
 {% block body %}
 
-    <h1 class="title">Positionnement des réponses</h1>
+    <h1 class="title">{{ 'back.quiz.response.locate.title'|trans }}</h1>
 
     <div id="locate-responses">
 
@@ -16,7 +16,7 @@ Required :
 
             <div class="level-left">
                 <div class="field">
-                    <label for="quiz-responses" class="label">Réponses pour le quiz "{{ quiz.name }}"</label>
+                    <label for="quiz-responses" class="label">{{ 'back.quiz.response.locate.response_choice'|trans({'%name%': quiz.name}) }}</label>
                     <div class="select">
                         <select id="quiz-responses" name="quiz-responses" data-location-url="{{ path('bo_quiz_response_location') }}">
                         {% for response in quiz.responses %}
@@ -32,10 +32,10 @@ Required :
 
             <div class="level-right">
                 <div class="column">
-                    <button id="next-button" class="button is-primary">Suivant</button>
+                    <button id="next-button" class="button is-primary">{{ 'global.next'|trans }}</button>
                 </div>
                 <div class="column">
-                    <button id="validate-button" class="button is-primary" data-locate-url="{{ path('bo_quiz_locate_response') }}">Valider</button>
+                    <button id="validate-button" class="button is-primary" data-locate-url="{{ path('bo_quiz_locate_response') }}">{{ 'global.validate'|trans }}</button>
                     <input id="selection-position-x" type="hidden" />
                     <input id="selection-position-y" type="hidden" />
                     <input id="selection-width" type="hidden" />
@@ -53,16 +53,6 @@ Required :
         >
         </div>
 
-    </div>
-
-    {# Allows to display form to add/edit response using Ajax #}
-    <div id="quiz-locate-modal" class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <div class="modal-card-body has-text-centered">
-            </div>
-        </div>
-        <button class="modal-close is-large" aria-label="close"></button>
     </div>
 
 {% endblock %}

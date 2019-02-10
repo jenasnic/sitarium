@@ -18,13 +18,13 @@ Optional
     <div id="maze-play" data-response-url="{{ path(responseRoute) }}" data-trick-url="{{ path(trickRoute) }}">
 
         <div id="action-wrapper">
-            <input type="text" id="response" name="response" placeholder="Saisissez votre réponse" />
-            <span id="answer-button" class="button" title="Soumettre la réponse"><i class="fas fa-check"></i></span>
-            <span id="trick-button" class="button" title="Utiliser un joker"><i class="fas fa-question"></i></span>
+            <input type="text" id="response" name="response" placeholder="{{ 'front.maze.play.response.placeholder'|trans }}" />
+            <span id="answer-button" class="button" title="{{ 'front.maze.play.response.submit'|trans }}"><i class="fas fa-check"></i></span>
+            <span id="trick-button" class="button" title="{{ 'front.maze.play.trick.request'|trans }}"><i class="fas fa-question"></i></span>
         </div>
 
         <div id="info-wrapper">
-            <label>Nombre de coups : </label>
+            <label>{{ 'front.maze.play.count'|trans }}</label>
             <span id="response-count">0</span>
             {% if level is defined %}
                 <input id="maze-level" type="hidden" value="{{ level }}" />
@@ -63,7 +63,7 @@ Optional
 
         <div id="helper-wrapper" class="card center">
 
-            <h2>Besoin d'aide ?<span id="toggle-helper-button"><i class="fas fa-plus-circle fa-lg"></i></span></h2>
+            <h2>{{ 'front.maze.play.help'|trans }}<span id="toggle-helper-button"><i class="fas fa-plus-circle fa-lg"></i></span></h2>
 
             <div id="toggle-wrapper">
                 <div id="helper-note">{% block mazeHelpText %}{% endblock %}</div>
@@ -79,7 +79,7 @@ Optional
         </div>
 
         <div id="replay-wrapper" class="center">
-            <span id="replay-button" class="button" data-replay-url="{{ replayUrl }}">Rejouer</span>
+            <span id="replay-button" class="button" data-replay-url="{{ replayUrl }}">{{ 'global.replay'|trans }}</span>
         </div>
 
     </div>

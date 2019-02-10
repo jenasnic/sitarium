@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class QuizCrudController extends Controller
 {
@@ -21,15 +22,17 @@ class QuizCrudController extends Controller
      * @Route("/admin/quiz/new", name="bo_quiz_new", methods="POST")
      *
      * @param Request $request
-     * @param QuizRepository $quizRepository
+     * @param TranslatorInterface $translator
      * @param EntityManagerInterface $entityManager
+     * @param QuizRepository $quizRepository
      *
      * @return Response
      */
     public function newAction(
         Request $request,
-        QuizRepository $quizRepository,
-        EntityManagerInterface $entityManager
+        TranslatorInterface $translator,
+        EntityManagerInterface $entityManager,
+        QuizRepository $quizRepository
     ): Response {
         try {
             $quizToCreate = new Quiz();
@@ -41,7 +44,7 @@ class QuizCrudController extends Controller
 
             return $this->redirectToRoute('bo_quiz_edit', ['quiz' => $quizToCreate->getId()]);
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur lors de la création');
+            $this->addFlash('error', $translator->trans('back.global.add.error'));
 
             return $this->redirectToRoute('bo_quiz_list');
         }
@@ -51,24 +54,29 @@ class QuizCrudController extends Controller
      * @Route("/admin/quiz/edit/{quiz}", requirements={"quiz" = "\d+"}, name="bo_quiz_edit")
      *
      * @param Request $request
-     * @param Quiz $quiz
+     * @param TranslatorInterface $translator
      * @param SaveQuizHandler $handler
+     * @param Quiz $quiz
      *
      * @return Response
      */
-    public function editAction(Request $request, Quiz $quiz, SaveQuizHandler $handler): Response
-    {
+    public function editAction(
+        Request $request,
+        TranslatorInterface $translator,
+        SaveQuizHandler $handler,
+        Quiz $quiz
+    ): Response {
         $form = $this->createForm(QuizType::class, $quiz);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $handler->handle(new SaveQuizCommand($quiz));
-                $this->addFlash('info', 'Sauvegarde OK');
+                $this->addFlash('info', $translator->trans('back.global.save.success'));
 
                 return $this->redirectToRoute('bo_quiz_list');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Erreur lors de la sauvegarde');
+                $this->addFlash('error', $translator->trans('back.global.save.error'));
             }
         }
 
@@ -78,18 +86,22 @@ class QuizCrudController extends Controller
     /**
      * @Route("/admin/quiz/delete/{quiz}", requirements={"quiz" = "\d+"}, name="bo_quiz_delete")
      *
+     * @param TranslatorInterface $translator
      * @param DeleteQuizHandler $handler
      * @param Quiz $quiz
      *
      * @return Response
      */
-    public function deleteAction(DeleteQuizHandler $handler, Quiz $quiz): Response
-    {
+    public function deleteAction(
+        TranslatorInterface $translator,
+        DeleteQuizHandler $handler,
+        Quiz $quiz
+    ): Response {
         try {
             $handler->handle(new DeleteQuizCommand($quiz));
-            $this->addFlash('info', 'Suppression OK');
+            $this->addFlash('info', $translator->trans('back.global.delete.success'));
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur lors de la suppression');
+            $this->addFlash('error', $translator->trans('back.global.delete.error'));
         }
 
         return $this->redirectToRoute('bo_quiz_list');

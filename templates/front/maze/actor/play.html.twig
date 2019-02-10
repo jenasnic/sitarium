@@ -16,11 +16,10 @@ Optional
     <meta name="description" content="Quiz filmographie : avancez d'acteur en acteur en trouvant les films communs !"/>
 {% endblock %}
 
-{% block title %}Quiz filmographie{% endblock %}
+{% block title %}{{ 'front.maze.quiz_filmography'|trans }}{% endblock %}
 
-{% block mazeTitle %}Quiz filmographie{% endblock %}
+{% block mazeTitle %}{{ 'front.maze.quiz_filmography'|trans }}{% endblock %}
 
 {% block mazeHelpText %}
-    <p>Choisissez parmi les films ci-dessous celui qui vous permettra d'avancer.</p>
-    <p>Plusieurs réponses peuvent être possibles et une même réponse peut être utilisée plusieurs fois.</p>
+    {{ 'front.maze.actor.play.help_content'|trans|raw }}
 {% endblock %}

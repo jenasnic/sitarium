@@ -8,24 +8,24 @@ Required :
 
 {% block body %}
 
-    <h1 class="title">Gestion des films</h1>
+    <h1 class="title">{{ 'back.maze.movie.list.title'|trans }}</h1>
 
     <div id="maze-item-list">
 
         <nav class="level">
             <div class="level-left">
-                <span>{{ movies|length }} film(s)</span>
+                <span>{{ 'back.maze.movie.list.count'|transchoice(movies|length) }}</span>
             </div>
             <div class="level-right">
                 <div class="column">
-                    <a class="button is-primary" href="{{ path('bo_maze_movie_new') }}">Ajouter</a>
+                    <a class="button is-primary" href="{{ path('bo_maze_movie_new') }}">{{ 'global.add'|trans }}</a>
                     <span
                         id="build-credits-button"
                         class="button is-primary"
                         data-build-credits-url="{{ path('bo_maze_movie_casting_build') }}"
                         data-progress-url="{{ path('bo_maze_movie_casting_progress') }}"
                     >
-                        Construire le casting
+                        {{ 'back.maze.movie.list.build_casting'|trans }}
                     </span>
                 </div>
             </div>
@@ -35,11 +35,11 @@ Required :
         <table id="maze-item-list" class="table is-striped is-hoverable is-fullwidth">
             <thead>
                 <tr>
-                    <th>Titre</th>
-                    <th>ID TMDB</th>
-                    <th>Casting</th>
-                    <th>Détails</th>
-                    <th>Supprimer</th>
+                    <th>{{ 'back.maze.movie.list.column.title'|trans }}</th>
+                    <th>{{ 'back.maze.movie.list.column.id'|trans }}</th>
+                    <th>{{ 'back.maze.movie.list.column.casting'|trans }}</th>
+                    <th>{{ 'global.detail'|trans }}</th>
+                    <th>{{ 'global.delete'|trans }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -59,7 +59,7 @@ Required :
                         </span>
                     </td>
                     <td>
-                        <a href="{{ path('bo_maze_movie_delete', { 'movie': movie.tmdbId }) }}" onclick="return confirm('Confirmer la suppression ?');" >
+                        <a href="{{ path('bo_maze_movie_delete', { 'movie': movie.tmdbId }) }}" onclick="return confirm('{{ 'global.delete.confirm'|trans }}');" >
                             <span class="icon has-text-danger button">
                                 <i class="fas fa-trash-alt"></i>
                             </span>

@@ -193,7 +193,7 @@ https://github.com/dsmink/twig-bulma-form-theme
         {{- form_label(form) -}}
         {{- form_widget(form) -}}
         {%- if form.vars.help is defined -%}
-            <p class="help">{{ form.vars.help|raw }}</p>
+            <p class="help">{{ form.vars.help|trans|raw }}</p>
         {%- endif -%}
     </div>
 {%- endblock form_row -%}
