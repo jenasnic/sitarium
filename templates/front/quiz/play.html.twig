@@ -36,6 +36,9 @@ Required :
 
             <div id="main-wrapper">
 
+                <input id="message-response-already-found" type="hidden" value="{{ 'front.quiz.response.already_found'|trans }}" />
+                <input id="message-response-found" type="hidden" value="{{ 'front.quiz.response.success'|trans }}" />
+
                 <div id="action-wrapper">
                     {% if (quiz.responses|length == userResponses|length) %}
                         <a href="{{ path('fo_quiz_replay', {'quiz': quiz.id}) }}" class="button">{{ 'global.replay'|trans }}</a>

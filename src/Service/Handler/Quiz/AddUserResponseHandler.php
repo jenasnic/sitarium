@@ -3,8 +3,9 @@
 namespace App\Service\Handler\Quiz;
 
 use App\Domain\Command\Quiz\AddUserResponseCommand;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Quiz\UserResponse;
+use App\Repository\Quiz\UserResponseRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Allows to save new quiz response found for user.
@@ -17,11 +18,18 @@ class AddUserResponseHandler
     protected $entityManager;
 
     /**
-     * @param EntityManagerInterface $entityManager
+     * @var UserResponseRepository
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    protected $userResponseRepository;
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param UserResponseRepository $userResponseRepository
+     */
+    public function __construct(EntityManagerInterface $entityManager, UserResponseRepository $userResponseRepository)
     {
         $this->entityManager = $entityManager;
+        $this->userResponseRepository = $userResponseRepository;
     }
 
     /**
@@ -29,12 +37,19 @@ class AddUserResponseHandler
      */
     public function handle(AddUserResponseCommand $command)
     {
-        $userResponse = new UserResponse();
-        $userResponse->setUser($command->getUser());
-        $userResponse->setResponse($command->getResponse());
-        $userResponse->setDate(new \DateTime());
+        $responseAlreadyFound = $this->userResponseRepository->checkExistingResponseForUserId(
+            $command->getUser()->getId(),
+            $command->getResponse()->getId()
+        );
 
-        $this->entityManager->persist($userResponse);
-        $this->entityManager->flush();
+        if (!$responseAlreadyFound) {
+            $userResponse = new UserResponse();
+            $userResponse->setUser($command->getUser());
+            $userResponse->setResponse($command->getResponse());
+            $userResponse->setDate(new \DateTime());
+
+            $this->entityManager->persist($userResponse);
+            $this->entityManager->flush();
+        }
     }
 }

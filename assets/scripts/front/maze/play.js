@@ -7,6 +7,8 @@ class MazePlayer {
     mazeResponseWidth;
     mazeItemMargin;
     popupDelay;
+    responseFoundMessage;
+    quizOverMessage;
 
     /**
      * @param int mazeItemWidth Total width of items in scrollable element.
@@ -19,6 +21,9 @@ class MazePlayer {
         this.mazeResponseWidth = mazeResponseWidth;
         this.mazeItemMargin = mazeItemMargin;
         this.popupDelay = popupDelay;
+
+        this.responseFoundMessage = document.getElementById('message-response-found').value;
+        this.quizOverMessage = document.getElementById('message-quiz-over').value;
 
         this.initScroll();
         this.initHelper();
@@ -47,9 +52,13 @@ class MazePlayer {
             event.target.classList.toggle('fa-minus-circle');
             document.getElementById('toggle-wrapper').classList.toggle('active');
         });
-
+        
         document.getElementById('mobile-helper-button').addEventListener('click', (event) => {
             document.getElementById('response-wrapper').classList.add('mobile-active');
+        });
+
+        document.getElementById('response-wrapper').addEventListener('click', (event) => {
+            document.getElementById('response-wrapper').classList.remove('mobile-active');
         });
 
         [...document.getElementById('response-wrapper').querySelectorAll('.selection-item')].forEach(
@@ -110,11 +119,9 @@ class MazePlayer {
 
                     if (mazeResolved) {
                         this.terminateMaze();
-                        // @todo use translation
-                        displayPopup('Bravo vous avez résolu ce quiz !');
+                        displayPopup(this.quizOverMessage);
                     } else {
-                        // @todo use translation
-                        displayPopup('Félicitations !', {autoCloseDelay: this.popupDelay});
+                        displayPopup(this.responseFoundMessage, {autoCloseDelay: this.popupDelay});
                     }
                 } else {
                     displayPopup(response.data.message, {autoCloseDelay: this.popupDelay});

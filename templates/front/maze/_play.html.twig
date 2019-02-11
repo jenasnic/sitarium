@@ -29,6 +29,8 @@ Optional
             {% if level is defined %}
                 <input id="maze-level" type="hidden" value="{{ level }}" />
             {% endif %}
+            <input id="message-response-found" type="hidden" value="{{ 'front.maze.play.response_found'|trans }}" />
+            <input id="message-quiz-over" type="hidden" value="{{ 'front.maze.play.quiz_over'|trans }}" />
         </div>
 
         <div id="maze-wrapper" class="card">

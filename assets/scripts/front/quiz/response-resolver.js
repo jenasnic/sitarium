@@ -7,6 +7,8 @@ export default class ResponseResolver {
     responseLocator;
     quizResolver;
     popupDelay;
+    responseFoundMessage;
+    responseAlreadyFoundMessage;
 
     /**
      * @param int quizId
@@ -21,6 +23,10 @@ export default class ResponseResolver {
         this.responseLocator = responseLocator;
         this.quizResolver = quizResolver;
         this.popupDelay = popupDelay;
+
+        this.responseFoundMessage = document.getElementById('message-response-found').value;
+        this.responseAlreadyFoundMessage = document.getElementById('message-response-already-found').value;
+
     };
 
     /**
@@ -41,9 +47,14 @@ export default class ResponseResolver {
                     return;
                 }
 
+                // Check if response already found
+                if (document.querySelectorAll(`li[data-response-id="${response.data.id}"]`).length > 0) {
+                    displayPopup(this.responseAlreadyFoundMessage, {autoCloseDelay: this.popupDelay});
+                    return;
+                }
+
                 document.getElementById('response-input').value = '';
-                // @todo use translation
-                displayPopup('Félicitations !', {autoCloseDelay: this.popupDelay});
+                displayPopup(this.responseFoundMessage, {autoCloseDelay: this.popupDelay});
                 setTimeout(
                     () => {this.addNewResponse(response.data);},
                     this.popupDelay

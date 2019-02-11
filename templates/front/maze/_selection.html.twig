@@ -5,7 +5,7 @@ Required :
 - string selectionId : CSS identifier for selection container.
 #}
 
-<section id="{{ selectionId }}">
+<section id="{{ selectionId }}" class="maze-item-selection-wrapper">
     {% for mazeItem in mazeItems %}
     <div data-tmdb-id="{{ mazeItem.tmdbId }}" data-display-name="{{ mazeItem.displayName|raw }}" class="selection-item">
         <img src="{{ mazeItem.pictureUrl }}" alt="{{ mazeItem.displayName|raw }}" />

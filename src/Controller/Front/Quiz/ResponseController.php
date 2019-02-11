@@ -4,7 +4,6 @@ namespace App\Controller\Front\Quiz;
 
 use App\Domain\Command\Quiz\AddUserResponseCommand;
 use App\Repository\Quiz\ResponseRepository;
-use App\Repository\Quiz\UserResponseRepository;
 use App\Service\Handler\Quiz\AddUserResponseHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,7 +19,6 @@ class ResponseController extends Controller
      * @param Request $request
      * @param TranslatorInterface $translator
      * @param ResponseRepository $responseRepository
-     * @param UserResponseRepository $userResponseRepository
      * @param AddUserResponseHandler $handler
      *
      * @return JsonResponse
@@ -29,7 +27,6 @@ class ResponseController extends Controller
         Request $request,
         TranslatorInterface $translator,
         ResponseRepository $responseRepository,
-        UserResponseRepository $userResponseRepository,
         AddUserResponseHandler $handler
     ): JsonResponse {
         $data = json_decode($request->getContent(), true);
@@ -44,18 +41,6 @@ class ResponseController extends Controller
                 if ($responseFound) {
                     // If logged user => save response for current user (if not already done)
                     if ($this->getUser()) {
-                        $responseAlreadyFound = $userResponseRepository->checkExistingResponseForUserId(
-                            $this->getUser()->getId(),
-                            $responseFound->getId()
-                        );
-
-                        if ($responseAlreadyFound) {
-                            return new JsonResponse([
-                                'success' => false,
-                                'message' => $translator->trans('front.quiz.response.already_found'),
-                            ]);
-                        }
-
                         $handler->handle(new AddUserResponseCommand($this->getUser(), $responseFound));
                     }
 

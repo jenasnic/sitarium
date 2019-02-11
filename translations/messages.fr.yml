@@ -245,6 +245,7 @@ front.quiz.response.already_found: Réponse déjà trouvée.
 front.quiz.response.incorrect: Réponse incorrecte.
 front.quiz.response.process_error: Erreur lors du traitement de la réponse.
 front.quiz.response.reset_error: Erreur lors de la remise à zéro de vos réponses.
+front.quiz.response.success: Félicitations !
 
 front.quiz.trick.no_trick_on_location: Aucun indice trouvé pour la zone indiquée.
 front.quiz.trick.process_error: Erreur lors de la récupération des indices.
@@ -310,6 +311,8 @@ front.maze.play.level.hard: Difficile
 front.maze.play.level.medium: Moyen
 front.maze.play.min_path: Jouer sur le plus court chemin
 front.maze.play.play_with: Jouer avec
+front.maze.play.quiz_over: Bravo vous avez résolu ce quiz !
+front.maze.play.response_found: Félicitations !
 front.maze.play.response.placeholder: Saisissez votre réponse
 front.maze.play.response.submit: Soumettre la réponse
 front.maze.play.select_actor: Choisir mes acteurs
