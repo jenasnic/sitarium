@@ -1,0 +1,24 @@
+.switch-button {
+    align-items: center;
+    display: inline-flex;
+
+    .switch-item {
+        background: linear-gradient($color-button-disabled-1, $color-button-disabled-2);
+        cursor: pointer;
+        margin: 0;
+        padding: 0.5rem 1.5rem;
+
+        &.active {
+            background: linear-gradient($color-button-active-1, $color-button-active-2);
+            border-radius: 3px;
+            border: 1px solid $color-shadow-default;
+        }
+
+        &:first-child {
+            border-radius: 5px 0 0 5px;
+        }
+        &:last-child {
+            border-radius: 0 5px 5px 0;
+        }
+    }
+}

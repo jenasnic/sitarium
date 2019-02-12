@@ -239,7 +239,8 @@ front.quiz.home.find: "Trouvez les %count% objets cachés dans l'image."
 front.quiz.play.response.found: "Réponses trouvées : "
 front.quiz.play.response.placeholder: Saisissez votre réponse
 front.quiz.play.response.submit: Soumettre la réponse
-front.quiz.play.trick.request: Demander un indice
+front.quiz.play.mode.trick: Demander un indice
+front.quiz.play.mode.zoom: Zoomer sur l'image
 
 front.quiz.response.already_found: Réponse déjà trouvée.
 front.quiz.response.incorrect: Réponse incorrecte.

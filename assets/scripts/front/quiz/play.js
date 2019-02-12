@@ -3,6 +3,7 @@ import QuizResolver from './quiz-resolver';
 import ResponseHelper from './response-helper';
 import ResponseLocator from './response-locator';
 import ResponseResolver from './response-resolver';
+import { bindSwitchButton } from '../../component/switch';
 
 /**
  * Allows to initialize quiz.
@@ -70,18 +71,8 @@ const initActions = (responseHelper, responseLocator, responseResolver) => {
 
     document.getElementById('response-input') && document.getElementById('response-input').focus();
 
-    document.getElementById('quiz-trick') && document.getElementById('quiz-trick').addEventListener(
-        'touchstart',
-        (event) => {
-            event.preventDefault();
-            responseHelper.toggleTrickingMode();
-        }
-    );
-
-    document.getElementById('quiz-trick') && document.getElementById('quiz-trick').addEventListener(
-        'click',
-        (event) => {responseHelper.toggleTrickingMode();}
-    );
+    document.getElementById('switch-mode-button')
+        && bindSwitchButton(document.getElementById('switch-mode-button'), (item) => {responseHelper.toggleHelperMode(item.dataset.mode);});
 
     [...document.querySelectorAll('li[data-response]')].forEach((element) => {
         element.addEventListener(type, (event) => {

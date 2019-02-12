@@ -35,6 +35,8 @@
                     display: block;
                     margin-left: 1rem;
                 }
+
+                .switch-button {margin-left: 1rem;}
             }
         }
 
@@ -155,7 +157,7 @@
                 .action-buttons {
                     justify-content: center;
 
-                    .button {margin: 0 1rem;}
+                    .button, .switch-button {margin: 0 1rem;}
                 }
             }
         }

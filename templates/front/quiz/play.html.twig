@@ -47,7 +47,10 @@ Required :
                         <div class="action-buttons">
                             <span id="response-submit" class="button" title="{{ 'front.quiz.play.response.submit'|trans }}"><i class="fas fa-check"></i></span>
                             {% if (quiz.displayTrick) %}
-                                <span id="quiz-trick" class="button" title="{{ 'front.quiz.play.trick.request'|trans }}"><i class="fas fa-question"></i></span>
+                                <span id="switch-mode-button" class="switch-button">
+                                    <span data-mode="zoom" class="switch-item active" title="{{ 'front.quiz.play.mode.zoom'|trans }}"><i class="fas fa-search"></i></span>
+                                    <span data-mode="trick" class="switch-item" title="{{ 'front.quiz.play.mode.trick'|trans }}"><i class="fas fa-lightbulb"></i></span>
+                                </span>
                             {% endif %}
                         </div>
                     {% endif %}

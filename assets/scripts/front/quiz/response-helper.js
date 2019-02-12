@@ -63,10 +63,11 @@ export default class ResponseHelper {
 
     /**
      * Allows to switch between tricking mode (to request trick) and zoom mode (to explore picture).
+     *
+     * @param string mode
      */
-    toggleTrickingMode() {
-        document.getElementById('quiz-trick').classList.toggle('active');
-        this.isTricking = !this.isTricking;
+    toggleHelperMode(mode) {
+        this.isTricking = ('trick' === mode);
         this.isTricking ? this.zoom.disable() : this.zoom.enable();
         document.getElementById('picture-quiz').style.cursor = this.isTricking ? 'help' : 'default';
     };
