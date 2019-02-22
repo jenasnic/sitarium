@@ -43,5 +43,5 @@ export default class QuizResolver {
                 actionElement.parentNode.removeChild(actionElement);
             })
         ;
-    }
+    };
 }

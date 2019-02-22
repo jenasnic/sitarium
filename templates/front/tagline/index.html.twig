@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Quiz tagline, retrouvez pour chaque tagline le film correspondant.{% endblock %}
+
+{% block body %}
+
+    <div id="tagline-home" class="center">
+
+        <h1>{{ 'front.tagline.home.title'|trans }}</h1>
+
+        {{ 'front.tagline.home.content'|trans|raw }}
+
+        <form id="tagline-selection-form" action="" method="GET" class="card">
+
+            <div class="field">
+                <label for="count">{{ 'front.tagline.home.play_with'|trans }}</label>
+                <div class="control select-wrapper">
+                    <select id="count" name="count">
+                    {% for count in range(5, 10) %}
+                        <option value="{{ count }}">
+                            {{ 'front.tagline.home.movie_count'|trans({'%count%': count}) }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div id="genre-wrapper">
+            {% for genre in genres %}
+                {% if genre['movieCount'] > 10 %}
+                <span data-action-url="{{ path('fo_tagline_genre', {'slug': genre['slug']}) }}" class="button">
+                    {{ genre['name'] }}
+                </span>
+                {% endif %}
+            {% endfor %}
+            </div>
+
+        </form>
+
+        {% if not app.user %}
+            <p>{{ 'front.tagline.home.content_anonymous'|trans({'%link_start%': '<a href="'~path('fo_account_new')~'">', '%link_end%': '</a>'})|raw }}</p>
+        {% endif %}
+
+    </div>
+
+{% endblock %}

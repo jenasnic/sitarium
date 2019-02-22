@@ -1,0 +1,26 @@
+
+#tagline-home {
+    #tagline-selection-form {
+        margin: 2rem 0;
+        #genre-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 1rem;
+            max-width: 550px;
+
+            .button {margin: 0.5rem;}
+       }
+    }
+}
+
+@media #{$media-small}
+{
+    #tagline-home {
+        #tagline-selection-form {
+            #genre-wrapper {
+                flex-direction: column;
+            }
+        }
+    }
+}

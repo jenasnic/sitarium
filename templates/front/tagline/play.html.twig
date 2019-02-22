@@ -1,0 +1,52 @@
+{#
+Allows to display taglines with movies.
+Required :
+- Genre genre : genre for current tagline quiz.
+- array taglines : list of taglines (as Movie).
+- array movies : list of movies for current genre used in tagline quiz.
+#}
+
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <h1>{{ 'front.tagline.play.title'|trans({'%genre%': genre.name}) }}</h1>
+
+    <div id="tagline-play" data-response-url="{{ path('fo_tagline') }}">
+
+        <input id="message-response-success" type="hidden" value="{{ 'front.tagline.play.response_success'|trans }}" />
+        <input id="message-response-failure" type="hidden" value="{{ 'front.tagline.play.response_failure'|trans }}" />
+        <input id="message-quiz-over" type="hidden" value="{{ 'front.tagline.play.quiz_over'|trans }}" />
+
+        <div id="tagline-wrapper">
+            {% for tagline in taglines %}
+            <div
+                data-tmdb-id="{{ tagline.tmdbId }}"
+                data-order="{{ loop.index }}"
+                class="tagline-item {{ loop.first ? 'active' : '' }}"
+            >
+                {{ tagline.tagline }}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div id="response-wrapper" class="card center">
+            {% for movie in movies %}
+            <div
+                data-tmdb-id="{{ movie.tmdbId }}"
+                data-display-name="{{ movie.title|raw }}"
+                class="selection-item"
+            >
+                <img src="{{ movie.pictureUrl|tmdbPictureUrl }}" alt="{{ movie.title|raw }}" />
+                <div class="info-wrapper"><span>{{ movie.displayName }}</span></div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div id="replay-wrapper" class="center">
+            <span id="replay-button" class="button">{{ 'global.replay'|trans }}</span>
+        </div>
+
+    </div>
+
+{% endblock %}

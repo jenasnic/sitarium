@@ -1,6 +1,20 @@
 @import './front/common';
 @import './front/style';
-@import './front/index';
+@import './front/other';
+
+@import './front/menu/menu';
+@import './front/account/infos';
+@import './front/account/new';
+@import './front/quiz/home';
+@import './front/quiz/play';
+@import './front/maze/home';
+@import './front/maze/play';
+@import './front/maze/selection';
+@import './front/tagline/home';
+@import './front/tagline/play';
+@import './front/component/tingle';
+@import './front/component/switch';
+
 @import '~@fortawesome/fontawesome-free/css/all.css';
 @import '~perfect-scrollbar/css/perfect-scrollbar.css';
 @import '~tingle.js/dist/tingle.min.css';

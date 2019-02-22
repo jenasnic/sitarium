@@ -249,6 +249,20 @@ front.quiz.winner.quiz_resolve_error: Erreur lors de la résolution du quiz.
 
 
 
+##############
+# Other quiz #
+##############
+
+front.other.content: "<p class='margin-bottom'>Nous vous proposons ici 2 autres quiz.</p>
+<p>Retrouver les films correspond aux <strong>taglines</strong> proposées.</p>
+<p class='margin-bottom'>Ou jouez aux <strong>dominos</strong> en reliant les films/acteurs proposés via leur casting/filmographie.</p>
+<p><strong>Bonne chance !</strong></p>"
+front.other.tagline: Taglines
+front.other.title: Autres quiz
+front.other.maze: Dominos
+
+
+
 ########
 # Maze #
 ########
@@ -295,13 +309,12 @@ front.maze.actor.min_path.title: Reliez 2 acteurs
 front.maze.actor.not_found: Acteur introuvable.
 front.maze.actor.play.help_content: "<p>Choisissez parmi les films ci-dessous celui qui vous permettra d'avancer.</p>
 <p>Plusieurs réponses peuvent être possibles et une même réponse peut être utilisée plusieurs fois.</p>"
-front.maze.home.content: "<p>Nous vous proposons ici 2 autres quiz, le premier basé sur la filmographie des acteurs et le second sur le casting des films.</p>
-<p class='margin-bottom'>Le but de ces quiz est de relier les acteurs via un film commun ou de relier les films via un acteur commun...</p>
+front.maze.home.content: "<p class='margin-bottom'>Le but de ces quiz est de relier les acteurs via un film commun ou de relier les films via un acteur commun...</p>
 <p><strong>Amusez-vous bien !</strong></p>"
 front.maze.home.content_anonymous: "Pensez à vous créer un compte %link_start%ici%link_end%."
 front.maze.home.title: Quiz casting et filmographie
 front.maze.initialization_error: Une erreur est survenue lors de l'initialisation du quiz.
-front.maze.invalid_parameters: Les paramètres spécifiés pour la page sont incorrects..
+front.maze.invalid_parameters: Les paramètres spécifiés pour la page sont incorrects.
 front.maze.movie.casting_error: Impossible de charger le casting du film.
 front.maze.movie.home.movie_count: "%count% films"
 front.maze.movie.home.content: "<p>Le but du jeu est d'avancer de film en film en trouvant un acteur commun.</p>
@@ -358,10 +371,8 @@ back.tagline.genre.list.unused: '{0} Aucun non utilisé|{1} 1 non utilisé|]1,In
 back.tagline.genre.list.used: '{0} Aucun utilisé|{1} 1 utilisé|]1,Inf[ %count% utilisés'
 back.tagline.genre.synchronize.error: Erreur lors de la synchronization
 back.tagline.genre.synchronize.success: Synchronization OK
-
 back.tagline.movie.detail.id: "ID TMDB : "
 back.tagline.movie.detail.release_date: "Date de sortie : "
-
 back.tagline.movie.list.button.genre: Genres
 back.tagline.movie.list.column.movie: Film
 back.tagline.movie.list.column.tagline: Tagline
@@ -374,6 +385,18 @@ back.tagline.similar.subtitle.primary: Film principal
 back.tagline.similar.subtitle.secondary: Films similaires
 back.tagline.similar.title: Films à ajouter
 back.tagline.similar.validate: Valider la sélection
+
+front.tagline.home.content: "<p class='margin-bottom'>Choisissez une catégorie et retrouvez les films associés aux taglines.</p>
+<p class='margin-bottom'><strong>Bonne chance !</strong></p>"
+front.tagline.home.content_anonymous: "Pensez à vous créer un compte %link_start%ici%link_end%."
+front.tagline.home.play_with: Jouer avec
+front.tagline.home.movie_count: "%count% films"
+front.tagline.home.title: Quiz taglines
+front.tagline.invalid_parameters: Les paramètres spécifiés pour la page sont incorrects.
+front.tagline.play.title: "Taglines '%genre%'"
+front.tagline.play.response_success: Félicitations !
+front.tagline.play.response_failure: Réponse incorrecte !
+front.tagline.play.quiz_over: Félicitations ! Vous avez résolu ce quiz.
 
 
 

@@ -4,6 +4,7 @@ namespace App\Entity\Tagline;
 
 use App\Annotation\Tmdb\TmdbField;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Genre.
@@ -29,6 +30,14 @@ class Genre
      * @TmdbField(name="name")
      */
     private $name;
+
+    /**
+     * @ORM\Column(name="slug", type="string", length=128, unique=true)
+     * @Gedmo\Slug(fields={"name"})
+     *
+     * @var string
+     */
+    private $slug;
 
     /**
      * @return int
@@ -60,5 +69,21 @@ class Genre
     public function setName(string $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug(string $slug)
+    {
+        $this->slug = $slug;
     }
 }

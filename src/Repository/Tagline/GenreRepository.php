@@ -36,7 +36,7 @@ class GenreRepository extends ServiceEntityRepository
         $queryBuilder
             ->from(Movie::class, 'movie')
             ->innerJoin('movie.genres', 'genre')
-            ->select('genre.tmdbId', 'genre.name', 'COUNT(genre.tmdbId) as movieCount')
+            ->select('genre.tmdbId', 'genre.name', 'genre.slug', 'COUNT(genre.tmdbId) as movieCount')
             ->groupBy('genre.tmdbId')
             ->orderBy('genre.name')
         ;

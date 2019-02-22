@@ -9,7 +9,7 @@
             <img src="{{ asset('build/images/logo.svg') }}" alt="Sitarium" />
             <span>{{ 'front.layout.menu.home'|trans }}</span>
         </a>
-        <a href="{{ path('fo_maze') }}" class="navbar-item">{{ 'front.layout.menu.other'|trans }}</a>
+        <a href="{{ path('fo_other') }}" class="navbar-item">{{ 'front.layout.menu.other'|trans }}</a>
     </div>
     <div class="navbar-login">
         {% if (app.user) %}

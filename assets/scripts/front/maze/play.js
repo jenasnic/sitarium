@@ -265,7 +265,7 @@ class MazePlayer {
 
         mobileCurrentItem.classList.add('current');
         mobileNextItem.classList.add('next');
-    }
+    };
 }
 
 /**
