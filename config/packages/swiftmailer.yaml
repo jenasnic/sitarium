@@ -5,4 +5,5 @@ swiftmailer:
     spool: { type: 'memory' }
     username: '%env(mailer_user)%'
     password: '%env(mailer_password)%'
+    encryption: '%env(mailer_encryption)%'
 

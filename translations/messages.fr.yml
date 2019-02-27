@@ -254,7 +254,7 @@ front.quiz.winner.quiz_resolve_error: Erreur lors de la résolution du quiz.
 ##############
 
 front.other.content: "<p class='margin-bottom'>Nous vous proposons ici 2 autres quiz.</p>
-<p>Retrouver les films correspond aux <strong>taglines</strong> proposées.</p>
+<p>Retrouver les films correspondant aux <strong>taglines</strong> proposées.</p>
 <p class='margin-bottom'>Ou jouez aux <strong>dominos</strong> en reliant les films/acteurs proposés via leur casting/filmographie.</p>
 <p><strong>Bonne chance !</strong></p>"
 front.other.tagline: Taglines
