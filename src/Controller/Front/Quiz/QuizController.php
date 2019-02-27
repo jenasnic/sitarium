@@ -8,12 +8,12 @@ use App\Repository\Quiz\QuizRepository;
 use App\Repository\Quiz\UserResponseRepository;
 use App\Service\Handler\Quiz\ClearUserResponseHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class QuizController extends Controller
+class QuizController extends AbstractController
 {
     /**
      * @Route("/quiz-en-images", name="fo_quiz")

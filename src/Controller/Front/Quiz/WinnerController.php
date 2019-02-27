@@ -6,14 +6,14 @@ use App\Domain\Command\Quiz\RegisterWinnerCommand;
 use App\Entity\Quiz\Quiz;
 use App\Service\Handler\Quiz\RegisterWinnerHandler;
 use App\Service\Quiz\ResolveQuizValidator;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class WinnerController extends Controller
+class WinnerController extends AbstractController
 {
     /**
      * @Route("/quiz/ajax/quiz-resolu/{quiz}", name="fo_quiz_resolved", methods="POST")

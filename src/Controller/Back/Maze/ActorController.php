@@ -10,14 +10,14 @@ use App\Service\Handler\Maze\AddActorHandler;
 use App\Service\Tmdb\TmdbApiService;
 use App\Validator\Maze\ActorValidator;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ActorController extends Controller
+class ActorController extends AbstractController
 {
     /**
      * Max actor count to return when searching actors through TMDB.

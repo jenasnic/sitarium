@@ -2,8 +2,8 @@
 
 namespace App\Annotation\Tmdb;
 
-use Doctrine\Common\Annotations\Annotation\Target;
 use Doctrine\Common\Annotations\Annotation\Required;
+use Doctrine\Common\Annotations\Annotation\Target;
 use Doctrine\ORM\Mapping\Annotation;
 
 /**

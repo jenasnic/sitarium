@@ -6,13 +6,13 @@ use App\Enum\Tmdb\Types;
 use App\Model\Tmdb\Search\Movie;
 use App\Model\Tmdb\Search\Actor;
 use App\Service\Tmdb\TmdbApiService;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class SearchController extends Controller
+class SearchController extends AbstractController
 {
     const TYPE_MAPPING_ENTITY = [
         Types::ACTOR => [

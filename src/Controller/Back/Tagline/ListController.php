@@ -5,12 +5,12 @@ namespace App\Controller\Back\Tagline;
 use App\Entity\Tagline\Movie;
 use App\Repository\Tagline\MovieRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ListController extends Controller
+class ListController extends AbstractController
 {
     /**
      * @Route("/admin/tagline/movie/list", name="bo_tagline_movie_list")

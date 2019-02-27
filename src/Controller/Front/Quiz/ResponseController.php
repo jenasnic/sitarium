@@ -5,13 +5,13 @@ namespace App\Controller\Front\Quiz;
 use App\Domain\Command\Quiz\AddUserResponseCommand;
 use App\Repository\Quiz\ResponseRepository;
 use App\Service\Handler\Quiz\AddUserResponseHandler;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ResponseController extends Controller
+class ResponseController extends AbstractController
 {
     /**
      * @Route("/quiz/ajax/valider-reponse", name="fo_quiz_check_response", methods="POST")

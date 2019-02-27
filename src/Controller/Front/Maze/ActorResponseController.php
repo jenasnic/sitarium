@@ -5,13 +5,13 @@ namespace App\Controller\Front\Maze;
 use App\Repository\Maze\ActorRepository;
 use App\Service\Maze\ActorPathResponseValidator;
 use App\Tool\TmdbUtil;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ActorResponseController extends Controller
+class ActorResponseController extends AbstractController
 {
     /**
      * @Route("/quiz-filmographie/ajax/valider-response", name="fo_maze_actor_progress", methods="POST")

@@ -11,13 +11,13 @@ use App\Repository\UserRepository;
 use App\Service\Handler\User\AddUserHandler;
 use App\Service\Handler\User\DeleteUserHandler;
 use App\Service\Handler\User\UpdateUserHandler;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class UserController extends Controller
+class UserController extends AbstractController
 {
     /**
      * @Route("/admin/user/list", name="bo_user_list", methods="GET")

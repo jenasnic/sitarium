@@ -4,13 +4,13 @@ namespace App\Controller\Back\Maze;
 
 use App\Enum\Maze\SessionValues;
 use App\Service\Maze\MovieCastingBuilder;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class CastingController extends Controller
+class CastingController extends AbstractController
 {
     /**
      * @Route("/admin/maze/movie/casting/build", name="bo_maze_movie_casting_build", methods="POST")

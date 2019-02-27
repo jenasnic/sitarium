@@ -5,12 +5,12 @@ namespace App\Controller\Back\Tmdb;
 use App\Model\Tmdb\Movie;
 use App\Model\Tmdb\Actor;
 use App\Service\Tmdb\TmdbApiService;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DisplayController extends Controller
+class DisplayController extends AbstractController
 {
     /**
      * @Route("/admin/tmdb/display/actor/{tmdbId}", name="bo_tmdb_display_actor", requirements={"tmdbId"="\d+"})

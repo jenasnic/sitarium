@@ -5,11 +5,11 @@ namespace App\Controller\Front\Maze;
 use App\Enum\Maze\FilmographyStatus;
 use App\Repository\Maze\ActorRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ActorMazeController extends Controller
+class ActorMazeController extends AbstractController
 {
     /**
      * @Route("/quiz-filmographie", name="fo_maze_actor")

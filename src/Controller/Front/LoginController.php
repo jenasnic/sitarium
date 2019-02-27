@@ -5,14 +5,14 @@ namespace App\Controller\Front;
 use App\Domain\Command\User\ResetPasswordCommand;
 use App\Repository\UserRepository;
 use App\Service\Handler\User\ResetUserPasswordHandler;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class LoginController extends Controller
+class LoginController extends AbstractController
 {
     /**
      * @Route("/connexion", name="login", methods="GET")

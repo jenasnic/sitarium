@@ -10,13 +10,13 @@ use App\Repository\Quiz\QuizRepository;
 use App\Service\Handler\Quiz\DeleteQuizHandler;
 use App\Service\Handler\Quiz\SaveQuizHandler;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class QuizCrudController extends Controller
+class QuizCrudController extends AbstractController
 {
     /**
      * @Route("/admin/quiz/new", name="bo_quiz_new", methods="POST")

@@ -6,12 +6,12 @@ use App\Entity\Tagline\Genre;
 use App\Repository\Tagline\GenreRepository;
 use App\Service\Tagline\GenreSynchronizer;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class GenreController extends Controller
+class GenreController extends AbstractController
 {
     /**
      * @Route("/admin/tagline/genre/list", name="bo_tagline_genre_list")

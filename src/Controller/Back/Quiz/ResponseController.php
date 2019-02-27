@@ -6,14 +6,14 @@ use App\Entity\Quiz\Quiz;
 use App\Entity\Quiz\Response as QuizResponse;
 use App\Form\Quiz\ResponseType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ResponseController extends Controller
+class ResponseController extends AbstractController
 {
     /**
      * @Route("/admin/quiz/{quiz}/response/list", requirements={"quiz" = "\d+"}, name="bo_quiz_response_list")

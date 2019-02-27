@@ -5,14 +5,14 @@ namespace App\Controller\Back\Quiz;
 use App\Domain\Command\Quiz\ReorderQuizCommand;
 use App\Repository\Quiz\QuizRepository;
 use App\Service\Handler\Quiz\ReorderQuizHandler;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class QuizListController extends Controller
+class QuizListController extends AbstractController
 {
     /**
      * @Route("/admin/quiz/list", name="bo_quiz_list")

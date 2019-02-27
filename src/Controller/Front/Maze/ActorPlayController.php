@@ -9,14 +9,14 @@ use App\Service\Maze\MinPathFinder;
 use App\Service\Maze\RandomPathFinder;
 use App\Tool\TmdbUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ActorPlayController extends Controller
+class ActorPlayController extends AbstractController
 {
     /**
      * @var TranslatorInterface

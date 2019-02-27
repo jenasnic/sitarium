@@ -8,14 +8,14 @@ use App\Enum\Tmdb\Types;
 use App\Service\Handler\Tagline\AddMoviesHandler;
 use App\Service\Tmdb\TmdbApiService;
 use App\Validator\Tagline\MovieValidator;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class AddMovieController extends Controller
+class AddMovieController extends AbstractController
 {
     const MAX_MOVIE_RESULT_COUNT = 10;
 

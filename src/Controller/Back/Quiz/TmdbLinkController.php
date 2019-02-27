@@ -5,13 +5,13 @@ namespace App\Controller\Back\Quiz;
 use App\Entity\Quiz\Quiz;
 use App\Enum\Quiz\SessionValues;
 use App\Service\Quiz\TmdbLinkBuilder;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class TmdbLinkController extends Controller
+class TmdbLinkController extends AbstractController
 {
     /**
      * @Route("/admin/quiz/tmdb-link/{quiz}", requirements={"quiz" = "\d+"}, name="bo_quiz_link_tmdb_start", methods="POST")

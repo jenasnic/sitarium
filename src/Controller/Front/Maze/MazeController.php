@@ -2,11 +2,11 @@
 
 namespace App\Controller\Front\Maze;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class MazeController extends Controller
+class MazeController extends AbstractController
 {
     /**
      * @Route("/quiz-domino", name="fo_maze")

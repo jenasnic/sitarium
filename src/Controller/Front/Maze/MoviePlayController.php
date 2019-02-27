@@ -8,14 +8,14 @@ use App\Service\Maze\MovieGraphBuilder;
 use App\Service\Maze\MoviePathHelpFactory;
 use App\Service\Maze\RandomPathFinder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class MoviePlayController extends Controller
+class MoviePlayController extends AbstractController
 {
     /**
      * @var TranslatorInterface

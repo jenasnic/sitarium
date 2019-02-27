@@ -5,11 +5,11 @@ namespace App\Controller\Front\Maze;
 use App\Enum\Maze\CastingStatus;
 use App\Repository\Maze\MovieRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class MovieMazeController extends Controller
+class MovieMazeController extends AbstractController
 {
     /**
      * @Route("/quiz-casting", name="fo_maze_movie")

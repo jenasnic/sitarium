@@ -11,7 +11,7 @@ use App\Repository\Quiz\QuizRepository;
 use App\Service\Handler\User\AddUserHandler;
 use App\Service\Handler\User\UpdateUserHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class AccountController extends Controller
+class AccountController extends AbstractController
 {
     /**
      * @Route("/creer-compte", name="fo_account_new")
