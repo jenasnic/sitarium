@@ -1,3 +1,8 @@
+@import '~@fortawesome/fontawesome-free/css/all.css';
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+@import '~tingle.js/dist/tingle.min.css';
+@import '~drift-zoom/dist/drift-basic.min.css';
+
 @import './front/common';
 @import './front/style';
 @import './front/other';
@@ -12,10 +17,7 @@
 @import './front/maze/selection';
 @import './front/tagline/home';
 @import './front/tagline/play';
+
+@import './front/component/drift';
 @import './front/component/tingle';
 @import './front/component/switch';
-
-@import '~@fortawesome/fontawesome-free/css/all.css';
-@import '~perfect-scrollbar/css/perfect-scrollbar.css';
-@import '~tingle.js/dist/tingle.min.css';
-@import '~drift-zoom/dist/drift-basic.min.css';

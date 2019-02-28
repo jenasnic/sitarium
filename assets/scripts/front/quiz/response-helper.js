@@ -38,7 +38,8 @@ export default class ResponseHelper {
             containInline: true,
             inlineOffsetX: 0,
             inlineOffsetY: 0,
-            inlinePane: true
+            inlinePane: true,
+            showWhitespaceAtEdges: true
         });
     };
 
