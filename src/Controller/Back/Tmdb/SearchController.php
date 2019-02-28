@@ -48,7 +48,7 @@ class SearchController extends AbstractController
 
         return $this->render('back/tmdb/search.html.twig', [
             'type' => $type,
-            'searchUrl' => $urlGenerator->generate('bo_tmdb_search_result', ['type' => $type])
+            'searchUrl' => $urlGenerator->generate('bo_tmdb_search_result', ['type' => $type]),
         ]);
     }
 

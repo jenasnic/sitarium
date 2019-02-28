@@ -51,7 +51,7 @@ class TaglineController extends AbstractController
 
         $movies = $repository->findByGenre($genre->getTmdbId());
         shuffle($movies);
-        $movies = array_slice($movies, 0, 2*$count);
+        $movies = array_slice($movies, 0, 2 * $count);
 
         $taglines = array_slice($movies, 0, $count);
         shuffle($taglines);

@@ -30,7 +30,7 @@ class AddMovieController extends AbstractController
     {
         return $this->render('back/tmdb/search.html.twig', [
             'type' => Types::MOVIE,
-            'searchUrl' => $urlGenerator->generate('bo_tagline_movie_search')
+            'searchUrl' => $urlGenerator->generate('bo_tagline_movie_search'),
         ]);
     }
 
@@ -94,14 +94,14 @@ class AddMovieController extends AbstractController
         TranslatorInterface $translator,
         AddMoviesHandler $handler
     ): Response {
-            try {
-                $tmdbIds = explode(',', $request->request->get('movie-selection-ids'));
-                $handler->handle(new AddMoviesCommand($tmdbIds));
-                $this->addFlash('info', $translator->trans('back.global.add.success'));
-            } catch (\Exception $e) {
-                $this->addFlash('error', $translator->trans('back.global.add.error'));
-            }
+        try {
+            $tmdbIds = explode(',', $request->request->get('movie-selection-ids'));
+            $handler->handle(new AddMoviesCommand($tmdbIds));
+            $this->addFlash('info', $translator->trans('back.global.add.success'));
+        } catch (\Exception $e) {
+            $this->addFlash('error', $translator->trans('back.global.add.error'));
+        }
 
-            return $this->redirectToRoute('bo_tagline_movie_list');
+        return $this->redirectToRoute('bo_tagline_movie_list');
     }
 }

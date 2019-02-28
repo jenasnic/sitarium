@@ -55,8 +55,7 @@ class LoginController extends AbstractController
                     $this->addFlash('info', $translator->trans('front.login.password.reset.send'));
 
                     return $this->redirectToRoute('login');
-                }
-                catch (\Exception $e) {
+                } catch (\Exception $e) {
                     $this->addFlash('error', $translator->trans('front.login.password.reset.error'));
                 }
             } else {

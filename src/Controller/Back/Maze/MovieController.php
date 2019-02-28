@@ -63,7 +63,7 @@ class MovieController extends AbstractController
     {
         return $this->render('back/tmdb/search.html.twig', [
             'type' => Types::MOVIE,
-            'searchUrl' => $urlGenerator->generate('bo_maze_movie_search')
+            'searchUrl' => $urlGenerator->generate('bo_maze_movie_search'),
         ]);
     }
 

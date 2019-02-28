@@ -54,7 +54,7 @@ class QuizType extends AbstractType
                 CheckboxType::class,
                 [
                     'required' => false,
-                    'help' => 'form.quiz.edit.help.displayResponse'
+                    'help' => 'form.quiz.edit.help.displayResponse',
                 ]
             )
             ->add(
@@ -62,7 +62,7 @@ class QuizType extends AbstractType
                 CheckboxType::class,
                 [
                     'required' => false,
-                    'help' => 'form.quiz.edit.help.displayTrick'
+                    'help' => 'form.quiz.edit.help.displayTrick',
                 ]
             )
             ->add('pictureUrl', HiddenType::class)

@@ -78,9 +78,9 @@ class ResponseController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param QuizResponse $response
      *
-     * @return JsonResponse
+     * @return Response
      */
-    public function deleteResponseAction(EntityManagerInterface $entityManager, QuizResponse $response): JsonResponse
+    public function deleteResponseAction(EntityManagerInterface $entityManager, QuizResponse $response): Response
     {
         try {
             $entityManager->remove($response);

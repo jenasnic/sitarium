@@ -61,7 +61,7 @@ class GenreRepository extends ServiceEntityRepository
 
         $queryBuilder = $this->createQueryBuilder('genre');
         $queryBuilder
-            ->where($queryBuilder->expr()->notIn('genre.tmdbId',  $subQuery->getDQL()))
+            ->where($queryBuilder->expr()->notIn('genre.tmdbId', $subQuery->getDQL()))
             ->orderBy('genre.name')
         ;
 

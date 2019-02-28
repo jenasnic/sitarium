@@ -63,7 +63,7 @@ class ActorController extends AbstractController
     {
         return $this->render('back/tmdb/search.html.twig', [
             'type' => Types::ACTOR,
-            'searchUrl' => $urlGenerator->generate('bo_maze_actor_search')
+            'searchUrl' => $urlGenerator->generate('bo_maze_actor_search'),
         ]);
     }
 
