@@ -6,35 +6,33 @@ use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * UserResponse.
- *
  * @ORM\Table(name="quiz_user_response")
  * @ORM\Entity(repositoryClass="App\Repository\Quiz\UserResponseRepository")
  */
 class UserResponse
 {
     /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", fetch="EAGER")
      * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", fetch="EAGER")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *
+     * @var User
      */
     private $user;
 
     /**
-     * @var Response
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz\Response", fetch="EAGER")
      * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz\Response", fetch="EAGER")
      * @ORM\JoinColumn(name="response_id", referencedColumnName="id")
+     *
+     * @var Response
      */
     private $response;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="date", type="datetime")
+     *
+     * @var \DateTime
      */
     private $date;
 

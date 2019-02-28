@@ -5,104 +5,102 @@ namespace App\Entity\Quiz;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Response.
- *
  * @ORM\Table(name="quiz_response")
  * @ORM\Entity(repositoryClass="App\Repository\Quiz\ResponseRepository")
  */
 class Response
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="integer")
+     *
+     * @var int
      */
     private $id;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="tmdbId", type="integer", nullable=true)
+     *
+     * @var int
      */
     private $tmdbId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="title", type="string", length=255)
+     *
+     * @var string
      */
     private $title;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="responses", type="text")
+     *
+     * @var string
      */
     private $responses;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="trick", type="text")
+     *
+     * @var string
      */
     private $trick;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="positionX", type="float", nullable=true)
+     *
+     * @var int
      */
     private $positionX;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="positionY", type="float", nullable=true)
+     *
+     * @var int
      */
     private $positionY;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="width", type="float", nullable=true)
+     *
+     * @var int
      */
     private $width;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="height", type="float", nullable=true)
+     *
+     * @var int
      */
     private $height;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="pictureUrl", type="string", length=255, nullable=true)
+     *
+     * @var string
      */
     private $pictureUrl;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="tagline", type="text", nullable=true)
+     *
+     * @var string
      */
     private $tagline;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="overview", type="text", nullable=true)
+     *
+     * @var string
      */
     private $overview;
 
     /**
-     * @var Quiz
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Quiz\Quiz", inversedBy="responses")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @var Quiz
      */
     private $quiz;
 
@@ -115,9 +113,9 @@ class Response
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

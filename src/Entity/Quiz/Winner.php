@@ -6,42 +6,40 @@ use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Winner.
- *
  * @ORM\Table(name="quiz_winner")
  * @ORM\Entity(repositoryClass="App\Repository\Quiz\WinnerRepository")
  */
 class Winner
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="integer")
+     *
+     * @var int
      */
     private $id;
 
     /**
-     * @var User
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @var User
      */
     private $user;
 
     /**
-     * @var Quiz
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Quiz\Quiz")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @var Quiz
      */
     private $quiz;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="date", type="datetime")
+     *
+     * @var \DateTime
      */
     private $date;
 

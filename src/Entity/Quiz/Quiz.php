@@ -9,26 +9,24 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * Quiz.
- *
  * @ORM\Table(name="quiz")
  * @ORM\Entity(repositoryClass="App\Repository\Quiz\QuizRepository")
  */
 class Quiz
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="integer")
+     *
+     * @var int
      */
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @var string
      */
     private $name;
 
@@ -41,66 +39,66 @@ class Quiz
     private $slug;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="displayResponse", type="boolean")
+     *
+     * @var bool
      */
     private $displayResponse;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="displayTrick", type="boolean")
+     *
+     * @var bool
      */
     private $displayTrick;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="published", type="boolean")
+     *
+     * @var bool
      */
     private $published;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="rank", type="integer")
+     *
+     * @var int
      */
     private $rank;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="pictureUrl", type="text", nullable=true)
+     *
+     * @var string
      */
     private $pictureUrl;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="pictureWidth", type="integer", nullable=true)
+     *
+     * @var int
      */
     private $pictureWidth;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="pictureHeight", type="integer", nullable=true)
+     *
+     * @var int
      */
     private $pictureHeight;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="thumbnailUrl", type="text", nullable=true)
+     *
+     * @var string
      */
     private $thumbnailUrl;
 
     /**
-     * @var Collection
-     *
      * @ORM\OneToMany(targetEntity="Response", mappedBy="quiz", cascade={"remove"})
      * @ORM\OrderBy({"title" = "ASC"})
+     *
+     * @var Collection
      */
     private $responses;
 
@@ -119,13 +117,14 @@ class Quiz
         $this->displayResponse = false;
         $this->displayTrick = false;
         $this->published = false;
+
         $this->responses = new ArrayCollection();
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -301,7 +300,7 @@ class Quiz
     /**
      * @param Response $response
      */
-    public function addResponse(Response $response)
+    public function addResponse(Response $response): void
     {
         $this->responses->add($response);
     }
@@ -309,7 +308,7 @@ class Quiz
     /**
      * @param Response $response
      */
-    public function removeResponse(Response $response)
+    public function removeResponse(Response $response): void
     {
         $this->responses->removeElement($response);
     }

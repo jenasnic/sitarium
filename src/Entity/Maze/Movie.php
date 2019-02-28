@@ -18,61 +18,64 @@ use Doctrine\ORM\Mapping as ORM;
 class Movie implements DisplayableInterface
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="tmdbId", type="integer")
      * @ORM\Id
+     * @ORM\Column(name="tmdbId", type="integer")
      * @TmdbField(name="id", type="integer")
+     *
+     * @var int
      */
     private $tmdbId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="title", type="string", length=255)
      * @TmdbField(name="title")
+     *
+     * @var string
      */
     private $title;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="releaseDate", type="datetime", nullable=true)
      * @TmdbField(name="release_date", type="datetime", dateFormat="Y-m-d")
+     *
+     * @var \DateTime
      */
     private $releaseDate;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="pictureUrl", type="string", length=255, nullable=true)
      * @TmdbField(name="poster_path")
+     *
+     * @var string
      */
     private $pictureUrl;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="status", type="string", length=25,
-     * columnDefinition="ENUM('casting_to_check', 'casting_validated', 'casting_empty')")
+     *      columnDefinition="ENUM('casting_to_check', 'casting_validated', 'casting_empty')")
+     *
+     * @var string
      */
     private $status;
 
     /**
-     * @var int
      * @TmdbField(name="vote_count", type="integer")
+     *
+     * @var int
      */
     private $voteCount;
 
     /**
-     * @var array
      * @TmdbField(name="genre_ids")
+     *
+     * @var array
      */
     private $genreIds;
 
     /**
-     * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="CastingActor", mappedBy="movies")
+     *
+     * @var CastingActor[]|Collection
      */
     private $actors;
 
@@ -207,26 +210,18 @@ class Movie implements DisplayableInterface
 
     /**
      * @param CastingActor $actor
-     *
-     * @return self
      */
-    public function addActor(CastingActor $actor): self
+    public function addActor(CastingActor $actor): void
     {
         $this->actors->add($actor);
-
-        return $this;
     }
 
     /**
      * @param CastingActor $actor
-     *
-     * @return self
      */
-    public function removeActor(CastingActor $actor): self
+    public function removeActor(CastingActor $actor): void
     {
         $this->actors->removeElement($actor);
-
-        return $this;
     }
 
     /**

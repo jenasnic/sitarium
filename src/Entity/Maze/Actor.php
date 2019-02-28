@@ -4,8 +4,8 @@ namespace App\Entity\Maze;
 
 use App\Annotation\Tmdb\TmdbField;
 use App\Annotation\Tmdb\TmdbType;
-use App\Model\Tmdb\Search\DisplayableInterface;
 use App\Enum\Maze\FilmographyStatus;
+use App\Model\Tmdb\Search\DisplayableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,49 +18,50 @@ use Doctrine\ORM\Mapping as ORM;
 class Actor implements DisplayableInterface
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="tmdbId", type="integer")
      * @ORM\Id
+     * @ORM\Column(name="tmdbId", type="integer")
      * @TmdbField(name="id", type="integer")
+     *
+     * @var int
      */
     private $tmdbId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="fullname", type="string", length=55)
      * @TmdbField(name="name")
+     *
+     * @var string
      */
     private $fullname;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="birthdate", type="datetime", nullable=true)
      * @TmdbField(name="birthday", type="datetime", dateFormat="Y-m-d")
+     *
+     * @var \DateTime
      */
     private $birthdate;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="pictureUrl", type="string", length=255, nullable=true)
      * @TmdbField(name="profile_path")
+     *
+     * @var string
      */
     private $pictureUrl;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="status", type="string", length=25,
-     * columnDefinition="ENUM('filmography_to_check', 'filmography_validated', 'filmography_empty')")
+     *      columnDefinition="ENUM('filmography_to_check', 'filmography_validated', 'filmography_empty')")
+     *
+     * @var string
      */
     private $status;
 
     /**
-     * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="FilmographyMovie", mappedBy="actors")
+     *
+     * @var FilmographyMovie[]|Collection
      */
     private $movies;
 
@@ -163,26 +164,18 @@ class Actor implements DisplayableInterface
 
     /**
      * @param FilmographyMovie $movie
-     *
-     * @return self
      */
-    public function addMovie(FilmographyMovie $movie): self
+    public function addMovie(FilmographyMovie $movie): void
     {
         $this->movies->add($movie);
-
-        return $this;
     }
 
     /**
      * @param FilmographyMovie $movie
-     *
-     * @return self
      */
-    public function removeMovie(FilmographyMovie $movie): self
+    public function removeMovie(FilmographyMovie $movie): void
     {
         $this->movies->removeElement($movie);
-
-        return $this;
     }
 
     /**

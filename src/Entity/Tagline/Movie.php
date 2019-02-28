@@ -167,26 +167,18 @@ class Movie implements DisplayableInterface
 
     /**
      * @param Genre $genre
-     *
-     * @return self
      */
-    public function addGenre(Genre $genre): self
+    public function addGenre(Genre $genre): void
     {
         $this->genres->add($genre);
-
-        return $this;
     }
 
     /**
      * @param Genre $genre
-     *
-     * @return self
      */
-    public function removeGenre(Genre $genre): self
+    public function removeGenre(Genre $genre): void
     {
         $this->genres->removeElement($genre);
-
-        return $this;
     }
 
     /**

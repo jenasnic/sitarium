@@ -5,54 +5,55 @@ namespace App\Entity\Maze;
 use App\Annotation\Tmdb\TmdbField;
 use App\Model\Tmdb\Search\DisplayableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CastingActor.
- *
  * @ORM\Table(name="maze_casting_actor")
  * @ORM\Entity(repositoryClass="App\Repository\Maze\CastingActorRepository")
  */
 class CastingActor implements DisplayableInterface
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="tmdbId", type="integer")
      * @ORM\Id
+     * @ORM\Column(name="tmdbId", type="integer")
      * @TmdbField(name="id", type="integer")
+     *
+     * @var int
      */
     private $tmdbId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="fullname", type="string", length=55)
      * @TmdbField(name="name")
+     *
+     * @var string
      */
     private $fullname;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="pictureUrl", type="string", length=255, nullable=true)
      * @TmdbField(name="profile_path")
+     *
+     * @var string
      */
     private $pictureUrl;
 
     /**
-     * @var string
      * @TmdbField(name="character")
+     *
+     * @var string
      */
     private $character;
 
     /**
-     * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="Movie", inversedBy="actors", cascade={"persist"})
      * @ORM\JoinTable(name="maze_movie_casting_actor",
      *      joinColumns={@ORM\JoinColumn(name="actor_id", referencedColumnName="tmdbId", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="tmdbId", onDelete="CASCADE")}
      * )
+     *
+     * @var Movie[]|Collection
      */
     private $movies;
 
@@ -126,35 +127,27 @@ class CastingActor implements DisplayableInterface
     }
 
     /**
-     * @return ArrayCollection
+     * @return Movie[]|Collection
      */
-    public function getMovies(): ArrayCollection
+    public function getMovies(): Collection
     {
         return $this->movies;
     }
 
     /**
      * @param Movie $movie
-     *
-     * @return self
      */
-    public function addMovie(Movie $movie): self
+    public function addMovie(Movie $movie): void
     {
         $this->movies->add($movie);
-
-        return $this;
     }
 
     /**
      * @param Movie $movie
-     *
-     * @return self
      */
-    public function removeMovie(Movie $movie): self
+    public function removeMovie(Movie $movie): void
     {
         $this->movies->removeElement($movie);
-
-        return $this;
     }
 
     /**

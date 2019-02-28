@@ -7,27 +7,25 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Genre.
- *
  * @ORM\Table(name="tagline_genre")
  * @ORM\Entity(repositoryClass="App\Repository\Tagline\GenreRepository")
  */
 class Genre
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="tmdbId", type="integer")
      * @ORM\Id
+     * @ORM\Column(name="tmdbId", type="integer")
      * @TmdbField(name="id", type="integer")
+     *
+     * @var int
      */
     private $tmdbId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=55)
      * @TmdbField(name="name")
+     *
+     * @var string
      */
     private $name;
 

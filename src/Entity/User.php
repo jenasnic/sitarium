@@ -6,61 +6,59 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * User.
- *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="integer")
+     *
+     * @var int
      */
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="firstname", type="string", length=55)
+     *
+     * @var string
      */
     private $firstname;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="lastname", type="string", length=55)
+     *
+     * @var string
      */
     private $lastname;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="email", type="string", unique=true, length=255)
+     *
+     * @var string
      */
     private $email;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="username", type="string", unique=true, length=55)
+     *
+     * @var string
      */
     private $username;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="password", type="string", length=255)
+     *
+     * @var string
      */
     private $password;
 
     /**
-     * @var array
-     *
      * @ORM\Column(name="roles", type="simple_array")
+     *
+     * @var array
      */
     private $roles;
 
@@ -182,31 +180,22 @@ class User implements UserInterface
 
     /**
      * @param string $role
-
-     *
-     * @return self
      */
-    public function addRole(string $role): self
+    public function addRole(string $role): void
     {
         if (!in_array($role, $this->roles)) {
             $this->roles[] = $role;
         }
-
-        return $this;
     }
 
     /**
      * @param string $role
-     *
-     * @return self
      */
-    public function removeRole(string $role): self
+    public function removeRole(string $role): void
     {
         $this->roles = array_filter($this->roles, function ($internalRole) use ($role) {
             return $internalRole === $role;
         });
-
-        return $this;
     }
 
     /**

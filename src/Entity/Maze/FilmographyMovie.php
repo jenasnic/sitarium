@@ -5,76 +5,78 @@ namespace App\Entity\Maze;
 use App\Annotation\Tmdb\TmdbField;
 use App\Model\Tmdb\Search\DisplayableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * FilmographyMovie.
- *
  * @ORM\Table(name="maze_filmography_movie")
  * @ORM\Entity(repositoryClass="App\Repository\Maze\FilmographyMovieRepository")
  */
 class FilmographyMovie implements DisplayableInterface
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="tmdbId", type="integer")
      * @ORM\Id
+     * @ORM\Column(name="tmdbId", type="integer")
      * @TmdbField(name="id", type="integer")
+     *
+     * @var int
      */
     private $tmdbId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="title", type="string", length=255)
      * @TmdbField(name="title")
+     *
+     * @var string
      */
     private $title;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="releaseDate", type="datetime", nullable=true)
      * @TmdbField(name="release_date", type="datetime", dateFormat="Y-m-d")
+     *
+     * @var \DateTime
      */
     private $releaseDate;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="voteCount", type="integer")
      * @TmdbField(name="vote_count", type="integer")
+     *
+     * @var int
      */
     private $voteCount;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="pictureUrl", type="string", length=255, nullable=true)
      * @TmdbField(name="poster_path")
+     *
+     * @var string
      */
     private $pictureUrl;
 
     /**
-     * @var string
      * @TmdbField(name="character")
+     *
+     * @var string
      */
     private $character;
 
     /**
-     * @var array
      * @TmdbField(name="genre_ids")
+     *
+     * @var array
      */
     private $genreIds;
 
     /**
-     * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="Actor", inversedBy="movies", cascade={"persist"})
      * @ORM\JoinTable(name="maze_actor_filmography_movie",
      *      joinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="tmdbId", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="actor_id", referencedColumnName="tmdbId", onDelete="CASCADE")}
      * )
+     *
+     * @var Actor[]|Collection
      */
     private $actors;
 
@@ -196,35 +198,27 @@ class FilmographyMovie implements DisplayableInterface
     }
 
     /**
-     * @return ArrayCollection
+     * @return Actor[]|Collection
      */
-    public function getActors(): ArrayCollection
+    public function getActors(): Collection
     {
         return $this->actors;
     }
 
     /**
      * @param Actor $actor
-     *
-     * @return self
      */
-    public function addActor(Actor $actor): self
+    public function addActor(Actor $actor): void
     {
         $this->actors->add($actor);
-
-        return $this;
     }
 
     /**
      * @param Actor $actor
-     *
-     * @return self
      */
-    public function removeActor(Actor $actor): self
+    public function removeActor(Actor $actor): void
     {
         $this->actors->removeElement($actor);
-
-        return $this;
     }
 
     /**
