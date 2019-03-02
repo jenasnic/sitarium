@@ -117,10 +117,13 @@ back.home.card.user.content: "Gestion des comptes utilisateurs :
 ##############
 
 front.home.content: "<p>Ce site vous propose différents <strong>quiz</strong> autour du <strong>cinéma</strong> (plutôt américain !).</p>
-<p>Vous trouverez des <strong>quiz</strong> en image basés sur le même principe que <a href='http://www.popcorngarage.com/' target='_blank'>PopCorn Garage</a>.</p>
-<p class='margin-bottom'>Vous pouvez aussi tester vos connaissances sur la <strong>filmographie</strong> des acteurs ou le <strong>casting</strong> des films.</p>
+<p>Vous trouverez des quiz en <strong>image</strong> basés sur le même principe que <a href='http://www.popcorngarage.com/' target='_blank'>PopCorn Garage</a>.</p>
+<p class='margin-bottom'>Vous pouvez aussi tester vos connaissances sur les <strong>taglines</strong> de films ou jouer aux <strong>dominos</strong> en reliant les films/acteurs proposés via leur casting/filmographie.</p>
 <p class='margin-bottom'>Un grand merci au site <a href='https://www.themoviedb.org/'>The Movie DB</a> qui m'a permis de recueillir les informations nécessaires pour vous proposer ces <strong>quiz</strong>.</p>
 <p><strong>Amusez-vous bien !</strong></p>"
+front.home.maze: Dominos
+front.home.picture: Images
+front.home.tagline: Taglines
 front.home.title: Bienvenue sur le Sitarium
 
 
@@ -262,20 +265,6 @@ front.quiz.trick.process_error: Erreur lors de la récupération des indices.
 front.quiz.winner.quiz_not_resolved: Vous n'avez pas résolu le quiz.
 front.quiz.winner.quiz_resolved: Félicitations ! Vous avez résolu ce quiz.
 front.quiz.winner.quiz_resolve_error: Erreur lors de la résolution du quiz.
-
-
-
-##############
-# Other quiz #
-##############
-
-front.other.content: "<p class='margin-bottom'>Nous vous proposons ici 2 autres quiz.</p>
-<p>Retrouver les films correspondant aux <strong>taglines</strong> proposées.</p>
-<p class='margin-bottom'>Ou jouez aux <strong>dominos</strong> en reliant les films/acteurs proposés via leur casting/filmographie.</p>
-<p><strong>Bonne chance !</strong></p>"
-front.other.tagline: Taglines
-front.other.title: Autres quiz
-front.other.maze: Dominos
 
 
 

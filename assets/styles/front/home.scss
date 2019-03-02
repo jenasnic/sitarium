@@ -1,5 +1,5 @@
 
-#other-home {
+#home {
     #quiz-selection-wrapper {
         display: flex;
         justify-content: center;
@@ -24,14 +24,13 @@
 
 @media #{$media-small}
 {
-    #other-home {
+    #home {
         #quiz-selection-wrapper {
             flex-direction: column;
 
             .quiz-selection-item {
-                margin: 1rem 0;
-
-                &:hover span, &:hover span i {color: $color-text-link;}
+                font-size: 1.7rem;
+                margin: 1.6rem 0;
             }
         }
     }

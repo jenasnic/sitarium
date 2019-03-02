@@ -15,6 +15,21 @@
             {{ 'front.home.content'|trans|raw }}
         </section>
 
+        <div id="quiz-selection-wrapper" class="card center">
+            <a href="{{ path('fo_quiz') }}" class="quiz-selection-item">
+                <span class="is-large"><i class="fas fa-3x fa-image"></i></span>
+                <span>{{ 'front.home.picture'|trans }}</span>
+            </a>
+            <a href="{{ path('fo_tagline') }}" class="quiz-selection-item">
+                <span class="is-large"><i class="fas fa-3x fa-marker"></i></span>
+                <span>{{ 'front.home.tagline'|trans }}</span>
+            </a>
+            <a href="{{ path('fo_maze') }}" class="quiz-selection-item">
+                <span class="is-large"><i class="fas fa-3x fa-code-branch"></i></span>
+                <span>{{ 'front.home.maze'|trans }}</span>
+            </a>
+        </div>
+
     </div>
 
 {% endblock %}
