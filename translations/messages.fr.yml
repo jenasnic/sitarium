@@ -14,6 +14,7 @@ global.delete: Supprimer
 global.delete_all: Supprimer tout
 global.detail: Details
 global.edit: Modifier
+global.error: Erreur
 global.login: Se connecter
 global.logout: Se déconnecter
 global.new: Nouveau
@@ -111,9 +112,9 @@ back.home.card.user.content: "Gestion des comptes utilisateurs :
 
 
 
-#############
+##############
 # Front home #
-#############
+##############
 
 front.home.content: "<p>Ce site vous propose différents <strong>quiz</strong> autour du <strong>cinéma</strong> (plutôt américain !).</p>
 <p>Vous trouverez des <strong>quiz</strong> en image basés sur le même principe que <a href='http://www.popcorngarage.com/' target='_blank'>PopCorn Garage</a>.</p>
@@ -121,6 +122,18 @@ front.home.content: "<p>Ce site vous propose différents <strong>quiz</strong> a
 <p class='margin-bottom'>Un grand merci au site <a href='https://www.themoviedb.org/'>The Movie DB</a> qui m'a permis de recueillir les informations nécessaires pour vous proposer ces <strong>quiz</strong>.</p>
 <p><strong>Amusez-vous bien !</strong></p>"
 front.home.title: Bienvenue sur le Sitarium
+
+
+
+################
+# Front errors #
+################
+
+front.error.403.message: Vous ne disposez pas des droits requis pour accéder à cette page.
+front.error.403.title: Accès refusé
+front.error.404.message: La page demandée n'existe pas.
+front.error.404.title: Page inconnue
+front.error.message: Une erreur est survenue.
 
 
 
