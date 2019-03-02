@@ -1,52 +1,98 @@
-
-.burger-icon {
-    display: none;
-}
-
-#menu {
+#navbar {
     display: flex;
 
-    .navbar-main {
+    #menu {
+        width: 150px;
+
+        #menu-entry {
+            align-items: center;
+            display: flex;
+            height: 90px;
+            position: relative;
+            width: 65px;
+
+            i {
+                transform: translateX(0px);
+                transition: transform 0.3s linear;
+            }
+
+            ul {
+                background: linear-gradient($color-background-header-2, $color-background-header-1);
+                border-radius: 0 0 10px 10px;
+                box-shadow: $box-shadow;
+                left: 0;
+                list-style: none;
+                overflow: hidden;
+                position: absolute;
+                top: 90px;
+                transition: transform 0.3s linear;
+                transform: scaleY(0);
+                transform-origin: top;
+                width: 250px;
+
+                .navbar-item {
+                    align-items: center;
+                    display: flex;
+                    font-weight: bold;
+                    padding: 0.4rem 1rem 0.4rem 2rem;
+                    text-transform: uppercase;
+
+                    i {
+                        transform: rotateZ(0deg);
+                        transition: transform 0.3s linear;
+                    }
+
+                    a {
+                        color: $color-text-default;
+                        padding: 0 1rem;
+                    }
+
+                    &:hover {
+                        text-shadow: $text-shadow;
+
+                        i {transform: rotateZ(30deg);}
+                    }
+
+                    &.mobile-item {display: none;}
+                }
+            }
+
+            &:hover {
+                width: 150px;
+
+                i {transform: translateX(10px);}
+                ul {
+                    transform: scaleY(1);
+                }
+            }
+        }
+    }
+
+    #logo {
         align-items: center;
         display: flex;
         flex-grow: 1;
         justify-content: center;
 
         .navbar-item {
-            box-shadow: $box-shadow;
-            color: $color-text-default;
-            font-weight: bold;
-            margin: 0 1.2rem;
-            min-width: 140px;
-            padding: 0.3rem 1.3rem;
-            text-align: center;
-            text-shadow: $text-shadow;
-            text-transform: uppercase;
+            img {
+                transition: 0.3s ease-in-out;
+                width: 390px;
+            }
 
-            &:hover {box-shadow: $box-shadow-darker;}
-        }
-
-        .navbar-logo {
-            box-shadow: none;
-            transition: 0.3s ease-in-out;
-
-            img {width: 390px;}
-
-            span {display: none;}
-
-            &:hover {
+            &:hover img {
                 box-shadow: none;
                 transform: scaleY(1.2);
             }
         }
     }
 
-    .navbar-login {
+    #login {
+        align-items: flex-end;
         display: flex;
         flex-direction: column;
-        position: absolute;
-        right: 20px;
-        top: 15px;
+        justify-content: center;
+        width: 150px;
 
         .navbar-item {
             color: $color-text-default;
@@ -60,73 +106,63 @@
 
 @media #{$media-medium}
 {
-    #menu {
-        flex-direction: column;
-
-        .navbar-main {
-            .navbar-item {
-                margin: 0 1rem;
-                min-width: 140px;
-                padding: 0.3rem 0.8rem;
-            }
-
-            .navbar-logo {
-                img {width: 270px;}
-            }
-        }
-
-        .navbar-login {
-            position: inherit;
-            flex-direction: row;
-            justify-content: center;
-        }
-    }
 }
 
 @media #{$media-small}
 {
-    .burger-icon {
-        display: block;
-        margin-bottom: 1rem;
-    }
+    #navbar {
+        #menu {
+            width: 100%;
 
-    #menu {
-        display: none;
-        flex-direction: column;
+            #menu-entry {
+                align-items: flex-start;
+                cursor: pointer;
+                flex-direction: column;
+                height: auto;
+                padding: 0.5rem 0;
+                width: 100%;
 
-        &.active {
-            display: block;
-        }
-
-        .navbar-main, .navbar-login {
-            flex-direction: column;
-            align-items: stretch;
-            position: inherit;
-
-            .navbar-logo {
-                order: -1;
-
-                img {display: none;}
-                span {display: block;}
-            }
-
-            .navbar-item {
-                box-shadow: $box-shadow;
-                color: $color-text-default;
-                font-weight: bold;
-                margin: 0.4rem 0;
-                min-width: 0;
-                padding: 0.6rem 1.3rem;
-                text-align: left;
-                text-shadow: $text-shadow;
-                text-transform: uppercase;
+                i {padding: 0 1rem;}
 
                 &:hover {
-                    background-color: $transparent-background-black;
-                    border: none;
-                    box-shadow: $box-shadow-darker;
+                    width: 100%;
+                    ul {display: none;}
+                }
+
+                ul.active {
+                    background: none;
+                    border-radius: 0;
+                    box-shadow: none;
+                    display: block;
+                    padding: 0.8rem 0 0 0;
+                    position: relative;
+                    list-style: none;
+                    top: 0;
+                    transform: scaleY(1);
+                    width: 100%;
+
+                    .navbar-item {
+                        border-bottom: 1px solid $color-border-text;
+                        margin: 0.6rem 0.5rem;
+                        padding: 0.5rem 0;
+
+                        a {
+                            flex-grow: 1;
+                            padding: 0.5rem;
+                        }
+
+                        &:last-child {
+                            border-bottom: none;
+                            margin-bottom: none;
+                        }
+                        &.mobile-item {display: flex;}
+                    }
                 }
             }
         }
+
+        #logo {display: none;}
+
+        #login {display: none;}
     }
 }

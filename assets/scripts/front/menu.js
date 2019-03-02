@@ -1,11 +1,11 @@
 
 /**
- * Define action to display/hide menu with burger icon.
+ * Define action to display/hide menu with mobile design.
  */
-const initBurgerMenuAction = () => {
-    document.querySelector('#header .burger-icon').addEventListener('click', (event) => {
-        document.querySelector('#menu').classList.toggle('active');
+const initMobileMenuAction = () => {
+    document.getElementById('menu-entry').addEventListener('click', (event) => {
+        document.getElementById('menu-content').classList.toggle('active');
     });
 }
 
-document.getElementById('header') && initBurgerMenuAction();
+document.getElementById('header') && initMobileMenuAction();

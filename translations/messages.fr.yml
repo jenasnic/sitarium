@@ -45,10 +45,13 @@ back.layout.menu.quiz: Quiz
 back.layout.menu.user: Utilisateurs
 
 front.layout.footer: © 2019 www.sitarium.com
-front.layout.menu.home: Accueil
-front.layout.menu.quiz: Quiz en image
-front.layout.menu.other: Autres quiz
 front.layout.menu.account: Mon compte
+front.layout.menu.casting: Casting
+front.layout.menu.filmography: Filmographie
+front.layout.menu.home: Accueil
+front.layout.menu.other: Autres quiz
+front.layout.menu.quiz: Quiz en image
+front.layout.menu.tagline: Tagline
 
 
 

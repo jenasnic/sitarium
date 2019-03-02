@@ -1,17 +1,58 @@
-<div class="burger-icon">
-    <span class="is-large"><i class="fas fa-bars fa-3x"></i></span>
-</div>
-
-<nav id="menu">
-    <div class="navbar-main">
-        <a href="{{ path('fo_quiz') }}" class="navbar-item">{{ 'front.layout.menu.quiz'|trans }}</a>
-        <a href="{{ path('fo_home') }}" class="navbar-item navbar-logo">
-            <img src="{{ asset('build/images/logo.svg') }}" alt="Sitarium" />
-            <span>{{ 'front.layout.menu.home'|trans }}</span>
-        </a>
-        <a href="{{ path('fo_other') }}" class="navbar-item">{{ 'front.layout.menu.other'|trans }}</a>
+<nav id="navbar">
+    <div id="menu">
+        <div id="menu-entry">
+            <i class="fas fa-3x fa-dice"></i>
+            <ul id="menu-content">
+                <li class="navbar-item mobile-item">
+                    <i class="fas fa-2x fa-home"></i>
+                    <a href="{{ path('fo_home') }}">{{ 'front.layout.menu.home'|trans }}</a>
+                </li>
+                <li class="navbar-item">
+                    <i class="fas fa-2x fa-dice-one"></i>
+                    <a href="{{ path('fo_quiz') }}">{{ 'front.layout.menu.quiz'|trans }}</a>
+                </li>
+                <li class="navbar-item">
+                    <i class="fas fa-2x fa-dice-two"></i>
+                    <a href="{{ path('fo_tagline') }}">{{ 'front.layout.menu.tagline'|trans }}</a>
+                </li>
+                <li class="navbar-item">
+                    <i class="fas fa-2x fa-dice-three"></i>
+                    <a href="{{ path('fo_maze_movie') }}">{{ 'front.layout.menu.casting'|trans }}</a>
+                </li>
+                <li class="navbar-item">
+                    <i class="fas fa-2x fa-dice-four"></i>
+                    <a href="{{ path('fo_maze_actor') }}">{{ 'front.layout.menu.filmography'|trans }}</a>
+                </li>
+                {% if (app.user) %}
+                    <li class="navbar-item mobile-item">
+                        <i class="fas fa-2x fa-user"></i>
+                        <a href="{{ path('fo_account_infos') }}">{{ 'front.layout.menu.account'|trans }}</a>
+                    </li>
+                    <li class="navbar-item mobile-item">
+                        <i class="fas fa-2x fa-sign-out-alt"></i>
+                        <a href="{{ path('logout') }}">{{ 'global.logout'|trans }}</a>
+                    </li>
+                {% else %}
+                    <li class="navbar-item mobile-item">
+                        <i class="fas fa-2x fa-unlock-alt"></i>
+                        <a href="{{ path('login') }}">{{ 'global.login'|trans }}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
-    <div class="navbar-login">
+
+
+
+    <div id="logo">
+        <a href="{{ path('fo_home') }}" class="navbar-item">
+            <img src="{{ asset('build/images/logo.svg') }}" alt="Sitarium" />
+        </a>
+    </div>
+
+
+
+    <div id="login">
         {% if (app.user) %}
             <a href="{{ path('fo_account_infos') }}" class="navbar-item">{{ 'front.layout.menu.account'|trans }}</a> 
             <a href="{{ path('logout') }}" class="navbar-item">{{ 'global.logout'|trans }}</a>

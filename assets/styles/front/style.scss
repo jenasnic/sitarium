@@ -27,8 +27,11 @@ body {
     background: linear-gradient($color-background-header-1, $color-background-header-2);
     box-shadow: $color-shadow-default 0 3px 11px;
     font-size: 1rem;
+    height: 90px;
+    max-height: 90px;
+    min-height: 90px;
     margin-bottom: 1rem;
-    padding: 1rem;
+    padding: 0 1rem;
 }
 
 #footer {
@@ -227,6 +230,13 @@ input, select, textarea, button {
 
 @media #{$media-small}
 {
+    #header {
+        height: auto;
+        max-height: none;
+        min-height: auto;
+        padding: 0.5rem 0;
+    }
+
     .container {margin: 0 0.5rem;}
 
     .field {
