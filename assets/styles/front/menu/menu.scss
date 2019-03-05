@@ -33,26 +33,28 @@
                 z-index: 99;
 
                 .navbar-item {
-                    align-items: center;
-                    display: flex;
-                    font-weight: bold;
-                    padding: 0.4rem 1rem 0.4rem 2rem;
-                    text-transform: uppercase;
-
-                    i {
-                        transform: rotateZ(0deg);
-                        transition: transform 0.3s linear;
-                    }
-
                     a {
+                        align-items: center;
                         color: $color-text-default;
-                        padding: 0 1rem;
+                        display: flex;
+                        font-weight: bold;
+                        padding: 0.4rem 1rem 0.4rem 2rem;
+                        text-transform: uppercase;
+
+                        i {
+                            transform: rotateZ(0deg);
+                            transition: transform 0.3s linear;
+                        }
+
+                        span {padding: 0 1rem;}
                     }
 
                     &:hover {
-                        text-shadow: $text-shadow;
+                        a {
+                            text-shadow: $text-shadow;
 
-                        i {transform: rotateZ(30deg);}
+                            i {transform: rotateZ(30deg);}
+                        }
                     }
 
                     &.mobile-item {display: none;}
@@ -142,13 +144,15 @@
                     width: 100%;
 
                     .navbar-item {
-                        border-bottom: 1px solid $color-border-text;
-                        margin: 0.6rem 0.5rem;
-                        padding: 0.5rem 0;
-
                         a {
-                            flex-grow: 1;
-                            padding: 0.5rem;
+                            border-bottom: 1px solid $color-border-text;
+                            margin: 0.6rem 0.5rem;
+                            padding: 0.5rem 0;
+
+                            span {
+                                flex-grow: 1;
+                                padding: 0.5rem;
+                            }
                         }
 
                         &:last-child {

@@ -3,6 +3,7 @@ import QuizResolver from './quiz-resolver';
 import ResponseHelper from './response-helper';
 import ResponseLocator from './response-locator';
 import ResponseResolver from './response-resolver';
+import { getOffsetElement } from '../../component/position';
 import { bindSwitchButton } from '../../component/switch';
 
 /**
@@ -75,7 +76,7 @@ const initActions = (responseHelper, responseLocator, responseResolver) => {
         && bindSwitchButton(document.getElementById('switch-mode-button'), (item) => {responseHelper.toggleHelperMode(item.dataset.mode);});
 
     [...document.querySelectorAll('li[data-response]')].forEach((element) => {
-        element.addEventListener(type, (event) => {
+        element.addEventListener('click', (event) => {
             responseLocator.displayResponseLocation(event.target.dataset);
         });
     });
@@ -85,6 +86,15 @@ const initActions = (responseHelper, responseLocator, responseResolver) => {
     });
     document.getElementById('picture-quiz').addEventListener('touchstart', (event) => {
         responseHelper.triggerTrickEvent(event, true)
+    });
+
+    document.getElementById('center-button').addEventListener('click', () => {
+        const offset = getOffsetElement(document.getElementById('main-wrapper'));
+        window.scroll({
+            top: offset.top,
+            left: offset.left,
+            behavior: 'smooth'
+        });
     });
 };
 

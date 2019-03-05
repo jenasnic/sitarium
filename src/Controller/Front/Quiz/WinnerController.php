@@ -41,9 +41,13 @@ class WinnerController extends AbstractController
                 if ($this->getUser()) {
                     $command = new RegisterWinnerCommand($quiz, $this->getUser());
                     $handler->handle($command);
+
+                    $message = $translator->trans('front.quiz.winner.quiz_resolved.logged_user', ['%username%' => $this->getUser()->getDisplayName()]);
+                } else {
+                    $message = $translator->trans('front.quiz.winner.quiz_resolved');
                 }
 
-                return new JsonResponse(['success' => true, 'message' => $translator->trans('front.quiz.winner.quiz_resolved')]);
+                return new JsonResponse(['success' => true, 'message' => $message]);
             } else {
                 return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.winner.quiz_not_resolved')]);
             }

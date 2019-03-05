@@ -32,6 +32,14 @@
         }
     }
 
+    #info-wrapper {
+        font-size: 0.8rem;
+        padding: 0.5rem 0 1rem 0;
+        text-align: center;
+
+        span {color: $color-text-link;}
+    }
+
     #response-wrapper {
         display: flex;
         flex-direction: row;

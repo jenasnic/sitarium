@@ -54,11 +54,13 @@ export default class ResponseResolver {
                 }
 
                 document.getElementById('response-input').value = '';
-                displayPopup(this.responseFoundMessage, {autoCloseDelay: this.popupDelay});
-                setTimeout(
-                    () => {this.addNewResponse(response.data);},
-                    this.popupDelay
-                );
+
+                displayPopup(this.responseFoundMessage, {
+                    autoCloseDelay: this.popupDelay,
+                    onClose: () => {
+                        this.addNewResponse(response.data);
+                    }
+                });
             })
         ;
     };

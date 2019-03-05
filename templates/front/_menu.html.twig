@@ -4,53 +4,65 @@
             <i class="fas fa-3x fa-dice"></i>
             <ul id="menu-content">
                 <li class="navbar-item mobile-item">
-                    <i class="fas fa-2x fa-home"></i>
-                    <a href="{{ path('fo_home') }}">{{ 'front.layout.menu.home'|trans }}</a>
+                    <a href="{{ path('fo_home') }}">
+                        <i class="fas fa-2x fa-home"></i>
+                        <span>{{ 'front.layout.menu.home'|trans }}</span>
+                    </a>
                 </li>
                 <li class="navbar-item">
-                    <i class="fas fa-2x fa-dice-one"></i>
-                    <a href="{{ path('fo_quiz') }}">{{ 'front.layout.menu.quiz'|trans }}</a>
+                    <a href="{{ path('fo_quiz') }}">
+                        <i class="fas fa-2x fa-dice-one"></i>
+                        <span>{{ 'front.layout.menu.quiz'|trans }}</span>
+                    </a>
                 </li>
                 <li class="navbar-item">
-                    <i class="fas fa-2x fa-dice-two"></i>
-                    <a href="{{ path('fo_tagline') }}">{{ 'front.layout.menu.tagline'|trans }}</a>
+                    <a href="{{ path('fo_tagline') }}">
+                        <i class="fas fa-2x fa-dice-two"></i>
+                        <span>{{ 'front.layout.menu.tagline'|trans }}</span>
+                    </a>
                 </li>
                 <li class="navbar-item">
-                    <i class="fas fa-2x fa-dice-three"></i>
-                    <a href="{{ path('fo_maze_movie') }}">{{ 'front.layout.menu.casting'|trans }}</a>
+                    <a href="{{ path('fo_maze_movie') }}">
+                        <i class="fas fa-2x fa-dice-three"></i>
+                        <span>{{ 'front.layout.menu.casting'|trans }}</span>
+                    </a>
                 </li>
                 <li class="navbar-item">
-                    <i class="fas fa-2x fa-dice-four"></i>
-                    <a href="{{ path('fo_maze_actor') }}">{{ 'front.layout.menu.filmography'|trans }}</a>
+                    <a href="{{ path('fo_maze_actor') }}">
+                        <i class="fas fa-2x fa-dice-four"></i>
+                        <span>{{ 'front.layout.menu.filmography'|trans }}</span>
+                    </a>
                 </li>
                 {% if (app.user) %}
                     <li class="navbar-item mobile-item">
-                        <i class="fas fa-2x fa-user"></i>
-                        <a href="{{ path('fo_account_infos') }}">{{ 'front.layout.menu.account'|trans }}</a>
+                        <a href="{{ path('fo_account_infos') }}">
+                            <i class="fas fa-2x fa-user"></i>
+                            <span>{{ 'front.layout.menu.account'|trans }}</span>
+                        </a>
                     </li>
                     <li class="navbar-item mobile-item">
-                        <i class="fas fa-2x fa-sign-out-alt"></i>
-                        <a href="{{ path('logout') }}">{{ 'global.logout'|trans }}</a>
+                        <a href="{{ path('logout') }}">
+                            <i class="fas fa-2x fa-sign-out-alt"></i>
+                            <span>{{ 'global.logout'|trans }}</span>
+                        </a>
                     </li>
                 {% else %}
                     <li class="navbar-item mobile-item">
-                        <i class="fas fa-2x fa-unlock-alt"></i>
-                        <a href="{{ path('login') }}">{{ 'global.login'|trans }}</a>
+                        <a href="{{ path('login') }}">
+                            <i class="fas fa-2x fa-unlock-alt"></i>
+                            <span>{{ 'global.login'|trans }}</span>
+                        </a>
                     </li>
                 {% endif %}
             </ul>
         </div>
     </div>
 
-
-
     <div id="logo">
         <a href="{{ path('fo_home') }}" class="navbar-item">
             <img src="{{ asset('build/images/logo.svg') }}" alt="Sitarium" />
         </a>
     </div>
-
-
 
     <div id="login">
         {% if (app.user) %}

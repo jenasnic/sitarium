@@ -34,7 +34,7 @@ export default class QuizResolver {
 
         axios.post(this.resolveUrl, {responses: JSON.stringify(responses)})
             .then((response) => {
-                displayPopup(response.data.message, {autoCloseDelay: this.popupDelay});
+                displayPopup(response.data.message);
                 if (!response.data.success) {
                     return;
                 }

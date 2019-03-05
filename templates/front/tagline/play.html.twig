@@ -10,7 +10,7 @@ Required :
 
 {% block body %}
 
-    <h1>{{ 'front.tagline.play.title'|trans({'%genre%': genre.name}) }}</h1>
+    <h1 id="tagline-title">{{ 'front.tagline.play.title'|trans({'%genre%': genre.name}) }}</h1>
 
     <div id="tagline-play" data-response-url="{{ path('fo_tagline') }}">
 
@@ -30,6 +30,11 @@ Required :
             {% endfor %}
         </div>
 
+        <div id="info-wrapper">
+            <label>{{ 'front.tagline.play.count'|trans }}</label>
+            <span id="response-count">0</span>
+        </div>
+
         <div id="response-wrapper" class="card center">
             {% for movie in movies %}
             <div
@@ -45,6 +50,7 @@ Required :
 
         <div id="replay-wrapper" class="center">
             <span id="replay-button" class="button">{{ 'global.replay'|trans }}</span>
+            <a href="{{ path('fo_tagline') }}" class="button">{{ 'front.tagline.play.back'|trans }}</a>
         </div>
 
     </div>

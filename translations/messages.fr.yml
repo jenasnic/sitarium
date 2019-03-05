@@ -12,7 +12,7 @@ global.add: Ajouter
 global.create: Créer
 global.delete: Supprimer
 global.delete_all: Supprimer tout
-global.detail: Details
+global.detail: Détails
 global.edit: Modifier
 global.error: Erreur
 global.login: Se connecter
@@ -23,7 +23,7 @@ global.no_result_found: Aucun résultat trouvé
 global.play: Jouer
 global.previous: Précedent
 global.replay: Rejouer
-global.save: Engregistrer
+global.save: Enregistrer
 global.search: Rechercher
 global.send: Envoyer
 global.synchronize: Synchroniser
@@ -264,6 +264,7 @@ front.quiz.trick.no_trick_on_location: Aucun indice trouvé pour la zone indiqu�
 front.quiz.trick.process_error: Erreur lors de la récupération des indices.
 front.quiz.winner.quiz_not_resolved: Vous n'avez pas résolu le quiz.
 front.quiz.winner.quiz_resolved: Félicitations ! Vous avez résolu ce quiz.
+front.quiz.winner.quiz_resolved.logged_user: "Félicitations %username% ! Vous avez résolu ce quiz."
 front.quiz.winner.quiz_resolve_error: Erreur lors de la résolution du quiz.
 
 
@@ -398,6 +399,8 @@ front.tagline.home.play_with: Jouer avec
 front.tagline.home.movie_count: "%count% films"
 front.tagline.home.title: Quiz taglines
 front.tagline.invalid_parameters: Les paramètres spécifiés pour la page sont incorrects.
+front.tagline.play.back: Changer de catégorie
+front.tagline.play.count: "Nombre de coups : "
 front.tagline.play.title: "Taglines '%genre%'"
 front.tagline.play.response_success: Félicitations !
 front.tagline.play.response_failure: Réponse incorrecte !

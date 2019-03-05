@@ -44,6 +44,9 @@ class TaglineQuiz {
             return;
         }
 
+        const responseCount = document.getElementById('response-count');
+        responseCount.innerHTML = `${+responseCount.innerHTML + 1}`;
+
         const tagline = document.querySelector('.tagline-item.active');
 
         if (item.dataset.tmdbId != tagline.dataset.tmdbId) {
@@ -58,8 +61,13 @@ class TaglineQuiz {
             return;
         }
 
-        displayPopup(this.responseSuccessMessage, {autoCloseDelay: this.popupDelay});
-        this.processNextTagline();
+        displayPopup(this.responseSuccessMessage, {
+            autoCloseDelay: this.popupDelay,
+            onClose: () => {
+                window.scroll(0, document.getElementById('tagline-title').offsetTop);
+                this.processNextTagline();
+            }
+        });
     };
 
     /**
