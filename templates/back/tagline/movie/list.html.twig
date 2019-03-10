@@ -1,63 +1,62 @@
 {#
 Allows to list all movies available for taglie quiz. It allows to add/delete movies.
 Required :
-- movies : list of all movies available (as Movie).
+- pager : list of all movies available (as Pagerfanta).
 #}
 
 {% extends "admin.html.twig" %}
 
 {% block body %}
 
-    <h1 class="title">{{ 'back.tagline.movie.list.title'|trans }}</h1>
-
     <div id="tagline-movie-list">
 
-        <nav class="level">
-            <div class="level-left">
-                <span>{{ 'back.tagline.movie.list.count'|transchoice(movies|length) }}</span>
-            </div>
-            <div class="level-right">
-                <div>
+        {% embed 'back/form/_grid.html.twig' with {'pager': pager, 'title': 'back.tagline.movie.list.title'|trans} %}
+
+            {% block action %}
                     <a class="button is-primary" href="{{ path('bo_tagline_movie_new') }}">{{ 'global.add'|trans }}</a>
                     <a class="button is-primary" href="{{ path('bo_tagline_genre_list') }}">{{ 'back.tagline.movie.list.button.genre'|trans }}</a>
-                </div>
-            </div>
-        </nav>
+            {% endblock %}
 
-        {# Display all movies found #}
-        <table class="table is-striped is-hoverable is-fullwidth">
-            <thead>
-                <tr>
-                    <th>{{ 'back.tagline.movie.list.column.movie'|trans }}</th>
-                    <th>{{ 'back.tagline.movie.list.column.tagline'|trans }}</th>
-                    <th>{{ 'global.detail'|trans }}</th>
-                    <th>{{ 'global.delete'|trans }}</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for movie in movies %}
-                <tr>
-                    <td>{{ movie.title }}</td>
-                    <td>{{ movie.tagline }}</td>
-                    <td>
-                        <span
-                            class="icon has-text-info button show-tagline-movie-detail-button"
-                            data-detail-url="{{ path('bo_tagline_movie_view', { 'movie': movie.tmdbId }) }}"
-                        >
-                            <i class="fas fa-search"></i>
-                        </span>
-                    </td>
-                    <td>
-                        <a href="{{ path('bo_tagline_movie_delete', { 'movie': movie.tmdbId }) }}" onclick="return confirm('{{ 'global.delete.confirm'|trans }}');" >
-                            <span class="icon has-text-danger button">
-                                <i class="fas fa-trash-alt"></i>
-                            </span>
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+            {% block grid_result %}
+
+                {% embed 'back/form/_grid_result.html.twig' with {'pager': pager} %}
+
+                    {% block grid_header %}
+                        <th>{{ 'back.tagline.movie.list.column.movie'|trans }}</th>
+                        <th>{{ 'back.tagline.movie.list.column.tagline'|trans }}</th>
+                        <th>{{ 'global.detail'|trans }}</th>
+                        <th>{{ 'global.delete'|trans }}</th>
+                    {% endblock %}
+
+                    {% block grid_body %}
+                        {% for movie in pager.currentPageResults %}
+                            <tr>
+                                <td>{{ movie.title }}</td>
+                                <td>{{ movie.tagline }}</td>
+                                <td>
+                                    <span
+                                        class="icon has-text-info button show-tagline-movie-detail-button"
+                                        data-detail-url="{{ path('bo_tagline_movie_view', { 'movie': movie.tmdbId }) }}"
+                                    >
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="{{ path('bo_tagline_movie_delete', { 'movie': movie.tmdbId }) }}" onclick="return confirm('{{ 'global.delete.confirm'|trans }}');" >
+                                        <span class="icon has-text-danger button">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endblock %}
+
+                {% endembed %}
+
+            {% endblock %}
+
+        {% endembed %}
 
     </div>
 

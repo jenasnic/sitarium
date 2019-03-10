@@ -3,9 +3,11 @@
 namespace App\Controller\Back\Tagline;
 
 use App\Entity\Tagline\Movie;
+use App\Enum\PagerEnum;
 use App\Repository\Tagline\MovieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -15,14 +17,19 @@ class ListController extends AbstractController
     /**
      * @Route("/admin/tagline/movie/list", name="bo_tagline_movie_list")
      *
+     * @param Request $request
      * @param MovieRepository $movieRepository
      *
      * @return Response
      */
-    public function listAction(MovieRepository $movieRepository): Response
+    public function listAction(Request $request, MovieRepository $movieRepository): Response
     {
+        $page = $request->query->get('page', 1);
+        $title = $request->query->get('value', null);
+
         return $this->render('back/tagline/movie/list.html.twig', [
-            'movies' => $movieRepository->findBy([], ['title' => 'asc']),
+            'pager' => $movieRepository->getPager($title, $page, PagerEnum::DEFAULT_MAX_PER_PAGE),
+            'value' => $title,
         ]);
     }
 

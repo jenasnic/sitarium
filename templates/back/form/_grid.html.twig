@@ -1,0 +1,36 @@
+{#
+Displays grid with actions, input to search/filter results and grid results.
+Required :
+- string title : current page title.
+- Pagerfanta pager : pager with result items.
+- string value : current filter value.
+#}
+
+<nav class="level">
+    <div class="level-left">
+        <h1 class="title">{{ title }}</h1>
+    </div>
+    <div class="level-right">
+        <div>
+            {% block action %}{% endblock %}
+        </div>
+    </div>
+</nav>
+
+<div class="field">
+    <p class="control has-icons-left">
+        <input
+            data-filter-url="{{ app.request.pathInfo }}"
+            type="text"
+            value="{{ value }}"
+            class="input"
+            placeholder="{{ 'global.search'|trans }}"
+        />
+        <span class="icon is-small is-left"><i class="fas fa-search"></i></span>
+    </p>
+</div>
+
+<div id="grid-wrapper">
+    <span>{{ 'global.result_count'|transchoice(pager.count) }}</span>
+    {% block grid_result %}{% endblock %}
+</div>

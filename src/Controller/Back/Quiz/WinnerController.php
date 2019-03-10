@@ -4,8 +4,10 @@ namespace App\Controller\Back\Quiz;
 
 use App\Entity\Quiz\Quiz;
 use App\Entity\Quiz\Winner;
+use App\Enum\PagerEnum;
 use App\Repository\Quiz\WinnerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -15,16 +17,21 @@ class WinnerController extends AbstractController
     /**
      * @Route("/admin/quiz/{quiz}/winner/list", requirements={"quiz" = "\d+"}, name="bo_quiz_winner_list")
      *
+     * @param Request $request
      * @param WinnerRepository $winnerRepository
      * @param Quiz $quiz
      *
      * @return Response
      */
-    public function listWinnerAction(WinnerRepository $winnerRepository, Quiz $quiz): Response
+    public function listWinnerAction(Request $request, WinnerRepository $winnerRepository, Quiz $quiz): Response
     {
+        $page = $request->query->get('page', 1);
+        $name = $request->query->get('value', null);
+
         return $this->render('back/quiz/winner_list.html.twig', [
             'quiz' => $quiz,
-            'winners' => $winnerRepository->getWinnersForQuizId($quiz->getId()),
+            'pager' => $winnerRepository->getPagerForQuizId($quiz->getId(), $name, $page, PagerEnum::DEFAULT_MAX_PER_PAGE),
+            'value' => $name,
         ]);
     }
 

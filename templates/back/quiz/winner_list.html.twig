@@ -2,48 +2,50 @@
 Allows to display all winners for a quiz.
 Required :
 - quiz : quiz we want to display winners (as Quiz).
-- winners : list of winners for current quiz (as Winner).
+- pager : list of winners for current quiz (as Pagerfanta).
 #}
 
 {% extends "admin.html.twig" %}
 
 {% block body %}
 
-    <h1 class="title">{{ 'back.quiz.winner.list.title'|trans({'%name%': quiz.name}) }}</h1>
+    {% embed 'back/form/_grid.html.twig' with {'pager': pager, 'title': 'back.quiz.winner.list.title'|trans({'%name%': quiz.name})} %}
 
-    <nav class="level">
-        <div class="level-left">
-            <span>{{ 'back.quiz.winner.list.count'|transchoice(winners|length) }}</span>
-        </div>
-        <div class="level-right">
+        {% block action %}
             <a class="button is-primary" href="{{ path('bo_quiz_winner_clear', { 'quiz': quiz.id }) }}">{{ 'global.delete_all'|trans }}</a>
-            <div>
-            </div>
-        </div>
-    </nav>
+        {% endblock %}
 
-    <table id="quiz-winner-list" class="table is-striped is-hoverable is-fullwidth">
-        <thead>
-            <tr>
-                <th>{{ 'back.quiz.winner.list.column.name'|trans }}</th>
-                <th>{{ 'global.detail'|trans }}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for winner in winners %}
-            <tr>
-                <td>{{ winner.user.displayName }}</td>
-                <td>
-                    <span
-                        class="icon has-text-info button show-winner-detail-button"
-                        data-winner-detail-url="{{ path('bo_quiz_winner_detail', {'winner': winner.id}) }}"
-                    >
-                        <i class="fas fa-search"></i>
-                    </span>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        {% block grid_result %}
+
+            {% embed 'back/form/_grid_result.html.twig' with {'pager': pager} %}
+
+                {% block grid_header %}
+                    <th>{{ 'back.quiz.winner.list.column.name'|trans }}</th>
+                    <th>{{ 'back.quiz.winner.list.column.resolved_at'|trans }}</th>
+                    <th>{{ 'global.detail'|trans }}</th>
+                {% endblock %}
+
+                {% block grid_body %}
+                    {% for winner in pager.currentPageResults %}
+                        <tr>
+                            <td>{{ winner.user.displayName }}</td>
+                            <td>{{ winner.date|date('d-m-Y') }}</td>
+                            <td>
+                                <span
+                                    class="icon has-text-info button show-winner-detail-button"
+                                    data-winner-detail-url="{{ path('bo_quiz_winner_detail', {'winner': winner.id}) }}"
+                                >
+                                    <i class="fas fa-search"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endblock %}
+
+            {% endembed %}
+
+        {% endblock %}
+
+    {% endembed %}
 
 {% endblock %}

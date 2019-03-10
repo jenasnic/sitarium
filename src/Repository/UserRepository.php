@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -23,67 +25,32 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $role
+     * @param string $name
+     * @param int $page
+     * @param int $maxPerPage
      *
-     * @return array
+     * @return Pagerfanta
      */
-    public function getUserWithRole($role): array
+    public function getPager(?string $name = null, int $page = 1, int $maxPerPage = 20): Pagerfanta
     {
         $queryBuilder = $this->createQueryBuilder('user');
 
-        return $queryBuilder->where($queryBuilder->expr()->like('user', $role))
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
-    /**
-     * Allows to check if mail is unique for user.
-     *
-     * @param string $mail
-     * @param int $excludeUserId user identifier to exclude from unicity search (useful when editing user)
-     *
-     * @return bool TRUE if mail is unique, FALSE either
-     */
-    public function checkMailUnicity($mail, $excludeUserId = null): bool
-    {
-        $queryBuilder = $this->createQueryBuilder('user')
-            ->select('COUNT(user)')
-            ->where('user.mail = :mail')
-            ->setParameter('mail', $mail)
-        ;
-
-        if ($excludeUserId) {
-            $queryBuilder
-                ->andWhere('user.id <> :userId')
-                ->setParameter('userId', $excludeUserId);
+        if (null !== $name) {
+            $queryBuilder->andWhere($queryBuilder->expr()->orX(
+                sprintf('user.firstname like \'%%%s%%\'', $name),
+                sprintf('user.lastname like \'%%%s%%\'', $name)
+            ));
         }
 
-        return ($queryBuilder->getQuery()->getSingleScalarResult() > 0) ? false : true;
-    }
-
-    /**
-     * Allows to check if login is unique for user.
-     *
-     * @param string $login Login we want to check unicity. NULL to ignore this parameter.
-     * @param int $userId User identifier to exclude from unicity search (useful when editing user). 0 to ignore this parameter.
-     *
-     * @return true if login is unique, FALSE either
-     */
-    public function checkLoginUnicity($login, $excludeUserId = null): bool
-    {
-        $queryBuilder = $this->createQueryBuilder('user')
-            ->select('COUNT(user)')
-            ->where('user.username = :login')
-            ->setParameter('login', $login)
+        $queryBuilder
+            ->addOrderBy('user.firstname')
+            ->addOrderBy('user.lastname')
         ;
 
-        if ($excludeUserId) {
-            $queryBuilder
-                ->andWhere('user.id <> :userId')
-                ->setParameter('userId', $excludeUserId);
-        }
+        $paginator = new Pagerfanta(new DoctrineORMAdapter($queryBuilder));
+        $paginator->setMaxPerPage($maxPerPage);
+        $paginator->setCurrentPage($page);
 
-        return ($queryBuilder->getQuery()->getSingleScalarResult() > 0) ? false : true;
+        return $paginator;
     }
 }

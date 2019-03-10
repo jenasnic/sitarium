@@ -4,6 +4,7 @@ namespace App\Controller\Back\Maze;
 
 use App\Domain\Command\Maze\AddActorCommand;
 use App\Entity\Maze\Actor;
+use App\Enum\PagerEnum;
 use App\Enum\Tmdb\Types;
 use App\Repository\Maze\ActorRepository;
 use App\Service\Handler\Maze\AddActorHandler;
@@ -29,14 +30,19 @@ class ActorController extends AbstractController
     /**
      * @Route("/admin/maze/actor/list", name="bo_maze_actor_list")
      *
+     * @param Request $request
      * @param ActorRepository $actorRepository
      *
      * @return Response
      */
-    public function listAction(ActorRepository $actorRepository): Response
+    public function listAction(Request $request, ActorRepository $actorRepository): Response
     {
+        $page = $request->query->get('page', 1);
+        $fullname = $request->query->get('value', null);
+
         return $this->render('back/maze/actor/list.html.twig', [
-            'actors' => $actorRepository->findBy([], ['fullname' => 'asc']),
+            'pager' => $actorRepository->getPager($fullname, $page, PagerEnum::DEFAULT_MAX_PER_PAGE),
+            'value' => $fullname,
         ]);
     }
 

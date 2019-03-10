@@ -9,12 +9,14 @@
         {% endblock %}
     </head>
     <body>
-        {% include 'back/_menu.html.twig' %}
-        <div class="container">
-            {% include 'back/_message.html.twig' %}
-            {% block body %}{% endblock %}
+        <div id="page">
+            {% include 'back/_menu.html.twig' %}
+            <div id="content" class="container">
+                {% include 'back/_message.html.twig' %}
+                {% block body %}{% endblock %}
+            </div>
+            {% include 'back/_footer.html.twig' %}
         </div>
-        {% include 'back/_footer.html.twig' %}
 
         {# Bulma popup to display informations through modal window #}
         <div id="popup" class="modal">

@@ -6,6 +6,7 @@ use App\Domain\Command\User\AddUserCommand;
 use App\Domain\Command\User\DeleteUserCommand;
 use App\Domain\Command\User\UpdateUserCommand;
 use App\Entity\User;
+use App\Enum\PagerEnum;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\Service\Handler\User\AddUserHandler;
@@ -22,21 +23,20 @@ class UserController extends AbstractController
     /**
      * @Route("/admin/user/list", name="bo_user_list", methods="GET")
      *
+     * @param Request $request
      * @param UserRepository $userRepository
      *
      * @return Response
      */
-    public function listAction(UserRepository $userRepository): Response
+    public function listAction(Request $request, UserRepository $userRepository): Response
     {
-        $users = $userRepository->findBy(
-            [],
-            [
-                'lastname' => 'asc',
-                'firstname' => 'asc',
-            ]
-        );
+        $page = $request->query->get('page', 1);
+        $name = $request->query->get('value', null);
 
-        return $this->render('back/user/list.html.twig', ['users' => $users]);
+        return $this->render('back/user/list.html.twig', [
+            'pager' => $userRepository->getPager($name, $page, PagerEnum::DEFAULT_MAX_PER_PAGE),
+            'value' => $name,
+        ]);
     }
 
     /**

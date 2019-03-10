@@ -1,0 +1,20 @@
+{#
+Displays grid results with pagination.
+Required :
+- Pagerfanta pager : pager with result items.
+#}
+
+<table class="grid table is-striped is-hoverable is-fullwidth">
+    <thead>
+        <tr>
+            {% block grid_header %}{% endblock %}
+        </tr>
+    </thead>
+    <tbody>
+        {% block grid_body %}{% endblock %}
+    </tbody>
+</table>
+
+{% if pager.haveToPaginate %}
+    {{ pagerfanta(pager, 'bulma_template') }}
+{% endif %}

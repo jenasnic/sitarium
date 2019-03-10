@@ -23,6 +23,7 @@ global.no_result_found: Aucun résultat trouvé
 global.play: Jouer
 global.previous: Précedent
 global.replay: Rejouer
+global.result_count: '{0} Aucun résultat|{1} 1 résultat|]1,Inf[ %count% résultats'
 global.save: Enregistrer
 global.search: Rechercher
 global.send: Envoyer
@@ -162,7 +163,6 @@ front.login.password.reset.user_not_found: Aucun utilisateur trouvé pour l'emai
 back.user.edit.title: Modification de l'utilisateur
 
 back.user.list.column.name: Nom complet
-back.user.list.count: '{0} Aucun compte|{1} 1 compte|]1,Inf[ %count% comptes'
 back.user.list.title: Gestion des comptes utilisateurs
 
 form.account.edit.label.email: Email
@@ -230,7 +230,7 @@ back.quiz.winner.detail.email: "Adresse mail : "
 back.quiz.winner.detail.name: "Nom complet : "
 back.quiz.winner.detail.resolved_at: "Résolu le : "
 back.quiz.winner.list.column.name: Nom
-back.quiz.winner.list.count: '{0} Aucun vainqueur|{1} 1 vainqueur|]1,Inf[ %count% vainqueurs'
+back.quiz.winner.list.column.resolved_at: Résolu le
 back.quiz.winner.list.title: 'Liste des vainqueurs du quiz "%name%"'
 
 form.quiz.edit.label.displayResponse: Afficher les réponses
@@ -278,7 +278,6 @@ back.maze.actor.list.build_filmography: Construire la filmographie
 back.maze.actor.list.column.filmography: Filmographie
 back.maze.actor.list.column.id: ID TMDB
 back.maze.actor.list.column.name: Nom
-back.maze.actor.list.count: '{0} Aucun résultat|{1} 1 acteur|]1,Inf[ %count% acteurs'
 back.maze.actor.list.title: Gestion des acteurs
 back.maze.casting.error: Erreur lors de la construction du casting
 back.maze.casting.success: Construction du casting OK
@@ -289,7 +288,6 @@ back.maze.movie.list.build_casting: Construire le casting
 back.maze.movie.list.column.casting: Casting
 back.maze.movie.list.column.id: ID TMDB
 back.maze.movie.list.column.title: Titre
-back.maze.movie.list.count: '{0} Aucun résultat|{1} 1 film|]1,Inf[ %count% films'
 back.maze.movie.list.title: Gestion des films
 
 front.maze.actor.filmography_error: Impossible de charger la filmographie de l'acteur.
@@ -382,7 +380,6 @@ back.tagline.movie.detail.release_date: "Date de sortie : "
 back.tagline.movie.list.button.genre: Genres
 back.tagline.movie.list.column.movie: Film
 back.tagline.movie.list.column.tagline: Tagline
-back.tagline.movie.list.count: '{0} Aucune tagline|{1} 1 tagline|]1,Inf[ %count% taglines'
 back.tagline.movie.list.title: Gestion des taglines
 
 back.tagline.similar.add: Ajouter à la sélection

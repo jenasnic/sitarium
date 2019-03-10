@@ -1,74 +1,73 @@
 {#
 Allows to list all actors available. It allows to add/delete actors.
 Required :
-- actors : list of all actors available (as Actor).
+- pager : list of all actors available (as Pagerfanta).
 #}
 
 {% extends "admin.html.twig" %}
 
 {% block body %}
 
-    <h1 class="title">{{ 'back.maze.actor.list.title'|trans }}</h1>
-
     <div id="maze-item-list">
 
-        <nav class="level">
-            <div class="level-left">
-                <span>{{ 'back.maze.actor.list.count'|transchoice(actors|length) }}</span>
-            </div>
-            <div class="level-right">
-                <div class="column">
-                    <a class="button is-primary" href="{{ path('bo_maze_actor_new') }}">{{ 'global.add'|trans }}</a>
-                    <span
-                        id="build-credits-button"
-                        class="button is-primary"
-                        data-build-credits-url="{{ path('bo_maze_actor_filmography_build') }}"
-                        data-progress-url="{{ path('bo_maze_actor_filmography_progress') }}"
-                    >
-                        {{ 'back.maze.actor.list.build_filmography'|trans }}
-                    </span>
-                </div>
-            </div>
-        </nav>
+        {% embed 'back/form/_grid.html.twig' with {'pager': pager, 'title': 'back.maze.actor.list.title'|trans} %}
 
-        {# Display all actors found #}
-        <table class="table is-striped is-hoverable is-fullwidth">
-            <thead>
-                <tr>
-                    <th>{{ 'back.maze.actor.list.column.name'|trans }}</th>
-                    <th>{{ 'back.maze.actor.list.column.id'|trans }}</th>
-                    <th>{{ 'back.maze.actor.list.column.filmography'|trans }}</th>
-                    <th>{{ 'global.detail'|trans }}</th>
-                    <th>{{ 'global.delete'|trans }}</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for actor in actors %}
-                <tr>
-                    <td>{{ actor.fullname }}</td>
-                    <td>{{ actor.tmdbId }}</td>
-                    <td>
-                        {% include 'back/maze/actor/_filmography_status.html.twig' with {'status': actor.status} %}
-                    </td>
-                    <td>
-                        <span
-                            class="icon has-text-info button show-maze-item-detail-button"
-                            data-detail-url="{{ path('bo_maze_actor_view', { 'actor': actor.tmdbId }) }}"
-                        >
-                            <i class="fas fa-search"></i>
-                        </span>
-                    </td>
-                    <td>
-                        <a href="{{ path('bo_maze_actor_delete', { 'actor': actor.tmdbId }) }}" onclick="return confirm('{{ 'global.delete.confirm'|trans }}');" >
-                            <span class="icon has-text-danger button">
-                                <i class="fas fa-trash-alt"></i>
-                            </span>
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+            {% block action %}
+                <a class="button is-primary" href="{{ path('bo_maze_actor_new') }}">{{ 'global.add'|trans }}</a>
+                <span
+                    id="build-credits-button"
+                    class="button is-primary"
+                    data-build-credits-url="{{ path('bo_maze_actor_filmography_build') }}"
+                    data-progress-url="{{ path('bo_maze_actor_filmography_progress') }}"
+                >
+                    {{ 'back.maze.actor.list.build_filmography'|trans }}
+                </span>
+            {% endblock %}
+
+            {% block grid_result %}
+
+                {% embed 'back/form/_grid_result.html.twig' with {'pager': pager} %}
+
+                    {% block grid_header %}
+                        <th>{{ 'back.maze.actor.list.column.name'|trans }}</th>
+                        <th>{{ 'back.maze.actor.list.column.id'|trans }}</th>
+                        <th>{{ 'back.maze.actor.list.column.filmography'|trans }}</th>
+                        <th>{{ 'global.detail'|trans }}</th>
+                        <th>{{ 'global.delete'|trans }}</th>
+                    {% endblock %}
+
+                    {% block grid_body %}
+                        {% for actor in pager.currentPageResults %}
+                            <tr>
+                                <td>{{ actor.fullname }}</td>
+                                <td>{{ actor.tmdbId }}</td>
+                                <td>
+                                    {% include 'back/maze/actor/_filmography_status.html.twig' with {'status': actor.status} %}
+                                </td>
+                                <td>
+                                    <span
+                                        class="icon has-text-info button show-maze-item-detail-button"
+                                        data-detail-url="{{ path('bo_maze_actor_view', { 'actor': actor.tmdbId }) }}"
+                                    >
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="{{ path('bo_maze_actor_delete', { 'actor': actor.tmdbId }) }}" onclick="return confirm('{{ 'global.delete.confirm'|trans }}');" >
+                                        <span class="icon has-text-danger button">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endblock %}
+
+                {% endembed %}
+
+            {% endblock %}
+
+        {% endembed %}
 
     </div>
 

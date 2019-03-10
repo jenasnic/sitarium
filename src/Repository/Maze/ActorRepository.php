@@ -6,6 +6,8 @@ use App\Enum\Maze\FilmographyStatus;
 use App\Entity\Maze\Actor;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -22,6 +24,30 @@ class ActorRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Actor::class);
+    }
+
+    /**
+     * @param string $fullname
+     * @param int $page
+     * @param int $maxPerPage
+     *
+     * @return Pagerfanta
+     */
+    public function getPager(?string $fullname = null, int $page = 1, int $maxPerPage = 20): Pagerfanta
+    {
+        $queryBuilder = $this->createQueryBuilder('actor');
+
+        if (null !== $fullname) {
+            $queryBuilder->andWhere(sprintf('actor.fullname like \'%%%s%%\'', $fullname));
+        }
+
+        $queryBuilder->orderBy('actor.fullname');
+
+        $paginator = new Pagerfanta(new DoctrineORMAdapter($queryBuilder));
+        $paginator->setMaxPerPage($maxPerPage);
+        $paginator->setCurrentPage($page);
+
+        return $paginator;
     }
 
     /**

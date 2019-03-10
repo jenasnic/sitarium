@@ -4,6 +4,8 @@ namespace App\Repository\Quiz;
 
 use App\Entity\Quiz\Winner;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -24,8 +26,43 @@ class WinnerRepository extends ServiceEntityRepository
 
     /**
      * @param int $quizId
+     * @param string $name
+     * @param int $page
+     * @param int $maxPerPage
      *
-     * @return array
+     * @return Pagerfanta
+     */
+    public function getPagerForQuizId(int $quizId, ?string $name = null, int $page = 1, int $maxPerPage = 20): Pagerfanta
+    {
+        $queryBuilder = $this->createQueryBuilder('winner');
+
+        $queryBuilder
+            ->join('winner.quiz', 'quiz')
+            ->andWhere('quiz.id = :quizId')
+            ->setParameter('quizId', $quizId)
+            ->orderBy('winner.date')
+        ;
+
+        if (null !== $name) {
+            $queryBuilder
+                ->join('winner.user', 'user')
+                ->andWhere($queryBuilder->expr()->orX(
+                    sprintf('user.firstname like \'%%%s%%\'', $name),
+                    sprintf('user.lastname like \'%%%s%%\'', $name)
+                ));
+        }
+
+        $paginator = new Pagerfanta(new DoctrineORMAdapter($queryBuilder));
+        $paginator->setMaxPerPage($maxPerPage);
+        $paginator->setCurrentPage($page);
+
+        return $paginator;
+    }
+
+    /**
+     * @param int $quizId
+     *
+     * @return Winner[]|array
      */
     public function getWinnersForQuizId(int $quizId): array
     {
@@ -56,7 +93,7 @@ class WinnerRepository extends ServiceEntityRepository
     /**
      * @param int $userId
      *
-     * @return array
+     * @return Winner[]|array
      */
     public function getWinnersForUserId(int $userId): array
     {

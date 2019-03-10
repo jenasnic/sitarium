@@ -1,3 +1,4 @@
+import './back/filter';
 import './back/popup';
 import './back/tmdb/search';
 import './back/maze/list';

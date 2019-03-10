@@ -1,58 +1,57 @@
 {#
 Allows to list all users. It allows to add/edit/delete user.
 Required :
-- users : list of all user available (as User).
+- pager : list of all user available (as Pagerfanta).
 #}
 
 {% extends "admin.html.twig" %}
 
 {% block body %}
 
-    <h1 class="title">{{ 'back.user.list.title'|trans }}</h1>
+    {% embed 'back/form/_grid.html.twig' with {'pager': pager, 'title': 'back.user.list.title'|trans} %}
 
-    <nav class="level">
-        <div class="level-left">
-            <span>{{ 'back.user.list.count'|transchoice(users|length) }}</span>
-        </div>
-        <div class="level-right">
-            <div>
-                <a id="new-quiz-button" class="button is-primary" href="{{ path('bo_user_add') }}">{{ 'global.new'|trans }}</a>
-            </div>
-        </div>
-    </nav>
+        {% block action %}
+            <a id="new-quiz-button" class="button is-primary" href="{{ path('bo_user_add') }}">{{ 'global.new'|trans }}</a>
+        {% endblock %}
 
-    {# Display all user found #}
-    <table class="table is-striped is-hoverable is-fullwidth">
-        <thead>
-            <tr>
-                <th>{{ 'back.user.list.column.name'|trans }}</th>
-                <th>{{ 'global.edit'|trans }}</th>
-                <th>{{ 'global.delete'|trans }}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>
-                    {{ user.displayName }}
-                </td>
-                <td>
-                    <a href="{{ path('bo_user_edit', { 'user': user.id }) }}">
-                        <span class="icon has-text-warning button">
-                            <i class="fas fa-edit"></i>
-                        </span>
-                    </a>
-                </td>
-                <td>
-                    <a href="{{ path('bo_user_delete', { 'user': user.id }) }}" onclick="return confirm('{{ 'global.delete.confirm'|trans }}');" >
-                        <span class="icon has-text-danger button">
-                            <i class="fas fa-trash-alt"></i>
-                        </span>
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        {% block grid_result %}
+
+            {% embed 'back/form/_grid_result.html.twig' with {'pager': pager} %}
+
+                {% block grid_header %}
+                    <th>{{ 'back.user.list.column.name'|trans }}</th>
+                    <th>{{ 'global.edit'|trans }}</th>
+                    <th>{{ 'global.delete'|trans }}</th>
+                {% endblock %}
+
+                {% block grid_body %}
+                    {% for user in pager.currentPageResults %}
+                        <tr>
+                            <td>
+                                {{ user.displayName }}
+                            </td>
+                            <td>
+                                <a href="{{ path('bo_user_edit', { 'user': user.id }) }}">
+                                    <span class="icon has-text-warning button">
+                                        <i class="fas fa-edit"></i>
+                                    </span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ path('bo_user_delete', { 'user': user.id }) }}" onclick="return confirm('{{ 'global.delete.confirm'|trans }}');" >
+                                    <span class="icon has-text-danger button">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </span>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endblock %}
+
+            {% endembed %}
+
+        {% endblock %}
+
+    {% endembed %}
 
 {% endblock %}
