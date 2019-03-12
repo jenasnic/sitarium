@@ -2,7 +2,7 @@
 
 namespace App\EventListener\Quiz;
 
-use App\Enum\Quiz\SessionValues;
+use App\Enum\Quiz\SessionValueEnum;
 use App\Event\Quiz\TmdbLinkProgressEvent;
 use App\Event\Quiz\TmdbLinkStartEvent;
 use App\Event\QuizEvents;
@@ -42,8 +42,8 @@ class BuildingTmdbLinkSubscriber implements EventSubscriberInterface
      */
     public function onBuildTmdbLinkStart(TmdbLinkStartEvent $event)
     {
-        $this->session->set(SessionValues::SESSION_BUILD_TMDB_LINK_PROGRESS, 0);
-        $this->session->set(SessionValues::SESSION_BUILD_TMDB_LINK_TOTAL, $event->getTotal());
+        $this->session->set(SessionValueEnum::SESSION_BUILD_TMDB_LINK_PROGRESS, 0);
+        $this->session->set(SessionValueEnum::SESSION_BUILD_TMDB_LINK_TOTAL, $event->getTotal());
         $this->session->save();
     }
 
@@ -52,7 +52,7 @@ class BuildingTmdbLinkSubscriber implements EventSubscriberInterface
      */
     public function onBuildTmdbLinkProgress(TmdbLinkProgressEvent $event)
     {
-        $this->session->set(SessionValues::SESSION_BUILD_TMDB_LINK_PROGRESS, $event->getProgress());
+        $this->session->set(SessionValueEnum::SESSION_BUILD_TMDB_LINK_PROGRESS, $event->getProgress());
         $this->session->save();
     }
 
@@ -61,8 +61,8 @@ class BuildingTmdbLinkSubscriber implements EventSubscriberInterface
      */
     public function onBuildTmdbLinkEnd(Event $event)
     {
-        $this->session->remove(SessionValues::SESSION_BUILD_TMDB_LINK_PROGRESS);
-        $this->session->remove(SessionValues::SESSION_BUILD_TMDB_LINK_TOTAL);
+        $this->session->remove(SessionValueEnum::SESSION_BUILD_TMDB_LINK_PROGRESS);
+        $this->session->remove(SessionValueEnum::SESSION_BUILD_TMDB_LINK_TOTAL);
         $this->session->save();
     }
 }

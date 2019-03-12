@@ -2,7 +2,7 @@
 
 namespace App\EventListener\Maze;
 
-use App\Enum\Maze\SessionValues;
+use App\Enum\Maze\SessionValueEnum;
 use App\Event\MazeEvents;
 use App\Event\Maze\FilmographyProgressEvent;
 use App\Event\Maze\FilmographyStartEvent;
@@ -42,8 +42,8 @@ class BuildingFilmographySubscriber implements EventSubscriberInterface
      */
     public function onBuildFilmographyStart(FilmographyStartEvent $event)
     {
-        $this->session->set(SessionValues::SESSION_BUILD_FILMOGRAPHY_PROGRESS, 0);
-        $this->session->set(SessionValues::SESSION_BUILD_FILMOGRAPHY_TOTAL, $event->getTotal());
+        $this->session->set(SessionValueEnum::SESSION_BUILD_FILMOGRAPHY_PROGRESS, 0);
+        $this->session->set(SessionValueEnum::SESSION_BUILD_FILMOGRAPHY_TOTAL, $event->getTotal());
         $this->session->save();
     }
 
@@ -52,7 +52,7 @@ class BuildingFilmographySubscriber implements EventSubscriberInterface
      */
     public function onBuildFilmographyProgress(FilmographyProgressEvent $event)
     {
-        $this->session->set(SessionValues::SESSION_BUILD_FILMOGRAPHY_PROGRESS, $event->getProgress());
+        $this->session->set(SessionValueEnum::SESSION_BUILD_FILMOGRAPHY_PROGRESS, $event->getProgress());
         $this->session->save();
     }
 
@@ -61,8 +61,8 @@ class BuildingFilmographySubscriber implements EventSubscriberInterface
      */
     public function onBuildFilmographyEnd(Event $event)
     {
-        $this->session->remove(SessionValues::SESSION_BUILD_FILMOGRAPHY_PROGRESS);
-        $this->session->remove(SessionValues::SESSION_BUILD_FILMOGRAPHY_TOTAL);
+        $this->session->remove(SessionValueEnum::SESSION_BUILD_FILMOGRAPHY_PROGRESS);
+        $this->session->remove(SessionValueEnum::SESSION_BUILD_FILMOGRAPHY_TOTAL);
         $this->session->save();
     }
 }

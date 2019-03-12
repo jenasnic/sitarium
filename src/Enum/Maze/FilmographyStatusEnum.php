@@ -2,7 +2,7 @@
 
 namespace App\Enum\Maze;
 
-class FilmographyStatus
+class FilmographyStatusEnum
 {
     const UNINITIALIZED = 'filmography_to_check';
     const INITIALIZED = 'filmography_validated';

@@ -4,7 +4,7 @@ namespace App\Controller\Back\Tagline;
 
 use App\Domain\Command\Tagline\AddMoviesCommand;
 use App\Entity\Tagline\Movie;
-use App\Enum\Tmdb\Types;
+use App\Enum\Tmdb\TypeEnum;
 use App\Service\Handler\Tagline\AddMoviesHandler;
 use App\Service\Tmdb\TmdbApiService;
 use App\Validator\Tagline\MovieValidator;
@@ -29,7 +29,7 @@ class AddMovieController extends AbstractController
     public function newAction(UrlGeneratorInterface $urlGenerator): Response
     {
         return $this->render('back/tmdb/search.html.twig', [
-            'type' => Types::MOVIE,
+            'type' => TypeEnum::MOVIE,
             'searchUrl' => $urlGenerator->generate('bo_tagline_movie_search'),
         ]);
     }

@@ -5,7 +5,7 @@ namespace App\Controller\Back\Maze;
 use App\Domain\Command\Maze\AddMovieCommand;
 use App\Entity\Maze\Movie;
 use App\Enum\PagerEnum;
-use App\Enum\Tmdb\Types;
+use App\Enum\Tmdb\TypeEnum;
 use App\Repository\Maze\MovieRepository;
 use App\Service\Handler\Maze\AddMovieHandler;
 use App\Service\Tmdb\TmdbApiService;
@@ -68,7 +68,7 @@ class MovieController extends AbstractController
     public function newAction(UrlGeneratorInterface $urlGenerator): Response
     {
         return $this->render('back/tmdb/search.html.twig', [
-            'type' => Types::MOVIE,
+            'type' => TypeEnum::MOVIE,
             'searchUrl' => $urlGenerator->generate('bo_maze_movie_search'),
         ]);
     }

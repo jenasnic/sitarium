@@ -2,7 +2,7 @@
 
 namespace App\EventListener\Maze;
 
-use App\Enum\Maze\SessionValues;
+use App\Enum\Maze\SessionValueEnum;
 use App\Event\Maze\CastingProgressEvent;
 use App\Event\Maze\CastingStartEvent;
 use App\Event\MazeEvents;
@@ -42,8 +42,8 @@ class BuildingCastingSubscriber implements EventSubscriberInterface
      */
     public function onBuildCastingStart(CastingStartEvent $event)
     {
-        $this->session->set(SessionValues::SESSION_BUILD_CASTING_PROGRESS, 0);
-        $this->session->set(SessionValues::SESSION_BUILD_CASTING_TOTAL, $event->getTotal());
+        $this->session->set(SessionValueEnum::SESSION_BUILD_CASTING_PROGRESS, 0);
+        $this->session->set(SessionValueEnum::SESSION_BUILD_CASTING_TOTAL, $event->getTotal());
         $this->session->save();
     }
 
@@ -52,7 +52,7 @@ class BuildingCastingSubscriber implements EventSubscriberInterface
      */
     public function onBuildCastingProgress(CastingProgressEvent $event)
     {
-        $this->session->set(SessionValues::SESSION_BUILD_CASTING_PROGRESS, $event->getProgress());
+        $this->session->set(SessionValueEnum::SESSION_BUILD_CASTING_PROGRESS, $event->getProgress());
         $this->session->save();
     }
 
@@ -61,8 +61,8 @@ class BuildingCastingSubscriber implements EventSubscriberInterface
      */
     public function onBuildCastingEnd(Event $event)
     {
-        $this->session->remove(SessionValues::SESSION_BUILD_CASTING_PROGRESS);
-        $this->session->remove(SessionValues::SESSION_BUILD_CASTING_TOTAL);
+        $this->session->remove(SessionValueEnum::SESSION_BUILD_CASTING_PROGRESS);
+        $this->session->remove(SessionValueEnum::SESSION_BUILD_CASTING_TOTAL);
         $this->session->save();
     }
 }

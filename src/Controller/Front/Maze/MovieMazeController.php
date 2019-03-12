@@ -2,7 +2,7 @@
 
 namespace App\Controller\Front\Maze;
 
-use App\Enum\Maze\CastingStatus;
+use App\Enum\Maze\CastingStatusEnum;
 use App\Repository\Maze\MovieRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,7 +32,7 @@ class MovieMazeController extends AbstractController
     public function selectMinPathAction(MovieRepository $movieRepository): Response
     {
         return $this->render('front/maze/movie/min_path_selection.html.twig', [
-            'movies' => $movieRepository->findBy(['status' => CastingStatus::INITIALIZED], ['title' => 'asc']),
+            'movies' => $movieRepository->findBy(['status' => CastingStatusEnum::INITIALIZED], ['title' => 'asc']),
         ]);
     }
 
@@ -47,7 +47,7 @@ class MovieMazeController extends AbstractController
     public function selectMaxPathAction(MovieRepository $movieRepository): Response
     {
         return $this->render('front/maze/movie/max_path_selection.html.twig', [
-            'movies' => $movieRepository->findBy(['status' => CastingStatus::INITIALIZED], ['title' => 'asc']),
+            'movies' => $movieRepository->findBy(['status' => CastingStatusEnum::INITIALIZED], ['title' => 'asc']),
         ]);
     }
 }

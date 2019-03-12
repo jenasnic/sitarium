@@ -2,7 +2,7 @@
 
 namespace App\Controller\Back\Maze;
 
-use App\Enum\Maze\SessionValues;
+use App\Enum\Maze\SessionValueEnum;
 use App\Service\Maze\ActorFilmographyBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -41,8 +41,8 @@ class FilmographyController extends AbstractController
     public function filmographyProgressAction(SessionInterface $session): JsonResponse
     {
         return new JsonResponse([
-            'current' => $session->get(SessionValues::SESSION_BUILD_FILMOGRAPHY_PROGRESS),
-            'total' => $session->get(SessionValues::SESSION_BUILD_FILMOGRAPHY_TOTAL),
+            'current' => $session->get(SessionValueEnum::SESSION_BUILD_FILMOGRAPHY_PROGRESS),
+            'total' => $session->get(SessionValueEnum::SESSION_BUILD_FILMOGRAPHY_TOTAL),
         ]);
     }
 }

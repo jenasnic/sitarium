@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
-use App\Enum\User\Roles;
+use App\Enum\User\RoleEnum;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,8 +21,8 @@ class UserType extends AccountType
                 ChoiceType::class,
                 [
                     'choices' => [
-                        'Administrateur' => Roles::ROLE_ADMIN,
-                        'Utilisateur' => Roles::ROLE_USER,
+                        'Administrateur' => RoleEnum::ROLE_ADMIN,
+                        'Utilisateur' => RoleEnum::ROLE_USER,
                     ],
                     'multiple' => true,
                     'expanded' => false,

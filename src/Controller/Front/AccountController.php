@@ -5,7 +5,7 @@ namespace App\Controller\Front;
 use App\Domain\Command\User\AddUserCommand;
 use App\Domain\Command\User\UpdateUserCommand;
 use App\Entity\User;
-use App\Enum\User\Roles;
+use App\Enum\User\RoleEnum;
 use App\Form\AccountType;
 use App\Repository\Quiz\QuizRepository;
 use App\Service\Handler\User\AddUserHandler;
@@ -44,7 +44,7 @@ class AccountController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $newPassword = $form->get('newPassword')->getData();
-                $user->addRole(Roles::ROLE_USER);
+                $user->addRole(RoleEnum::ROLE_USER);
                 $user->setUsername($user->getEmail());
                 $handler->handle(new AddUserCommand($user, $newPassword));
 

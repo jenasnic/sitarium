@@ -2,7 +2,7 @@
 
 namespace App\Enum\Maze;
 
-class SessionValues
+class SessionValueEnum
 {
     // Session variable used to store progress state when building casting
     const SESSION_BUILD_CASTING_PROGRESS = 'session_build_casting_progress';

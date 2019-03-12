@@ -3,7 +3,7 @@
 namespace App\Service\Maze;
 
 use App\Entity\Maze\FilmographyMovie;
-use App\Enum\Maze\FilmographyStatus;
+use App\Enum\Maze\FilmographyStatusEnum;
 use App\Event\MazeEvents;
 use App\Event\Maze\FilmographyProgressEvent;
 use App\Event\Maze\FilmographyStartEvent;
@@ -103,7 +103,7 @@ class ActorFilmographyBuilder
                 $movieFilteredList[$tmdbId] = $movie;
                 // Update status for actors
                 foreach ($movie->getActors() as $actor) {
-                    $actor->setStatus(FilmographyStatus::INITIALIZED);
+                    $actor->setStatus(FilmographyStatusEnum::INITIALIZED);
                 }
             }
         }
@@ -111,8 +111,8 @@ class ActorFilmographyBuilder
         // Third step : update status for actors without filmography (i.e. actor status not initialized)
         /** @var Actor $actor */
         foreach ($actorList as $actor) {
-            if (FilmographyStatus::UNINITIALIZED === $actor->getStatus()) {
-                $actor->setStatus(FilmographyStatus::EMPTY);
+            if (FilmographyStatusEnum::UNINITIALIZED === $actor->getStatus()) {
+                $actor->setStatus(FilmographyStatusEnum::EMPTY);
             }
         }
 

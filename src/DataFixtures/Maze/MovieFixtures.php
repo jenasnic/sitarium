@@ -3,7 +3,7 @@
 namespace App\DataFixtures\Maze;
 
 use App\Entity\Maze\Movie;
-use App\Enum\Maze\CastingStatus;
+use App\Enum\Maze\CastingStatusEnum;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -153,7 +153,7 @@ class MovieFixtures extends Fixture
         $data->setTitle($title);
         $data->setReleaseDate(\DateTime::createFromFormat('Y-m-d H:i:s', $releaseDate));
         $data->setPictureUrl($pictureUrl);
-        $data->setStatus(CastingStatus::UNINITIALIZED);
+        $data->setStatus(CastingStatusEnum::UNINITIALIZED);
 
         return $data;
     }

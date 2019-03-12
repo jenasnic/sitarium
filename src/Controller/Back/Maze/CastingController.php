@@ -2,7 +2,7 @@
 
 namespace App\Controller\Back\Maze;
 
-use App\Enum\Maze\SessionValues;
+use App\Enum\Maze\SessionValueEnum;
 use App\Service\Maze\MovieCastingBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -41,8 +41,8 @@ class CastingController extends AbstractController
     public function castingProgressAction(SessionInterface $session): JsonResponse
     {
         return new JsonResponse([
-            'current' => $session->get(SessionValues::SESSION_BUILD_CASTING_PROGRESS),
-            'total' => $session->get(SessionValues::SESSION_BUILD_CASTING_TOTAL),
+            'current' => $session->get(SessionValueEnum::SESSION_BUILD_CASTING_PROGRESS),
+            'total' => $session->get(SessionValueEnum::SESSION_BUILD_CASTING_TOTAL),
         ]);
     }
 }

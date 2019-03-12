@@ -2,7 +2,7 @@
 
 namespace App\Enum\Maze;
 
-class CastingStatus
+class CastingStatusEnum
 {
     const UNINITIALIZED = 'casting_to_check';
     const INITIALIZED = 'casting_validated';

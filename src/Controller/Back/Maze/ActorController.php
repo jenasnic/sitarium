@@ -5,7 +5,7 @@ namespace App\Controller\Back\Maze;
 use App\Domain\Command\Maze\AddActorCommand;
 use App\Entity\Maze\Actor;
 use App\Enum\PagerEnum;
-use App\Enum\Tmdb\Types;
+use App\Enum\Tmdb\TypeEnum;
 use App\Repository\Maze\ActorRepository;
 use App\Service\Handler\Maze\AddActorHandler;
 use App\Service\Tmdb\TmdbApiService;
@@ -68,7 +68,7 @@ class ActorController extends AbstractController
     public function newAction(UrlGeneratorInterface $urlGenerator): Response
     {
         return $this->render('back/tmdb/search.html.twig', [
-            'type' => Types::ACTOR,
+            'type' => TypeEnum::ACTOR,
             'searchUrl' => $urlGenerator->generate('bo_maze_actor_search'),
         ]);
     }

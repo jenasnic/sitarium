@@ -2,7 +2,7 @@
 
 namespace App\Controller\Back\Tmdb;
 
-use App\Enum\Tmdb\Types;
+use App\Enum\Tmdb\TypeEnum;
 use App\Model\Tmdb\Search\Movie;
 use App\Model\Tmdb\Search\Actor;
 use App\Service\Tmdb\TmdbApiService;
@@ -15,11 +15,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class SearchController extends AbstractController
 {
     const TYPE_MAPPING_ENTITY = [
-        Types::ACTOR => [
+        TypeEnum::ACTOR => [
             'class' => Actor::class,
             'display_route' => 'bo_tmdb_display_actor',
         ],
-        Types::MOVIE => [
+        TypeEnum::MOVIE => [
             'class' => Movie::class,
             'display_route' => 'bo_tmdb_display_movie',
         ],

@@ -2,7 +2,7 @@
 
 namespace App\Enum\Quiz;
 
-class SessionValues
+class SessionValueEnum
 {
     // Session variable used to store progress state when building tmdb link
     const SESSION_BUILD_TMDB_LINK_PROGRESS = 'session_build_tmdb_link_progress';

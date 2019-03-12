@@ -4,11 +4,11 @@ Required :
 - status : current casting status (as string).
 #}
 
-{% if (status == constant('App\\Enum\\Maze\\CastingStatus::INITIALIZED')) %}
+{% if (status == constant('App\\Enum\\Maze\\CastingStatusEnum::INITIALIZED')) %}
 <span class="icon has-text-success">
     <i class="fas fa-check"></i>
 </span>
-{% elseif (status == constant('App\\Enum\\Maze\\CastingStatus::EMPTY')) %}
+{% elseif (status == constant('App\\Enum\\Maze\\CastingStatusEnum::EMPTY')) %}
 <span class="icon has-text-danger">
     <i class="fas fa-times"></i>
 </span>

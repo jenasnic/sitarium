@@ -3,7 +3,7 @@
 namespace App\Controller\Back\Quiz;
 
 use App\Entity\Quiz\Quiz;
-use App\Enum\Quiz\SessionValues;
+use App\Enum\Quiz\SessionValueEnum;
 use App\Service\Quiz\TmdbLinkBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -46,8 +46,8 @@ class TmdbLinkController extends AbstractController
     public function tmdbLinkStepAction(Request $request): JsonResponse
     {
         return new JsonResponse([
-            'current' => $request->getSession()->get(SessionValues::SESSION_BUILD_TMDB_LINK_PROGRESS),
-            'total' => $request->getSession()->get(SessionValues::SESSION_BUILD_TMDB_LINK_TOTAL),
+            'current' => $request->getSession()->get(SessionValueEnum::SESSION_BUILD_TMDB_LINK_PROGRESS),
+            'total' => $request->getSession()->get(SessionValueEnum::SESSION_BUILD_TMDB_LINK_TOTAL),
         ]);
     }
 }

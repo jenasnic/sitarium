@@ -4,7 +4,7 @@ namespace App\Entity\Maze;
 
 use App\Annotation\Tmdb\TmdbField;
 use App\Annotation\Tmdb\TmdbType;
-use App\Enum\Maze\FilmographyStatus;
+use App\Enum\Maze\FilmographyStatusEnum;
 use App\Model\Tmdb\Search\DisplayableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -147,7 +147,7 @@ class Actor implements DisplayableInterface
      */
     public function setStatus(string $status)
     {
-        if (!FilmographyStatus::exists($status)) {
+        if (!FilmographyStatusEnum::exists($status)) {
             throw new \InvalidArgumentException('Invalid status');
         }
 

@@ -4,7 +4,7 @@ namespace App\Service\Handler\Maze;
 
 use App\Domain\Command\Maze\AddActorCommand;
 use App\Entity\Maze\Actor;
-use App\Enum\Maze\FilmographyStatus;
+use App\Enum\Maze\FilmographyStatusEnum;
 use App\Service\Tmdb\TmdbApiService;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -44,7 +44,7 @@ class AddActorHandler
         }
 
         $actorToAdd = $this->tmdbService->getEntity(Actor::class, $command->getTmdbId());
-        $actorToAdd->setStatus(FilmographyStatus::UNINITIALIZED);
+        $actorToAdd->setStatus(FilmographyStatusEnum::UNINITIALIZED);
 
         $this->entityManager->persist($actorToAdd);
         $this->entityManager->flush();

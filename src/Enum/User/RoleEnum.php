@@ -2,7 +2,7 @@
 
 namespace App\Enum\User;
 
-class Roles
+class RoleEnum
 {
     const ROLE_ADMIN = 'ROLE_ADMIN';
     const ROLE_USER = 'ROLE_USER';

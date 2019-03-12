@@ -4,11 +4,11 @@ Required :
 - status : current filmography status (as string).
 #}
 
-{% if (status == constant('App\\Enum\\Maze\\FilmographyStatus::INITIALIZED')) %}
+{% if (status == constant('App\\Enum\\Maze\\FilmographyStatusEnum::INITIALIZED')) %}
 <span class="icon has-text-success">
     <i class="fas fa-check"></i>
 </span>
-{% elseif (status == constant('App\\Enum\\Maze\\FilmographyStatus::EMPTY')) %}
+{% elseif (status == constant('App\\Enum\\Maze\\FilmographyStatusEnum::EMPTY')) %}
 <span class="icon has-text-danger">
     <i class="fas fa-times"></i>
 </span>

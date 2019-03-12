@@ -2,7 +2,7 @@
 
 namespace App\Enum\Tmdb;
 
-class Types
+class TypeEnum
 {
     const ACTOR = 'actor';
     const MOVIE = 'movie';

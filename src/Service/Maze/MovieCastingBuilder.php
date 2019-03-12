@@ -3,7 +3,7 @@
 namespace App\Service\Maze;
 
 use App\Entity\Maze\CastingActor;
-use App\Enum\Maze\CastingStatus;
+use App\Enum\Maze\CastingStatusEnum;
 use App\Event\Maze\CastingProgressEvent;
 use App\Event\Maze\CastingStartEvent;
 use App\Event\MazeEvents;
@@ -97,7 +97,7 @@ class MovieCastingBuilder
                 $actorFilteredList[$tmdbId] = $actor;
                 // Update status for movies
                 foreach ($actor->getMovies() as $movie) {
-                    $movie->setStatus(CastingStatus::INITIALIZED);
+                    $movie->setStatus(CastingStatusEnum::INITIALIZED);
                 }
             }
         }
@@ -105,8 +105,8 @@ class MovieCastingBuilder
         // Third step : update status for movies without casting (i.e. movie status not initialized)
         /** @var Movie $movie */
         foreach ($movieList as $movie) {
-            if (CastingStatus::UNINITIALIZED === $movie->getStatus()) {
-                $movie->setStatus(CastingStatus::EMPTY);
+            if (CastingStatusEnum::UNINITIALIZED === $movie->getStatus()) {
+                $movie->setStatus(CastingStatusEnum::EMPTY);
             }
         }
 

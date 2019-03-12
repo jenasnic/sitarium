@@ -3,7 +3,7 @@
 namespace App\DataFixtures\Maze;
 
 use App\Entity\Maze\Actor;
-use App\Enum\Maze\FilmographyStatus;
+use App\Enum\Maze\FilmographyStatusEnum;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -153,7 +153,7 @@ class ActorFixtures extends Fixture
         $data->setFullname($fullname);
         $data->setBirthdate(\DateTime::createFromFormat('Y-m-d H:i:s', $birthdate));
         $data->setPictureUrl($pictureUrl);
-        $data->setStatus(FilmographyStatus::UNINITIALIZED);
+        $data->setStatus(FilmographyStatusEnum::UNINITIALIZED);
 
         return $data;
     }

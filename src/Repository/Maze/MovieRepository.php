@@ -2,7 +2,7 @@
 
 namespace App\Repository\Maze;
 
-use App\Enum\Maze\CastingStatus;
+use App\Enum\Maze\CastingStatusEnum;
 use App\Entity\Maze\Movie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
@@ -74,7 +74,7 @@ class MovieRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('movie');
 
         return $queryBuilder->update()
-            ->set('movie.status', $queryBuilder->expr()->literal(CastingStatus::UNINITIALIZED))
+        ->set('movie.status', $queryBuilder->expr()->literal(CastingStatusEnum::UNINITIALIZED))
             ->getQuery()
             ->getSingleScalarResult()
         ;
