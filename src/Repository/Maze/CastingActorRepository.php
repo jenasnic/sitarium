@@ -29,7 +29,7 @@ class CastingActorRepository extends ServiceEntityRepository
      * @param Movie first actor that must appear in searched movies
      * @param Movie second actor that must appear in searched movies
      *
-     * @return array array of movies with specified actors (as Movie)
+     * @return CastingActor[]|array
      */
     public function getActorsWithMovies(Movie $movie1, Movie $movie2): array
     {
@@ -45,8 +45,10 @@ class CastingActorRepository extends ServiceEntityRepository
 
     /**
      * Allows to clear casting for all movies.
+     *
+     * @return int deleted rows count
      */
-    public function clearCasting()
+    public function clearCasting(): int
     {
         return $this->createQueryBuilder('actor')
             ->delete()

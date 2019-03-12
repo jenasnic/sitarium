@@ -53,7 +53,7 @@ class ResponseRepository extends ServiceEntityRepository
      * @param int $positionY coordonate Y we are searching for responses
      * @param int $quizId quiz we are searching for responses
      *
-     * @return array Array of responses matching specified paramters (as Response)
+     * @return Response[]|array Array of responses matching specified paramters (as Response)
      */
     public function getResponsesWithCoordonates(int $positionX, int $positionY, int $quizId): array
     {

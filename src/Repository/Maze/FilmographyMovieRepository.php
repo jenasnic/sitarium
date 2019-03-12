@@ -29,7 +29,7 @@ class FilmographyMovieRepository extends ServiceEntityRepository
      * @param Actor first actor that must appear in searched movies
      * @param Actor second actor that must appear in searched movies
      *
-     * @return array array of movies with specified actors (as Movie)
+     * @return FilmographyMovie[]|array
      */
     public function getMoviesWithActors(Actor $actor1, Actor $actor2): array
     {
@@ -45,8 +45,10 @@ class FilmographyMovieRepository extends ServiceEntityRepository
 
     /**
      * Allows to clear filmography for all actors.
+     *
+     * @return int deleted rows count
      */
-    public function clearFilmography()
+    public function clearFilmography(): int
     {
         return $this->createQueryBuilder('movie')
             ->delete()

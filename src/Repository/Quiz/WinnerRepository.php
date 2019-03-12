@@ -79,15 +79,15 @@ class WinnerRepository extends ServiceEntityRepository
     /**
      * @param int $quizId
      */
-    public function removeWinnersForQuizId(int $quizId)
+    public function removeWinnersForQuizId(int $quizId): void
     {
         $winners = $this->getWinnersForQuizId($quizId);
 
         foreach ($winners as $winner) {
-            $this->_em->remove($winner);
+            $this->getEntityManager()->remove($winner);
         }
 
-        $this->_em->flush();
+        $this->getEntityManager()->flush();
     }
 
     /**
@@ -110,14 +110,14 @@ class WinnerRepository extends ServiceEntityRepository
     /**
      * @param int $userId
      */
-    public function removeWinnersForUserId(int $userId)
+    public function removeWinnersForUserId(int $userId): void
     {
         $winners = $this->getWinnersForUserId($userId);
 
         foreach ($winners as $winner) {
-            $this->_em->remove($winner);
+            $this->getEntityManager()->remove($winner);
         }
 
-        $this->_em->flush();
+        $this->getEntityManager()->flush();
     }
 }

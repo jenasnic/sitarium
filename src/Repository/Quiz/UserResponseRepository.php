@@ -28,7 +28,7 @@ class UserResponseRepository extends ServiceEntityRepository
      * @param int $userId identifier of user we want to get responses already found
      * @param int $quizId identifier of quiz we want to get responses already found by previous user
      *
-     * @return array list of responses found by specified user for specified quiz
+     * @return UserResponse[]|array list of responses found by specified user for specified quiz
      */
     public function getResponsesForUserIdAndQuizId(int $userId, int $quizId): array
     {
@@ -52,7 +52,7 @@ class UserResponseRepository extends ServiceEntityRepository
     /**
      * @param int $quizId
      */
-    public function removeResponsesForQuizId(int $quizId)
+    public function removeResponsesForQuizId(int $quizId): void
     {
         $responses = $this
             ->createQueryBuilder('userResponse')
@@ -65,16 +65,16 @@ class UserResponseRepository extends ServiceEntityRepository
         ;
 
         foreach ($responses as $response) {
-            $this->_em->remove($response);
+            $this->getEntityManager()->remove($response);
         }
 
-        $this->_em->flush();
+        $this->getEntityManager()->flush();
     }
 
     /**
      * @param int $userId
      */
-    public function removeResponsesForUserId(int $userId)
+    public function removeResponsesForUserId(int $userId): void
     {
         $responses = $this
             ->createQueryBuilder('userResponse')
@@ -86,10 +86,10 @@ class UserResponseRepository extends ServiceEntityRepository
         ;
 
         foreach ($responses as $response) {
-            $this->_em->remove($response);
+            $this->getEntityManager()->remove($response);
         }
 
-        $this->_em->flush();
+        $this->getEntityManager()->flush();
     }
 
     /**
@@ -253,7 +253,7 @@ class UserResponseRepository extends ServiceEntityRepository
      *
      * @param int $responseId
      *
-     * @return array list of user responses matching specified parameter
+     * @return UserResponse[]|array list of user responses matching specified parameter
      */
     public function getUserResponsesForResponseId(int $responseId): array
     {

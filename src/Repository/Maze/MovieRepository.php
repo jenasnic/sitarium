@@ -73,11 +73,12 @@ class MovieRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('movie');
 
-        return $queryBuilder->update()
-        ->set('movie.status', $queryBuilder->expr()->literal(CastingStatusEnum::UNINITIALIZED))
-            ->getQuery()
-            ->getSingleScalarResult()
+        $queryBuilder
+            ->update()
+            ->set('movie.status', $queryBuilder->expr()->literal(CastingStatusEnum::UNINITIALIZED))
         ;
+
+        return $queryBuilder->getQuery()->getSingleScalarResult();
     }
 
     /**
@@ -89,7 +90,7 @@ class MovieRepository extends ServiceEntityRepository
      * @return array Array of linked movies using TMDB identifiers in a map with both keys : main_movie_identifier and linked_movie_identifier.
      * NOTE : unable to build same entity => use TMDB identifiers instead...
      */
-    public function getLinkedMoviesIds($movieIds = null)
+    public function getLinkedMoviesIds($movieIds = null): array
     {
         $queryBuilder = $this->createQueryBuilder('main_movie');
 

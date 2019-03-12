@@ -43,13 +43,13 @@ class QuizRepository extends ServiceEntityRepository
     /**
      * @param int $userId
      *
-     * @return array
+     * @return Quiz[]|array
      */
     public function getQuizOverForUserId(int $userId): array
     {
         $queryBuilder = $this->createQueryBuilder('quiz');
 
-        return $queryBuilder
+        $queryBuilder
             ->join(
                 Winner::class,
                 'winner',
@@ -60,26 +60,26 @@ class QuizRepository extends ServiceEntityRepository
                 )
             )
             ->setParameter('userId', $userId)
-            ->getQuery()
-            ->getResult()
         ;
+
+        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
      * @param int $userId
      *
-     * @return array
+     * @return Quiz[]|array
      */
     public function getQuizInProgressForUserId(int $userId): array
     {
         $queryBuilder = $this->createQueryBuilder('quiz');
 
-        return $queryBuilder
+        $queryBuilder
             ->join(UserResponse::class, 'userResponse', Join::WITH, $queryBuilder->expr()->eq('userResponse.user', ':userId'))
             ->join('userResponse.response', 'response', Join::WITH, $queryBuilder->expr()->eq('response.quiz', 'quiz'))
             ->setParameter('userId', $userId)
-            ->getQuery()
-            ->getResult()
         ;
+
+        return $queryBuilder->getQuery()->getResult();
     }
 }
