@@ -36,18 +36,15 @@ const viewMazeItemDetail = (detailUrl) => {
 /**
  * Allows to build credits (filmography for actors or casting for movies) with progress bar.
  *
- * @parma buildUrl Url to call to build credits.
- * @parma progressUrl Url to call to get progress when building credits.
+ * @param buildUrl Url to call to build credits.
+ * @param progressUrl Url to call to get progress when building credits.
  */
 const buildCredits = (buildUrl, progressUrl) => {
-    axios.post(buildUrl)
-        .then(response => {
-            closeModal();
-            document.location.reload();
-        })
-    ;
+    axios.post(buildUrl);
 
-    displayProgressBar(progressUrl);
+    displayProgressBar(progressUrl, () => {
+        document.location.reload();
+    });
 };
 
 document.getElementById('maze-item-list') && initActions();

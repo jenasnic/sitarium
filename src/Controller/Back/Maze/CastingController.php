@@ -15,19 +15,30 @@ class CastingController extends AbstractController
     /**
      * @Route("/admin/maze/movie/casting/build", name="bo_maze_movie_casting_build", methods="POST")
      *
+     * @param SessionInterface $session
      * @param TranslatorInterface $translator
      * @param MovieCastingBuilder $castingBuilder
      *
      * @return JsonResponse
      */
-    public function castingBuildAction(TranslatorInterface $translator, MovieCastingBuilder $castingBuilder): JsonResponse
-    {
+    public function castingBuildAction(
+        SessionInterface $session,
+        TranslatorInterface $translator,
+        MovieCastingBuilder $castingBuilder
+    ): JsonResponse {
+        if ($session->has(SessionValueEnum::SESSION_BUILD_CASTING_PROGRESS)) {
+            return new JsonResponse(['status' => 'progress']);
+        }
+
         try {
             $castingBuilder->build();
+            $this->addFlash('info', $translator->trans('back.maze.casting.success'));
 
-            return new JsonResponse(['success' => true, 'message' => $translator->trans('back.maze.casting.success')]);
+            return new JsonResponse(['status' => 'over']);
         } catch (\Exception $e) {
-            return new JsonResponse(['success' => false, 'message' => $translator->trans('back.maze.casting.error')]);
+            $this->addFlash('error', $translator->trans('back.maze.casting.error'));
+
+            return new JsonResponse(['status' => 'error']);
         }
     }
 
@@ -41,8 +52,8 @@ class CastingController extends AbstractController
     public function castingProgressAction(SessionInterface $session): JsonResponse
     {
         return new JsonResponse([
-            'current' => $session->get(SessionValueEnum::SESSION_BUILD_CASTING_PROGRESS),
-            'total' => $session->get(SessionValueEnum::SESSION_BUILD_CASTING_TOTAL),
+            'current' => $session->get(SessionValueEnum::SESSION_BUILD_CASTING_PROGRESS, 0),
+            'total' => $session->get(SessionValueEnum::SESSION_BUILD_CASTING_TOTAL, 0),
         ]);
     }
 }

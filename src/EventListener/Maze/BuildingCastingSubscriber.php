@@ -34,6 +34,7 @@ class BuildingCastingSubscriber implements EventSubscriberInterface
             MazeEvents::BUILD_CASTING_START => 'onBuildCastingStart',
             MazeEvents::BUILD_CASTING_PROGRESS => 'onBuildCastingProgress',
             MazeEvents::BUILD_CASTING_END => 'onBuildCastingEnd',
+            MazeEvents::BUILD_CASTING_ERROR => 'onBuildCastingEnd',
         ];
     }
 

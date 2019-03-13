@@ -226,8 +226,8 @@ const displayResponseLocation = (event) => {
                 setLocationStateOK();
 
                 setTimeout(
-                        () => {locationElement.parentNode.removeChild(locationElement);},
-                        2200
+                    () => {locationElement.parentNode.removeChild(locationElement);},
+                    2200
                 );
             } else {
                 clearLocationState();

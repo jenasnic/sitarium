@@ -5,8 +5,8 @@ Required :
 #}
 <div class="columns">
 
-    <div class="column is-narrow">
-        <div class="card">
+    <div class="column">
+        <div class="card has-text-centered">
             <div class="card-image">
                 <figure>
                     <img src="{{ movie.pictureUrl|tmdbPictureUrl }}" alt="-">
@@ -15,7 +15,7 @@ Required :
             <div class="card-content">
                 <div class="media">
                     <div class="media-content">
-                        <p class="title is-5">{{ movie.title }}</p>
+                        <div class="title is-5 has-text-centered">{{ movie.title }}</div>
                     </div>
                 </div>
                 <div class="content subtitle is-6">

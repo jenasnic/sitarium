@@ -198,7 +198,7 @@ class TmdbApiService
         string $entityActorClass = Actor::class,
         TmdbValidatorInterface $validator = null
     ): array {
-        $url = sprintf('%s/movie/%d/%credits?api_key=%s&language=fr', $this->baseUri, $tmdbId, $this->apiKey);
+        $url = sprintf('%s/movie/%d/credits?api_key=%s&language=fr', $this->baseUri, $tmdbId, $this->apiKey);
         $response = $this->guzzleClient->request('GET', $url);
 
         if (200 !== $response->getStatusCode()) {

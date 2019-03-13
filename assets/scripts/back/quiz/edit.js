@@ -102,18 +102,13 @@ const initQuizResponseForm = (url, form) => {
 /**
  * Allows to link movies from quiz with TMDB with progress bar.
  *
- * @parma linkUrl Url to call to link movies with TMDB.
- * @parma progressUrl Url to call to get progress when linking movies.
+ * @param linkUrl Url to call to link movies with TMDB.
+ * @param progressUrl Url to call to get progress when linking movies.
  */
 const buildTmdbLink = (tmdbLinkUrl, progressUrl) => {
-    axios.post(tmdbLinkUrl)
-        .then(response => {
-            closeModal('progress-bar-modal');
-            document.location.reload();
-        })
-    ;
+    axios.post(tmdbLinkUrl);
 
-    displayProgressBar(progressUrl);
+    displayProgressBar(progressUrl, () => {document.location.reload();});
 };
 
 document.getElementById('quiz-responses-wrapper') && initQuizResponseActions();

@@ -34,6 +34,7 @@ class BuildingFilmographySubscriber implements EventSubscriberInterface
             MazeEvents::BUILD_FILMOGRAPHY_START => 'onBuildFilmographyStart',
             MazeEvents::BUILD_FILMOGRAPHY_PROGRESS => 'onBuildFilmographyProgress',
             MazeEvents::BUILD_FILMOGRAPHY_END => 'onBuildFilmographyEnd',
+            MazeEvents::BUILD_FILMOGRAPHY_ERROR => 'onBuildFilmographyEnd',
         ];
     }
 

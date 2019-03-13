@@ -26,6 +26,13 @@ class MazeEvents
     const BUILD_FILMOGRAPHY_END = 'build_filmography_end';
 
     /**
+     * Event fired when error occurs for filmography.
+     *
+     * @var string
+     */
+    const BUILD_FILMOGRAPHY_ERROR = 'build_filmography_error';
+
+    /**
      * Event fired when starting to build casting for movies.
      *
      * @var string
@@ -45,4 +52,11 @@ class MazeEvents
      * @var string
      */
     const BUILD_CASTING_END = 'build_casting_end';
+
+    /**
+     * Event fired when error occurs for casting.
+     *
+     * @var string
+     */
+    const BUILD_CASTING_ERROR = 'build_casting_error';
 }
