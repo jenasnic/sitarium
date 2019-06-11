@@ -8,50 +8,54 @@ Required :
 
 {% block body %}
 
-    {% embed 'back/form/_grid.html.twig' with {'pager': pager, 'title': 'back.user.list.title'|trans} %}
+    <div id="user-list">
 
-        {% block action %}
-            <a id="new-quiz-button" class="button is-primary" href="{{ path('bo_user_add') }}">{{ 'global.new'|trans }}</a>
-        {% endblock %}
+        {% embed 'back/form/_grid.html.twig' with {'pager': pager, 'title': 'back.user.list.title'|trans} %}
 
-        {% block grid_result %}
+            {% block action %}
+                <a class="button is-primary" href="{{ path('bo_user_add') }}">{{ 'global.new'|trans }}</a>
+            {% endblock %}
 
-            {% embed 'back/form/_grid_result.html.twig' with {'pager': pager} %}
+            {% block grid_result %}
 
-                {% block grid_header %}
-                    <th>{{ 'back.user.list.column.name'|trans }}</th>
-                    <th>{{ 'global.edit'|trans }}</th>
-                    <th>{{ 'global.delete'|trans }}</th>
-                {% endblock %}
+                {% embed 'back/form/_grid_result.html.twig' with {'pager': pager} %}
 
-                {% block grid_body %}
-                    {% for user in pager.currentPageResults %}
-                        <tr>
-                            <td>
-                                {{ user.displayName }}
-                            </td>
-                            <td>
-                                <a href="{{ path('bo_user_edit', { 'user': user.id }) }}">
-                                    <span class="icon has-text-warning button">
-                                        <i class="fas fa-edit"></i>
-                                    </span>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="{{ path('bo_user_delete', { 'user': user.id }) }}" onclick="return confirm('{{ 'global.delete.confirm'|trans }}');" >
-                                    <span class="icon has-text-danger button">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </span>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                {% endblock %}
+                    {% block grid_header %}
+                        <th>{{ 'back.user.list.column.name'|trans }}</th>
+                        <th>{{ 'global.edit'|trans }}</th>
+                        <th>{{ 'global.delete'|trans }}</th>
+                    {% endblock %}
 
-            {% endembed %}
+                    {% block grid_body %}
+                        {% for user in pager.currentPageResults %}
+                            <tr>
+                                <td>
+                                    {{ user.displayName }}
+                                </td>
+                                <td>
+                                    <a href="{{ path('bo_user_edit', { 'user': user.id }) }}">
+                                        <span class="icon has-text-warning button">
+                                            <i class="fas fa-edit"></i>
+                                        </span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ path('bo_user_delete', { 'user': user.id }) }}" onclick="return confirm('{{ 'global.delete.confirm'|trans }}');" >
+                                        <span class="icon has-text-danger button">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endblock %}
 
-        {% endblock %}
+                {% endembed %}
 
-    {% endembed %}
+            {% endblock %}
+
+        {% endembed %}
+
+    </div>
 
 {% endblock %}

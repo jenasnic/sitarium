@@ -1,6 +1,7 @@
 import './back/filter';
 import './back/popup';
 import './back/tmdb/search';
+import './back/user/list';
 import './back/maze/list';
 import './back/tagline/list';
 import './back/tagline/selection';

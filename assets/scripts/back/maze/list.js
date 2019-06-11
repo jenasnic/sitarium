@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { initFilterAction } from '../filter';
 import { displayModal, closeModal } from '../popup';
 import { displayProgressBar } from '../progress-bar';
 
@@ -6,6 +7,20 @@ import { displayProgressBar } from '../progress-bar';
  * Allows to initialize action to display detail about maze item (actor or movie).
  */
 const initActions = () => {
+    initFilterAction(initDetailAction);
+
+    initDetailAction();
+
+    document.getElementById('build-credits-button')
+        && document.getElementById('build-credits-button').addEventListener('click', (event) => {
+            buildCredits(event.target.dataset.buildCreditsUrl, event.target.getAttribute('data-progress-url'));
+        });
+};
+
+/**
+ * Allows to display info for maze items.
+ */
+const initDetailAction = () => {
     [...document.querySelectorAll('.show-maze-item-detail-button')].forEach(
         (element) => {
             element.addEventListener('click', (event) => {
@@ -13,11 +28,6 @@ const initActions = () => {
             });
         }
     );
-
-    document.getElementById('build-credits-button')
-        && document.getElementById('build-credits-button').addEventListener('click', (event) => {
-            buildCredits(event.target.dataset.buildCreditsUrl, event.target.getAttribute('data-progress-url'));
-        });
 };
 
 /**

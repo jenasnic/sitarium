@@ -1,10 +1,19 @@
 import axios from 'axios';
+import { initFilterAction } from '../filter';
 import { displayModal } from '../popup';
 
 /**
  * Allows to initialize action to display detail about winner.
  */
 const initActions = () => {
+    initFilterAction(initDetailAction);
+    initDetailAction();
+};
+
+/**
+ * Allows to display info for winner.
+ */
+const initDetailAction = () => {
     [...document.querySelectorAll('.show-winner-detail-button')].forEach(
         (element) => {
             element.addEventListener('click', (event) => {

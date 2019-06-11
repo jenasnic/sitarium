@@ -1,10 +1,19 @@
 import axios from 'axios';
+import { initFilterAction } from '../filter';
 import { displayModal, closeModal } from '../popup';
 
 /**
- * Allows to initialize action to display detail about movie.
+ * Allows to initialize actions for taglines.
  */
 const initActions = () => {
+    initFilterAction(initDetailAction);
+    initDetailAction();
+};
+
+/**
+ * Allows to display info for movie.
+ */
+const initDetailAction = () => {
     [...document.querySelectorAll('.show-tagline-movie-detail-button')].forEach(
         (element) => {
             element.addEventListener('click', (event) => {
