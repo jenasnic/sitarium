@@ -16,7 +16,10 @@
         .navbar-item .icon {margin-right: 0.5rem;}
     }
 
-    #content {flex-grow: 1;}
+    #content {
+        flex-grow: 1;
+        width: 100%;
+    }
 
     #footer {
         background: #ddd;
