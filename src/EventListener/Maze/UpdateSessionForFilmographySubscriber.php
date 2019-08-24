@@ -10,7 +10,7 @@ use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class BuildingFilmographySubscriber implements EventSubscriberInterface
+class UpdateSessionForFilmographySubscriber implements EventSubscriberInterface
 {
     /**
      * @var SessionInterface

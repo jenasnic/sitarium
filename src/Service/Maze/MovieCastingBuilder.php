@@ -130,7 +130,7 @@ class MovieCastingBuilder
             }
 
             // WARNING : wait between each TMDB request to not override request rate limit (40 per seconde)
-            usleep(400000);
+            usleep(30000);
 
             $this->eventDispatcher->dispatch(MazeEvents::BUILD_CASTING_PROGRESS, new CastingProgressEvent(++$processCount));
         }

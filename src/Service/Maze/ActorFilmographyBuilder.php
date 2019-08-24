@@ -136,10 +136,12 @@ class ActorFilmographyBuilder
             }
 
             // WARNING : wait between each TMDB request to not override request rate limit (40 per seconde)
-            usleep(400000);
+            usleep(30000);
 
             $this->eventDispatcher->dispatch(MazeEvents::BUILD_FILMOGRAPHY_PROGRESS, new FilmographyProgressEvent(++$processCount));
         }
+
+        return $movieFullList;
     }
 
     /**
