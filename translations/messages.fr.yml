@@ -171,6 +171,8 @@ form.account.edit.label.firstname: Prénom
 form.account.edit.label.password.first: Mot de passe
 form.account.edit.label.password.second: Confirmation m.d.p.
 form.account.edit.label.roles: Rôles
+form.account.edit.label.roles.admin: Administrateur
+form.account.edit.label.roles.user: Utilisateur
 form.account.edit.label.username: Login
 
 front.account.create.content: Veuillez remplir les champs ci-dessous pour créer votre compte.
@@ -239,6 +241,8 @@ form.quiz.edit.label.published: Publication
 form.quiz.edit.label.thumbnailFile: Vignette
 form.quiz.edit.help.displayResponse: Permet de visualiser sur l'image les éléments du quiz relatifs aux réponses trouvées.<br/>Si cette option est activée, les réponses doivents définir les coordonées permettant de localiser les éléments associés.
 form.quiz.edit.help.displayTrick: Permet de donner un indice sur les films à trouver.<br/>Si cette option est activée, les réponses doivents définir les coordonées permettant de localiser les éléments associés.
+form.quiz.edit.help.pictureFile: 'Image actuellement chargée : %name%'
+form.quiz.edit.help.thumbnailFile: 'Vignette actuellement chargée : %name%'
 form.quiz.response.edit.label.responses: Valeurs autorisées
 form.quiz.response.edit.label.title: Réponse
 form.quiz.response.edit.label.trick: Indice

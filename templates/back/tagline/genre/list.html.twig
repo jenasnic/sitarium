@@ -15,9 +15,9 @@ Required :
 
         <nav class="level">
             <div class="level-left">
-                <span>{{ 'back.tagline.genre.list.used'|transchoice(genreInfos|length) }}</span>
+                <span>{{ 'back.tagline.genre.list.used'|trans({'%count%': genreInfos|length}) }}</span>
                 <span>&nbsp;|&nbsp;</span>
-                <span>{{ 'back.tagline.genre.list.unused'|transchoice(unusedGenres|length) }}</span>
+                <span>{{ 'back.tagline.genre.list.unused'|trans({'%count%': unusedGenres|length}) }}</span>
             </div>
             <div class="level-right">
                 <div class="column">

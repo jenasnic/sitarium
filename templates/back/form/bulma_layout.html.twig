@@ -7,13 +7,15 @@ https://github.com/dsmink/twig-bulma-form-theme
 {# Widgets #}
 
 {%- block form_widget_simple -%}
-    {% spaceless %}
+    {% apply spaceless %}
         {%- if type is not defined or type not in ['file', 'hidden'] -%}
             {%- set attr = attr|merge({class: (attr.class|default('') ~ ' input')|trim}) -%}
         {%- endif -%}
         {%- set size_class = '' -%}
-        {%- for size in ['is-small', 'is-medium', 'is-large'] if size in form.vars.attr.class|default('') -%}
-            {%- set size_class = size -%}
+        {%- for size in ['is-small', 'is-medium', 'is-large'] -%}
+            {%- if size in form.vars.attr.class|default('') -%}
+                {%- set size_class = size -%}
+            {%- endif -%}
         {%- endfor -%}
         {%- set widget_icon = attribute(form.vars, 'bulma_icon')|default(false) -%}
         <div {{ block('form_widget_container_attributes') }}>
@@ -25,14 +27,16 @@ https://github.com/dsmink/twig-bulma-form-theme
             {%- endif -%}
             {{- block('form_errors') -}}
         </div>
-    {% endspaceless %}
+    {% endapply %}
 {%- endblock form_widget_simple %}
 
 {%- block choice_widget_collapsed -%}
-    {% spaceless %}
+    {% apply spaceless %}
         {%- set size_class = '' -%}
-        {%- for size in ['is-small', 'is-medium', 'is-large'] if size in form.vars.attr.class|default('') -%}
-            {%- set size_class = size -%}
+        {%- for size in ['is-small', 'is-medium', 'is-large'] -%}
+            {%- if size in form.vars.attr.class|default('') -%}
+                {%- set size_class = size -%}
+            {%- endif -%}
         {%- endfor -%}
         {%- set is_multiple_class = multiple ? ' is-multiple' : '' -%}
         <div {{ block('form_widget_container_attributes') }}>
@@ -41,7 +45,7 @@ https://github.com/dsmink/twig-bulma-form-theme
         </span>
             {{- block('form_errors') -}}
         </div>
-    {% endspaceless %}
+    {% endapply %}
 {%- endblock choice_widget_collapsed -%}
 
 {%- block choice_widget_expanded -%}
@@ -134,9 +138,10 @@ https://github.com/dsmink/twig-bulma-form-theme
 
 {%- block button_widget -%}
     {%- set btn_class = 'is-link' -%}
-    {%- for color in [ 'is-primary', 'is-info', 'is-success', 'is-warning', 'is-danger' ]
-    if color in attr.class|default('') -%}
-        {%- set btn_class = color -%}
+    {%- for color in [ 'is-primary', 'is-info', 'is-success', 'is-warning', 'is-danger' ] -%}
+        {%- if color in attr.class|default('') -%}
+            {%- set btn_class = color -%}
+        {%- endif -%}
     {%- endfor -%}
     {%- set attr = attr|merge({class: (attr.class|default('') ~ ' button ' ~ btn_class)|trim}) -%}
     <p {{ block('form_widget_container_attributes') }}>
@@ -192,8 +197,8 @@ https://github.com/dsmink/twig-bulma-form-theme
     <div class="field">
         {{- form_label(form) -}}
         {{- form_widget(form) -}}
-        {%- if form.vars.help is defined -%}
-            <p class="help">{{ form.vars.help|trans|raw }}</p>
+        {%- if form.vars.help is defined and form.vars.help|length > 0 -%}
+            <p class="help">{{ form.vars.help|trans(help_translation_parameters, translation_domain)|raw }}</p>
         {%- endif -%}
     </div>
 {%- endblock form_row -%}

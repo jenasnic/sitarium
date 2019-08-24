@@ -14,20 +14,14 @@ class QuizType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $helpPictureFile = null;
-        $helpThumbnailFile = null;
+        $pictureUrl = null;
+        $thumbnailUrl = null;
 
         if (!empty($options['data'])) {
             /** @var Quiz $quiz */
             $quiz = $options['data'];
-
-            if (!empty($quiz->getPictureUrl())) {
-                $helpPictureFile = 'Image actuellement chargée : '.$quiz->getPictureUrl();
-            }
-
-            if (!empty($quiz->getThumbnailUrl())) {
-                $helpThumbnailFile = 'Image actuellement chargée : '.$quiz->getThumbnailUrl();
-            }
+            $pictureUrl = $quiz->getPictureUrl();
+            $thumbnailUrl = $quiz->getThumbnailUrl();
         }
 
         $builder
@@ -37,7 +31,8 @@ class QuizType extends AbstractType
                 FileType::class,
                 [
                     'required' => false,
-                    'help' => $helpPictureFile,
+                    'help' => 'form.quiz.edit.help.pictureFile',
+                    'help_translation_parameters' => ['%name%' => $pictureUrl],
                 ]
             )
             ->add(
@@ -45,7 +40,8 @@ class QuizType extends AbstractType
                 FileType::class,
                 [
                     'required' => false,
-                    'help' => $helpThumbnailFile,
+                    'help' => 'form.quiz.edit.help.thumbnailFile',
+                    'help_translation_parameters' => ['%name%' => $thumbnailUrl],
                 ]
             )
             ->add('published', CheckboxType::class, ['required' => false])

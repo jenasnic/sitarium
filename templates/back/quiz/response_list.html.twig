@@ -9,7 +9,7 @@ Required :
 
 <nav class="level">
     <div class="level-left">
-        <span>{{ 'back.quiz.response.list.count'|transchoice(quiz.responses|length) }}</span>
+        <span>{{ 'back.quiz.response.list.count'|trans({'%count%': quiz.responses|length}) }}</span>
     </div>
     <div class="level-right">
         <div>

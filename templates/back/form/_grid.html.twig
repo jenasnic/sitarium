@@ -31,6 +31,6 @@ Required :
 </div>
 
 <div id="grid-wrapper">
-    <span>{{ 'global.result_count'|transchoice(pager.count) }}</span>
+    <span>{{ 'global.result_count'|trans({'%count%': pager.count}) }}</span>
     {% block grid_result %}{% endblock %}
 </div>
