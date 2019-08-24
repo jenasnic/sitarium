@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Entity\Tagline\Movie;
 
 class TaglineController extends AbstractController
 {
@@ -55,7 +56,11 @@ class TaglineController extends AbstractController
 
         $taglines = array_slice($movies, 0, $count);
         shuffle($taglines);
-        shuffle($movies);
+
+        // Sort list alphabetically for available responses
+        usort($movies, function (Movie $movie1, Movie $movie2) {
+            return strcmp($movie1->getTitle(), $movie2->getTitle());
+        });
 
         return $this->render('front/tagline/play.html.twig', [
             'genre' => $genre,

@@ -59,7 +59,7 @@ class FilmographyMovieRepository extends ServiceEntityRepository
             ->setParameter('actor1', $actor1)
             ->setParameter('actor2', $actor2)
             ->orderBy('movie.voteCount', 'DESC')
-            ->setMaxResults(1);
+            ->setMaxResults(1)
         ;
 
         return $queryBuilder->getQuery()->getOneOrNullResult();

@@ -58,7 +58,7 @@ class CastingActorRepository extends ServiceEntityRepository
             ->andWhere(':movie2 MEMBER OF actor.movies')
             ->setParameter('movie1', $movie1)
             ->setParameter('movie2', $movie2)
-            ->setMaxResults(1);
+            ->setMaxResults(1)
         ;
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
