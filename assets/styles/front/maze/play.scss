@@ -133,21 +133,29 @@
         #maze-wrapper {
             #mobile-wrapper {
                 display: flex;
-                justify-content: center;
+                justify-content: space-between;
                 margin: 0 auto;
                 position: relative;
 
-                #mobile-helper-button {
+                #mobile-buttons {
                     cursor: pointer;
+                    display: flex;
+                    flex-direction: column;
+                    flex-grow: 0;
                     font-size: 10vw;
+                    justify-content: center;
                     order: 2;
 
-                    i {
-                        color: $color-button-default-2;
-                        text-shadow: $text-shadow-dark;
-                    }
+                    span {
+                        margin: 1.5rem 0;
 
-                    &:hover i {color: $color-button-active-1;}
+                        i {
+                            color: $color-button-default-2;
+                            text-shadow: $text-shadow-dark;
+                        }
+
+                        &:hover i {color: $color-button-active-1;}
+                    }
                 }
 
                 .mobile-maze-item {
@@ -156,6 +164,8 @@
                     border-radius: 5px;
                     box-shadow: 0px 0px 2px $color-border-default;
                     display: none;
+                    flex-grow: 1;
+                    flex: 1;
                     margin: 0 1rem;
                     max-width: 180px;
                     text-align: center;
@@ -181,11 +191,13 @@
 
                 &.over {
                     flex-wrap: wrap;
+                    justify-content: center;
 
-                    #mobile-helper-button {display: none;}
+                    #mobile-buttons {display: none;}
 
                     .mobile-maze-item {
                         display: block;
+                        flex: none;
                         margin: 0.5rem;
                     }
                 }
@@ -208,6 +220,8 @@
 
                 #response-wrapper {
                     display: none;
+                    align-content: center;
+
                     &.mobile-active {
                         background-color: $transparent-background-dark;
                         display: flex;

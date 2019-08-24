@@ -44,6 +44,28 @@ class FilmographyMovieRepository extends ServiceEntityRepository
     }
 
     /**
+     * Allows to get top movies with both specified actors (i.e. movie with best vote count).
+     *
+     * @param Actor first actor that must appear in searched movie
+     * @param Actor second actor that must appear in searched movie
+     *
+     * @return FilmographyMovie|null
+     */
+    public function findTopMovieWithActors(Actor $actor1, Actor $actor2): ?FilmographyMovie
+    {
+        $queryBuilder = $this->createQueryBuilder('movie')
+            ->where(':actor1 MEMBER OF movie.actors')
+            ->andWhere(':actor2 MEMBER OF movie.actors')
+            ->setParameter('actor1', $actor1)
+            ->setParameter('actor2', $actor2)
+            ->orderBy('movie.voteCount', 'DESC')
+            ->setMaxResults(1);
+        ;
+
+        return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
+    /**
      * Allows to clear filmography for all actors.
      *
      * @return int deleted rows count

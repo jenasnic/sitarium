@@ -5,6 +5,7 @@ Required :
 - array helpList : list of maze items (movies or actors) used to help user to find path.
 - string responseRoute : Name of route to submit and check response.
 - string trickRoute : Name of route to request a trick.
+- string cheatRoute : Name of route to cheat and get response.
 - string replayUrl : Url to replay quiz.
 Optional
 - int level : Difficulty level for maze.
@@ -16,12 +17,18 @@ Optional
 
     <h1>{% block mazeTitle %}{% endblock %}</h1>
 
-    <div id="maze-play" data-response-url="{{ path(responseRoute) }}" data-trick-url="{{ path(trickRoute) }}">
+    <div
+        id="maze-play"
+        data-response-url="{{ path(responseRoute) }}"
+        data-trick-url="{{ path(trickRoute) }}"
+        data-cheat-url="{{ path(cheatRoute) }}"
+    >
 
         <div id="action-wrapper">
             <input type="text" id="response" name="response" placeholder="{{ 'front.maze.play.response.placeholder'|trans }}" />
             <span id="answer-button" class="button" title="{{ 'front.maze.play.response.submit'|trans }}"><i class="fas fa-check"></i></span>
-            <span id="trick-button" class="button" title="{{ 'front.maze.play.trick.request'|trans }}"><i class="fas fa-question"></i></span>
+            <span id="trick-button" class="button" title="{{ 'front.maze.play.trick.request'|trans }}"><i class="fas fa-lightbulb"></i></span>
+            <span id="cheat-button" class="button" title="{{ 'front.maze.play.trick.cheat'|trans }}"><i class="fas fa-question"></i></span>
         </div>
 
         <div id="info-wrapper">
@@ -37,7 +44,10 @@ Optional
         <div id="maze-wrapper" class="card">
 
             <div id="mobile-wrapper">
-                <span id="mobile-helper-button"><i class="fas fa-question-circle"></i></span>
+                <div id="mobile-buttons">
+                    <span id="mobile-helper-button"><i class="fas fa-plus-circle"></i></span>
+                    <span id="mobile-cheat-button"><i class="fas fa-question-circle"></i></span>
+                </div>
                 {% for mazeItem in mazePath %}
                 <div data-order="{{ loop.index }}" class="mobile-maze-item">
                     <img src="{{ mazeItem.pictureUrl|tmdbPictureUrl }}" alt="{{ mazeItem.displayName|raw }}" />

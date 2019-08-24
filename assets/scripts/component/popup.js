@@ -15,14 +15,14 @@ export const displayPopup = (content, options) => {
     modal.setContent(content);
     modal.open();
 
-    if (options.autoCloseDelay) {
+    if (defaultOptions.autoCloseDelay) {
         setTimeout(
             () => {
                 if (modal.isOpen()) {
                     modal.close();
                 }
             },
-            options.autoCloseDelay
+            defaultOptions.autoCloseDelay
         );
     }
 };

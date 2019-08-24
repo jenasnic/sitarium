@@ -34,10 +34,14 @@
 
     #info-wrapper {
         font-size: 0.8rem;
-        padding: 0.5rem 0 1rem 0;
+        padding: 0.5rem 0 1.5rem 0;
         text-align: center;
 
-        span {color: $color-text-link;}
+        #response-count {color: $color-text-link;}
+
+        #cheat-button {
+            margin-left: 2rem;
+        }
     }
 
     #response-wrapper {
@@ -84,5 +88,22 @@
         margin-top: 2em;
 
         &.active {display: block;}
+    }
+
+    &.over {
+        #tagline-wrapper {
+            div {
+                font-size: 1rem;
+                font-style: italic;
+                height: auto;
+                margin-bottom: 0.4rem;
+                opacity: 1;
+                transform: rotateX(0deg);
+            }
+        }
+
+        #info-wrapper {
+            #cheat-button {display: none;}
+        }
     }
 }

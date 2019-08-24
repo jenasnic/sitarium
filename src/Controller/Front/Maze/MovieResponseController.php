@@ -2,6 +2,7 @@
 
 namespace App\Controller\Front\Maze;
 
+use App\Repository\Maze\CastingActorRepository;
 use App\Repository\Maze\MovieRepository;
 use App\Service\Maze\MoviePathResponseValidator;
 use App\Tool\TmdbUtil;
@@ -81,6 +82,47 @@ class MovieResponseController extends AbstractController
             }
         } catch (\Exception $ex) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.movie.casting_error')]);
+        }
+    }
+
+    /**
+     * @Route("/quiz-casting/ajax/tricher", name="fo_maze_movie_cheat", methods="POST")
+     *
+     * @param Request $request
+     * @param TranslatorInterface $translator
+     * @param MovieRepository $movieRepository
+     * @param CastingActorRepository $castingActorRepository
+     *
+     * @return JsonResponse
+     */
+    public function cheatAction(
+        Request $request,
+        TranslatorInterface $translator,
+        MovieRepository $movieRepository,
+        CastingActorRepository $castingActorRepository
+    ): JsonResponse {
+        $data = json_decode($request->getContent(), true);
+        $currentMovieId = $data['currentTmdbId'];
+        $nextMovieId = $data['nextTmdbId'];
+
+        try {
+            $currentMovie = $movieRepository->find($currentMovieId);
+            $nextMovie = $movieRepository->find($nextMovieId);
+
+            $commonActor = $castingActorRepository->findTopActorWithMovies($currentMovie, $nextMovie);
+
+            if (null === $commonActor) {
+                return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.movie.cheat.not_found')]);
+            }
+
+            return new JsonResponse([
+                'success' => true,
+                'displayName' => $commonActor->getFullname(),
+                'tmdbLink' => sprintf('https://www.themoviedb.org/person/%d', $commonActor->getTmdbId()),
+                'pictureUrl' => TmdbUtil::getBasePictureUrl().$commonActor->getPictureUrl(),
+            ]);
+        } catch (\Exception $ex) {
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.movie.cheat.error')]);
         }
     }
 }

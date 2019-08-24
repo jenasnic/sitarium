@@ -26,8 +26,8 @@ class CastingActorRepository extends ServiceEntityRepository
     /**
      * Allows to get actors with both specified movies.
      *
-     * @param Movie first actor that must appear in searched movies
-     * @param Movie second actor that must appear in searched movies
+     * @param Movie first movie with searched actors in casting
+     * @param Movie second movie with searched actors in casting
      *
      * @return CastingActor[]|array
      */
@@ -41,6 +41,27 @@ class CastingActorRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    /**
+     * Allows to get first actor found with both specified movies.
+     *
+     * @param Movie first movie with searched actor in casting
+     * @param Movie second movie with searched actor in casting
+     *
+     * @return CastingActor|null
+     */
+    public function findTopActorWithMovies(Movie $movie1, Movie $movie2): ?CastingActor
+    {
+        $queryBuilder = $this->createQueryBuilder('actor')
+            ->where(':movie1 MEMBER OF actor.movies')
+            ->andWhere(':movie2 MEMBER OF actor.movies')
+            ->setParameter('movie1', $movie1)
+            ->setParameter('movie2', $movie2)
+            ->setMaxResults(1);
+        ;
+
+        return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 
     /**

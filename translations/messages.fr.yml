@@ -288,6 +288,8 @@ back.maze.movie.list.column.id: ID TMDB
 back.maze.movie.list.column.title: Titre
 back.maze.movie.list.title: Gestion des films
 
+front.maze.actor.cheat.error: Impossible de charger les filmographies des acteurs.
+front.maze.actor.cheat.not_found: Impossible de trouver le film commun.
 front.maze.actor.filmography_error: Impossible de charger la filmographie de l'acteur.
 front.maze.actor.home.actor_count: "%count% acteurs"
 front.maze.actor.home.content: "<p>Le but du jeu est d'avancer d'acteur en acteur en trouvant un film commun.</p>
@@ -318,6 +320,8 @@ front.maze.home.title: Quiz casting et filmographie
 front.maze.initialization_error: Une erreur est survenue lors de l'initialisation du quiz.
 front.maze.invalid_parameters: Les paramètres spécifiés pour la page sont incorrects.
 front.maze.movie.casting_error: Impossible de charger le casting du film.
+front.maze.movie.cheat.error: Impossible de charger les castings des films.
+front.maze.movie.cheat.not_found: Impossible de trouver l'acteur commun.
 front.maze.movie.home.movie_count: "%count% films"
 front.maze.movie.home.content: "<p>Le but du jeu est d'avancer de film en film en trouvant un acteur commun.</p>
 <p class='margin-bottom'>Ce quiz se base sur une sélection d'une centaine de films.</p>
@@ -353,6 +357,7 @@ front.maze.play.response.submit: Soumettre la réponse
 front.maze.play.select_actor: Choisir mes acteurs
 front.maze.play.select_movie: Choisir mes films
 front.maze.play.trick.request: Utiliser un joker
+front.maze.play.trick.cheat: Obtenir la réponse
 front.maze.quiz_casting: Quiz casting
 front.maze.quiz_filmography: Quiz filmographie
 front.maze.response.incorrect: Réponse incorrecte.
@@ -397,9 +402,10 @@ front.tagline.invalid_parameters: Les paramètres spécifiés pour la page sont 
 front.tagline.play.back: Changer de catégorie
 front.tagline.play.count: "Nombre de coups : "
 front.tagline.play.title: "Taglines '%genre%'"
+front.tagline.play.quiz_over: Félicitations ! Vous avez résolu ce quiz.
 front.tagline.play.response_success: Félicitations !
 front.tagline.play.response_failure: Réponse incorrecte !
-front.tagline.play.quiz_over: Félicitations ! Vous avez résolu ce quiz.
+front.tagline.play.cheat: Obtenir la réponse
 
 
 

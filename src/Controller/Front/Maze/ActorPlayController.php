@@ -169,6 +169,7 @@ class ActorPlayController extends AbstractController
             'helpList' => $helpMovieList,
             'responseRoute' => 'fo_maze_actor_progress',
             'trickRoute' => 'fo_maze_actor_trick',
+            'cheatRoute' => 'fo_maze_actor_cheat',
             'level' => $level,
             'replayUrl' => $replayUrl,
         ]);

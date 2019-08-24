@@ -79,9 +79,13 @@ class MazePlayer {
             this.submitResponse(document.getElementById('response').value, false);
         });
         document.getElementById('trick-button').addEventListener('click', (event) => {
-            const levelElement = document.getElementById('maze-level');
-            const level = levelElement ? levelElement.value : null
-            this.displayTrick(document.querySelector('.maze-item.active').dataset.tmdbId, level);
+            this.displayTrick(document.querySelector('.maze-item.active').dataset.tmdbId);
+        });
+        document.getElementById('cheat-button').addEventListener('click', (event) => {
+            this.useCheat();
+        });
+        document.getElementById('mobile-cheat-button').addEventListener('click', (event) => {
+            this.useCheat();
         });
         document.getElementById('replay-button').addEventListener('click', (event) => {
             window.location.assign(event.target.dataset.replayUrl);
@@ -134,9 +138,10 @@ class MazePlayer {
      * Allows to send request for a trick.
      *
      * @param int tmdbId
-     * @param int level
      */
-    displayTrick(tmdbId, level) {
+    displayTrick(tmdbId) {
+        const levelElement = document.getElementById('maze-level');
+        const level = levelElement ? levelElement.value : null;
         const trickUrl = document.getElementById('maze-play').dataset.trickUrl;
 
         const parameters = {tmdbId: tmdbId};
@@ -156,6 +161,35 @@ class MazePlayer {
 
                     displayPopup(list.outerHTML);
                 }
+            })
+        ;
+    };
+
+    /**
+     * Allows to cheat to get response.
+     */
+    useCheat() {
+        const currentItem = document.querySelector('.maze-item.active');
+        const nextItem = document.querySelector(`.maze-item[data-order="${+currentItem.dataset.order + 1}"]`);
+        const cheatUrl = document.getElementById('maze-play').dataset.cheatUrl;
+
+        axios.post(cheatUrl, {
+            currentTmdbId: currentItem.dataset.tmdbId,
+            nextTmdbId: nextItem.dataset.tmdbId
+        })
+            .then((response) => {
+                const responseCount = document.getElementById('response-count');
+                responseCount.innerHTML = `${+responseCount.innerHTML + 1}`;
+
+                const mazeResolved = this.progressMaze();
+
+                this.addMazeResponse(response.data);
+
+                if (mazeResolved) {
+                    this.terminateMaze();
+                }
+
+                displayPopup(response.data.displayName, {autoCloseDelay: this.popupDelay});
             })
         ;
     };

@@ -29,6 +29,9 @@ class TaglineQuiz {
                 this.checkResponse(item);
             });
         });
+        document.getElementById('cheat-button').addEventListener('click', (event) => {
+            this.useCheat();
+        });
         document.getElementById('replay-button').addEventListener('click', (event) => {
             window.location.reload();
         });
@@ -57,7 +60,7 @@ class TaglineQuiz {
         item.classList.add('disabled');
 
         if (tagline.dataset.order == this.taglineCount) {
-            this.terminateQuiz();
+            this.terminateQuiz(true);
             return;
         }
 
@@ -84,11 +87,40 @@ class TaglineQuiz {
     };
 
     /**
-     * Allows to terminate quiz about taglines (i.e. quiz resolved).
+     * Allows to cheat to get response.
      */
-    terminateQuiz() {
-        const quizOverMessage = document.getElementById('message-quiz-over');
-        displayPopup(this.quizOverMessage, {});
+    useCheat() {
+        const responseCount = document.getElementById('response-count');
+        responseCount.innerHTML = `${+responseCount.innerHTML + 1}`;
+
+        const tagline = document.querySelector('.tagline-item.active');
+        const item = document.querySelector(`.selection-item[data-tmdb-id="${tagline.dataset.tmdbId}"]`);
+
+        item.classList.add('disabled');
+
+        displayPopup(item.dataset.displayName, {
+            autoCloseDelay: this.popupDelay,
+            onClose: () => {
+                this.processNextTagline();
+            }
+        });
+
+        if (tagline.dataset.order == this.taglineCount) {
+            this.terminateQuiz(false);
+            return;
+        }
+    };
+
+    /**
+     * Allows to terminate quiz about taglines (i.e. quiz resolved).
+     *
+     * @param bool showMessage TRUE to display message for quiz over, FALSE either.
+     */
+    terminateQuiz(showMessage) {
+        if (showMessage) {
+            const quizOverMessage = document.getElementById('message-quiz-over');
+            displayPopup(this.quizOverMessage, {});
+        }
 
         [...document.querySelectorAll('.selection-item:not(.disabled)')].forEach((item) => {
             item.remove();
@@ -103,8 +135,7 @@ class TaglineQuiz {
             item.remove();
         });
 
-        document.getElementById('tagline-wrapper').classList.add('over');
-        document.getElementById('response-wrapper').classList.add('over');
+        document.getElementById('tagline-play').classList.add('over');
         document.getElementById('replay-wrapper').classList.add('active');
     };
 }
