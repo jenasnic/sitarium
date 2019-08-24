@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { displayModal, closeModal } from '../popup';
-import { displayProgressBar } from '../progress-bar';
+import { activateProgressBar } from '../progress-bar';
 
 /**
  * Allows to define actions for responses of quiz : add/edit/delete + link with TMDB
@@ -26,9 +26,17 @@ const initQuizResponseActions = () => {
         }
     );
 
-    document.getElementById('link-tmdb-button').addEventListener('click', (event) => {
-        buildTmdbLink(event.target.dataset.tmdbLinkUrl, event.target.dataset.progressUrl);
-    });
+    const progressBar = document.querySelector('progress[data-current-build-process]');
+    if (progressBar) {
+        activateProgressBar(
+            progressBar,
+            progressBar.dataset.progressUrl,
+            () => {
+                document.getElementById('pending-process-wrapper').remove();
+                document.querySelector('button[form="link-tmdb-form"]').disabled = false;
+            }
+        );
+    }
 };
 
 /**
@@ -98,17 +106,5 @@ const initQuizResponseForm = (url, form) => {
         ;
     });
 }
-
-/**
- * Allows to link movies from quiz with TMDB with progress bar.
- *
- * @param linkUrl Url to call to link movies with TMDB.
- * @param progressUrl Url to call to get progress when linking movies.
- */
-const buildTmdbLink = (tmdbLinkUrl, progressUrl) => {
-    axios.post(tmdbLinkUrl);
-
-    displayProgressBar(progressUrl, () => {document.location.reload();});
-};
 
 document.getElementById('quiz-responses-wrapper') && initQuizResponseActions();

@@ -27,7 +27,6 @@ class BuildFilmographyCommand extends AbstractBuildProcessCommand
         ActorFilmographyBuilder $filmographyBuilder
     ) {
         $this->filmographyBuilder = $filmographyBuilder;
-        $this->buildProcessRepository = $buildProcessRepository;
 
         parent::__construct($buildProcessRepository, $entityManager, ProcessTypeEnum::FILMOGRAPHY);
     }

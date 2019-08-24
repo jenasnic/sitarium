@@ -2,11 +2,14 @@
 Allows to edit quiz.
 Required :
 - form : FormView element based on QuizType object (i.e. quiz to edit).
+- BuildProcess pendingProcess : pending process (building filmography or casting).
 #}
 
 {% extends "admin.html.twig" %}
 
 {% block body %}
+
+    {% include 'back/tmdb/_pending_process.html.twig' %}
 
     <h1 class="title">{{ 'back.quiz.edit.title'|trans }}</h1>
 

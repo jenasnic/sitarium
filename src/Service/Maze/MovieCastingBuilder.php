@@ -8,12 +8,12 @@ use App\Enum\Maze\CastingStatusEnum;
 use App\Event\Maze\CastingProgressEvent;
 use App\Event\Maze\CastingStartEvent;
 use App\Event\MazeEvents;
+use App\Repository\Maze\CastingActorRepository;
 use App\Repository\Maze\MovieRepository;
 use App\Service\Tmdb\TmdbApiService;
 use App\Validator\Maze\CastingActorValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use App\Repository\Maze\CastingActorRepository;
 
 /**
  * This class allows to get all actors relative to existing movies and to build casting keeping only actors linked together
@@ -129,8 +129,8 @@ class MovieCastingBuilder
                 $actor->addMovie($movie);
             }
 
-            // WARNING : wait between each TMDB request to not override request rate limit (40 per seconde)
-            usleep(30000);
+            // WARNING : wait between each TMDB request to not override request rate limit (4 per seconde)
+            usleep(250001);
 
             $this->eventDispatcher->dispatch(MazeEvents::BUILD_CASTING_PROGRESS, new CastingProgressEvent(++$processCount));
         }

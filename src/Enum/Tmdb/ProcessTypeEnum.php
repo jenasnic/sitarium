@@ -6,6 +6,7 @@ class ProcessTypeEnum
 {
     const FILMOGRAPHY = 'filmography';
     const CASTING = 'casting';
+    const QUIZ_LINK = 'quiz_link';
 
     /**
      * @return array
@@ -15,6 +16,7 @@ class ProcessTypeEnum
         return [
             self::CASTING,
             self::FILMOGRAPHY,
+            self::QUIZ_LINK,
         ];
     }
 

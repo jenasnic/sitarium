@@ -27,7 +27,6 @@ class BuildCastingCommand extends AbstractBuildProcessCommand
         MovieCastingBuilder $castingBuilder
     ) {
         $this->castingBuilder = $castingBuilder;
-        $this->buildProcessRepository = $buildProcessRepository;
 
         parent::__construct($buildProcessRepository, $entityManager, ProcessTypeEnum::CASTING);
     }

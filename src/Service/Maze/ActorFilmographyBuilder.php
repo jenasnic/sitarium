@@ -9,11 +9,11 @@ use App\Event\MazeEvents;
 use App\Event\Maze\FilmographyProgressEvent;
 use App\Event\Maze\FilmographyStartEvent;
 use App\Repository\Maze\ActorRepository;
+use App\Repository\Maze\FilmographyMovieRepository;
 use App\Service\Tmdb\TmdbApiService;
 use App\Validator\Maze\FilmographyMovieValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use App\Repository\Maze\FilmographyMovieRepository;
 
 /**
  * This class allows to get all movies relative to existing actors and to build filmography keeping only movies linked together
@@ -135,8 +135,8 @@ class ActorFilmographyBuilder
                 }
             }
 
-            // WARNING : wait between each TMDB request to not override request rate limit (40 per seconde)
-            usleep(30000);
+            // WARNING : wait between each TMDB request to not override request rate limit (4 per seconde)
+            usleep(250001);
 
             $this->eventDispatcher->dispatch(MazeEvents::BUILD_FILMOGRAPHY_PROGRESS, new FilmographyProgressEvent(++$processCount));
         }

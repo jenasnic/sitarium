@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Repository\Tmdb\BuildProcessRepository;
 
 class QuizCrudController extends AbstractController
 {
@@ -54,6 +55,7 @@ class QuizCrudController extends AbstractController
      * @Route("/admin/quiz/edit/{quiz}", requirements={"quiz" = "\d+"}, name="bo_quiz_edit")
      *
      * @param Request $request
+     * @param BuildProcessRepository $buildProcessRepository
      * @param TranslatorInterface $translator
      * @param SaveQuizHandler $handler
      * @param Quiz $quiz
@@ -62,6 +64,7 @@ class QuizCrudController extends AbstractController
      */
     public function editAction(
         Request $request,
+        BuildProcessRepository $buildProcessRepository,
         TranslatorInterface $translator,
         SaveQuizHandler $handler,
         Quiz $quiz
@@ -80,7 +83,10 @@ class QuizCrudController extends AbstractController
             }
         }
 
-        return $this->render('back/quiz/edit.html.twig', ['form' => $form->createView()]);
+        return $this->render('back/quiz/edit.html.twig', [
+            'form' => $form->createView(),
+            'pendingProcess' => $buildProcessRepository->findPendingProcess(),
+        ]);
     }
 
     /**

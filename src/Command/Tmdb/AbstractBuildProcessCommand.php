@@ -74,6 +74,7 @@ abstract class AbstractBuildProcessCommand extends Command
         try {
             $this->executeProcess($input, $output);
         } catch (\Exception $e) {
+            $output->writeln($e->getMessage());
             $this->stopPendingProcess();
         }
         $output->writeln('OK');

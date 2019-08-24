@@ -2,6 +2,7 @@
 Allows to list all responses for a quiz. It allows to edit/delete response.
 Required :
 - quiz : quiz we want to display responses (as Quiz).
+- BuildProcess pendingProcess : pending process (building filmography or casting).
 #}
 
 <h1 class="title">{{ 'back.quiz.response.list.title'|trans }}</h1>
@@ -25,14 +26,18 @@ Required :
             >
                 {{ 'back.quiz.response.list.locate'|trans }}
             </a>
-            <span
-                id="link-tmdb-button"
+            <button
+                form="link-tmdb-form"
                 class="button is-primary"
-                data-tmdb-link-url="{{ path('bo_quiz_link_tmdb_start', {'quiz': quiz.id}) }}"
-                data-progress-url="{{ path('bo_quiz_link_tmdb_progress') }}"
+                {% if pendingProcess %}disabled{% endif %}
             >
                 {{ 'back.quiz.response.list.tmdb_link'|trans }}
-            </span>
+            </button>
+            <form id="link-tmdb-form" action="{{ path('bo_tmdb_build_process') }}" method="post">
+                <input name="type" type="hidden" value="{{ constant('App\\Enum\\Tmdb\\ProcessTypeEnum::QUIZ_LINK') }}" />
+                <input name="redirect" type="hidden" value="{{ path('bo_quiz_edit', {'quiz': quiz.id}) }}" />
+                <input name="parameters" type="hidden" value="{{ [quiz.id]|json_encode }}" />
+            </form>
         </div>
     </div>
 </nav>

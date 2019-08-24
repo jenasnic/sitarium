@@ -55,6 +55,9 @@ class TmdbLinkBuilder
         $this->eventDispatcher = $eventDispatcher;
     }
 
+    /**
+     * @param int $quizId
+     */
     public function build(int $quizId)
     {
         $processCount = 0;
@@ -65,10 +68,14 @@ class TmdbLinkBuilder
         /** @var Response $response */
         foreach ($responses as $response) {
             $movies = $this->tmdbService->searchEntity(Movie::class, $response->getTitle());
+            // WARNING : wait between each TMDB request to not override request rate limit (4 per seconde)
+            usleep(250001);
 
             if ($movies['total'] > 0) {
                 $tmdbId = $movies['results'][0]->getTmdbId();
                 $movie = $this->tmdbService->getEntity(Movie::class, $tmdbId);
+                // WARNING : wait between each TMDB request to not override request rate limit (4 per seconde)
+                usleep(250001);
 
                 $response->setTmdbId($tmdbId);
                 $response->setPictureUrl($movie->getPictureUrl());
@@ -78,9 +85,6 @@ class TmdbLinkBuilder
                 $this->entityManager->persist($response);
                 $this->entityManager->flush();
             }
-
-            // WARNING : wait between each TMDB request to not override request rate limit (40 per seconde)
-            usleep(600000);
 
             $this->eventDispatcher->dispatch(QuizEvents::BUILD_TMDB_LINK_PROGRESS, new TmdbLinkProgressEvent(++$processCount));
         }

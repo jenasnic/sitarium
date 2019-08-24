@@ -2,15 +2,15 @@
 
 namespace App\Controller\Back\Tmdb;
 
-use App\Enum\Tmdb\ProcessTypeEnum;
 use App\Repository\Tmdb\BuildProcessRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Process\Process;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Domain\Command\Tmdb\ExecuteProcessCommand;
+use App\Service\Handler\Tmdb\ExecuteProcessHandler;
 
 class BuildProcessController extends AbstractController
 {
@@ -20,7 +20,8 @@ class BuildProcessController extends AbstractController
      * @param Request $request
      * @param TranslatorInterface $translator
      * @param BuildProcessRepository $buildProcessRepository
-     * @param string $rootDir
+     * @param ExecuteProcessHandler $executeProcessHandler
+     * @param ExecuteProcessCommand $executeProcessCommand
      *
      * @return Response
      */
@@ -28,13 +29,13 @@ class BuildProcessController extends AbstractController
         Request $request,
         TranslatorInterface $translator,
         BuildProcessRepository $buildProcessRepository,
-        string $rootDir
+        ExecuteProcessHandler $executeProcessHandler,
+        ExecuteProcessCommand $executeProcessCommand
     ): Response {
-        $type = $request->request->get('type');
         $redirect = $request->request->get('redirect');
 
-        if (!ProcessTypeEnum::exists($type) || null === $redirect) {
-            throw new \InvalidArgumentException(sprintf('Invalid parameters (type "%s" / redirect "%s")', $type, $redirect));
+        if (null === $redirect) {
+            throw new \InvalidArgumentException(sprintf('Invalid redirect URL "%s"', $redirect));
         }
 
         $pendingProcess = $buildProcessRepository->findPendingProcess();
@@ -46,10 +47,9 @@ class BuildProcessController extends AbstractController
             ));
             $this->addFlash('warning', $message);
         } else {
-            $process = Process::fromShellCommandline(sprintf('nohup bin/console tmdb:build:%s &', $type), $rootDir);
-            $process->start();
+            $executeProcessHandler->handle($executeProcessCommand);
 
-            $message = $translator->trans(sprintf('back.tmdb.build.process.%s.start', $type));
+            $message = $translator->trans(sprintf('back.tmdb.build.process.%s.start', $executeProcessCommand->getType()));
             $this->addFlash('info', $message);
         }
 

@@ -26,7 +26,7 @@ Required :
                     {{ 'back.maze.actor.list.build_filmography'|trans }}
                 </button>
                 <form id="build-credits-form" action="{{ path('bo_tmdb_build_process') }}" method="post">
-                    <input name="type" type="hidden" value="filmography" />
+                    <input name="type" type="hidden" value="{{ constant('App\\Enum\\Tmdb\\ProcessTypeEnum::FILMOGRAPHY') }}" />
                     <input name="redirect" type="hidden" value="{{ path('bo_maze_actor_list') }}" />
                 </form>
             {% endblock %}
