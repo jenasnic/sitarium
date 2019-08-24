@@ -51,8 +51,7 @@ class Actor implements DisplayableInterface
     private $pictureUrl;
 
     /**
-     * @ORM\Column(name="status", type="string", length=25,
-     *      columnDefinition="ENUM('filmography_to_check', 'filmography_validated', 'filmography_empty')")
+     * @ORM\Column(name="status", type="string", length=25)
      *
      * @var string
      */
@@ -148,7 +147,7 @@ class Actor implements DisplayableInterface
     public function setStatus(string $status)
     {
         if (!FilmographyStatusEnum::exists($status)) {
-            throw new \InvalidArgumentException('Invalid status');
+            throw new \InvalidArgumentException(sprintf('Invalid status "%s"', $status));
         }
 
         $this->status = $status;

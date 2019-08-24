@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Entity\Maze;
+namespace App\Entity\Tmdb;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Enum\Maze\ProcessTypeEnum;
+use App\Enum\Tmdb\ProcessTypeEnum;
 
 /**
- * @ORM\Table(name="maze_build_process")
- * @ORM\Entity(repositoryClass="App\Repository\Maze\BuildProcessRepository")
+ * @ORM\Table(name="tmdb_build_process")
+ * @ORM\Entity(repositoryClass="App\Repository\Tmdb\BuildProcessRepository")
  */
 class BuildProcess
 {
@@ -21,8 +21,7 @@ class BuildProcess
     private $id;
 
     /**
-     * @ORM\Column(name="type", type="string", length=25,
-     *      columnDefinition="ENUM('filmography', 'casting')")
+     * @ORM\Column(name="type", type="string", length=25)
      *
      * @var string
      */
@@ -86,7 +85,7 @@ class BuildProcess
     public function setType(string $type)
     {
         if (!ProcessTypeEnum::exists($type)) {
-            throw new \InvalidArgumentException('Invalid type');
+            throw new \InvalidArgumentException(sprintf('Invalid type "%s"', $type));
         }
 
         $this->type = $type;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enum\Maze;
+namespace App\Enum\Tmdb;
 
 class ProcessTypeEnum
 {
@@ -13,8 +13,8 @@ class ProcessTypeEnum
     public static function getAll(): array
     {
         return [
-            self::FILMOGRAPHY,
             self::CASTING,
+            self::FILMOGRAPHY,
         ];
     }
 

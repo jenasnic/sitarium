@@ -51,8 +51,7 @@ class Movie implements DisplayableInterface
     private $pictureUrl;
 
     /**
-     * @ORM\Column(name="status", type="string", length=25,
-     *      columnDefinition="ENUM('casting_to_check', 'casting_validated', 'casting_empty')")
+     * @ORM\Column(name="status", type="string", length=25)
      *
      * @var string
      */
@@ -162,7 +161,7 @@ class Movie implements DisplayableInterface
     public function setStatus(string $status)
     {
         if (!CastingStatusEnum::exists($status)) {
-            throw new \InvalidArgumentException('Invalid status');
+            throw new \InvalidArgumentException(sprintf('Invalid status "%s"', $status));
         }
 
         $this->status = $status;

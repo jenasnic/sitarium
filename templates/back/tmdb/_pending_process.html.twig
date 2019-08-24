@@ -6,10 +6,10 @@ Required :
 
 {% if pendingProcess %}
     <div id="pending-process-wrapper" class="content">
-        <div class="is-size-7 has-text-centered">{{ ('back.maze.build.process.'~pendingProcess.type~'.pending')|trans }}</div>
+        <div class="is-size-7 has-text-centered">{{ ('back.tmdb.build.process.'~pendingProcess.type~'.pending')|trans }}</div>
         <progress
             data-current-build-process
-            data-progress-url="{{ path('bo_maze_build_progress') }}"
+            data-progress-url="{{ path('bo_tmdb_build_progress') }}"
             value="{{ pendingProcess.count }}"
             max="{{ pendingProcess.total }}"
             class="progress is-large"

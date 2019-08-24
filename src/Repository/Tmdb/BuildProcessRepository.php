@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository\Maze;
+namespace App\Repository\Tmdb;
 
-use App\Entity\Maze\BuildProcess;
+use App\Entity\Tmdb\BuildProcess;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -60,23 +60,5 @@ class BuildProcessRepository extends ServiceEntityRepository
         ;
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
-    }
-
-    /**
-     * @param string $type
-     */
-    public function stopPendingProcess(string $type): void
-    {
-        $queryBuilder = $this->createQueryBuilder('buildProcess')
-            ->update()
-            ->set('buildProcess.endedAt', ':today')
-            ->andWhere('buildProcess.endedAt is null')
-            ->andWhere('buildProcess.type = :type')
-        ;
-
-        $queryBuilder->getQuery()->execute([
-            'today' => new \DateTime(),
-            'type' => $type,
-        ]);
     }
 }

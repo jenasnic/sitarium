@@ -83,7 +83,7 @@ class TmdbApiService
         $annotation = $this->annotationReader->getClassAnnotation($reflectionClass, TmdbType::class);
 
         if (null === $annotation) {
-            throw new \InvalidArgumentException('Specified class doesn\'t define required information to get entity. Use annotation to fix it.');
+            throw new \InvalidArgumentException(sprintf('Specified class "%s" doesn\'t define required information to get entity. Use annotation to fix it.', $entityClass));
         }
 
         // Build request depending on annotation information (giving type of data to get)

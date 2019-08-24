@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller\Back\Maze;
+namespace App\Controller\Back\Tmdb;
 
-use App\Enum\Maze\ProcessTypeEnum;
-use App\Repository\Maze\BuildProcessRepository;
+use App\Enum\Tmdb\ProcessTypeEnum;
+use App\Repository\Tmdb\BuildProcessRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,14 +15,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class BuildProcessController extends AbstractController
 {
     /**
-     * @Route("/admin/maze/build/casting", name="bo_maze_build_casting", defaults={"type": "casting"}, methods="POST")
-     * @Route("/admin/maze/build/filmography", name="bo_maze_build_filmography", defaults={"type": "filmography"}, methods="POST")
+     * @Route("/admin/tmdb/build/process", name="bo_tmdb_build_process", methods="POST")
      *
      * @param Request $request
      * @param TranslatorInterface $translator
      * @param BuildProcessRepository $buildProcessRepository
      * @param string $rootDir
-     * @param string $type
      *
      * @return Response
      */
@@ -30,33 +28,36 @@ class BuildProcessController extends AbstractController
         Request $request,
         TranslatorInterface $translator,
         BuildProcessRepository $buildProcessRepository,
-        string $rootDir,
-        string $type
+        string $rootDir
     ): Response {
+        $type = $request->request->get('type');
+        $redirect = $request->request->get('redirect');
+
+        if (!ProcessTypeEnum::exists($type) || null === $redirect) {
+            throw new \InvalidArgumentException(sprintf('Invalid parameters (type "%s" / redirect "%s")', $type, $redirect));
+        }
+
         $pendingProcess = $buildProcessRepository->findPendingProcess();
 
         if (null !== $pendingProcess) {
             $message = $translator->trans(sprintf(
-                'back.maze.build.process.%s.already_pending',
+                'back.tmdb.build.process.%s.already_pending',
                 $pendingProcess->getType()
             ));
             $this->addFlash('warning', $message);
         } else {
-            $command = ProcessTypeEnum::CASTING === $type ? 'maze:build:casting' : 'maze:build:filmography';
-            $process = Process::fromShellCommandline(sprintf('nohup bin/console %s &', $command), $rootDir);
+            $process = Process::fromShellCommandline(sprintf('nohup bin/console tmdb:build:%s &', $type), $rootDir);
             $process->start();
 
-            $message = $translator->trans(sprintf('back.maze.build.process.%s.start', $type));
-            $this->addFlash('success', $message);
+            $message = $translator->trans(sprintf('back.tmdb.build.process.%s.start', $type));
+            $this->addFlash('info', $message);
         }
 
-        $redirectRoute = ProcessTypeEnum::CASTING === $type ? 'bo_maze_movie_list' :'bo_maze_actor_list';
-
-        return $this->redirectToRoute($redirectRoute);
+        return $this->redirect($redirect);
     }
 
     /**
-     * @Route("/admin/maze/build/progress", name="bo_maze_build_progress")
+     * @Route("/admin/maze/build/progress", name="bo_tmdb_build_progress")
      *
      * @param BuildProcessRepository $buildProcessRepository
      *

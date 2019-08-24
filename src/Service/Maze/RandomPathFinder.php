@@ -29,11 +29,11 @@ class RandomPathFinder
     public function find(array $mazeGraph, int $mazeSize): ?array
     {
         if ($mazeSize < 2) {
-            throw new \InvalidArgumentException('Items count must be equal or greater than 2.');
+            throw new \InvalidArgumentException(sprintf('Items count must be equal or greater than 2 (%u items found).', $mazeSize));
         }
 
         if ($mazeSize > count($mazeGraph)) {
-            throw new \InvalidArgumentException('Items count is too large to build a path. Choose a smaller items count size or increase items list in graph.');
+            throw new \InvalidArgumentException(sprintf('Items count is too large to build a path. Choose a smaller items count size or increase items list in graph (%u items found).', $mazeSize));
         }
 
         // Browse all MazeGraphItem randomly and try to find a path with specified size

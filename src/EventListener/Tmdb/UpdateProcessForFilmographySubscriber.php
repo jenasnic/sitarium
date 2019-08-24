@@ -1,13 +1,13 @@
 <?php
 
-namespace App\EventListener\Maze;
+namespace App\EventListener\Tmdb;
 
-use App\Entity\Maze\BuildProcess;
-use App\Enum\Maze\ProcessTypeEnum;
+use App\Entity\Tmdb\BuildProcess;
+use App\Enum\Tmdb\ProcessTypeEnum;
 use App\Event\MazeEvents;
 use App\Event\Maze\FilmographyProgressEvent;
 use App\Event\Maze\FilmographyStartEvent;
-use App\Repository\Maze\BuildProcessRepository;
+use App\Repository\Tmdb\BuildProcessRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -31,9 +31,9 @@ class UpdateProcessForFilmographySubscriber implements EventSubscriberInterface
     public function __construct(
         BuildProcessRepository $buildProcessRepository,
         EntityManagerInterface $entityManager
-        ) {
-            $this->buildProcessRepository = $buildProcessRepository;
-            $this->entityManager = $entityManager;
+    ) {
+        $this->buildProcessRepository = $buildProcessRepository;
+        $this->entityManager = $entityManager;
     }
 
     /**

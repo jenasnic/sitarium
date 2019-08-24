@@ -7,7 +7,7 @@ use App\Entity\Maze\Actor;
 use App\Enum\PagerEnum;
 use App\Enum\Tmdb\TypeEnum;
 use App\Repository\Maze\ActorRepository;
-use App\Repository\Maze\BuildProcessRepository;
+use App\Repository\Tmdb\BuildProcessRepository;
 use App\Service\Handler\Maze\AddActorHandler;
 use App\Service\Tmdb\TmdbApiService;
 use App\Validator\Maze\ActorValidator;

@@ -10,7 +10,7 @@ Required :
 
 {% block body %}
 
-    {% include 'back/maze/_pending_process.html.twig' %}
+    {% include 'back/tmdb/_pending_process.html.twig' %}
 
     <div id="maze-item-list">
 
@@ -25,7 +25,10 @@ Required :
                 >
                     {{ 'back.maze.movie.list.build_casting'|trans }}
                 </button>
-                <form id="build-credits-form" action="{{ path('bo_maze_build_casting') }}" method="post"></form>
+                <form id="build-credits-form" action="{{ path('bo_tmdb_build_process') }}" method="post">
+                    <input name="type" type="hidden" value="casting" />
+                    <input name="redirect" type="hidden" value="{{ path('bo_maze_movie_list') }}" />
+                </form>
             {% endblock %}
 
             {% block grid_result %}
