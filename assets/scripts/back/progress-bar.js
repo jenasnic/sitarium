@@ -14,7 +14,18 @@ export const displayProgressBar = (progressUrl, callback) => {
     progressBar.setAttribute('max', 100);
 
     displayModal(progressBar);
-    setTimeout(updateProgressBar, 500, progressBar, progressUrl, callback);
+    setTimeout(updateProgressBar, 500, progressBar, progressUrl, callback, true);
+};
+
+/**
+ * Allows to activate a visible progress bar.
+ *
+ * @param Element progressBar Progress bar as DOM element to update.
+ * @param string progressUrl Url to call given new state of progress.
+ * @param function callback Callback to call after progress bar over.
+ */
+export const activateProgressBar = (progressBar, progressUrl, callback) => {
+    setTimeout(updateProgressBar, 500, progressBar, progressUrl, callback, false);
 };
 
 /**
@@ -23,8 +34,9 @@ export const displayProgressBar = (progressUrl, callback) => {
  * @param Element progressBar Progress bar as DOM element to update.
  * @param string progressUrl Url to call given new state of progress.
  * @param function callback Callback to call after progress bar over.
+ * @param bool withModal TRUE if progress bar is displayed in a modal, FALSE either.
  */
-const updateProgressBar = (progressBar, progressUrl, callback) => {
+const updateProgressBar = (progressBar, progressUrl, callback, withModal) => {
     axios.get(progressUrl)
         .then(response => {
             const { current, total } = response.data;
@@ -35,7 +47,9 @@ const updateProgressBar = (progressBar, progressUrl, callback) => {
             if (current < total) {
                 setTimeout(updateProgressBar, 700, progressBar, progressUrl, callback);
             } else {
-                closeModal();
+                if (withModal) {
+                    closeModal();
+                }
                 callback();
             }
         })

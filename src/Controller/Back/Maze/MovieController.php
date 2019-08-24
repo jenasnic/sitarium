@@ -6,6 +6,7 @@ use App\Domain\Command\Maze\AddMovieCommand;
 use App\Entity\Maze\Movie;
 use App\Enum\PagerEnum;
 use App\Enum\Tmdb\TypeEnum;
+use App\Repository\Maze\BuildProcessRepository;
 use App\Repository\Maze\MovieRepository;
 use App\Service\Handler\Maze\AddMovieHandler;
 use App\Service\Tmdb\TmdbApiService;
@@ -32,17 +33,22 @@ class MovieController extends AbstractController
      *
      * @param Request $request
      * @param MovieRepository $movieRepository
+     * @param BuildProcessRepository $buildProcessRepository
      *
      * @return Response
      */
-    public function listAction(Request $request, MovieRepository $movieRepository): Response
-    {
+    public function listAction(
+        Request $request,
+        MovieRepository $movieRepository,
+        BuildProcessRepository $buildProcessRepository
+    ): Response {
         $page = $request->query->get('page', 1);
         $title = $request->query->get('value', null);
 
         return $this->render('back/maze/movie/list.html.twig', [
             'pager' => $movieRepository->getPager($title, $page, PagerEnum::DEFAULT_MAX_PER_PAGE),
             'value' => $title,
+            'pendingProcess' => $buildProcessRepository->findPendingProcess(),
         ]);
     }
 

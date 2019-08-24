@@ -1,19 +1,19 @@
 {% if(app.session.flashbag.has('error')) %}
-    <div class="has-text-centered has-text-danger">
+    <div class="has-text-centered has-text-danger content">
     {% for message in app.session.flashbag.get('error') %}
         <p>{{ message }}</p>
     {% endfor %}
     </div>
 {% endif %}
 {% if(app.session.flashbag.has('warning')) %}
-    <div class="has-text-centered has-text-warning">
+    <div class="has-text-centered has-text-warning content">
     {% for message in app.session.flashbag.get('warning') %}
         <p>{{ message }}</p>
     {% endfor %}
     </div>
 {% endif %}
 {% if(app.session.flashbag.has('info')) %}
-    <div class="has-text-centered has-text-success">
+    <div class="has-text-centered has-text-success content">
     {% for message in app.session.flashbag.get('info') %}
         <p>{{ message }}</p>
     {% endfor %}

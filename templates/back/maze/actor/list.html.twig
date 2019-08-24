@@ -2,11 +2,15 @@
 Allows to list all actors available. It allows to add/delete actors.
 Required :
 - pager : list of all actors available (as Pagerfanta).
+- string value : current filter value.
+- BuildProcess pendingProcess : pending process (building filmography or casting).
 #}
 
 {% extends "admin.html.twig" %}
 
 {% block body %}
+
+    {% include 'back/maze/_pending_process.html.twig' %}
 
     <div id="maze-item-list">
 
@@ -14,14 +18,14 @@ Required :
 
             {% block action %}
                 <a class="button is-primary" href="{{ path('bo_maze_actor_new') }}">{{ 'global.add'|trans }}</a>
-                <span
-                    id="build-credits-button"
+                <button
+                    form="build-credits-form"
                     class="button is-primary"
-                    data-build-credits-url="{{ path('bo_maze_actor_filmography_build') }}"
-                    data-progress-url="{{ path('bo_maze_actor_filmography_progress') }}"
+                    {% if pendingProcess %}disabled{% endif %}
                 >
                     {{ 'back.maze.actor.list.build_filmography'|trans }}
-                </span>
+                </button>
+                <form id="build-credits-form" action="{{ path('bo_maze_build_filmography') }}" method="post"></form>
             {% endblock %}
 
             {% block grid_result %}

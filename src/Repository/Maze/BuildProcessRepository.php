@@ -35,6 +35,18 @@ class BuildProcessRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return BuildProcess|null
+     */
+    public function findPendingProcess(): ?BuildProcess
+    {
+        $queryBuilder = $this->createQueryBuilder('buildProcess')
+            ->where('buildProcess.endedAt is null')
+        ;
+
+        return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
+    /**
      * @param string $type
      *
      * @return BuildProcess|null

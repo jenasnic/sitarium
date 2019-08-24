@@ -7,6 +7,7 @@ use App\Entity\Maze\Actor;
 use App\Enum\PagerEnum;
 use App\Enum\Tmdb\TypeEnum;
 use App\Repository\Maze\ActorRepository;
+use App\Repository\Maze\BuildProcessRepository;
 use App\Service\Handler\Maze\AddActorHandler;
 use App\Service\Tmdb\TmdbApiService;
 use App\Validator\Maze\ActorValidator;
@@ -32,17 +33,22 @@ class ActorController extends AbstractController
      *
      * @param Request $request
      * @param ActorRepository $actorRepository
+     * @param BuildProcessRepository $buildProcessRepository
      *
      * @return Response
      */
-    public function listAction(Request $request, ActorRepository $actorRepository): Response
-    {
+    public function listAction(
+        Request $request,
+        ActorRepository $actorRepository,
+        BuildProcessRepository $buildProcessRepository
+    ): Response {
         $page = $request->query->get('page', 1);
         $fullname = $request->query->get('value', null);
 
         return $this->render('back/maze/actor/list.html.twig', [
             'pager' => $actorRepository->getPager($fullname, $page, PagerEnum::DEFAULT_MAX_PER_PAGE),
             'value' => $fullname,
+            'pendingProcess' => $buildProcessRepository->findPendingProcess(),
         ]);
     }
 

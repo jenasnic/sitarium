@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { initFilterAction } from '../filter';
 import { displayModal, closeModal } from '../popup';
-import { displayProgressBar } from '../progress-bar';
+import { activateProgressBar } from '../progress-bar';
 
 /**
  * Allows to initialize action to display detail about maze item (actor or movie).
@@ -11,10 +11,16 @@ const initActions = () => {
 
     initDetailAction();
 
-    document.getElementById('build-credits-button')
-        && document.getElementById('build-credits-button').addEventListener('click', (event) => {
-            buildCredits(event.target.dataset.buildCreditsUrl, event.target.getAttribute('data-progress-url'));
-        });
+    const progressBar = document.querySelector('progress[data-current-build-process]');
+    if (progressBar) {
+        activateProgressBar(
+            progressBar,
+            progressBar.dataset.progressUrl,
+            () => {
+                document.getElementById('pending-process-wrapper').remove();
+            }
+        );
+    }
 };
 
 /**
@@ -41,20 +47,6 @@ const viewMazeItemDetail = (detailUrl) => {
             displayModal(response.data);
         })
     ;
-};
-
-/**
- * Allows to build credits (filmography for actors or casting for movies) with progress bar.
- *
- * @param buildUrl Url to call to build credits.
- * @param progressUrl Url to call to get progress when building credits.
- */
-const buildCredits = (buildUrl, progressUrl) => {
-    axios.post(buildUrl);
-
-    displayProgressBar(progressUrl, () => {
-        document.location.reload();
-    });
 };
 
 document.getElementById('maze-item-list') && initActions();
