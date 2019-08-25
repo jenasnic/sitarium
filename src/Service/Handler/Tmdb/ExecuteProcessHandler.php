@@ -3,6 +3,7 @@
 namespace App\Service\Handler\Tmdb;
 
 use App\Domain\Command\Tmdb\ExecuteProcessCommand;
+use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 
 /**
@@ -42,7 +43,10 @@ class ExecuteProcessHandler
             $symfonyCommand = sprintf('%s %s', $symfonyCommand, implode(' ', $options));
         }
 
-        $process = Process::fromShellCommandline(sprintf('nohup bin/console %s &', $symfonyCommand), $this->rootDir);
+        $phpBinaryFinder = new PhpExecutableFinder();
+        $phpBinaryPath = $phpBinaryFinder->find();
+
+        $process = Process::fromShellCommandline(sprintf('nohup %s bin/console %s &', $phpBinaryPath, $symfonyCommand), $this->rootDir);
         $process->start();
     }
 }

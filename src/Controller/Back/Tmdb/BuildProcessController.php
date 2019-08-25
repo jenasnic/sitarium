@@ -2,15 +2,15 @@
 
 namespace App\Controller\Back\Tmdb;
 
+use App\Domain\Command\Tmdb\ExecuteProcessCommand;
 use App\Repository\Tmdb\BuildProcessRepository;
+use App\Service\Handler\Tmdb\ExecuteProcessHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use App\Domain\Command\Tmdb\ExecuteProcessCommand;
-use App\Service\Handler\Tmdb\ExecuteProcessHandler;
 
 class BuildProcessController extends AbstractController
 {
