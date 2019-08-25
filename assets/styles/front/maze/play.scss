@@ -189,8 +189,11 @@
                     }
                 }
 
+                .maze-response {display:none;}
+
                 &.over {
-                    flex-wrap: wrap;
+                    align-items: center;
+                    flex-direction: column;
                     justify-content: center;
 
                     #mobile-buttons {display: none;}
@@ -199,6 +202,19 @@
                         display: block;
                         flex: none;
                         margin: 0.5rem;
+                    }
+
+                    .maze-response {
+                        display: block;
+                        flex: none;
+                        margin: 0.2rem;
+
+                        img {
+                            border: 2px solid $color-border-input;
+                            border-radius: 5px;
+                            box-shadow: $box-shadow-input;
+                            max-width: 100px;
+                        }
                     }
                 }
             }

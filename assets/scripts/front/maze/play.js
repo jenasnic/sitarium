@@ -9,6 +9,7 @@ class MazePlayer {
     popupDelay;
     responseFoundMessage;
     quizOverMessage;
+    processPending;
 
     /**
      * @param int mazeItemWidth Total width of items in scrollable element.
@@ -21,6 +22,7 @@ class MazePlayer {
         this.mazeResponseWidth = mazeResponseWidth;
         this.mazeItemMargin = mazeItemMargin;
         this.popupDelay = popupDelay;
+        this.processPending = false;
 
         this.responseFoundMessage = document.getElementById('message-response-found').value;
         this.quizOverMessage = document.getElementById('message-quiz-over').value;
@@ -99,6 +101,11 @@ class MazePlayer {
      * @param bool backToMaze
      */
     submitResponse(response, backToMaze) {
+        if (this.processPending) {
+            return;
+        }
+
+        this.processPending = true;
         const responseUrl = document.getElementById('maze-play').dataset.responseUrl;
         const currentItem = document.querySelector('.maze-item.active');
         const nextItem = document.querySelector(`.maze-item[data-order="${+currentItem.dataset.order + 1}"]`);
@@ -113,15 +120,13 @@ class MazePlayer {
                 responseCount.innerHTML = `${+responseCount.innerHTML + 1}`;
 
                 if (response.data.success) {
-                    const mazeResolved = this.progressMaze();
+                    this.progressMaze(response.data);
 
                     if (backToMaze) {
                         window.scroll(0, document.getElementById('action-wrapper').offsetTop);
                     }
 
-                    this.addMazeResponse(response.data);
-
-                    if (mazeResolved) {
+                    if (this.isMazeResolved()) {
                         this.terminateMaze();
                         displayPopup(this.quizOverMessage);
                     } else {
@@ -130,6 +135,9 @@ class MazePlayer {
                 } else {
                     displayPopup(response.data.message, {autoCloseDelay: this.popupDelay});
                 }
+            })
+            .finally(() => {
+                this.processPending = false;
             })
         ;
     };
@@ -169,6 +177,11 @@ class MazePlayer {
      * Allows to cheat to get response.
      */
     useCheat() {
+        if (this.processPending) {
+            return;
+        }
+
+        this.processPending = true;
         const currentItem = document.querySelector('.maze-item.active');
         const nextItem = document.querySelector(`.maze-item[data-order="${+currentItem.dataset.order + 1}"]`);
         const cheatUrl = document.getElementById('maze-play').dataset.cheatUrl;
@@ -181,31 +194,26 @@ class MazePlayer {
                 const responseCount = document.getElementById('response-count');
                 responseCount.innerHTML = `${+responseCount.innerHTML + 1}`;
 
-                const mazeResolved = this.progressMaze();
+                this.progressMaze(response.data);
 
-                this.addMazeResponse(response.data);
-
-                if (mazeResolved) {
+                if (this.isMazeResolved()) {
                     this.terminateMaze();
                 }
 
                 displayPopup(response.data.displayName, {autoCloseDelay: this.popupDelay});
             })
+            .finally(() => {
+                this.processPending = false;
+            })
         ;
     };
 
     /**
-     * Allows to progress maze with following actions:
-     * - move to next maze item
-     * - move cursor
-     * - check if maze is over.
+     * Allows to progress maze with following actions (i.e. move to next maze item + move cursor).
      *
      * @param object response Response as JSON object with displayName, tmdbLink and pictureUrl.
-     * @param string displayName
-     *
-     * @return bool True if end of maze has been reached (maze resolved), false either.
      */
-    progressMaze() {
+    progressMaze(response) {
         const currentItem = document.querySelector('.maze-item.active');
         currentItem.classList.remove('active');
 
@@ -213,17 +221,16 @@ class MazePlayer {
         const nextItem = document.querySelector(`.maze-item[data-order="${newIndex}"]`);
         nextItem.classList.add('active');
 
-        if (nextItem.classList.contains('last')) {
-            return true;
-        } else {
+        if (!nextItem.classList.contains('last')) {
             const cursor = document.getElementById('maze-cursor');
             document.getElementById('maze-cursor').style.left = `${cursor.offsetLeft + this.mazeItemWidth}px`;
 
             this.centerCursorScroll();
-            this.refreshForMobile();
-
-            return false;
         }
+
+        this.refreshForMobile();
+
+        this.addMazeResponse(response);
     };
 
     /**
@@ -237,16 +244,24 @@ class MazePlayer {
         responsePicture.alt = response.displayName;
 
         const positionLeft = ((+document.querySelector('.maze-item.active').dataset.order - 1) * this.mazeItemWidth) - (this.mazeResponseWidth / 2);
-
         const responseLink = document.createElement('a');
         responseLink.href = response.tmdbLink;
         responseLink.target = '_blank';
         responseLink.title = response.displayName;
         responseLink.classList.add('maze-response');
-        responseLink.appendChild(responsePicture);
         responseLink.style.left = `${positionLeft}px`;
 
+        const responseMobileLink = responseLink.cloneNode();
+
+        responseLink.appendChild(responsePicture);
+        responseMobileLink.appendChild(responsePicture.cloneNode());
+
+        // Add response link for desktop + mobile
         document.getElementById('maze-items').appendChild(responseLink);
+        document.getElementById('mobile-wrapper').insertBefore(
+            responseMobileLink,
+            document.querySelector('.mobile-maze-item.current')
+        );
     };
 
     /**
@@ -259,6 +274,17 @@ class MazePlayer {
         const scrollOffset = this.mazeItemWidth - (cursor.offsetLeft % this.mazeItemWidth) + (2 * this.mazeItemMargin);
         const newPosition = cursor.offsetLeft - (container.offsetWidth / 2) + scrollOffset;
         document.getElementById('scroll-wrapper').scroll(newPosition, 0);
+    };
+
+    /**
+     * Allows to check if maze is resolved, i.e. last maze item has been reached.
+     *
+     * @return bool True if end of maze has been reached (maze resolved), false either.
+     */
+    isMazeResolved() {
+        const currentItem = document.querySelector('.maze-item.active');
+
+        return currentItem.classList.contains('last');
     };
 
     /**
@@ -277,7 +303,6 @@ class MazePlayer {
 
         // Add/remove class for mobile
         document.querySelector('.mobile-maze-item.current').classList.remove('current');
-        document.querySelector('.mobile-maze-item.next').classList.remove('next');
         document.getElementById('mobile-wrapper').classList.add('over');
 
         // Display button to replay
@@ -294,11 +319,14 @@ class MazePlayer {
         });
 
         const currentItem = document.querySelector('.maze-item.active');
-        const mobileCurrentItem = document.querySelector(`.mobile-maze-item[data-order="${currentItem.dataset.order}"]`);
-        const mobileNextItem = document.querySelector(`.mobile-maze-item[data-order="${+currentItem.dataset.order + 1}"]`);
 
+        const mobileCurrentItem = document.querySelector(`.mobile-maze-item[data-order="${currentItem.dataset.order}"]`);
         mobileCurrentItem.classList.add('current');
-        mobileNextItem.classList.add('next');
+
+        if (!currentItem.classList.contains('last')) {
+            const mobileNextItem = document.querySelector(`.mobile-maze-item[data-order="${+currentItem.dataset.order + 1}"]`);
+            mobileNextItem.classList.add('next');
+        }
     };
 }
 
