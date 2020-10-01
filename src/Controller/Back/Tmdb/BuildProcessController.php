@@ -63,7 +63,7 @@ class BuildProcessController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function castingProgressAction(BuildProcessRepository $buildProcessRepository): JsonResponse
+    public function progressAction(BuildProcessRepository $buildProcessRepository): JsonResponse
     {
         $pendingProcess = $buildProcessRepository->findPendingProcess();
 
