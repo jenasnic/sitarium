@@ -77,6 +77,7 @@ class BuildProcessController extends AbstractController
         return new JsonResponse([
             'current' => $pendingProcess->getCount(),
             'total' => $pendingProcess->getTotal(),
+            'options' => $pendingProcess->getOptions(),
         ]);
     }
 }

@@ -7,19 +7,10 @@ use App\Model\Tmdb\Search\DisplayableInterface;
 use App\Repository\Tagline\MovieRepository;
 use App\Service\Tmdb\TmdbApiService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class TaglineMovieSynchronizer extends AbstractSynchronizer
 {
-    /**
-     * @var TmdbApiService
-     */
-    protected $tmdbService;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
-
     /**
      * @var MovieRepository
      */
@@ -28,22 +19,32 @@ class TaglineMovieSynchronizer extends AbstractSynchronizer
     /**
      * @param TmdbApiService $tmdbService
      * @param EntityManagerInterface $entityManager
+     * @param EventDispatcherInterface $eventDispatcher
      * @param MovieRepository $movieRepository
      */
     public function __construct(
         TmdbApiService $tmdbService,
         EntityManagerInterface $entityManager,
+        EventDispatcherInterface $eventDispatcher,
         MovieRepository $movieRepository
     ) {
-        $this->tmdbService = $tmdbService;
-        $this->entityManager = $entityManager;
+        parent::__construct($tmdbService, $entityManager, $eventDispatcher);
+
         $this->movieRepository = $movieRepository;
     }
 
     /**
      * @return string
      */
-    protected function getEntityClass()
+    protected function getLocalEntityClass()
+    {
+        return Movie::class;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTmdbEntityClass()
     {
         return Movie::class;
     }

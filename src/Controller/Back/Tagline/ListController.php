@@ -5,6 +5,7 @@ namespace App\Controller\Back\Tagline;
 use App\Entity\Tagline\Movie;
 use App\Enum\PagerEnum;
 use App\Repository\Tagline\MovieRepository;
+use App\Repository\Tmdb\BuildProcessRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,17 +20,22 @@ class ListController extends AbstractController
      *
      * @param Request $request
      * @param MovieRepository $movieRepository
+     * @param BuildProcessRepository $buildProcessRepository
      *
      * @return Response
      */
-    public function listAction(Request $request, MovieRepository $movieRepository): Response
-    {
+    public function listAction(
+        Request $request,
+        MovieRepository $movieRepository,
+        BuildProcessRepository $buildProcessRepository
+    ): Response {
         $page = $request->query->get('page', 1);
         $title = $request->query->get('value', null);
 
         return $this->render('back/tagline/movie/list.html.twig', [
             'pager' => $movieRepository->getPager($title, $page, PagerEnum::DEFAULT_MAX_PER_PAGE),
             'value' => $title,
+            'pendingProcess' => $buildProcessRepository->findPendingProcess(),
         ]);
     }
 

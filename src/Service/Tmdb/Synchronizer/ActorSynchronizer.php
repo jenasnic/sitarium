@@ -7,19 +7,10 @@ use App\Model\Tmdb\Search\DisplayableInterface;
 use App\Repository\Maze\ActorRepository;
 use App\Service\Tmdb\TmdbApiService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ActorSynchronizer extends AbstractSynchronizer
 {
-    /**
-     * @var TmdbApiService
-     */
-    protected $tmdbService;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
-
     /**
      * @var ActorRepository
      */
@@ -28,22 +19,32 @@ class ActorSynchronizer extends AbstractSynchronizer
     /**
      * @param TmdbApiService $tmdbService
      * @param EntityManagerInterface $entityManager
+     * @param EventDispatcherInterface $eventDispatcher
      * @param ActorRepository $actorRepository
      */
     public function __construct(
         TmdbApiService $tmdbService,
         EntityManagerInterface $entityManager,
+        EventDispatcherInterface $eventDispatcher,
         ActorRepository $actorRepository
     ) {
-        $this->tmdbService = $tmdbService;
-        $this->entityManager = $entityManager;
+        parent::__construct($tmdbService, $entityManager, $eventDispatcher);
+
         $this->actorRepository = $actorRepository;
     }
 
     /**
      * @return string
      */
-    protected function getEntityClass()
+    protected function getLocalEntityClass()
+    {
+        return Actor::class;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTmdbEntityClass()
     {
         return Actor::class;
     }

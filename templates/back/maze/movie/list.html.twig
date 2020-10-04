@@ -18,6 +18,7 @@ Required :
 
             {% block action %}
                 <a class="button is-primary" href="{{ path('bo_maze_movie_new') }}">{{ 'global.add'|trans }}</a>
+                {% include 'back/tmdb/_synchro_button.html.twig' with {'redirect': path('bo_maze_movie_list')} %}
                 <button
                     form="build-credits-form"
                     class="button is-primary"

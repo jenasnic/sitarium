@@ -28,6 +28,13 @@ class BuildProcess
     private $type;
 
     /**
+     * @ORM\Column(name="options", type="text", nullable=true)
+     *
+     * @var string
+     */
+    private $options;
+
+    /**
      * @ORM\Column(name="startedAt", type="datetime")
      *
      * @var \DateTime
@@ -55,9 +62,14 @@ class BuildProcess
      */
     private $total;
 
-    public function __construct(string $type, int $total)
+    /**
+     * @param string $type
+     * @param int $total
+     */
+    public function __construct(string $type, int $total, ?string $options = null)
     {
         $this->setType($type);
+        $this->setOptions($options);
         $this->startedAt = new \DateTime();
         $this->count = 0;
         $this->total = $total;
@@ -89,6 +101,22 @@ class BuildProcess
         }
 
         $this->type = $type;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOptions(): ?string
+    {
+        return $this->options;
+    }
+
+    /**
+     * @param string|null $options
+     */
+    public function setOptions(?string $options)
+    {
+        $this->options = $options;
     }
 
     /**

@@ -16,10 +16,7 @@ const initActions = () => {
         activateProgressBar(
             progressBar,
             progressBar.dataset.progressUrl,
-            () => {
-                document.getElementById('pending-process-wrapper').remove();
-                document.querySelector('button[form="build-credits-form"]').disabled = false;
-            }
+            () => { document.location.reload(true); }
         );
     }
 };

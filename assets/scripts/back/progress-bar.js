@@ -39,7 +39,8 @@ export const activateProgressBar = (progressBar, progressUrl, callback) => {
 const updateProgressBar = (progressBar, progressUrl, callback, withModal) => {
     axios.get(progressUrl)
         .then(response => {
-            const { current, total } = response.data;
+            const { current, total, options } = response.data;
+            progressBar.parentNode.dataset.info = options ? options : '';
             if (current > 0 && total > 0) {
                 progressBar.setAttribute('max', total);
                 progressBar.setAttribute('value', current);

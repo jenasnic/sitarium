@@ -6,19 +6,11 @@ use App\Model\Tmdb\Search\DisplayableInterface;
 use App\Repository\Maze\CastingActorRepository;
 use App\Service\Tmdb\TmdbApiService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use App\Entity\Maze\Actor;
 
 class CastingActorSynchronizer extends AbstractSynchronizer
 {
-    /**
-     * @var TmdbApiService
-     */
-    protected $tmdbService;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
-
     /**
      * @var CastingActorRepository
      */
@@ -27,24 +19,34 @@ class CastingActorSynchronizer extends AbstractSynchronizer
     /**
      * @param TmdbApiService $tmdbService
      * @param EntityManagerInterface $entityManager
+     * @param EventDispatcherInterface $eventDispatcher
      * @param CastingActorRepository $actorRepository
      */
     public function __construct(
         TmdbApiService $tmdbService,
         EntityManagerInterface $entityManager,
+        EventDispatcherInterface $eventDispatcher,
         CastingActorRepository $castingActorRepository
     ) {
-        $this->tmdbService = $tmdbService;
-        $this->entityManager = $entityManager;
+        parent::__construct($tmdbService, $entityManager, $eventDispatcher);
+
         $this->castingActorRepository = $castingActorRepository;
     }
 
     /**
      * @return string
      */
-    protected function getEntityClass()
+    protected function getLocalEntityClass()
     {
         return CastingActor::class;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTmdbEntityClass()
+    {
+        return Actor::class;
     }
 
     /**
@@ -52,12 +54,12 @@ class CastingActorSynchronizer extends AbstractSynchronizer
      */
     protected function getAllData()
     {
-        return $this->actorRepository->findAll();
+        return $this->castingActorRepository->findAll();
     }
 
     /**
      * @param CastingActor $localData
-     * @param CastingActor $tmdbData
+     * @param Actor $tmdbData
      *
      * @return bool TRUE if local data is updated, FALSE either
      */

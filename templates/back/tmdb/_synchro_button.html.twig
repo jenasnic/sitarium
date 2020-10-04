@@ -1,0 +1,17 @@
+{#
+Allows to display synchronization button.
+Required :
+- string redirect : redirect path when clicking on synchronization button.
+#}
+
+<button
+    form="synchronization-form"
+    class="button is-primary"
+    {% if pendingProcess %}disabled{% endif %}
+>
+    {{ 'back.tmdb.synchronization'|trans }}
+</button>
+<form id="synchronization-form" action="{{ path('bo_tmdb_build_process') }}" method="post" class="is-hidden">
+    <input name="type" type="hidden" value="{{ constant('App\\Enum\\Tmdb\\ProcessTypeEnum::SYNCHRONIZATION') }}" />
+    <input name="redirect" type="hidden" value="{{ redirect }}" />
+</form>
