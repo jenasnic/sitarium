@@ -8,13 +8,16 @@ Required :
 
 {% block body %}
 
+    {% include 'back/tmdb/_pending_process.html.twig' %}
+
     <div id="tagline-movie-list">
 
         {% embed 'back/form/_grid.html.twig' with {'pager': pager, 'title': 'back.tagline.movie.list.title'|trans} %}
 
             {% block action %}
-                    <a class="button is-primary" href="{{ path('bo_tagline_movie_new') }}">{{ 'global.add'|trans }}</a>
-                    <a class="button is-primary" href="{{ path('bo_tagline_genre_list') }}">{{ 'back.tagline.movie.list.button.genre'|trans }}</a>
+                <a class="button is-primary" href="{{ path('bo_tagline_movie_new') }}">{{ 'global.add'|trans }}</a>
+                <a class="button is-primary" href="{{ path('bo_tagline_genre_list') }}">{{ 'back.tagline.movie.list.button.genre'|trans }}</a>
+                {% include 'back/tmdb/_synchro_button.html.twig' with {'redirect': path('bo_tagline_movie_list')} %}
             {% endblock %}
 
             {% block grid_result %}

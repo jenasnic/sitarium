@@ -18,6 +18,7 @@ Required :
 
             {% block action %}
                 <a class="button is-primary" href="{{ path('bo_maze_actor_new') }}">{{ 'global.add'|trans }}</a>
+                {% include 'back/tmdb/_synchro_button.html.twig' with {'redirect': path('bo_maze_actor_list')} %}
                 <button
                     form="build-credits-form"
                     class="button is-primary"
@@ -25,7 +26,7 @@ Required :
                 >
                     {{ 'back.maze.actor.list.build_filmography'|trans }}
                 </button>
-                <form id="build-credits-form" action="{{ path('bo_tmdb_build_process') }}" method="post">
+                <form id="build-credits-form" action="{{ path('bo_tmdb_build_process') }}" method="post" class="is-hidden">
                     <input name="type" type="hidden" value="{{ constant('App\\Enum\\Tmdb\\ProcessTypeEnum::FILMOGRAPHY') }}" />
                     <input name="redirect" type="hidden" value="{{ path('bo_maze_actor_list') }}" />
                 </form>

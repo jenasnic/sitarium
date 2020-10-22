@@ -9,3 +9,16 @@
         margin: 0.5rem;
     }
 }
+
+#pending-process-wrapper {
+    position: relative;
+
+    &:after {
+        bottom: 0;
+        color: $sitarium-grey-light-1;
+        content: attr(data-info);
+        position: absolute;
+        text-align: center;
+        width: 100%;
+    }
+}

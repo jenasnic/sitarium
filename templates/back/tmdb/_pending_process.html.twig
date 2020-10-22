@@ -5,7 +5,7 @@ Required :
 #}
 
 {% if pendingProcess %}
-    <div id="pending-process-wrapper" class="content">
+    <div id="pending-process-wrapper" class="content" data-info="">
         <div class="is-size-7 has-text-centered">{{ ('back.tmdb.build.process.'~pendingProcess.type~'.pending')|trans }}</div>
         <progress
             data-current-build-process

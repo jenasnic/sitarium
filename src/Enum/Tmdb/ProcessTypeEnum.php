@@ -7,6 +7,7 @@ class ProcessTypeEnum
     const FILMOGRAPHY = 'filmography';
     const CASTING = 'casting';
     const QUIZ_LINK = 'quiz_link';
+    const SYNCHRONIZATION = 'synchronization';
 
     /**
      * @return array
@@ -17,6 +18,7 @@ class ProcessTypeEnum
             self::CASTING,
             self::FILMOGRAPHY,
             self::QUIZ_LINK,
+            self::SYNCHRONIZATION,
         ];
     }
 

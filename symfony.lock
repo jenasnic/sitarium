@@ -122,11 +122,17 @@
     "nikic/php-parser": {
         "version": "v4.0.3"
     },
+    "ocramius/package-versions": {
+        "version": "1.4.0"
+    },
     "ocramius/proxy-manager": {
         "version": "2.1.1"
     },
     "pagerfanta/pagerfanta": {
         "version": "v2.0.1"
+    },
+    "php": {
+        "version": "7.3"
     },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"

@@ -2,6 +2,7 @@
 
 namespace App\Service\Quiz;
 
+use App\Entity\Quiz\Response;
 use App\Event\QuizEvents;
 use App\Event\Quiz\TmdbLinkProgressEvent;
 use App\Event\Quiz\TmdbLinkStartEvent;

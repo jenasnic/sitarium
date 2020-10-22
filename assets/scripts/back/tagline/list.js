@@ -1,13 +1,24 @@
 import axios from 'axios';
 import { initFilterAction } from '../filter';
 import { displayModal, closeModal } from '../popup';
+import { activateProgressBar } from '../progress-bar';
 
 /**
  * Allows to initialize actions for taglines.
  */
 const initActions = () => {
     initFilterAction(initDetailAction);
+
     initDetailAction();
+
+    const progressBar = document.querySelector('progress[data-current-build-process]');
+    if (progressBar) {
+        activateProgressBar(
+            progressBar,
+            progressBar.dataset.progressUrl,
+            () => { document.location.reload(true); }
+        );
+    }
 };
 
 /**
