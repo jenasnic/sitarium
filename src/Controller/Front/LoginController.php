@@ -15,7 +15,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class LoginController extends AbstractController
 {
     /**
-     * @Route("/connexion", name="login", methods="GET")
+     * @Route("/connexion", name="login", methods="GET|POST")
      *
      * @param AuthenticationUtils $authenticationUtils
      *
@@ -27,6 +27,15 @@ class LoginController extends AbstractController
             'last_username' => $authenticationUtils->getLastUsername(),
             'error' => $authenticationUtils->getLastAuthenticationError(),
         ]);
+    }
+
+    /**
+     * @Route("/deconnexion", name="logout")
+     */
+    public function logout()
+    {
+        // This method will be intercepted by the logout key on firewall.
+        return;
     }
 
     /**
