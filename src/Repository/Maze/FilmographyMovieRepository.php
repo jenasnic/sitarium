@@ -5,7 +5,7 @@ namespace App\Repository\Maze;
 use App\Entity\Maze\Actor;
 use App\Entity\Maze\FilmographyMovie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * FilmographyMovieRepository.
@@ -16,9 +16,9 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 class FilmographyMovieRepository extends ServiceEntityRepository
 {
     /**
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, FilmographyMovie::class);
     }

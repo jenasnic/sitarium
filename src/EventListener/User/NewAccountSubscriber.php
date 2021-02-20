@@ -5,16 +5,19 @@ namespace App\EventListener\User;
 use App\Event\UserEvents;
 use App\Event\User\NewAccountEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Twig\Environment;
 
 class NewAccountSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var \Swift_Mailer
+     * @var MailerInterface
      */
     protected $mailer;
 
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     protected $twig;
 
@@ -29,14 +32,14 @@ class NewAccountSubscriber implements EventSubscriberInterface
     protected $mailerSender;
 
     /**
-     * @param \Swift_Mailer $mailer
-     * @param \Twig_Environment $twig
+     * @param MailerInterface $mailer
+     * @param Environment $twig
      * @param string $mailFrom
      * @param string $mailSender
      */
     public function __construct(
-        \Swift_Mailer $mailer,
-        \Twig_Environment $twig,
+        MailerInterface $mailer,
+        Environment $twig,
         string $mailerFrom,
         string $mailerSender
     ) {
@@ -70,7 +73,7 @@ class NewAccountSubscriber implements EventSubscriberInterface
             ]);
 
             // Create mail and send it
-            $mailMessage = new \Swift_Message();
+            $mailMessage = new Email();
             $mailMessage
                 ->setSubject($subject)
                 ->setFrom($this->mailerFrom, $this->mailerSender)

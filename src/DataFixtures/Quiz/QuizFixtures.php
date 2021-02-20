@@ -4,7 +4,7 @@ namespace App\DataFixtures\Quiz;
 
 use App\Entity\Quiz\Quiz;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class QuizFixtures extends Fixture
 {

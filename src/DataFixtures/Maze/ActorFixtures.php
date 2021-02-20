@@ -5,7 +5,7 @@ namespace App\DataFixtures\Maze;
 use App\Entity\Maze\Actor;
 use App\Enum\Maze\FilmographyStatusEnum;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class ActorFixtures extends Fixture
 {

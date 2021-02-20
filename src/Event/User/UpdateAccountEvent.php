@@ -3,7 +3,7 @@
 namespace App\Event\User;
 
 use App\Entity\User;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class UpdateAccountEvent extends Event
 {

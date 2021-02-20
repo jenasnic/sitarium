@@ -7,7 +7,7 @@ use App\Entity\Quiz\Response;
 use App\Tool\TextUtil;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class ResponseFixtures extends Fixture implements DependentFixtureInterface
 {

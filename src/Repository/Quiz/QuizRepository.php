@@ -7,7 +7,7 @@ use App\Entity\Quiz\UserResponse;
 use App\Entity\Quiz\Winner;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * QuizRepository.
@@ -18,9 +18,9 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 class QuizRepository extends ServiceEntityRepository
 {
     /**
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Quiz::class);
     }

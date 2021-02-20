@@ -9,8 +9,8 @@ use App\Event\Maze\CastingProgressEvent;
 use App\Event\Maze\CastingStartEvent;
 use App\Repository\Tmdb\BuildProcessRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class UpdateProcessForCastingSubscriber implements EventSubscriberInterface
 {

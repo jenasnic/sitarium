@@ -5,7 +5,7 @@ namespace App\Repository\Maze;
 use App\Entity\Maze\CastingActor;
 use App\Entity\Maze\Movie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * CastingActorRepository.
@@ -16,9 +16,9 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 class CastingActorRepository extends ServiceEntityRepository
 {
     /**
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, CastingActor::class);
     }

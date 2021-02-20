@@ -9,8 +9,8 @@ use App\Event\Quiz\TmdbLinkStartEvent;
 use App\Event\Quiz\TmdbLinkProgressEvent;
 use App\Repository\Tmdb\BuildProcessRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class UpdateProcessForQuizLinkSubscriber implements EventSubscriberInterface
 {

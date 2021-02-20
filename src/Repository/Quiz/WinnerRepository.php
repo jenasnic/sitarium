@@ -4,9 +4,9 @@ namespace App\Repository\Quiz;
 
 use App\Entity\Quiz\Winner;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Doctrine\Persistence\ManagerRegistry;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * WinnerRepository.
@@ -17,9 +17,9 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 class WinnerRepository extends ServiceEntityRepository
 {
     /**
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Winner::class);
     }
@@ -52,7 +52,7 @@ class WinnerRepository extends ServiceEntityRepository
                 ));
         }
 
-        $paginator = new Pagerfanta(new DoctrineORMAdapter($queryBuilder));
+        $paginator = new Pagerfanta(new QueryAdapter($queryBuilder));
         $paginator->setMaxPerPage($maxPerPage);
         $paginator->setCurrentPage($page);
 

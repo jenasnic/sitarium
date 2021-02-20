@@ -4,7 +4,7 @@ namespace App\Repository\Quiz;
 
 use App\Entity\Quiz\UserResponse;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * QuizUserResponseRepository.
@@ -15,9 +15,9 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 class UserResponseRepository extends ServiceEntityRepository
 {
     /**
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, UserResponse::class);
     }
