@@ -9,7 +9,7 @@ use App\Enum\Tmdb\TypeEnum;
 use App\Repository\Maze\MovieRepository;
 use App\Repository\Tmdb\BuildProcessRepository;
 use App\Service\Handler\Maze\AddMovieHandler;
-use App\Service\Tmdb\TmdbApiService;
+use App\Service\Tmdb\TmdbDataProvider;
 use App\Validator\Maze\MovieValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -107,19 +107,19 @@ class MovieController extends AbstractController
      * @Route("/admin/maze/movie/search", name="bo_maze_movie_search")
      *
      * @param Request $request
-     * @param TmdbApiService $tmdbService
+     * @param TmdbDataProvider $tmdbDataProvider
      *
      * @return Response
      */
     public function searchAction(
         Request $request,
-        TmdbApiService $tmdbService
+        TmdbDataProvider $tmdbDataProvider
     ): Response {
         $title = $request->query->get('value', '');
         $movies = [];
 
         if (strlen($title) > 2) {
-            $result = $tmdbService->searchEntity(Movie::class, $title, new MovieValidator(), self::MAX_MOVIE_RESULT_COUNT);
+            $result = $tmdbDataProvider->searchMovies($title, new MovieValidator(), self::MAX_MOVIE_RESULT_COUNT);
             $movies = $result['results'];
         }
 

@@ -3,12 +3,10 @@
 namespace App\Service\Tmdb\Synchronizer;
 
 use App\Entity\Maze\FilmographyMovie;
-use App\Model\Tmdb\Search\DisplayableInterface;
 use App\Repository\Maze\FilmographyMovieRepository;
-use App\Service\Tmdb\TmdbApiService;
+use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use App\Entity\Maze\Movie;
 
 class FilmographyMovieSynchronizer extends AbstractSynchronizer
 {
@@ -18,40 +16,34 @@ class FilmographyMovieSynchronizer extends AbstractSynchronizer
     protected $filmographyMovieRepository;
 
     /**
-     * @param TmdbApiService $tmdbService
+     * @param TmdbDataProvider $tmdbDataProvider
      * @param EntityManagerInterface $entityManager
      * @param EventDispatcherInterface $eventDispatcher
      * @param FilmographyMovieRepository $filmographyMovieRepository
      */
     public function __construct(
-        TmdbApiService $tmdbService,
+        TmdbDataProvider $tmdbDataProvider,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher,
         FilmographyMovieRepository $filmographyMovieRepository
     ) {
-        parent::__construct($tmdbService, $entityManager, $eventDispatcher);
+        parent::__construct($tmdbDataProvider, $entityManager, $eventDispatcher);
 
         $this->filmographyMovieRepository = $filmographyMovieRepository;
     }
 
     /**
-     * @return string
+     * @param string $type
+     *
+     * @return bool
      */
-    protected function getLocalEntityClass()
+    public function support($type): bool
     {
-        return FilmographyMovie::class;
+        return FilmographyMovie::class === $type;
     }
 
     /**
-     * @return string
-     */
-    protected function getTmdbEntityClass()
-    {
-        return Movie::class;
-    }
-
-    /**
-     * @return DisplayableInterface[]|array
+     * @return array
      */
     protected function getAllData()
     {
@@ -59,15 +51,16 @@ class FilmographyMovieSynchronizer extends AbstractSynchronizer
     }
 
     /**
-     * @param FilmographyMovie $localData
-     * @param Movie $tmdbData
+     * @param FilmographyMovie $data
      *
      * @return bool TRUE if local data is updated, FALSE either
      */
-    protected function synchronizeData($localData, $tmdbData): bool
+    protected function synchronizeData($data): bool
     {
-        if ($localData->getPictureUrl() !== $tmdbData->getPictureUrl()) {
-            $localData->setPictureUrl($tmdbData->getPictureUrl());
+        $tmdbData = $this->tmdbDataProvider->getMovie($data->getTmdbId());
+
+        if ($data->getPictureUrl() !== $tmdbData->getProfilePath()) {
+            $data->setPictureUrl($tmdbData->getProfilePath());
 
             return true;
         }

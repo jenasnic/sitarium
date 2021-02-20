@@ -2,10 +2,7 @@
 
 namespace App\Entity\Maze;
 
-use App\Annotation\Tmdb\TmdbField;
-use App\Annotation\Tmdb\TmdbType;
 use App\Enum\Maze\CastingStatusEnum;
-use App\Model\Tmdb\Search\DisplayableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,14 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Table(name="maze_movie")
  * @ORM\Entity(repositoryClass="App\Repository\Maze\MovieRepository")
- * @TmdbType("MOVIE")
  */
-class Movie implements DisplayableInterface
+class Movie
 {
     /**
      * @ORM\Id
      * @ORM\Column(name="tmdbId", type="integer")
-     * @TmdbField(name="id", type="integer")
      *
      * @var int
      */
@@ -28,7 +23,6 @@ class Movie implements DisplayableInterface
 
     /**
      * @ORM\Column(name="title", type="string", length=255)
-     * @TmdbField(name="title")
      *
      * @var string
      */
@@ -36,7 +30,6 @@ class Movie implements DisplayableInterface
 
     /**
      * @ORM\Column(name="releaseDate", type="datetime", nullable=true)
-     * @TmdbField(name="release_date", type="datetime", dateFormat="Y-m-d")
      *
      * @var \DateTime
      */
@@ -44,7 +37,6 @@ class Movie implements DisplayableInterface
 
     /**
      * @ORM\Column(name="pictureUrl", type="string", length=255, nullable=true)
-     * @TmdbField(name="poster_path")
      *
      * @var string
      */
@@ -58,15 +50,11 @@ class Movie implements DisplayableInterface
     private $status;
 
     /**
-     * @TmdbField(name="vote_count", type="integer")
-     *
      * @var int
      */
     private $voteCount;
 
     /**
-     * @TmdbField(name="genre_ids")
-     *
      * @var array
      */
     private $genreIds;
@@ -81,6 +69,7 @@ class Movie implements DisplayableInterface
     public function __construct()
     {
         $this->actors = new ArrayCollection();
+        $this->setStatus(CastingStatusEnum::UNINITIALIZED);
     }
 
     /**
@@ -221,13 +210,5 @@ class Movie implements DisplayableInterface
     public function removeActor(CastingActor $actor): void
     {
         $this->actors->removeElement($actor);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDisplayName(): string
-    {
-        return $this->title;
     }
 }

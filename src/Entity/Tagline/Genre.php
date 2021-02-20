@@ -2,9 +2,7 @@
 
 namespace App\Entity\Tagline;
 
-use App\Annotation\Tmdb\TmdbField;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table(name="tagline_genre")
@@ -15,7 +13,6 @@ class Genre
     /**
      * @ORM\Id
      * @ORM\Column(name="tmdbId", type="integer")
-     * @TmdbField(name="id", type="integer")
      *
      * @var int
      */
@@ -23,7 +20,6 @@ class Genre
 
     /**
      * @ORM\Column(name="name", type="string", length=55)
-     * @TmdbField(name="name")
      *
      * @var string
      */
@@ -31,7 +27,6 @@ class Genre
 
     /**
      * @ORM\Column(name="slug", type="string", length=128, unique=true)
-     * @Gedmo\Slug(fields={"name"})
      *
      * @var string
      */

@@ -5,7 +5,6 @@ namespace App\Entity\Quiz;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -32,7 +31,6 @@ class Quiz
 
     /**
      * @ORM\Column(name="slug", type="string", length=128, unique=true)
-     * @Gedmo\Slug(fields={"name"})
      *
      * @var string
      */

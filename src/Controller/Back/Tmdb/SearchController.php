@@ -3,9 +3,7 @@
 namespace App\Controller\Back\Tmdb;
 
 use App\Enum\Tmdb\TypeEnum;
-use App\Model\Tmdb\Search\Movie;
-use App\Model\Tmdb\Search\Actor;
-use App\Service\Tmdb\TmdbApiService;
+use App\Service\Tmdb\TmdbDataProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,17 +12,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SearchController extends AbstractController
 {
-    const TYPE_MAPPING_ENTITY = [
-        TypeEnum::ACTOR => [
-            'class' => Actor::class,
-            'display_route' => 'bo_tmdb_display_actor',
-        ],
-        TypeEnum::MOVIE => [
-            'class' => Movie::class,
-            'display_route' => 'bo_tmdb_display_movie',
-        ],
-    ];
-
     /**
      * Max result count to return when searching entities through TMDB.
      *
@@ -42,7 +29,7 @@ class SearchController extends AbstractController
      */
     public function searchAction(UrlGeneratorInterface $urlGenerator, string $type): Response
     {
-        if (!array_key_exists($type, self::TYPE_MAPPING_ENTITY)) {
+        if (!TypeEnum::exist($type)) {
             return $this->createNotFoundException(sprintf('Type "%s" unknown!', $type));
         }
 
@@ -58,30 +45,43 @@ class SearchController extends AbstractController
      * Requires query parameter 'value' to specifiy searched value for current type.
      *
      * @param Request $request
-     * @param TmdbApiService $tmdbService
+     * @param TmdbDataProvider $tmdbDataProvider
      * @param string $type
      *
      * @return Response
      */
     public function searchResultAction(
         Request $request,
-        TmdbApiService $tmdbService,
+        TmdbDataProvider $tmdbDataProvider,
         string $type
     ): Response {
-        if (!array_key_exists($type, self::TYPE_MAPPING_ENTITY)) {
+        if (!TypeEnum::exist($type)) {
             return $this->createNotFoundException(sprintf('Type "%s" unknown!', $type));
         }
 
         $value = $request->query->get('value', '');
         $result = [];
+        $displayRoute = null;
 
         if (strlen($value) > 2) {
-            $result = $tmdbService->searchEntity(self::TYPE_MAPPING_ENTITY[$type]['class'], $value, null, self::MAX_RESULT_COUNT);
+            switch ($type) {
+                case TypeEnum::ACTOR :
+                    $result = $tmdbDataProvider->searchActors($value, null, self::MAX_RESULT_COUNT);
+                    $displayRoute = 'bo_tmdb_display_actor';
+                    break;
+                case TypeEnum::MOVIE :
+                    $result = $tmdbDataProvider->searchMovies($value, null, self::MAX_RESULT_COUNT);
+                    $displayRoute = 'bo_tmdb_display_movie';
+                    break;
+                default:
+                    return $this->createNotFoundException(sprintf('Type "%s" not supported!', $type));
+
+            }
         }
 
         return $this->render('back/tmdb/search_result.html.twig', [
             'items' => $result['results'],
-            'callback' => self::TYPE_MAPPING_ENTITY[$type]['display_route'],
+            'callback' => $displayRoute,
         ]);
     }
 }

@@ -2,24 +2,14 @@
 
 namespace App\Model\Tmdb;
 
-use App\Annotation\Tmdb\TmdbType;
-use App\Annotation\Tmdb\TmdbField;
-
-/**
- * @TmdbType("GENRE")
- */
 class Genre
 {
     /**
-     * @TmdbField(name="id", type="integer")
-     *
      * @var int
      */
-    private $tmdbId;
+    private $id;
 
     /**
-     * @TmdbField(name="name")
-     *
      * @var string
      */
     private $name;
@@ -27,17 +17,17 @@ class Genre
     /**
      * @return int
      */
-    public function getTmdbId(): int
+    public function getId(): int
     {
-        return $this->tmdbId;
+        return $this->id;
     }
 
     /**
-     * @param int $tmdbId
+     * @param int $id
      */
-    public function setTmdbId(int $tmdbId)
+    public function setId(int $id)
     {
-        $this->tmdbId = $tmdbId;
+        $this->id = $id;
     }
 
     /**
@@ -54,5 +44,13 @@ class Genre
     public function setName(string $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTmdbId(): int
+    {
+        return $this->id;
     }
 }

@@ -3,10 +3,9 @@
 namespace App\Controller\Back\Tagline;
 
 use App\Domain\Command\Tagline\AddMoviesCommand;
-use App\Entity\Tagline\Movie;
 use App\Enum\Tmdb\TypeEnum;
 use App\Service\Handler\Tagline\AddMoviesHandler;
-use App\Service\Tmdb\TmdbApiService;
+use App\Service\Tmdb\TmdbDataProvider;
 use App\Validator\Tagline\MovieValidator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,19 +38,19 @@ class AddMovieController extends AbstractController
      *
      * @param Request $request
      * @param TranslatorInterface $translator
-     * @param TmdbApiService $tmdbService
+     * @param TmdbDataProvider $tmdbDataProvider
      *
      * @return Response
      */
     public function searchAction(
         Request $request,
-        TmdbApiService $tmdbService
+        TmdbDataProvider $tmdbDataProvider
     ): Response {
         $value = $request->query->get('value', '');
         $movies = [];
 
         if (strlen($value) > 2) {
-            $result = $tmdbService->searchEntity(Movie::class, $value, new MovieValidator(), self::MAX_MOVIE_RESULT_COUNT);
+            $result = $tmdbDataProvider->searchMovies($value, new MovieValidator(), self::MAX_MOVIE_RESULT_COUNT);
             $movies = $result['results'];
         }
 
@@ -66,17 +65,17 @@ class AddMovieController extends AbstractController
      *
      * @param Request $request
      * @param TranslatorInterface $translator
-     * @param TmdbApiService $tmdbService
+     * @param TmdbDataProvider $tmdbDataProvider
      *
      * @return Response
      */
     public function similarAction(
-        TmdbApiService $tmdbService,
+        TmdbDataProvider $tmdbDataProvider,
         int $tmdbId
     ): Response {
         return $this->render('back/tagline/movie/similar.html.twig', [
-            'movie' => $tmdbService->getEntity(Movie::class, $tmdbId),
-            'movies' => $tmdbService->getSimilarMovies($tmdbId, Movie::class),
+            'movie' => $tmdbDataProvider->getMovie($tmdbId),
+            'movies' => $tmdbDataProvider->getSimilarMovies($tmdbId),
         ]);
     }
 

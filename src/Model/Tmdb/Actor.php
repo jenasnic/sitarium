@@ -2,63 +2,47 @@
 
 namespace App\Model\Tmdb;
 
-use App\Annotation\Tmdb\TmdbType;
-use App\Annotation\Tmdb\TmdbField;
-
-/**
- * @TmdbType("PERSON")
- */
 class Actor
 {
     /**
-     * @TmdbField(name="id", type="integer")
-     *
      * @var int
      */
-    private $tmdbId;
+    private $id;
 
     /**
-     * @TmdbField(name="name")
-     *
      * @var string
      */
     private $name;
 
     /**
-     * @TmdbField(name="biography")
-     *
      * @var string
      */
     private $biography;
 
     /**
-     * @TmdbField(name="birthday", type="datetime", dateFormat="Y-m-d")
-     *
      * @var \DateTime
      */
-    private $birthdate;
+    private $birthday;
 
     /**
-     * @TmdbField(name="profile_path")
-     *
      * @var string
      */
-    private $pictureUrl;
+    private $profilePath;
 
     /**
      * @return int
      */
-    public function getTmdbId(): int
+    public function getId(): int
     {
-        return $this->tmdbId;
+        return $this->id;
     }
 
     /**
      * @param int $tmdbId
      */
-    public function setTmdbId(int $tmdbId)
+    public function setId(int $id)
     {
-        $this->tmdbId = $tmdbId;
+        $this->id = $id;
     }
 
     /**
@@ -96,32 +80,37 @@ class Actor
     /**
      * @return \DateTime|null
      */
-    public function getBirthdate(): ?\DateTime
+    public function getBirthday(): ?\DateTime
     {
-        return $this->birthdate;
+        return $this->birthday;
     }
 
     /**
-     * @param \DateTime|null $birthdate
+     * @param \DateTime|null $birthday
      */
-    public function setBirthdate(?\DateTime $birthdate)
+    public function setBirthday(?\DateTime $birthday)
     {
-        $this->birthdate = $birthdate;
+        $this->birthday = $birthday;
     }
 
     /**
      * @return string|null
      */
-    public function getPictureUrl(): ?string
+    public function getProfilePath(): ?string
     {
-        return $this->pictureUrl;
+        return $this->profilePath;
     }
 
     /**
      * @param string|null $pictureUrl
      */
-    public function setPictureUrl(?string $pictureUrl)
+    public function setProfilePath(?string $profilePath)
     {
-        $this->pictureUrl = $pictureUrl;
+        $this->profilePath = $profilePath;
+    }
+
+    public function getDisplayName()
+    {
+        return $this->name;
     }
 }

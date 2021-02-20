@@ -9,7 +9,7 @@ use App\Entity\Maze\Movie;
 use App\Entity\Tagline\Movie as TaglineMovie;
 use App\Enum\Tmdb\ProcessTypeEnum;
 use App\Repository\Tmdb\BuildProcessRepository;
-use App\Service\Tmdb\DataSynchronizer;
+use App\Service\Tmdb\TmdbDataSynchronizer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,21 +17,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 class SynchronizeDataCommand extends AbstractBuildProcessCommand
 {
     /**
-     * @var DataSynchronizer
+     * @var TmdbDataSynchronizer
      */
-    protected $dataSynchronizer;
+    protected $tmdbDataSynchronizer;
 
     /**
      * @param BuildProcessRepository $buildProcessRepository
      * @param EntityManagerInterface $entityManager
-     * @param DataSynchronizer $dataSynchronizer
+     * @param TmdbDataSynchronizer $tmdbDataSynchronizer
      */
     public function __construct(
         BuildProcessRepository $buildProcessRepository,
         EntityManagerInterface $entityManager,
-        DataSynchronizer $dataSynchronizer
+        TmdbDataSynchronizer $tmdbDataSynchronizer
     ) {
-        $this->dataSynchronizer = $dataSynchronizer;
+        $this->tmdbDataSynchronizer = $tmdbDataSynchronizer;
 
         parent::__construct($buildProcessRepository, $entityManager, ProcessTypeEnum::SYNCHRONIZATION);
     }
@@ -59,7 +59,7 @@ class SynchronizeDataCommand extends AbstractBuildProcessCommand
         ];
 
         foreach ($entities as $entity) {
-            $this->dataSynchronizer->synchronize($entity);
+            $this->tmdbDataSynchronizer->synchronize($entity);
         }
     }
 }

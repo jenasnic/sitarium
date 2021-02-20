@@ -2,9 +2,6 @@
 
 namespace App\Entity\Tagline;
 
-use App\Annotation\Tmdb\TmdbField;
-use App\Annotation\Tmdb\TmdbType;
-use App\Model\Tmdb\Search\DisplayableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,13 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Table(name="tagline_movie")
  * @ORM\Entity(repositoryClass="App\Repository\Tagline\MovieRepository")
- * @TmdbType("MOVIE")
  */
-class Movie implements DisplayableInterface
+class Movie
 {
     /**
      * @ORM\Id
-     * @TmdbField(name="id", type="integer")
      * @ORM\Column(name="tmdbId", type="integer")
      *
      * @var int
@@ -27,7 +22,6 @@ class Movie implements DisplayableInterface
 
     /**
      * @ORM\Column(name="title", type="string", length=255)
-     * @TmdbField(name="title")
      *
      * @var string
      */
@@ -35,7 +29,6 @@ class Movie implements DisplayableInterface
 
     /**
      * @ORM\Column(name="pictureUrl", type="string", length=255, nullable=true)
-     * @TmdbField(name="poster_path")
      *
      * @var string
      */
@@ -43,7 +36,6 @@ class Movie implements DisplayableInterface
 
     /**
      * @ORM\Column(name="tagline", type="text", nullable=true)
-     * @TmdbField(name="tagline")
      *
      * @var string
      */
@@ -61,29 +53,21 @@ class Movie implements DisplayableInterface
     private $genres;
 
     /**
-     * @TmdbField(name="vote_count", type="integer")
-     *
      * @var int
      */
     private $voteCount;
 
     /**
-     * @TmdbField(name="release_date", type="datetime", dateFormat="Y-m-d")
-     *
      * @var \DateTime
      */
     private $releaseDate;
 
     /**
-     * @TmdbField(name="genre_ids", type="array")
-     *
      * @var array
      */
     private $genreIds;
 
     /**
-     * @TmdbField(name="genres", type="object_array", subClass="App\Entity\Tagline\Genre")
-     *
      * @var Genre[]|array
      */
     private $tmdbGenres;
@@ -211,13 +195,5 @@ class Movie implements DisplayableInterface
     public function getTmdbGenres(): array
     {
         return $this->tmdbGenres;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDisplayName(): string
-    {
-        return $this->title;
     }
 }

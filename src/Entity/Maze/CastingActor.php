@@ -2,8 +2,6 @@
 
 namespace App\Entity\Maze;
 
-use App\Annotation\Tmdb\TmdbField;
-use App\Model\Tmdb\Search\DisplayableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,12 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="maze_casting_actor")
  * @ORM\Entity(repositoryClass="App\Repository\Maze\CastingActorRepository")
  */
-class CastingActor implements DisplayableInterface
+class CastingActor
 {
     /**
      * @ORM\Id
      * @ORM\Column(name="tmdbId", type="integer")
-     * @TmdbField(name="id", type="integer")
      *
      * @var int
      */
@@ -25,7 +22,6 @@ class CastingActor implements DisplayableInterface
 
     /**
      * @ORM\Column(name="fullname", type="string", length=55)
-     * @TmdbField(name="name")
      *
      * @var string
      */
@@ -33,18 +29,10 @@ class CastingActor implements DisplayableInterface
 
     /**
      * @ORM\Column(name="pictureUrl", type="string", length=255, nullable=true)
-     * @TmdbField(name="profile_path")
      *
      * @var string
      */
     private $pictureUrl;
-
-    /**
-     * @TmdbField(name="character")
-     *
-     * @var string
-     */
-    private $character;
 
     /**
      * @ORM\ManyToMany(targetEntity="Movie", inversedBy="actors", cascade={"persist"})
@@ -148,13 +136,5 @@ class CastingActor implements DisplayableInterface
     public function removeMovie(Movie $movie): void
     {
         $this->movies->removeElement($movie);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDisplayName(): string
-    {
-        return $this->fullname;
     }
 }

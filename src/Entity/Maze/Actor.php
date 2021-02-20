@@ -2,10 +2,7 @@
 
 namespace App\Entity\Maze;
 
-use App\Annotation\Tmdb\TmdbField;
-use App\Annotation\Tmdb\TmdbType;
 use App\Enum\Maze\FilmographyStatusEnum;
-use App\Model\Tmdb\Search\DisplayableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,14 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Table(name="maze_actor")
  * @ORM\Entity(repositoryClass="App\Repository\Maze\ActorRepository")
- * @TmdbType("PERSON")
  */
-class Actor implements DisplayableInterface
+class Actor
 {
     /**
      * @ORM\Id
      * @ORM\Column(name="tmdbId", type="integer")
-     * @TmdbField(name="id", type="integer")
      *
      * @var int
      */
@@ -28,7 +23,6 @@ class Actor implements DisplayableInterface
 
     /**
      * @ORM\Column(name="fullname", type="string", length=55)
-     * @TmdbField(name="name")
      *
      * @var string
      */
@@ -36,7 +30,6 @@ class Actor implements DisplayableInterface
 
     /**
      * @ORM\Column(name="birthdate", type="datetime", nullable=true)
-     * @TmdbField(name="birthday", type="datetime", dateFormat="Y-m-d")
      *
      * @var \DateTime
      */
@@ -44,7 +37,6 @@ class Actor implements DisplayableInterface
 
     /**
      * @ORM\Column(name="pictureUrl", type="string", length=255, nullable=true)
-     * @TmdbField(name="profile_path")
      *
      * @var string
      */
@@ -67,6 +59,7 @@ class Actor implements DisplayableInterface
     public function __construct()
     {
         $this->movies = new ArrayCollection();
+        $this->setStatus(FilmographyStatusEnum::UNINITIALIZED);
     }
 
     /**
@@ -175,13 +168,5 @@ class Actor implements DisplayableInterface
     public function removeMovie(FilmographyMovie $movie): void
     {
         $this->movies->removeElement($movie);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDisplayName(): string
-    {
-        return $this->fullname;
     }
 }

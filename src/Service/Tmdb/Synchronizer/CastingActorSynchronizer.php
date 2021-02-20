@@ -2,12 +2,10 @@
 namespace App\Service\Tmdb\Synchronizer;
 
 use App\Entity\Maze\CastingActor;
-use App\Model\Tmdb\Search\DisplayableInterface;
 use App\Repository\Maze\CastingActorRepository;
-use App\Service\Tmdb\TmdbApiService;
+use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use App\Entity\Maze\Actor;
 
 class CastingActorSynchronizer extends AbstractSynchronizer
 {
@@ -17,40 +15,34 @@ class CastingActorSynchronizer extends AbstractSynchronizer
     protected $castingActorRepository;
 
     /**
-     * @param TmdbApiService $tmdbService
+     * @param TmdbDataProvider $tmdbDataProvider
      * @param EntityManagerInterface $entityManager
      * @param EventDispatcherInterface $eventDispatcher
      * @param CastingActorRepository $actorRepository
      */
     public function __construct(
-        TmdbApiService $tmdbService,
+        TmdbDataProvider $tmdbDataProvider,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher,
         CastingActorRepository $castingActorRepository
     ) {
-        parent::__construct($tmdbService, $entityManager, $eventDispatcher);
+        parent::__construct($tmdbDataProvider, $entityManager, $eventDispatcher);
 
         $this->castingActorRepository = $castingActorRepository;
     }
 
     /**
-     * @return string
+     * @param string $type
+     *
+     * @return bool
      */
-    protected function getLocalEntityClass()
+    public function support($type): bool
     {
-        return CastingActor::class;
+        return CastingActor::class === $type;
     }
 
     /**
-     * @return string
-     */
-    protected function getTmdbEntityClass()
-    {
-        return Actor::class;
-    }
-
-    /**
-     * @return DisplayableInterface[]|array
+     * @return array
      */
     protected function getAllData()
     {
@@ -58,15 +50,16 @@ class CastingActorSynchronizer extends AbstractSynchronizer
     }
 
     /**
-     * @param CastingActor $localData
-     * @param Actor $tmdbData
+     * @param CastingActor $data
      *
      * @return bool TRUE if local data is updated, FALSE either
      */
-    protected function synchronizeData($localData, $tmdbData): bool
+    protected function synchronizeData($data): bool
     {
-        if ($localData->getPictureUrl() !== $tmdbData->getPictureUrl()) {
-            $localData->setPictureUrl($tmdbData->getPictureUrl());
+        $tmdbData = $this->tmdbDataProvider->getActor($data->getTmdbId());
+
+        if ($data->getPictureUrl() !== $tmdbData->getProfilePath()) {
+            $data->setPictureUrl($tmdbData->getProfilePath());
 
             return true;
         }

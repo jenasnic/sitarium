@@ -17,4 +17,12 @@ class TypeEnum
             self::MOVIE,
         ];
     }
+
+    /**
+     * @return bool
+     */
+    public static function exist(string $value): bool
+    {
+        return in_array($value, self::getAll());
+    }
 }

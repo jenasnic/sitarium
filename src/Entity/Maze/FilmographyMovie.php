@@ -2,8 +2,6 @@
 
 namespace App\Entity\Maze;
 
-use App\Annotation\Tmdb\TmdbField;
-use App\Model\Tmdb\Search\DisplayableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,12 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="maze_filmography_movie")
  * @ORM\Entity(repositoryClass="App\Repository\Maze\FilmographyMovieRepository")
  */
-class FilmographyMovie implements DisplayableInterface
+class FilmographyMovie
 {
     /**
      * @ORM\Id
      * @ORM\Column(name="tmdbId", type="integer")
-     * @TmdbField(name="id", type="integer")
      *
      * @var int
      */
@@ -25,7 +22,6 @@ class FilmographyMovie implements DisplayableInterface
 
     /**
      * @ORM\Column(name="title", type="string", length=255)
-     * @TmdbField(name="title")
      *
      * @var string
      */
@@ -33,7 +29,6 @@ class FilmographyMovie implements DisplayableInterface
 
     /**
      * @ORM\Column(name="releaseDate", type="datetime", nullable=true)
-     * @TmdbField(name="release_date", type="datetime", dateFormat="Y-m-d")
      *
      * @var \DateTime
      */
@@ -41,7 +36,6 @@ class FilmographyMovie implements DisplayableInterface
 
     /**
      * @ORM\Column(name="voteCount", type="integer")
-     * @TmdbField(name="vote_count", type="integer")
      *
      * @var int
      */
@@ -49,21 +43,18 @@ class FilmographyMovie implements DisplayableInterface
 
     /**
      * @ORM\Column(name="pictureUrl", type="string", length=255, nullable=true)
-     * @TmdbField(name="poster_path")
      *
      * @var string
      */
     private $pictureUrl;
 
     /**
-     * @TmdbField(name="character")
      *
      * @var string
      */
     private $character;
 
     /**
-     * @TmdbField(name="genre_ids")
      *
      * @var array
      */
@@ -219,13 +210,5 @@ class FilmographyMovie implements DisplayableInterface
     public function removeActor(Actor $actor): void
     {
         $this->actors->removeElement($actor);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDisplayName(): string
-    {
-        return $this->title;
     }
 }

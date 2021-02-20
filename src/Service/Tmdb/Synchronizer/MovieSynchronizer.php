@@ -3,9 +3,8 @@
 namespace App\Service\Tmdb\Synchronizer;
 
 use App\Entity\Maze\Movie;
-use App\Model\Tmdb\Search\DisplayableInterface;
 use App\Repository\Maze\MovieRepository;
-use App\Service\Tmdb\TmdbApiService;
+use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -17,40 +16,34 @@ class MovieSynchronizer extends AbstractSynchronizer
     protected $movieRepository;
     
     /**
-     * @param TmdbApiService $tmdbService
+     * @param TmdbDataProvider $tmdbDataProvider
      * @param EntityManagerInterface $entityManager
      * @param EventDispatcherInterface $eventDispatcher
      * @param MovieRepository $movieRepository
      */
     public function __construct(
-        TmdbApiService $tmdbService,
+        TmdbDataProvider $tmdbDataProvider,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher,
         MovieRepository $movieRepository
     ) {
-        parent::__construct($tmdbService, $entityManager, $eventDispatcher);
+        parent::__construct($tmdbDataProvider, $entityManager, $eventDispatcher);
 
         $this->movieRepository = $movieRepository;
     }
 
     /**
-     * @return string
+     * @param string $type
+     *
+     * @return bool
      */
-    protected function getLocalEntityClass()
+    public function support($type): bool
     {
-        return Movie::class;
+        return Movie::class === $type;
     }
 
     /**
-     * @return string
-     */
-    protected function getTmdbEntityClass()
-    {
-        return Movie::class;
-    }
-
-    /**
-     * @return DisplayableInterface[]|array
+     * @return array
      */
     protected function getAllData()
     {
@@ -58,15 +51,16 @@ class MovieSynchronizer extends AbstractSynchronizer
     }
 
     /**
-     * @param Movie $localData
-     * @param Movie $tmdbData
+     * @param Movie $data
      *
      * @return bool TRUE if local data is updated, FALSE either
      */
-    protected function synchronizeData($localData, $tmdbData): bool
+    protected function synchronizeData($data): bool
     {
-        if ($localData->getPictureUrl() !== $tmdbData->getPictureUrl()) {
-            $localData->setPictureUrl($tmdbData->getPictureUrl());
+        $tmdbData = $this->tmdbDataProvider->getMovie($data->getTmdbId());
+
+        if ($data->getPictureUrl() !== $tmdbData->getProfilePath()) {
+            $data->setPictureUrl($tmdbData->getProfilePath());
 
             return true;
         }

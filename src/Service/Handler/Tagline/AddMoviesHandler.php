@@ -3,9 +3,9 @@
 namespace App\Service\Handler\Tagline;
 
 use App\Domain\Command\Tagline\AddMoviesCommand;
-use App\Entity\Tagline\Movie;
 use App\Repository\Tagline\GenreRepository;
-use App\Service\Tmdb\TmdbApiService;
+use App\Repository\Tagline\MovieRepository;
+use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -14,9 +14,9 @@ use Doctrine\ORM\EntityManagerInterface;
 class AddMoviesHandler
 {
     /**
-     * @var TmdbApiService
+     * @var TmdbDataProvider
      */
-    protected $tmdbService;
+    protected $tmdbDataProvider;
 
     /**
      * @var EntityManagerInterface
@@ -24,21 +24,29 @@ class AddMoviesHandler
     protected $entityManager;
 
     /**
+     * @var MovieRepository
+     */
+    protected $movieRepository;
+
+    /**
      * @var GenreRepository
      */
     protected $genreRepository;
 
     /**
-     * @param TmdbApiService $tmdbService
+     * @param TmdbDataProvider $tmdbDataProvider
      * @param EntityManagerInterface $entityManager
+     * @param MovieRepository $movieRepository
      * @param GenreRepository $genreRepository
      */
     public function __construct(
-        TmdbApiService $tmdbService,
+        TmdbDataProvider $tmdbDataProvider,
         EntityManagerInterface $entityManager,
+        MovieRepository $movieRepository,
         GenreRepository $genreRepository
     ) {
-        $this->tmdbService = $tmdbService;
+        $this->movieRepository = $movieRepository;
+        $this->tmdbDataProvider = $tmdbDataProvider;
         $this->entityManager = $entityManager;
         $this->genreRepository = $genreRepository;
     }
@@ -49,24 +57,23 @@ class AddMoviesHandler
     public function handle(AddMoviesCommand $command)
     {
         foreach ($command->getTmdbIds() as $tmdbId) {
-            if (null !== $this->entityManager->getRepository(Movie::class)->find($tmdbId)) {
+            if (null !== $this->movieRepository->find($tmdbId)) {
                 continue;
             }
 
-            /* @var Movie $movieToAdd */
-            $movieToAdd = $this->tmdbService->getEntity(Movie::class, $tmdbId);
-            if (empty($movieToAdd->getTagline())) {
+            $tmdbMovie = $this->tmdbDataProvider->getMovie($tmdbId);
+            if (empty($tmdbMovie->getTagline())) {
                 continue;
             }
 
-            foreach ($movieToAdd->getTmdbGenres() as $tmdbGenre) {
+            foreach ($tmdbMovie->getTmdbGenres() as $tmdbGenre) {
                 $genre = $this->genreRepository->find($tmdbGenre->getTmdbId());
                 if (null !== $genre) {
-                    $movieToAdd->addGenre($genre);
+                    $tmdbMovie->addGenre($genre);
                 }
             }
 
-            $this->entityManager->persist($movieToAdd);
+            $this->entityManager->persist($tmdbMovie);
         }
 
         $this->entityManager->flush();

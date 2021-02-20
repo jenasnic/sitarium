@@ -5,17 +5,16 @@ namespace App\Service\Tmdb\Synchronizer;
 use App\Event\SynchronizationEvents;
 use App\Event\Synchronization\SynchronizationProgressEvent;
 use App\Event\Synchronization\SynchronizationStartEvent;
-use App\Model\Tmdb\Search\DisplayableInterface;
-use App\Service\Tmdb\TmdbApiService;
+use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 abstract class AbstractSynchronizer implements SynchronizerInterface
 {
     /**
-     * @var TmdbApiService
+     * @var TmdbDataProvider
      */
-    protected $tmdbService;
+    protected $tmdbDataProvider;
 
     /**
      * @var EntityManagerInterface
@@ -28,16 +27,16 @@ abstract class AbstractSynchronizer implements SynchronizerInterface
     protected $eventDispatcher;
 
     /**
-     * @param TmdbApiService $tmdbService
+     * @param TmdbDataProvider $tmdbDataProvider
      * @param EntityManagerInterface $entityManager
      * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
-        TmdbApiService $tmdbService,
+        TmdbDataProvider $tmdbDataProvider,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $this->tmdbService = $tmdbService;
+        $this->tmdbDataProvider = $tmdbDataProvider;
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
     }
@@ -55,9 +54,7 @@ abstract class AbstractSynchronizer implements SynchronizerInterface
             $count = 0;
             $processed = 0;
             foreach ($datas as $data) {
-                $tmdbData = $this->tmdbService->getEntity($this->getTmdbEntityClass(), $data->getTmdbId());
-
-                if ($this->synchronizeData($data, $tmdbData)) {
+                if ($this->synchronizeData($data)) {
                     $this->entityManager->persist($data);
                     $processed++;
                 }
@@ -78,31 +75,22 @@ abstract class AbstractSynchronizer implements SynchronizerInterface
         }
     }
 
-    public function support($type): bool
-    {
-        return $this->getLocalEntityClass() === $type;
-    }
-
     /**
-     * @return string
+     * @param string $type
+     *
+     * @return bool
      */
-    abstract protected function getLocalEntityClass();
+    abstract public function support($type): bool;
 
     /**
-     * @return string
-     */
-    abstract protected function getTmdbEntityClass();
-
-    /**
-     * @return DisplayableInterface[]|array
+     * @return array
      */
     abstract protected function getAllData();
 
     /**
-     * @param mixed $localData
-     * @param mixed $tmdbData
-     * 
-     * @return bool TRUE if local data is updated, FALSE either
+     * @param mixed $data
+     *
+     * @return bool TRUE if data is updated, FALSE either
      */
-    abstract protected function synchronizeData($localData, $tmdbData): bool;
+    abstract protected function synchronizeData($data): bool;
 }

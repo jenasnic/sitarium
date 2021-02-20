@@ -9,7 +9,7 @@ use App\Enum\Tmdb\TypeEnum;
 use App\Repository\Maze\ActorRepository;
 use App\Repository\Tmdb\BuildProcessRepository;
 use App\Service\Handler\Maze\AddActorHandler;
-use App\Service\Tmdb\TmdbApiService;
+use App\Service\Tmdb\TmdbDataProvider;
 use App\Validator\Maze\ActorValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -107,19 +107,19 @@ class ActorController extends AbstractController
      * @Route("/admin/maze/actor/search", name="bo_maze_actor_search")
      *
      * @param Request $request
-     * @param TmdbApiService $tmdbService
+     * @param TmdbDataProvider $tmdbDataProvider
      *
      * @return Response
      */
     public function searchAction(
         Request $request,
-        TmdbApiService $tmdbService
+        TmdbDataProvider $tmdbDataProvider
     ): Response {
         $name = $request->query->get('value', '');
         $actors = [];
 
         if (strlen($name) > 2) {
-            $result = $tmdbService->searchEntity(Actor::class, $name, new ActorValidator(), self::MAX_ACTOR_RESULT_COUNT);
+            $result = $tmdbDataProvider->searchActors($name, new ActorValidator(), self::MAX_ACTOR_RESULT_COUNT);
             $actors = $result['results'];
         }
 

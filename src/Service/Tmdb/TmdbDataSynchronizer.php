@@ -7,7 +7,7 @@ use App\Service\Tmdb\Synchronizer\SynchronizerInterface;
 /**
  * This service allows to synchronize data with TMDB.
  */
-class DataSynchronizer
+class TmdbDataSynchronizer
 {
     /**
      * @var SynchronizerInterface[]

@@ -3,9 +3,9 @@
 namespace App\Service\Handler\Maze;
 
 use App\Domain\Command\Maze\AddActorCommand;
-use App\Entity\Maze\Actor;
-use App\Enum\Maze\FilmographyStatusEnum;
-use App\Service\Tmdb\TmdbApiService;
+use App\Repository\Maze\ActorRepository;
+use App\Service\Converter\TmdbActorConverter;
+use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -14,9 +14,19 @@ use Doctrine\ORM\EntityManagerInterface;
 class AddActorHandler
 {
     /**
-     * @var TmdbApiService
+     * @var TmdbDataProvider
      */
-    protected $tmdbService;
+    protected $tmdbDataProvider;
+
+    /**
+     * @var TmdbActorConverter
+     */
+    protected $tmdbActorConverter;
+
+    /**
+     * @var ActorRepository
+     */
+    protected $actorRepository;
 
     /**
      * @var EntityManagerInterface
@@ -24,12 +34,20 @@ class AddActorHandler
     protected $entityManager;
 
     /**
-     * @param TmdbApiService $tmdbService
+     * @param TmdbDataProvider $tmdbDataProvider
+     * @param TmdbActorConverter $tmdbActorConverter
+     * @param ActorRepository $actorRepository
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(TmdbApiService $tmdbService, EntityManagerInterface $entityManager)
-    {
-        $this->tmdbService = $tmdbService;
+    public function __construct(
+        TmdbDataProvider $tmdbDataProvider,
+        TmdbActorConverter $tmdbActorConverter,
+        ActorRepository $actorRepository,
+        EntityManagerInterface $entityManager
+    ) {
+        $this->tmdbDataProvider = $tmdbDataProvider;
+        $this->tmdbActorConverter = $tmdbActorConverter;
+        $this->actorRepository = $actorRepository;
         $this->entityManager = $entityManager;
     }
 
@@ -39,12 +57,12 @@ class AddActorHandler
     public function handle(AddActorCommand $command)
     {
         // Check if actor already exist
-        if (null !== $this->entityManager->getRepository(Actor::class)->find($command->getTmdbId())) {
+        if (null !== $this->actorRepository->find($command->getTmdbId())) {
             return;
         }
 
-        $actorToAdd = $this->tmdbService->getEntity(Actor::class, $command->getTmdbId());
-        $actorToAdd->setStatus(FilmographyStatusEnum::UNINITIALIZED);
+        $tmdbActor = $this->tmdbDataProvider->getActor($command->getTmdbId());
+        $actorToAdd = $this->tmdbActorConverter->convert($tmdbActor);
 
         $this->entityManager->persist($actorToAdd);
         $this->entityManager->flush();

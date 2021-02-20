@@ -2,77 +2,57 @@
 
 namespace App\Model\Tmdb;
 
-use App\Annotation\Tmdb\TmdbType;
-use App\Annotation\Tmdb\TmdbField;
-
-/**
- * @TmdbType("MOVIE")
- */
 class Movie
 {
     /**
-     * @TmdbField(name="id", type="integer")
-     *
      * @var int
      */
-    private $tmdbId;
+    private $id;
 
     /**
-     * @TmdbField(name="title")
-     *
      * @var string
      */
     private $title;
 
     /**
-     * @TmdbField(name="release_date", type="datetime", dateFormat="Y-m-d")
-     *
      * @var \DateTime
      */
     private $releaseDate;
 
     /**
-     * @TmdbField(name="poster_path")
-     *
      * @var string
      */
-    private $pictureUrl;
+    private $posterPath;
 
     /**
-     * @TmdbField(name="belongs_to_collection", type="object", subClass="App\Model\Tmdb\MovieCollection")
-     *
-     * @var MovieCollection
-     */
-    private $collection;
-
-    /**
-     * @TmdbField(name="tagline")
-     *
      * @var string
      */
     private $tagline;
 
     /**
-     * @TmdbField(name="overview")
-     *
      * @var string
      */
     private $overview;
+    
+    /**
+     * @var array
+     */
+    private $genres;
 
     /**
      * @return int
      */
-    public function getTmdbId(): int
+    public function getId(): int
     {
-        return $this->tmdbId;
+        return $this->id;
     }
 
     /**
-     * @param int $tmdbId
+     * @param int $id
      */
-    public function setTmdbId(int $tmdbId)
+    public function setId(int $id)
     {
-        $this->tmdbId = $tmdbId;
+        $this->id = $id;
     }
 
     /**
@@ -110,33 +90,17 @@ class Movie
     /**
      * @return string|null
      */
-    public function getPictureUrl(): ?string
+    public function getPosterPath(): ?string
     {
-        return $this->pictureUrl;
+        return $this->posterPath;
     }
 
     /**
-     * @param string|null $pictureUrl
+     * @param string|null $posterPath
      */
-    public function setPictureUrl(?string $pictureUrl)
+    public function setPosterPath(?string $posterPath)
     {
-        $this->pictureUrl = $pictureUrl;
-    }
-
-    /**
-     * @return MovieCollection|null
-     */
-    public function getCollection(): ?MovieCollection
-    {
-        return $this->collection;
-    }
-
-    /**
-     * @param MovieCollection|null $collection
-     */
-    public function setCollection(?MovieCollection $collection)
-    {
-        $this->collection = $collection;
+        $this->posterPath = $posterPath;
     }
 
     /**
@@ -170,4 +134,21 @@ class Movie
     {
         $this->overview = $overview;
     }
+
+    /**
+     * @return array
+     */
+    public function getGenres(): array
+    {
+        return $this->genres;
+    }
+
+    /**
+     * @param array $genres
+     */
+    public function addGenre(Genre $genre)
+    {
+        $this->genres[] = $genre;
+    }
+
 }
