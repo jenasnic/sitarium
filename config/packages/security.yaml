@@ -21,12 +21,12 @@ security:
             pattern:  ^/
             anonymous: true
             provider: user_service
-            form_login:
-                login_path: login
-                check_path: login_check
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
             logout:
                 path: logout
-                target: /
+                target: fo_home
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_USER
