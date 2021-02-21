@@ -9,6 +9,7 @@ use App\Enum\Tmdb\TypeEnum;
 use App\Repository\Maze\MovieRepository;
 use App\Repository\Tmdb\BuildProcessRepository;
 use App\Service\Handler\Maze\AddMovieHandler;
+use App\Service\Tmdb\DisplayableResultAdapter;
 use App\Service\Tmdb\TmdbDataProvider;
 use App\Validator\Maze\MovieValidator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -108,12 +109,14 @@ class MovieController extends AbstractController
      *
      * @param Request $request
      * @param TmdbDataProvider $tmdbDataProvider
+     * @param DisplayableResultAdapter $displayableResultAdapter
      *
      * @return Response
      */
     public function searchAction(
         Request $request,
-        TmdbDataProvider $tmdbDataProvider
+        TmdbDataProvider $tmdbDataProvider,
+        DisplayableResultAdapter $displayableResultAdapter
     ): Response {
         $title = $request->query->get('value', '');
         $movies = [];
@@ -124,7 +127,7 @@ class MovieController extends AbstractController
         }
 
         return $this->render('back/tmdb/search_result.html.twig', [
-            'items' => $movies,
+            'items' => $displayableResultAdapter->adaptArray($movies),
             'callback' => 'bo_maze_movie_add',
         ]);
     }

@@ -7,6 +7,7 @@ use App\Service\Maze\MinPathFinder;
 use App\Service\Maze\MovieGraphBuilder;
 use App\Service\Maze\MoviePathHelpFactory;
 use App\Service\Maze\RandomPathFinder;
+use App\Service\Tmdb\DisplayableResultAdapter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +22,11 @@ class MoviePlayController extends AbstractController
      * @var TranslatorInterface
      */
     protected $translator;
+
+    /**
+     * @var DisplayableResultAdapter
+     */
+    protected $displayableResultAdapter;
 
     /**
      * @var MovieGraphBuilder
@@ -39,17 +45,20 @@ class MoviePlayController extends AbstractController
 
     /**
      * @param TranslatorInterface $translator
+     * @param DisplayableResultAdapter $displayableResultAdapter
      * @param MovieGraphBuilder $graphBuilder
      * @param MoviePathHelpFactory $helpFactory
      * @param UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         TranslatorInterface $translator,
+        DisplayableResultAdapter $displayableResultAdapter,
         MovieGraphBuilder $graphBuilder,
         MoviePathHelpFactory $helpFactory,
         UrlGeneratorInterface $urlGenerator
     ) {
         $this->translator = $translator;
+        $this->displayableResultAdapter = $displayableResultAdapter;
         $this->graphBuilder = $graphBuilder;
         $this->helpFactory = $helpFactory;
         $this->urlGenerator = $urlGenerator;
@@ -155,10 +164,13 @@ class MoviePlayController extends AbstractController
     protected function renderPlayView(array $moviePath, int $level, string $replayUrl): Response
     {
         $helpActorList = $this->helpFactory->getActors($moviePath, $level);
+        $displayableActorList = $this->displayableResultAdapter->adaptArray($helpActorList);
+
+        $displayableMoviePath = $this->displayableResultAdapter->adaptArray($moviePath);
 
         return $this->render('front/maze/movie/play.html.twig', [
-            'mazePath' => $moviePath,
-            'helpList' => $helpActorList,
+            'mazePath' => $displayableMoviePath,
+            'helpList' => $displayableActorList,
             'responseRoute' => 'fo_maze_movie_progress',
             'trickRoute' => 'fo_maze_movie_trick',
             'cheatRoute' => 'fo_maze_movie_cheat',

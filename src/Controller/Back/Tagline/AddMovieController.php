@@ -5,6 +5,7 @@ namespace App\Controller\Back\Tagline;
 use App\Domain\Command\Tagline\AddMoviesCommand;
 use App\Enum\Tmdb\TypeEnum;
 use App\Service\Handler\Tagline\AddMoviesHandler;
+use App\Service\Tmdb\DisplayableResultAdapter;
 use App\Service\Tmdb\TmdbDataProvider;
 use App\Validator\Tagline\MovieValidator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,14 +38,15 @@ class AddMovieController extends AbstractController
      * @Route("/admin/tagline/movie/search", name="bo_tagline_movie_search")
      *
      * @param Request $request
-     * @param TranslatorInterface $translator
      * @param TmdbDataProvider $tmdbDataProvider
+     * @param DisplayableResultAdapter $displayableResultAdapter
      *
      * @return Response
      */
     public function searchAction(
         Request $request,
-        TmdbDataProvider $tmdbDataProvider
+        TmdbDataProvider $tmdbDataProvider,
+        DisplayableResultAdapter $displayableResultAdapter
     ): Response {
         $value = $request->query->get('value', '');
         $movies = [];
@@ -55,7 +57,7 @@ class AddMovieController extends AbstractController
         }
 
         return $this->render('back/tmdb/search_result.html.twig', [
-            'items' => $movies,
+            'items' => $displayableResultAdapter->adaptArray($movies),
             'callback' => 'bo_tagline_movie_similar',
         ]);
     }

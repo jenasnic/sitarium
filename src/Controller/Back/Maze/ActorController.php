@@ -9,6 +9,7 @@ use App\Enum\Tmdb\TypeEnum;
 use App\Repository\Maze\ActorRepository;
 use App\Repository\Tmdb\BuildProcessRepository;
 use App\Service\Handler\Maze\AddActorHandler;
+use App\Service\Tmdb\DisplayableResultAdapter;
 use App\Service\Tmdb\TmdbDataProvider;
 use App\Validator\Maze\ActorValidator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -108,12 +109,14 @@ class ActorController extends AbstractController
      *
      * @param Request $request
      * @param TmdbDataProvider $tmdbDataProvider
+     * @param DisplayableResultAdapter $displayableResultAdapter
      *
      * @return Response
      */
     public function searchAction(
         Request $request,
-        TmdbDataProvider $tmdbDataProvider
+        TmdbDataProvider $tmdbDataProvider,
+        DisplayableResultAdapter $displayableResultAdapter
     ): Response {
         $name = $request->query->get('value', '');
         $actors = [];
@@ -124,7 +127,7 @@ class ActorController extends AbstractController
         }
 
         return $this->render('back/tmdb/search_result.html.twig', [
-            'items' => $actors,
+            'items' => $displayableResultAdapter->adaptArray($actors),
             'callback' => 'bo_maze_actor_add',
         ]);
     }

@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Entity\Tagline\Movie;
+use App\Service\Tmdb\DisplayableResultAdapter;
 
 class TaglineController extends AbstractController
 {
@@ -40,8 +41,9 @@ class TaglineController extends AbstractController
         Request $request,
         TranslatorInterface $translator,
         MovieRepository $repository,
-        Genre $genre): Response
-    {
+        DisplayableResultAdapter $displayableResultAdapter,
+        Genre $genre
+    ): Response {
         $count = $request->query->get('count');
 
         if (!in_array($count, [5, 6, 7, 8, 9, 10])) {
@@ -65,7 +67,7 @@ class TaglineController extends AbstractController
         return $this->render('front/tagline/play.html.twig', [
             'genre' => $genre,
             'taglines' => $taglines,
-            'movies' => $movies,
+            'movies' => $displayableResultAdapter->adaptArray($movies),
         ]);
     }
 }

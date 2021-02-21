@@ -40,10 +40,10 @@ Required :
             {% for movie in movies %}
             <div
                 data-tmdb-id="{{ movie.tmdbId }}"
-                data-display-name="{{ movie.title|raw }}"
+                data-display-name="{{ movie.displayName }}"
                 class="selection-item"
             >
-                <img src="{{ movie.pictureUrl|tmdbPictureUrl }}" alt="{{ movie.title|raw }}" />
+                <img src="{{ movie.pictureUrl|tmdbPictureUrl }}" alt="{{ movie.displayName }}" />
                 <div class="info-wrapper"><span>{{ movie.displayName }}</span></div>
             </div>
             {% endfor %}

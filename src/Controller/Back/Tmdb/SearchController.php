@@ -3,6 +3,7 @@
 namespace App\Controller\Back\Tmdb;
 
 use App\Enum\Tmdb\TypeEnum;
+use App\Service\Tmdb\DisplayableResultAdapter;
 use App\Service\Tmdb\TmdbDataProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,6 +47,7 @@ class SearchController extends AbstractController
      *
      * @param Request $request
      * @param TmdbDataProvider $tmdbDataProvider
+     * @param DisplayableResultAdapter $displayableResultAdapter
      * @param string $type
      *
      * @return Response
@@ -53,6 +55,7 @@ class SearchController extends AbstractController
     public function searchResultAction(
         Request $request,
         TmdbDataProvider $tmdbDataProvider,
+        DisplayableResultAdapter $displayableResultAdapter,
         string $type
     ): Response {
         if (!TypeEnum::exist($type)) {
@@ -80,7 +83,7 @@ class SearchController extends AbstractController
         }
 
         return $this->render('back/tmdb/search_result.html.twig', [
-            'items' => $result['results'],
+            'items' => $displayableResultAdapter->adaptArray($result['results']),
             'callback' => $displayRoute,
         ]);
     }
