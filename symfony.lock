@@ -1,4 +1,7 @@
 {
+    "babdev/pagerfanta-bundle": {
+        "version": "v2.9.0"
+    },
     "beberlei/doctrineextensions": {
         "version": "v1.3.0"
     },
@@ -124,7 +127,7 @@
         "version": "v4.10.4"
     },
     "pagerfanta/pagerfanta": {
-        "version": "v2.6.0"
+        "version": "v2.7.0"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
