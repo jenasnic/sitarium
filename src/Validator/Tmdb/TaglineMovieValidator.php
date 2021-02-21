@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Validator\Tagline;
+namespace App\Validator\Tmdb;
 
-use App\Entity\Tagline\Movie;
-use App\Validator\Tmdb\TmdbValidatorInterface;
+use App\Model\Tmdb\Movie;
 
-class MovieValidator implements TmdbValidatorInterface
+class TaglineMovieValidator implements TmdbValidatorInterface
 {
     /**
      * Allows to check if specified movie is valid or not.
@@ -22,7 +21,7 @@ class MovieValidator implements TmdbValidatorInterface
         }
 
         // If no picture => ignore movie
-        if (null === $movie->getPictureUrl()) {
+        if (null === $movie->getPosterPath()) {
             return false;
         }
 

@@ -11,7 +11,7 @@ use App\Repository\Tmdb\BuildProcessRepository;
 use App\Service\Handler\Maze\AddActorHandler;
 use App\Service\Tmdb\DisplayableResultAdapter;
 use App\Service\Tmdb\TmdbDataProvider;
-use App\Validator\Maze\ActorValidator;
+use App\Validator\Tmdb\ActorValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -122,8 +122,7 @@ class ActorController extends AbstractController
         $actors = [];
 
         if (strlen($name) > 2) {
-            $result = $tmdbDataProvider->searchActors($name, new ActorValidator(), self::MAX_ACTOR_RESULT_COUNT);
-            $actors = $result['results'];
+            $actors = $tmdbDataProvider->searchActors($name, new ActorValidator(), self::MAX_ACTOR_RESULT_COUNT);
         }
 
         return $this->render('back/tmdb/search_result.html.twig', [

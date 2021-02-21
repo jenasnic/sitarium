@@ -83,7 +83,7 @@ class SearchController extends AbstractController
         }
 
         return $this->render('back/tmdb/search_result.html.twig', [
-            'items' => $displayableResultAdapter->adaptArray($result['results']),
+            'items' => $displayableResultAdapter->adaptArray($result),
             'callback' => $displayRoute,
         ]);
     }

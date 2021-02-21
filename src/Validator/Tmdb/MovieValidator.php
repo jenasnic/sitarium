@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Validator\Maze;
+namespace App\Validator\Tmdb;
 
-use App\Entity\Maze\Movie;
-use App\Validator\Tmdb\TmdbValidatorInterface;
+use App\Model\Tmdb\Movie;
 
 class MovieValidator implements TmdbValidatorInterface
 {

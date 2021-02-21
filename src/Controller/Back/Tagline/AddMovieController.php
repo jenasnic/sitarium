@@ -7,7 +7,7 @@ use App\Enum\Tmdb\TypeEnum;
 use App\Service\Handler\Tagline\AddMoviesHandler;
 use App\Service\Tmdb\DisplayableResultAdapter;
 use App\Service\Tmdb\TmdbDataProvider;
-use App\Validator\Tagline\MovieValidator;
+use App\Validator\Tmdb\TaglineMovieValidator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,8 +52,7 @@ class AddMovieController extends AbstractController
         $movies = [];
 
         if (strlen($value) > 2) {
-            $result = $tmdbDataProvider->searchMovies($value, new MovieValidator(), self::MAX_MOVIE_RESULT_COUNT);
-            $movies = $result['results'];
+            $movies = $tmdbDataProvider->searchMovies($value, new TaglineMovieValidator(), self::MAX_MOVIE_RESULT_COUNT);
         }
 
         return $this->render('back/tmdb/search_result.html.twig', [

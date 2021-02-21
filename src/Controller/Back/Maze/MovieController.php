@@ -11,7 +11,7 @@ use App\Repository\Tmdb\BuildProcessRepository;
 use App\Service\Handler\Maze\AddMovieHandler;
 use App\Service\Tmdb\DisplayableResultAdapter;
 use App\Service\Tmdb\TmdbDataProvider;
-use App\Validator\Maze\MovieValidator;
+use App\Validator\Tmdb\MovieValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -122,8 +122,7 @@ class MovieController extends AbstractController
         $movies = [];
 
         if (strlen($title) > 2) {
-            $result = $tmdbDataProvider->searchMovies($title, new MovieValidator(), self::MAX_MOVIE_RESULT_COUNT);
-            $movies = $result['results'];
+            $movies = $tmdbDataProvider->searchMovies($title, new MovieValidator(), self::MAX_MOVIE_RESULT_COUNT);
         }
 
         return $this->render('back/tmdb/search_result.html.twig', [

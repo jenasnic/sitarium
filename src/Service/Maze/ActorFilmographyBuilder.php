@@ -11,7 +11,7 @@ use App\Event\Maze\FilmographyStartEvent;
 use App\Repository\Maze\ActorRepository;
 use App\Repository\Maze\FilmographyMovieRepository;
 use App\Service\Tmdb\TmdbApiService;
-use App\Validator\Maze\FilmographyMovieValidator;
+use App\Validator\Tmdb\FilmographyMovieValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

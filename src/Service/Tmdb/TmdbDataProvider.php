@@ -47,49 +47,49 @@ class TmdbDataProvider
     {
         $data = $this->tmdbApiService->getGenres();
 
-        return $this->buildArray($data, Genre::class);
+        return $this->buildArray($data['results'], Genre::class);
     }
 
     public function searchActors(string $search, TmdbValidatorInterface $validator = null, int $maxCount = 10)
     {
         $data = $this->tmdbApiService->searchActors($search);
 
-        return $this->buildArray($data, Actor::class, $validator, $maxCount);
+        return $this->buildArray($data['results'], Actor::class, $validator, $maxCount);
     }
 
     public function searchMovies(string $search, TmdbValidatorInterface $validator = null, int $maxCount = 10)
     {
         $data = $this->tmdbApiService->searchMovies($search);
 
-        return $this->buildArray($data, Movie::class, $validator, $maxCount);
+        return $this->buildArray($data['results'], Movie::class, $validator, $maxCount);
     }
 
     public function getFilmography(int $actorId): array
     {
         $data = $this->tmdbApiService->getFilmography($actorId);
 
-        return $this->buildArray($data, Movie::class);
+        return $this->buildArray($data['cast'], Movie::class);
     }
 
     public function getCasting(int $movieId): array
     {
         $data = $this->tmdbApiService->getCasting($movieId);
 
-        return $this->buildArray($data, Actor::class);
+        return $this->buildArray($data['cast'], Actor::class);
     }
 
     public function getSimilarMovies(int $movieId): array
     {
         $data = $this->tmdbApiService->getSimilarMovies($movieId);
 
-        return $this->buildArray($data, Movie::class);
+        return $this->buildArray($data['results'], Movie::class);
     }
 
     protected function buildArray(array $data, string $className, TmdbValidatorInterface $validator = null, $maxCount = null): array
     {
         $result = [];
 
-        foreach ($data['results'] as $item) {
+        foreach ($data as $item) {
             $entity = $this->denormalizer->denormalize($item, $className);
 
             if (null === $validator || $validator->isValid($entity)) {
@@ -98,13 +98,6 @@ class TmdbDataProvider
                     break;
                 }
             }
-        }
-
-        if (null !== $maxCount) {
-            $result = [
-                'total' => $data['total_results'],
-                'results' => $result,
-            ];
         }
 
         return $result;

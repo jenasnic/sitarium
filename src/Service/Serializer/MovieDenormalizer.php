@@ -19,7 +19,7 @@ class MovieDenormalizer extends ObjectNormalizer implements ContextAwareDenormal
     ) {
         parent::__construct($classMetadataFactory, $nameConverter, $propertyAccessor, $propertyTypeExtractor);
     }
-    
+
     public function denormalize($data, string $type, string $format = null, array $context = [])
     {
         return parent::denormalize($data, $type, $format, $context);

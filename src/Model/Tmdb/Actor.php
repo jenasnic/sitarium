@@ -17,6 +17,16 @@ class Actor
     /**
      * @var string
      */
+    private $character;
+
+    /**
+     * @var float
+     */
+    private $popularity;
+
+    /**
+     * @var string
+     */
     private $biography;
 
     /**
@@ -59,6 +69,38 @@ class Actor
     public function setName(string $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCharacter()
+    {
+        return $this->character;
+    }
+
+    /**
+     * @param string $character
+     */
+    public function setCharacter($character)
+    {
+        $this->character = $character;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPopularity()
+    {
+        return $this->popularity;
+    }
+
+    /**
+     * @param float $popularity
+     */
+    public function setPopularity($popularity)
+    {
+        $this->popularity = $popularity;
     }
 
     /**

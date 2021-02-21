@@ -11,7 +11,7 @@ use App\Event\MazeEvents;
 use App\Repository\Maze\CastingActorRepository;
 use App\Repository\Maze\MovieRepository;
 use App\Service\Tmdb\TmdbApiService;
-use App\Validator\Maze\CastingActorValidator;
+use App\Validator\Tmdb\CastingActorValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

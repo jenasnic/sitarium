@@ -50,16 +50,6 @@ class Movie
     private $status;
 
     /**
-     * @var int
-     */
-    private $voteCount;
-
-    /**
-     * @var array
-     */
-    private $genreIds;
-
-    /**
      * @ORM\ManyToMany(targetEntity="CastingActor", mappedBy="movies")
      *
      * @var CastingActor[]|Collection
@@ -154,38 +144,6 @@ class Movie
         }
 
         $this->status = $status;
-    }
-
-    /**
-     * @return int
-     */
-    public function getVoteCount(): int
-    {
-        return $this->voteCount;
-    }
-
-    /**
-     * @param int $voteCount
-     */
-    public function setVoteCount(int $voteCount)
-    {
-        $this->voteCount = $voteCount;
-    }
-
-    /**
-     * @return array
-     */
-    public function getGenreIds(): array
-    {
-        return $this->genreIds;
-    }
-
-    /**
-     * @param string $genreIds
-     */
-    public function setGenreIds(string $genreIds)
-    {
-        $this->genreIds = $genreIds;
     }
 
     /**

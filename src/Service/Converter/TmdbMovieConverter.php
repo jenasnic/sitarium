@@ -14,6 +14,7 @@ class TmdbMovieConverter
         $entity->setTmdbId($movie->getId());
         $entity->setTitle($movie->getTitle());
         $entity->setPictureUrl($movie->getProfilePath());
+        $entity->setReleaseDate($movie->getReleaseDate());
 
         return $entity;
     }

@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Validator\Maze;
+namespace App\Validator\Tmdb;
 
-use App\Entity\Maze\FilmographyMovie;
-use App\Validator\Tmdb\TmdbValidatorInterface;
+use App\Model\Tmdb\Movie;
 
 class FilmographyMovieValidator implements TmdbValidatorInterface
 {
     /**
      * Allows to check if specified movie is valid or not.
      *
-     * @param FilmographyMovie $movie movie to check
+     * @param Movie $movie movie to check
      *
      * @return bool TRUE if movie is valid, FALSE either
      */

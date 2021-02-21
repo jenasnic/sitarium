@@ -12,7 +12,7 @@ class TmdbMovieAdapter implements DisplayableAdapterInterface
      */
     public function adapt($item): DisplayableItem
     {
-        return new DisplayableItem($item->getTmdbId(), $item->getTitle(), $item->getPosterPath());
+        return new DisplayableItem($item->getId(), $item->getTitle(), $item->getPosterPath());
     }
 
     public function support($item): bool

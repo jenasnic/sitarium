@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Validator\Maze;
+namespace App\Validator\Tmdb;
 
-use App\Entity\Maze\Actor;
-use App\Validator\Tmdb\TmdbValidatorInterface;
+use App\Model\Tmdb\Actor;
 
 class CastingActorValidator implements TmdbValidatorInterface
 {
@@ -18,7 +17,7 @@ class CastingActorValidator implements TmdbValidatorInterface
     public function isValid($actor): bool
     {
         // If no picture => ignore actor
-        if (empty($actor->getPictureUrl())) {
+        if (empty($actor->getProfilePath())) {
             return false;
         }
 

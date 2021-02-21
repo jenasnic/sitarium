@@ -33,11 +33,36 @@ class Movie
      * @var string
      */
     private $overview;
-    
+
+    /**
+     * @var int
+     */
+    private $voteCount;
+
+    /**
+     * @var float
+     */
+    private $voteAverage;
+
+    /**
+     * @var float
+     */
+    private $popularity;
+
+    /**
+     * @var string
+     */
+    private $character;
+
+    /**
+     * @var Genre[]|array<Genre>
+     */
+    private $genres;
+
     /**
      * @var array
      */
-    private $genres;
+    private $genreIds;
 
     /**
      * @return int
@@ -136,7 +161,71 @@ class Movie
     }
 
     /**
-     * @return array
+     * @return number
+     */
+    public function getVoteCount()
+    {
+        return $this->voteCount;
+    }
+
+    /**
+     * @param number $voteCount
+     */
+    public function setVoteCount($voteCount)
+    {
+        $this->voteCount = $voteCount;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVoteAverage()
+    {
+        return $this->voteAverage;
+    }
+
+    /**
+     * @param float $voteAverage
+     */
+    public function setVoteAverage($voteAverage)
+    {
+        $this->voteAverage = $voteAverage;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPopularity()
+    {
+        return $this->popularity;
+    }
+
+    /**
+     * @param float $popularity
+     */
+    public function setPopularity($popularity)
+    {
+        $this->popularity = $popularity;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCharacter()
+    {
+        return $this->character;
+    }
+
+    /**
+     * @param string $character
+     */
+    public function setCharacter($character)
+    {
+        $this->character = $character;
+    }
+
+    /**
+     * @return Genre[]|array<Genre>
      */
     public function getGenres(): array
     {
@@ -144,11 +233,26 @@ class Movie
     }
 
     /**
-     * @param array $genres
+     * @param Genre[]|array<Genre> $genres
      */
-    public function addGenre(Genre $genre)
+    public function setGenres(array $genres)
     {
-        $this->genres[] = $genre;
+        $this->genres = $genres;
     }
 
+    /**
+     * @return array
+     */
+    public function getGenreIds(): array
+    {
+        return $this->genreIds;
+    }
+
+    /**
+     * @param array $genreIds
+     */
+    public function setGenreIds(array $genreIds)
+    {
+        $this->genreIds = $genreIds;
+    }
 }
