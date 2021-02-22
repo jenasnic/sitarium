@@ -4,7 +4,7 @@ namespace App\EventListener\Tmdb;
 
 use App\Entity\Tmdb\BuildProcess;
 use App\Enum\Tmdb\ProcessTypeEnum;
-use App\Event\QuizEvents;
+use App\Event\Quiz\TmdbLinkEndEvent;
 use App\Event\Quiz\TmdbLinkStartEvent;
 use App\Event\Quiz\TmdbLinkProgressEvent;
 use App\Repository\Tmdb\BuildProcessRepository;
@@ -42,9 +42,9 @@ class UpdateProcessForQuizLinkSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            QuizEvents::BUILD_TMDB_LINK_START => 'onBuildTmdbLinkStart',
-            QuizEvents::BUILD_TMDB_LINK_PROGRESS => 'onBuildTmdbLinkProgress',
-            QuizEvents::BUILD_TMDB_LINK_END => 'onBuildTmdbLinkEnd',
+            TmdbLinkStartEvent::BUILD_TMDB_LINK_START => 'onBuildTmdbLinkStart',
+            TmdbLinkProgressEvent::BUILD_TMDB_LINK_PROGRESS => 'onBuildTmdbLinkProgress',
+            TmdbLinkEndEvent::BUILD_TMDB_LINK_END => 'onBuildTmdbLinkEnd',
         ];
     }
 

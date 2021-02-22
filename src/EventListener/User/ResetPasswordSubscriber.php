@@ -2,7 +2,6 @@
 
 namespace App\EventListener\User;
 
-use App\Event\UserEvents;
 use App\Event\User\ResetPasswordEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -55,7 +54,7 @@ class ResetPasswordSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            UserEvents::RESET_PASSWORD => 'onResetPassword',
+            ResetPasswordEvent::RESET_PASSWORD => 'onResetPassword',
         ];
     }
 

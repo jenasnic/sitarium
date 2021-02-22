@@ -6,6 +6,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class FilmographyStartEvent extends Event
 {
+    public const BUILD_FILMOGRAPHY_START = 'build_filmography_start';
+
     /**
      * @var int
      */

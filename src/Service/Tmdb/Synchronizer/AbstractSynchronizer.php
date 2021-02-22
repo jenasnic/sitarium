@@ -2,7 +2,8 @@
 
 namespace App\Service\Tmdb\Synchronizer;
 
-use App\Event\SynchronizationEvents;
+use App\Event\Synchronization\SynchronizationEndEvent;
+use App\Event\Synchronization\SynchronizationErrorEvent;
 use App\Event\Synchronization\SynchronizationProgressEvent;
 use App\Event\Synchronization\SynchronizationStartEvent;
 use App\Service\Tmdb\TmdbDataProvider;
@@ -47,8 +48,8 @@ abstract class AbstractSynchronizer implements SynchronizerInterface
             $datas = $this->getAllData();
 
             $this->eventDispatcher->dispatch(
-                SynchronizationEvents::SYNCHRONIZE_DATA_START,
-                new SynchronizationStartEvent(count($datas), $this->getLocalEntityClass())
+                new SynchronizationStartEvent(count($datas), $this->getLocalEntityClass()),
+                SynchronizationStartEvent::SYNCHRONIZE_DATA_START
             );
 
             $count = 0;
@@ -62,15 +63,15 @@ abstract class AbstractSynchronizer implements SynchronizerInterface
                 // WARNING : wait between each TMDB request to not override request rate limit (4 per seconde)
                 usleep(250001);
 
-                $this->eventDispatcher->dispatch(SynchronizationEvents::SYNCHRONIZE_DATA_PROGRESS, new SynchronizationProgressEvent(++$count));
+                $this->eventDispatcher->dispatch(new SynchronizationProgressEvent(++$count), SynchronizationProgressEvent::SYNCHRONIZE_DATA_PROGRESS);
             }
 
             $this->entityManager->flush();
-            $this->eventDispatcher->dispatch(SynchronizationEvents::SYNCHRONIZE_DATA_END);
+            $this->eventDispatcher->dispatch(new SynchronizationEndEvent(), SynchronizationEndEvent::SYNCHRONIZE_DATA_END);
 
             return $count;
         } catch (\Exception $e) {
-            $this->eventDispatcher->dispatch(SynchronizationEvents::SYNCHRONIZE_DATA_ERROR);
+            $this->eventDispatcher->dispatch(new SynchronizationErrorEvent($e), SynchronizationErrorEvent::SYNCHRONIZE_DATA_ERROR);
             throw $e;
         }
     }

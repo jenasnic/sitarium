@@ -6,6 +6,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class SynchronizationStartEvent extends Event
 {
+    public const SYNCHRONIZE_DATA_START = 'synchronize_data_start';
+
     /**
      * @var int
      */

@@ -5,14 +5,15 @@ namespace App\Service\Maze;
 use App\Entity\Maze\CastingActor;
 use App\Entity\Maze\Movie;
 use App\Enum\Maze\CastingStatusEnum;
+use App\Event\Maze\CastingEndEvent;
+use App\Event\Maze\CastingErrorEvent;
 use App\Event\Maze\CastingProgressEvent;
 use App\Event\Maze\CastingStartEvent;
-use App\Event\MazeEvents;
 use App\Model\Tmdb\Actor;
 use App\Repository\Maze\CastingActorRepository;
 use App\Repository\Maze\MovieRepository;
 use App\Service\Converter\CastingActorConverter;
-use App\Service\Tmdb\TmdbApiService;
+use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -23,9 +24,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class MovieCastingBuilder
 {
     /**
-     * @var TmdbApiService
+     * @var TmdbDataProvider
      */
-    protected $tmdbService;
+    protected $tmdbDataProvider;
 
     /**
      * @var CastingActorConverter
@@ -53,7 +54,7 @@ class MovieCastingBuilder
     protected $eventDispatcher;
 
     /**
-     * @param TmdbApiService $tmdbService
+     * @param TmdbDataProvider $tmdbDataProvider
      * @param CastingActorConverter $castingActorConverter
      * @param MovieRepository $movieRepository
      * @param CastingActorRepository $castingActorRepository
@@ -61,14 +62,14 @@ class MovieCastingBuilder
      * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
-        TmdbApiService $tmdbService,
+        TmdbDataProvider $tmdbDataProvider,
         CastingActorConverter $castingActorConverter,
         MovieRepository $movieRepository,
         CastingActorRepository $castingActorRepository,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $this->tmdbService = $tmdbService;
+        $this->tmdbDataProvider = $tmdbDataProvider;
         $this->castingActorConverter = $castingActorConverter;
         $this->movieRepository = $movieRepository;
         $this->castingActorRepository = $castingActorRepository;
@@ -83,7 +84,7 @@ class MovieCastingBuilder
 
             $movies = $this->movieRepository->findAll();
 
-            $this->eventDispatcher->dispatch(MazeEvents::BUILD_CASTING_START, new CastingStartEvent(count($movies)));
+            $this->eventDispatcher->dispatch(new CastingStartEvent(count($movies)), CastingStartEvent::BUILD_CASTING_START);
 
             $allActors = $this->getAllActors($movies);
             $filteredActors = $this->getFilteredActors($allActors);
@@ -95,9 +96,9 @@ class MovieCastingBuilder
 
             $this->entityManager->flush();
 
-            $this->eventDispatcher->dispatch(MazeEvents::BUILD_CASTING_END);
+            $this->eventDispatcher->dispatch(new CastingEndEvent(), CastingEndEvent::BUILD_CASTING_END);
         } catch (\Exception $e) {
-            $this->eventDispatcher->dispatch(MazeEvents::BUILD_CASTING_ERROR);
+            $this->eventDispatcher->dispatch(new CastingErrorEvent($e), CastingErrorEvent::BUILD_CASTING_ERROR);
             throw $e;
         }
     }
@@ -122,7 +123,7 @@ class MovieCastingBuilder
 
         /** @var Movie $movie */
         foreach ($movieList as $movie) {
-            $actorList = $this->tmdbService->getCasting($movie->getTmdbId());
+            $actorList = $this->tmdbDataProvider->getCasting($movie->getTmdbId());
 
             /** @var Actor $actor */
             foreach ($actorList as $actor) {
@@ -139,7 +140,7 @@ class MovieCastingBuilder
             // WARNING : wait between each TMDB request to not override request rate limit (4 per seconde)
             usleep(250001);
 
-            $this->eventDispatcher->dispatch(MazeEvents::BUILD_CASTING_PROGRESS, new CastingProgressEvent(++$processCount));
+            $this->eventDispatcher->dispatch(new CastingProgressEvent(++$processCount), CastingProgressEvent::BUILD_CASTING_PROGRESS);
         }
 
         return $actorFullList;

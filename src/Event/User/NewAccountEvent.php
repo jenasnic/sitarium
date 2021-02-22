@@ -7,6 +7,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class NewAccountEvent extends Event
 {
+    public const NEW_ACCOUNT = 'new_account';
+
     /**
      * @var User
      */

@@ -3,7 +3,6 @@
 namespace App\Service\Handler\User;
 
 use App\Domain\Command\User\AddUserCommand;
-use App\Event\UserEvents;
 use App\Event\User\NewAccountEvent;
 use App\Tool\PasswordUtil;
 use Doctrine\ORM\EntityManagerInterface;
@@ -50,6 +49,6 @@ class AddUserHandler
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $this->eventDispatcher->dispatch(UserEvents::NEW_ACCOUNT, new NewAccountEvent($user, $password));
+        $this->eventDispatcher->dispatch(new NewAccountEvent($user, $password), NewAccountEvent::NEW_ACCOUNT);
     }
 }

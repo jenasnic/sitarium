@@ -5,16 +5,17 @@ namespace App\Service\Maze;
 use App\Entity\Maze\Actor;
 use App\Entity\Maze\FilmographyMovie;
 use App\Enum\Maze\FilmographyStatusEnum;
-use App\Event\MazeEvents;
+use App\Event\Maze\FilmographyEndEvent;
+use App\Event\Maze\FilmographyErrorEvent;
 use App\Event\Maze\FilmographyProgressEvent;
 use App\Event\Maze\FilmographyStartEvent;
 use App\Model\Tmdb\Movie;
 use App\Repository\Maze\ActorRepository;
 use App\Repository\Maze\FilmographyMovieRepository;
-use App\Service\Tmdb\TmdbApiService;
+use App\Service\Converter\FilmographyMovieConverter;
+use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use App\Service\Converter\FilmographyMovieConverter;
 
 /**
  * This class allows to get all movies relative to existing actors and to build filmography keeping only movies linked together
@@ -23,9 +24,9 @@ use App\Service\Converter\FilmographyMovieConverter;
 class ActorFilmographyBuilder
 {
     /**
-     * @var TmdbApiService
+     * @var TmdbDataProvider
      */
-    protected $tmdbApiService;
+    protected $tmdbDataProvider;
 
     /**
      * @var FilmographyMovieConverter
@@ -53,7 +54,7 @@ class ActorFilmographyBuilder
     protected $eventDispatcher;
 
     /**
-     * @param TmdbApiService $tmdbService
+     * @param TmdbDataProvider $tmdbDataProvider
      * @param FilmographyMovieConverter $filmographyMovieConverter
      * @param ActorRepository $actorRepository
      * @param FilmographyMovieRepository $filmographyMovieRepository
@@ -61,14 +62,14 @@ class ActorFilmographyBuilder
      * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
-        TmdbApiService $tmdbApiService,
+        TmdbDataProvider $tmdbDataProvider,
         FilmographyMovieConverter $filmographyMovieConverter,
         ActorRepository $actorRepository,
         FilmographyMovieRepository $filmographyMovieRepository,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $this->tmdbApiService = $tmdbApiService;
+        $this->tmdbDataProvider = $tmdbDataProvider;
         $this->filmographyMovieConverter = $filmographyMovieConverter;
         $this->actorRepository = $actorRepository;
         $this->filmographyMovieRepository = $filmographyMovieRepository;
@@ -83,7 +84,7 @@ class ActorFilmographyBuilder
 
             $actors = $this->actorRepository->findAll();
 
-            $this->eventDispatcher->dispatch(MazeEvents::BUILD_FILMOGRAPHY_START, new FilmographyStartEvent(count($actors)));
+            $this->eventDispatcher->dispatch(new FilmographyStartEvent(count($actors)), FilmographyStartEvent::BUILD_FILMOGRAPHY_START);
 
             $allMovies = $this->getAllMovies($actors);
             $filteredMovies = $this->getFilteredMovies($allMovies);
@@ -95,9 +96,9 @@ class ActorFilmographyBuilder
 
             $this->entityManager->flush();
 
-            $this->eventDispatcher->dispatch(MazeEvents::BUILD_FILMOGRAPHY_END);
+            $this->eventDispatcher->dispatch(new FilmographyEndEvent(), FilmographyEndEvent::BUILD_FILMOGRAPHY_END);
         } catch (\Exception $e) {
-            $this->eventDispatcher->dispatch(MazeEvents::BUILD_FILMOGRAPHY_ERROR);
+            $this->eventDispatcher->dispatch(new FilmographyErrorEvent($e), FilmographyErrorEvent::BUILD_FILMOGRAPHY_ERROR);
             throw $e;
         }
     }
@@ -122,7 +123,7 @@ class ActorFilmographyBuilder
 
         /** @var Actor $actor */
         foreach ($actorList as $actor) {
-            $movieList = $this->tmdbApiService->getFilmography($actor->getTmdbId());
+            $movieList = $this->tmdbDataProvider->getFilmography($actor->getTmdbId());
 
             /** @var Movie $movie */
             foreach ($movieList as $movie) {
@@ -144,7 +145,7 @@ class ActorFilmographyBuilder
             // WARNING : wait between each TMDB request to not override request rate limit (4 per seconde)
             usleep(250001);
 
-            $this->eventDispatcher->dispatch(MazeEvents::BUILD_FILMOGRAPHY_PROGRESS, new FilmographyProgressEvent(++$processCount));
+            $this->eventDispatcher->dispatch(new FilmographyProgressEvent(++$processCount), FilmographyProgressEvent::BUILD_FILMOGRAPHY_PROGRESS);
         }
 
         return $movieFullList;

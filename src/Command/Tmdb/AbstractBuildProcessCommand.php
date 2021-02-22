@@ -67,7 +67,7 @@ abstract class AbstractBuildProcessCommand extends Command
         if ($this->buildProcessRepository->isProcessPending()) {
             $output->writeln('Process already pending...');
 
-            return;
+            return Command::FAILURE;
         }
 
         $output->writeln(sprintf('Build process %s', $this->processType));
@@ -76,8 +76,13 @@ abstract class AbstractBuildProcessCommand extends Command
         } catch (\Exception $e) {
             $output->writeln($e->getMessage());
             $this->stopPendingProcess();
+
+            return Command::FAILURE;
         }
+
         $output->writeln('OK');
+
+        return Command::SUCCESS;
     }
 
     private function stopPendingProcess()

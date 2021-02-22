@@ -3,7 +3,6 @@
 namespace App\Service\Handler\User;
 
 use App\Domain\Command\User\ResetPasswordCommand;
-use App\Event\UserEvents;
 use App\Event\User\ResetPasswordEvent;
 use App\Tool\PasswordUtil;
 use Doctrine\ORM\EntityManagerInterface;
@@ -47,6 +46,6 @@ class ResetUserPasswordHandler
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $this->eventDispatcher->dispatch(UserEvents::RESET_PASSWORD, new ResetPasswordEvent($user, $password));
+        $this->eventDispatcher->dispatch(new ResetPasswordEvent($user, $password), ResetPasswordEvent::RESET_PASSWORD);
     }
 }

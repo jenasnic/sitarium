@@ -4,7 +4,8 @@ namespace App\EventListener\Tmdb;
 
 use App\Entity\Tmdb\BuildProcess;
 use App\Enum\Tmdb\ProcessTypeEnum;
-use App\Event\SynchronizationEvents;
+use App\Event\Synchronization\SynchronizationEndEvent;
+use App\Event\Synchronization\SynchronizationErrorEvent;
 use App\Event\Synchronization\SynchronizationProgressEvent;
 use App\Event\Synchronization\SynchronizationStartEvent;
 use App\Repository\Tmdb\BuildProcessRepository;
@@ -42,10 +43,10 @@ class UpdateProcessForSynchronizationSubscriber implements EventSubscriberInterf
     public static function getSubscribedEvents()
     {
         return [
-            SynchronizationEvents::SYNCHRONIZE_DATA_START => 'onSynchronizationStart',
-            SynchronizationEvents::SYNCHRONIZE_DATA_PROGRESS => 'onSynchronizationProgress',
-            SynchronizationEvents::SYNCHRONIZE_DATA_END => 'onSynchronizationEnd',
-            SynchronizationEvents::SYNCHRONIZE_DATA_ERROR => 'onSynchronizationEnd',
+            SynchronizationStartEvent::SYNCHRONIZE_DATA_START => 'onSynchronizationStart',
+            SynchronizationProgressEvent::SYNCHRONIZE_DATA_PROGRESS => 'onSynchronizationProgress',
+            SynchronizationEndEvent::SYNCHRONIZE_DATA_END => 'onSynchronizationEnd',
+            SynchronizationErrorEvent::SYNCHRONIZE_DATA_ERROR => 'onSynchronizationEnd',
         ];
     }
 

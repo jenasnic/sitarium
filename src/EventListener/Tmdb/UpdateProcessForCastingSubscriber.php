@@ -4,7 +4,8 @@ namespace App\EventListener\Tmdb;
 
 use App\Entity\Tmdb\BuildProcess;
 use App\Enum\Tmdb\ProcessTypeEnum;
-use App\Event\MazeEvents;
+use App\Event\Maze\CastingEndEvent;
+use App\Event\Maze\CastingErrorEvent;
 use App\Event\Maze\CastingProgressEvent;
 use App\Event\Maze\CastingStartEvent;
 use App\Repository\Tmdb\BuildProcessRepository;
@@ -42,10 +43,10 @@ class UpdateProcessForCastingSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            MazeEvents::BUILD_CASTING_START => 'onBuildCastingStart',
-            MazeEvents::BUILD_CASTING_PROGRESS => 'onBuildCastingProgress',
-            MazeEvents::BUILD_CASTING_END => 'onBuildCastingEnd',
-            MazeEvents::BUILD_CASTING_ERROR => 'onBuildCastingEnd',
+            CastingStartEvent::BUILD_CASTING_START => 'onBuildCastingStart',
+            CastingProgressEvent::BUILD_CASTING_PROGRESS => 'onBuildCastingProgress',
+            CastingEndEvent::BUILD_CASTING_END => 'onBuildCastingEnd',
+            CastingErrorEvent::BUILD_CASTING_ERROR => 'onBuildCastingEnd',
         ];
     }
 

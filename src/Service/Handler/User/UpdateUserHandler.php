@@ -3,7 +3,6 @@
 namespace App\Service\Handler\User;
 
 use App\Domain\Command\User\UpdateUserCommand;
-use App\Event\UserEvents;
 use App\Event\User\UpdateAccountEvent;
 use App\Tool\PasswordUtil;
 use Doctrine\ORM\EntityManagerInterface;
@@ -49,6 +48,6 @@ class UpdateUserHandler
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $this->eventDispatcher->dispatch(UserEvents::UPDATE_ACCOUNT, new UpdateAccountEvent($user, $password));
+        $this->eventDispatcher->dispatch(new UpdateAccountEvent($user, $password), UpdateAccountEvent::UPDATE_ACCOUNT);
     }
 }

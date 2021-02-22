@@ -3,7 +3,7 @@
 namespace App\Service\Quiz;
 
 use App\Entity\Quiz\Response;
-use App\Event\QuizEvents;
+use App\Event\Quiz\TmdbLinkEndEvent;
 use App\Event\Quiz\TmdbLinkProgressEvent;
 use App\Event\Quiz\TmdbLinkStartEvent;
 use App\Model\Tmdb\Movie;
@@ -64,7 +64,7 @@ class TmdbLinkBuilder
         $processCount = 0;
         $responses = $this->quizRepository->find($quizId)->getResponses();
 
-        $this->eventDispatcher->dispatch(QuizEvents::BUILD_TMDB_LINK_START, new TmdbLinkStartEvent(count($responses)));
+        $this->eventDispatcher->dispatch(new TmdbLinkStartEvent(count($responses)), TmdbLinkStartEvent::BUILD_TMDB_LINK_START);
 
         /** @var Response $response */
         foreach ($responses as $response) {
@@ -87,9 +87,9 @@ class TmdbLinkBuilder
                 $this->entityManager->flush();
             }
 
-            $this->eventDispatcher->dispatch(QuizEvents::BUILD_TMDB_LINK_PROGRESS, new TmdbLinkProgressEvent(++$processCount));
+            $this->eventDispatcher->dispatch(new TmdbLinkProgressEvent(++$processCount), TmdbLinkProgressEvent::BUILD_TMDB_LINK_PROGRESS);
         }
 
-        $this->eventDispatcher->dispatch(QuizEvents::BUILD_TMDB_LINK_END);
+        $this->eventDispatcher->dispatch(new TmdbLinkEndEvent(), TmdbLinkEndEvent::BUILD_TMDB_LINK_END);
     }
 }

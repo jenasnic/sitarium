@@ -6,6 +6,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class CastingStartEvent extends Event
 {
+    public const BUILD_CASTING_START = 'build_casting_start';
+
     /**
      * @var int
      */

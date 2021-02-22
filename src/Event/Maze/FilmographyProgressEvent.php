@@ -6,6 +6,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class FilmographyProgressEvent extends Event
 {
+    public const BUILD_FILMOGRAPHY_PROGRESS = 'build_filmography_progress';
+
     /**
      * @var int
      */

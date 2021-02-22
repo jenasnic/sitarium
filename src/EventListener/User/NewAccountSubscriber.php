@@ -2,7 +2,6 @@
 
 namespace App\EventListener\User;
 
-use App\Event\UserEvents;
 use App\Event\User\NewAccountEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -55,7 +54,7 @@ class NewAccountSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            UserEvents::NEW_ACCOUNT => 'onNewAccount',
+            NewAccountEvent::NEW_ACCOUNT => 'onNewAccount',
         ];
     }
 

@@ -6,6 +6,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class CastingProgressEvent extends Event
 {
+    public const BUILD_CASTING_PROGRESS = 'build_casting_progress';
+
     /**
      * @var int
      */

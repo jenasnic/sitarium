@@ -7,6 +7,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class UpdateAccountEvent extends Event
 {
+    public const UPDATE_ACCOUNT = 'update_account';
+
     /**
      * @var User
      */

@@ -4,7 +4,8 @@ namespace App\EventListener\Tmdb;
 
 use App\Entity\Tmdb\BuildProcess;
 use App\Enum\Tmdb\ProcessTypeEnum;
-use App\Event\MazeEvents;
+use App\Event\Maze\FilmographyEndEvent;
+use App\Event\Maze\FilmographyErrorEvent;
 use App\Event\Maze\FilmographyProgressEvent;
 use App\Event\Maze\FilmographyStartEvent;
 use App\Repository\Tmdb\BuildProcessRepository;
@@ -42,10 +43,10 @@ class UpdateProcessForFilmographySubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            MazeEvents::BUILD_FILMOGRAPHY_START => 'onBuildFilmographyStart',
-            MazeEvents::BUILD_FILMOGRAPHY_PROGRESS => 'onBuildFilmographyProgress',
-            MazeEvents::BUILD_FILMOGRAPHY_END => 'onBuildFilmographyEnd',
-            MazeEvents::BUILD_FILMOGRAPHY_ERROR => 'onBuildFilmographyEnd',
+            FilmographyStartEvent::BUILD_FILMOGRAPHY_START => 'onBuildFilmographyStart',
+            FilmographyProgressEvent::BUILD_FILMOGRAPHY_PROGRESS => 'onBuildFilmographyProgress',
+            FilmographyEndEvent::BUILD_FILMOGRAPHY_END => 'onBuildFilmographyEnd',
+            FilmographyErrorEvent::BUILD_FILMOGRAPHY_ERROR => 'onBuildFilmographyEnd',
         ];
     }
 
