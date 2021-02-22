@@ -8,12 +8,13 @@ use App\Enum\Maze\FilmographyStatusEnum;
 use App\Event\MazeEvents;
 use App\Event\Maze\FilmographyProgressEvent;
 use App\Event\Maze\FilmographyStartEvent;
+use App\Model\Tmdb\Movie;
 use App\Repository\Maze\ActorRepository;
 use App\Repository\Maze\FilmographyMovieRepository;
 use App\Service\Tmdb\TmdbApiService;
-use App\Validator\Tmdb\FilmographyMovieValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use App\Service\Converter\FilmographyMovieConverter;
 
 /**
  * This class allows to get all movies relative to existing actors and to build filmography keeping only movies linked together
@@ -24,7 +25,12 @@ class ActorFilmographyBuilder
     /**
      * @var TmdbApiService
      */
-    protected $tmdbService;
+    protected $tmdbApiService;
+
+    /**
+     * @var FilmographyMovieConverter
+     */
+    protected $filmographyMovieConverter;
 
     /**
      * @var ActorRepository
@@ -48,19 +54,22 @@ class ActorFilmographyBuilder
 
     /**
      * @param TmdbApiService $tmdbService
+     * @param FilmographyMovieConverter $filmographyMovieConverter
      * @param ActorRepository $actorRepository
      * @param FilmographyMovieRepository $filmographyMovieRepository
      * @param EntityManagerInterface $entityManager
      * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
-        TmdbApiService $tmdbService,
+        TmdbApiService $tmdbApiService,
+        FilmographyMovieConverter $filmographyMovieConverter,
         ActorRepository $actorRepository,
         FilmographyMovieRepository $filmographyMovieRepository,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $this->tmdbService = $tmdbService;
+        $this->tmdbApiService = $tmdbApiService;
+        $this->filmographyMovieConverter = $filmographyMovieConverter;
         $this->actorRepository = $actorRepository;
         $this->filmographyMovieRepository = $filmographyMovieRepository;
         $this->entityManager = $entityManager;
@@ -113,24 +122,21 @@ class ActorFilmographyBuilder
 
         /** @var Actor $actor */
         foreach ($actorList as $actor) {
-            $movieList = $this->tmdbService->getFilmographyForActorId(
-                $actor->getTmdbId(),
-                'movie',
-                FilmographyMovie::class,
-                new FilmographyMovieValidator()
-            );
+            $movieList = $this->tmdbApiService->getFilmography($actor->getTmdbId());
 
-            /** @var FilmographyMovie $movie */
+            /** @var Movie $movie */
             foreach ($movieList as $movie) {
+                $filmographyMovie = $this->filmographyMovieConverter->convert($movie);
+
                 // Add movie to full list if not yet added
-                if (!isset($movieFullList[$movie->getTmdbId()])) {
-                    $movieFullList[$movie->getTmdbId()] = $movie;
+                if (!isset($movieFullList[$filmographyMovie->getTmdbId()])) {
+                    $movieFullList[$filmographyMovie->getTmdbId()] = $filmographyMovie;
                 }
 
-                $movie = $movieFullList[$movie->getTmdbId()];
+                $filmographyMovie = $movieFullList[$filmographyMovie->getTmdbId()];
                 // Add current actor to movie
                 // WARNING : Check if actor not already exist (a same actor can appear several times in a same movie...)
-                if (0 === count($movie->getActors()) || !$movie->getActors()->contains($actor)) {
+                if (0 === count($filmographyMovie->getActors()) || !$filmographyMovie->getActors()->contains($actor)) {
                     $movie->addActor($actor);
                 }
             }

@@ -8,10 +8,11 @@ use App\Enum\Maze\CastingStatusEnum;
 use App\Event\Maze\CastingProgressEvent;
 use App\Event\Maze\CastingStartEvent;
 use App\Event\MazeEvents;
+use App\Model\Tmdb\Actor;
 use App\Repository\Maze\CastingActorRepository;
 use App\Repository\Maze\MovieRepository;
+use App\Service\Converter\CastingActorConverter;
 use App\Service\Tmdb\TmdbApiService;
-use App\Validator\Tmdb\CastingActorValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -25,6 +26,11 @@ class MovieCastingBuilder
      * @var TmdbApiService
      */
     protected $tmdbService;
+
+    /**
+     * @var CastingActorConverter
+     */
+    protected $castingActorConverter;
 
     /**
      * @var MovieRepository
@@ -48,6 +54,7 @@ class MovieCastingBuilder
 
     /**
      * @param TmdbApiService $tmdbService
+     * @param CastingActorConverter $castingActorConverter
      * @param MovieRepository $movieRepository
      * @param CastingActorRepository $castingActorRepository
      * @param EntityManagerInterface $entityManager
@@ -55,12 +62,14 @@ class MovieCastingBuilder
      */
     public function __construct(
         TmdbApiService $tmdbService,
+        CastingActorConverter $castingActorConverter,
         MovieRepository $movieRepository,
         CastingActorRepository $castingActorRepository,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher
     ) {
         $this->tmdbService = $tmdbService;
+        $this->castingActorConverter = $castingActorConverter;
         $this->movieRepository = $movieRepository;
         $this->castingActorRepository = $castingActorRepository;
         $this->entityManager = $entityManager;
@@ -113,20 +122,18 @@ class MovieCastingBuilder
 
         /** @var Movie $movie */
         foreach ($movieList as $movie) {
-            $actorList = $this->tmdbService->getCastingForMovieId(
-                $movie->getTmdbId(),
-                CastingActor::class,
-                new CastingActorValidator()
-            );
+            $actorList = $this->tmdbService->getCasting($movie->getTmdbId());
 
-            /** @var CastingActor $actor */
+            /** @var Actor $actor */
             foreach ($actorList as $actor) {
-                if (!isset($actorFullList[$actor->getTmdbId()])) {
-                    $actorFullList[$actor->getTmdbId()] = $actor;
+                $castingActor = $this->castingActorConverter->convert($actor);
+
+                if (!isset($actorFullList[$castingActor->getTmdbId()])) {
+                    $actorFullList[$castingActor->getTmdbId()] = $actor;
                 }
 
-                $actor = $actorFullList[$actor->getTmdbId()];
-                $actor->addMovie($movie);
+                $castingActor = $actorFullList[$castingActor->getTmdbId()];
+                $castingActor->addMovie($movie);
             }
 
             // WARNING : wait between each TMDB request to not override request rate limit (4 per seconde)

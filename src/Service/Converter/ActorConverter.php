@@ -2,12 +2,12 @@
 
 namespace App\Service\Converter;
 
-use App\Model\Tmdb\Actor as TmdbActor;
 use App\Entity\Maze\Actor;
+use App\Model\Tmdb\Actor as TmdbActor;
 
-class TmdbActorConverter
+class ActorConverter
 {
-    public function convert(TmdbActor $actor)
+    public function convert(TmdbActor $actor): Actor
     {
         $entity = new Actor();
 

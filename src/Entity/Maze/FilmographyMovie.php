@@ -49,18 +49,6 @@ class FilmographyMovie
     private $pictureUrl;
 
     /**
-     *
-     * @var string
-     */
-    private $character;
-
-    /**
-     *
-     * @var array
-     */
-    private $genreIds;
-
-    /**
      * @ORM\ManyToMany(targetEntity="Actor", inversedBy="movies", cascade={"persist"})
      * @ORM\JoinTable(name="maze_actor_filmography_movie",
      *      joinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="tmdbId", onDelete="CASCADE")},
@@ -154,38 +142,6 @@ class FilmographyMovie
     public function setPictureUrl(?string $pictureUrl)
     {
         $this->pictureUrl = $pictureUrl;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCharacter(): string
-    {
-        return $this->character;
-    }
-
-    /**
-     * @param string $character
-     */
-    public function setCharacter(string $character)
-    {
-        $this->character = $character;
-    }
-
-    /**
-     * @return array
-     */
-    public function getGenreIds(): array
-    {
-        return $this->genreIds;
-    }
-
-    /**
-     * @param array $genreIds
-     */
-    public function setGenreIds(array $genreIds)
-    {
-        $this->genreIds = $genreIds;
     }
 
     /**

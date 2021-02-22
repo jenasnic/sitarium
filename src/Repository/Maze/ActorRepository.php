@@ -74,7 +74,7 @@ class ActorRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('actor');
 
         return $queryBuilder->update()
-        ->set('actor.status', $queryBuilder->expr()->literal(FilmographyStatusEnum::UNINITIALIZED))
+            ->set('actor.status', $queryBuilder->expr()->literal(FilmographyStatusEnum::UNINITIALIZED))
             ->getQuery()
             ->getSingleScalarResult()
         ;

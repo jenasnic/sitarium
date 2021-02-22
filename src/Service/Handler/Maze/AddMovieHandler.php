@@ -4,7 +4,7 @@ namespace App\Service\Handler\Maze;
 
 use App\Domain\Command\Maze\AddMovieCommand;
 use App\Repository\Maze\MovieRepository;
-use App\Service\Converter\TmdbMovieConverter;
+use App\Service\Converter\MovieConverter;
 use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -19,9 +19,9 @@ class AddMovieHandler
     protected $tmdbDataProvider;
 
     /**
-     * @var TmdbMovieConverter
+     * @var MovieConverter
      */
-    protected $tmdbMovieConverter;
+    protected $movieConverter;
 
     /**
      * @var MovieRepository
@@ -35,19 +35,19 @@ class AddMovieHandler
 
     /**
      * @param TmdbDataProvider $tmdbDataProvider
-     * @param TmdbMovieConverter $tmdbMovieConverter
+     * @param MovieConverter $movieConverter
      * @param MovieRepository $movieRepository
      * @param EntityManagerInterface $entityManager
      */
     public function __construct(
         TmdbDataProvider $tmdbDataProvider,
-        TmdbMovieConverter $tmdbMovieConverter,
+        MovieConverter $movieConverter,
         MovieRepository $movieRepository,
         EntityManagerInterface $entityManager
     ) {
         $this->movieRepository = $movieRepository;
         $this->tmdbDataProvider = $tmdbDataProvider;
-        $this->tmdbMovieConverter = $tmdbMovieConverter;
+        $this->movieConverter = $movieConverter;
         $this->entityManager = $entityManager;
     }
 
@@ -62,7 +62,7 @@ class AddMovieHandler
         }
 
         $tmdbMovie = $this->tmdbDataProvider->getMovie($command->getTmdbId());
-        $movieToAdd = $this->tmdbMovieConverter->convert($tmdbMovie);
+        $movieToAdd = $this->movieConverter->convert($tmdbMovie);
 
         $this->entityManager->persist($movieToAdd);
         $this->entityManager->flush();

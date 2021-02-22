@@ -4,7 +4,7 @@ namespace App\Service\Handler\Maze;
 
 use App\Domain\Command\Maze\AddActorCommand;
 use App\Repository\Maze\ActorRepository;
-use App\Service\Converter\TmdbActorConverter;
+use App\Service\Converter\ActorConverter;
 use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -19,9 +19,9 @@ class AddActorHandler
     protected $tmdbDataProvider;
 
     /**
-     * @var TmdbActorConverter
+     * @var ActorConverter
      */
-    protected $tmdbActorConverter;
+    protected $actorConverter;
 
     /**
      * @var ActorRepository
@@ -35,18 +35,18 @@ class AddActorHandler
 
     /**
      * @param TmdbDataProvider $tmdbDataProvider
-     * @param TmdbActorConverter $tmdbActorConverter
+     * @param ActorConverter $actorConverter
      * @param ActorRepository $actorRepository
      * @param EntityManagerInterface $entityManager
      */
     public function __construct(
         TmdbDataProvider $tmdbDataProvider,
-        TmdbActorConverter $tmdbActorConverter,
+        ActorConverter $actorConverter,
         ActorRepository $actorRepository,
         EntityManagerInterface $entityManager
     ) {
         $this->tmdbDataProvider = $tmdbDataProvider;
-        $this->tmdbActorConverter = $tmdbActorConverter;
+        $this->actorConverter = $actorConverter;
         $this->actorRepository = $actorRepository;
         $this->entityManager = $entityManager;
     }
@@ -62,7 +62,7 @@ class AddActorHandler
         }
 
         $tmdbActor = $this->tmdbDataProvider->getActor($command->getTmdbId());
-        $actorToAdd = $this->tmdbActorConverter->convert($tmdbActor);
+        $actorToAdd = $this->actorConverter->convert($tmdbActor);
 
         $this->entityManager->persist($actorToAdd);
         $this->entityManager->flush();
