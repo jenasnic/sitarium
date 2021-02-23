@@ -16,10 +16,6 @@ class LoginController extends AbstractController
 {
     /**
      * @Route("/connexion", name="login", methods="GET|POST")
-     *
-     * @param AuthenticationUtils $authenticationUtils
-     *
-     * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -40,13 +36,6 @@ class LoginController extends AbstractController
 
     /**
      * @Route("/mot-de-passe-oublie", name="fo_forgotten_password")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param UserRepository $userRepository
-     * @param ResetUserPasswordHandler $handler
-     *
-     * @return Response
      */
     public function infosAction(
         Request $request,

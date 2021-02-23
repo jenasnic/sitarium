@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class UserType extends AccountType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
         $builder

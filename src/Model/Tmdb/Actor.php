@@ -2,157 +2,91 @@
 
 namespace App\Model\Tmdb;
 
+use DateTime;
+
 class Actor
 {
-    /**
-     * @var int
-     */
-    private $id;
+    private ?int $id = null;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var string
-     */
-    private $character;
+    private ?string $character = null;
 
-    /**
-     * @var float
-     */
-    private $popularity;
+    private ?float $popularity = null;
 
-    /**
-     * @var string
-     */
-    private $biography;
+    private ?string $biography = null;
 
-    /**
-     * @var \DateTime
-     */
-    private $birthday;
+    private ?DateTime $birthday = null;
 
-    /**
-     * @var string
-     */
-    private $profilePath;
+    private ?string $profilePath = null;
 
-    /**
-     * @return int
-     */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $tmdbId
-     */
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @return string
-     */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
-    public function getCharacter()
+    public function getCharacter(): ?string
     {
         return $this->character;
     }
 
-    /**
-     * @param string $character
-     */
-    public function setCharacter($character)
+    public function setCharacter($character): void
     {
         $this->character = $character;
     }
 
-    /**
-     * @return float
-     */
-    public function getPopularity()
+    public function getPopularity(): ?float
     {
         return $this->popularity;
     }
 
-    /**
-     * @param float $popularity
-     */
-    public function setPopularity($popularity)
+    public function setPopularity($popularity): void
     {
         $this->popularity = $popularity;
     }
 
-    /**
-     * @return string
-     */
-    public function getBiography()
+    public function getBiography(): ?string
     {
         return $this->biography;
     }
 
-    /**
-     * @param string $biography
-     */
-    public function setBiography($biography)
+    public function setBiography($biography): void
     {
         $this->biography = $biography;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getBirthday(): ?\DateTime
+    public function getBirthday(): ?DateTime
     {
         return $this->birthday;
     }
 
-    /**
-     * @param \DateTime|null $birthday
-     */
-    public function setBirthday(?\DateTime $birthday)
+    public function setBirthday(?DateTime $birthday): void
     {
         $this->birthday = $birthday;
     }
 
-    /**
-     * @return string|null
-     */
     public function getProfilePath(): ?string
     {
         return $this->profilePath;
     }
 
-    /**
-     * @param string|null $pictureUrl
-     */
-    public function setProfilePath(?string $profilePath)
+    public function setProfilePath(?string $profilePath): void
     {
         $this->profilePath = $profilePath;
-    }
-
-    public function getDisplayName()
-    {
-        return $this->name;
     }
 }

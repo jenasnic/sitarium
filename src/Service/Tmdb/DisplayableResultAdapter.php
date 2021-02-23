@@ -8,15 +8,20 @@ use App\Service\Tmdb\Adapter\DisplayableAdapterInterface;
 class DisplayableResultAdapter
 {
     /**
-     * @var DisplayableAdapterInterface[]
+     * @var DisplayableAdapterInterface[]|iterable<DisplayableAdapterInterface>
      */
-    protected $adapters = [];
+    protected iterable $adapters = [];
 
     public function __construct(iterable $adapters)
     {
         $this->adapters = $adapters;
     }
 
+    /**
+     * @param array<mixed> $items
+     *
+     * @return array<DisplayableItem>
+     */
     public function adaptArray(array $items): array
     {
         $result = [];

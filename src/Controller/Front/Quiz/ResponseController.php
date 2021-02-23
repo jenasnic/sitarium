@@ -15,13 +15,6 @@ class ResponseController extends AbstractController
 {
     /**
      * @Route("/quiz/ajax/valider-reponse", name="fo_quiz_check_response", methods="POST")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param ResponseRepository $responseRepository
-     * @param AddUserResponseHandler $handler
-     *
-     * @return JsonResponse
      */
     public function checkResponseAction(
         Request $request,
@@ -64,12 +57,6 @@ class ResponseController extends AbstractController
 
     /**
      * @Route("/quiz/ajax/indice", name="fo_quiz_trick", methods="POST")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param ResponseRepository $responseRepository
-     *
-     * @return JsonResponse
      */
     public function quizTrick(Request $request, TranslatorInterface $translator, ResponseRepository $responseRepository): JsonResponse
     {

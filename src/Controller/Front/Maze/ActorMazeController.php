@@ -13,8 +13,6 @@ class ActorMazeController extends AbstractController
 {
     /**
      * @Route("/quiz-filmographie", name="fo_maze_actor")
-     *
-     * @return Response
      */
     public function indexAction(): Response
     {
@@ -24,10 +22,6 @@ class ActorMazeController extends AbstractController
     /**
      * @Route("/quiz-filmographie/plus-court-chemin", name="fo_maze_actor_select_min_path")
      * @Security("is_granted('ROLE_USER')")
-     *
-     * @param ActorRepository $actorRepository
-     *
-     * @return Response
      */
     public function selectMinPathAction(ActorRepository $actorRepository): Response
     {
@@ -39,10 +33,6 @@ class ActorMazeController extends AbstractController
     /**
      * @Route("/quiz-filmographie/plus-long-chemin", name="fo_maze_actor_select_max_path")
      * @Security("is_granted('ROLE_USER')")
-     *
-     * @param ActorRepository $actorRepository
-     *
-     * @return Response
      */
     public function selectMaxPathAction(ActorRepository $actorRepository): Response
     {

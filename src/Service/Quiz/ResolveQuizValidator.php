@@ -11,7 +11,7 @@ class ResolveQuizValidator
 {
     /**
      * @param Quiz $quiz
-     * @param array $responses
+     * @param array<string> $responses
      *
      * @return bool
      */

@@ -17,14 +17,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AddMovieController extends AbstractController
 {
-    const MAX_MOVIE_RESULT_COUNT = 10;
-
     /**
      * @Route("/admin/tagline/movie/new", name="bo_tagline_movie_new")
-     *
-     * @param UrlGeneratorInterface $urlGenerator
-     *
-     * @return Response
      */
     public function newAction(UrlGeneratorInterface $urlGenerator): Response
     {
@@ -36,12 +30,6 @@ class AddMovieController extends AbstractController
 
     /**
      * @Route("/admin/tagline/movie/search", name="bo_tagline_movie_search")
-     *
-     * @param Request $request
-     * @param TmdbDataProvider $tmdbDataProvider
-     * @param DisplayableResultAdapter $displayableResultAdapter
-     *
-     * @return Response
      */
     public function searchAction(
         Request $request,
@@ -52,7 +40,7 @@ class AddMovieController extends AbstractController
         $movies = [];
 
         if (strlen($value) > 2) {
-            $movies = $tmdbDataProvider->searchMovies($value, new TaglineMovieValidator(), self::MAX_MOVIE_RESULT_COUNT);
+            $movies = $tmdbDataProvider->searchMovies($value, new TaglineMovieValidator());
         }
 
         return $this->render('back/tmdb/search_result.html.twig', [
@@ -63,12 +51,6 @@ class AddMovieController extends AbstractController
 
     /**
      * @Route("/admin/tagline/movie/similar/{tmdbId}", requirements={"tmdbId" = "\d+"}, name="bo_tagline_movie_similar")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param TmdbDataProvider $tmdbDataProvider
-     *
-     * @return Response
      */
     public function similarAction(
         TmdbDataProvider $tmdbDataProvider,
@@ -82,12 +64,6 @@ class AddMovieController extends AbstractController
 
     /**
      * @Route("/admin/tagline/movie/add-selection", name="bo_tagline_movie_add_selection", methods="POST")
-     *
-     * @param TranslatorInterface $translator
-     * @param AddMoviesHandler $handler
-     * @param int $tmdbId
-     *
-     * @return Response
      */
     public function addSelectionAction(
         Request $request,

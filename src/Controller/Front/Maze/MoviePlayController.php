@@ -18,38 +18,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MoviePlayController extends AbstractController
 {
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
+    protected TranslatorInterface $translator;
 
-    /**
-     * @var DisplayableResultAdapter
-     */
-    protected $displayableResultAdapter;
+    protected DisplayableResultAdapter $displayableResultAdapter;
 
-    /**
-     * @var MovieGraphBuilder
-     */
-    protected $graphBuilder;
+    protected MovieGraphBuilder $graphBuilder;
 
-    /**
-     * @var MoviePathHelpFactory
-     */
-    protected $helpFactory;
+    protected MoviePathHelpFactory $helpFactory;
 
-    /**
-     * @var UrlGeneratorInterface
-     */
-    protected $urlGenerator;
+    protected UrlGeneratorInterface $urlGenerator;
 
-    /**
-     * @param TranslatorInterface $translator
-     * @param DisplayableResultAdapter $displayableResultAdapter
-     * @param MovieGraphBuilder $graphBuilder
-     * @param MoviePathHelpFactory $helpFactory
-     * @param UrlGeneratorInterface $urlGenerator
-     */
     public function __construct(
         TranslatorInterface $translator,
         DisplayableResultAdapter $displayableResultAdapter,
@@ -66,11 +44,6 @@ class MoviePlayController extends AbstractController
 
     /**
      * @Route("/quiz-casting/jouer", name="fo_maze_movie_play", methods="GET")
-     *
-     * @param Request $request
-     * @param RandomPathFinder $randomPathFinder
-     *
-     * @return Response
      */
     public function playAction(Request $request, RandomPathFinder $randomPathFinder): Response
     {
@@ -102,11 +75,6 @@ class MoviePlayController extends AbstractController
     /**
      * @Route("/quiz-casting/plus-court-chemin/jouer", name="fo_maze_movie_play_min_path", methods="POST")
      * @Security("is_granted('ROLE_USER')")
-     *
-     * @param Request $request
-     * @param MinPathFinder $minPathFinder
-     *
-     * @return Response
      */
     public function minPathAction(Request $request, MinPathFinder $minPathFinder): Response
     {
@@ -130,11 +98,6 @@ class MoviePlayController extends AbstractController
     /**
      * @Route("/quiz-casting/plus-long-chemin/jouer", name="fo_maze_movie_play_max_path", methods="POST")
      * @Security("is_granted('ROLE_USER')")
-     *
-     * @param Request $request
-     * @param MaxPathFinder $maxPathFinder
-     *
-     * @return Response
      */
     public function maxPathAction(Request $request, MaxPathFinder $maxPathFinder): Response
     {
@@ -154,13 +117,6 @@ class MoviePlayController extends AbstractController
         }
     }
 
-    /**
-     * @param array $actorPath
-     * @param int $level
-     * @param string $replayUrl
-     *
-     * @return Response
-     */
     protected function renderPlayView(array $moviePath, int $level, string $replayUrl): Response
     {
         $helpActorList = $this->helpFactory->getActors($moviePath, $level);

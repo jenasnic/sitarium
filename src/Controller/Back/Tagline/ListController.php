@@ -17,12 +17,6 @@ class ListController extends AbstractController
 {
     /**
      * @Route("/admin/tagline/movie/list", name="bo_tagline_movie_list")
-     *
-     * @param Request $request
-     * @param MovieRepository $movieRepository
-     * @param BuildProcessRepository $buildProcessRepository
-     *
-     * @return Response
      */
     public function listAction(
         Request $request,
@@ -41,10 +35,6 @@ class ListController extends AbstractController
 
     /**
      * @Route("/admin/tagline/movie/view/{movie}", requirements={"movie" = "\d+"}, name="bo_tagline_movie_view")
-     *
-     * @param Movie $movie
-     *
-     * @return Response
      */
     public function viewAction(Movie $movie): Response
     {
@@ -53,12 +43,6 @@ class ListController extends AbstractController
 
     /**
      * @Route("/admin/tagline/movie/delete/{movie}", requirements={"movie" = "\d+"}, name="bo_tagline_movie_delete")
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param TranslatorInterface $translator
-     * @param Movie $movie
-     *
-     * @return Response
      */
     public function deleteAction(
         EntityManagerInterface $entityManager,

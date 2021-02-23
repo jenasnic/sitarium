@@ -8,38 +8,22 @@ class SynchronizationStartEvent extends Event
 {
     public const SYNCHRONIZE_DATA_START = 'synchronize_data_start';
 
-    /**
-     * @var int
-     */
-    protected $total;
+    protected int $total;
 
-    /**
-     * @var string
-     */
-    protected $entityClass;
+    protected string $entityClass;
 
-    /**
-     * @param int $total
-     * @param string $entityClass
-     */
     public function __construct(int $total, string $entityClass)
     {
         $this->total = $total;
         $this->entityClass = $entityClass;
     }
 
-    /**
-     * @return int
-     */
     public function getTotal(): int
     {
         return $this->total;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getEntityClass(): ?string
+    public function getEntityClass(): string
     {
         return $this->entityClass;
     }

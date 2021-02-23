@@ -16,16 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SynchronizeDataCommand extends AbstractBuildProcessCommand
 {
-    /**
-     * @var TmdbDataSynchronizer
-     */
-    protected $tmdbDataSynchronizer;
+    protected TmdbDataSynchronizer $tmdbDataSynchronizer;
 
-    /**
-     * @param BuildProcessRepository $buildProcessRepository
-     * @param EntityManagerInterface $entityManager
-     * @param TmdbDataSynchronizer $tmdbDataSynchronizer
-     */
     public function __construct(
         BuildProcessRepository $buildProcessRepository,
         EntityManagerInterface $entityManager,
@@ -35,11 +27,11 @@ class SynchronizeDataCommand extends AbstractBuildProcessCommand
 
         parent::__construct($buildProcessRepository, $entityManager, ProcessTypeEnum::SYNCHRONIZATION);
     }
-    
+
     /**
-     * Command settings.
+     * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
         $this->setDescription('Synchronize local data with TMDB data.');
@@ -48,7 +40,7 @@ class SynchronizeDataCommand extends AbstractBuildProcessCommand
     /**
      * {@inheritdoc}
      */
-    protected function executeProcess(InputInterface $input, OutputInterface $output)
+    protected function executeProcess(InputInterface $input, OutputInterface $output): void
     {
         $entities = [
             Actor::class,

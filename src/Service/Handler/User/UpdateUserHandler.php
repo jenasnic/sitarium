@@ -13,30 +13,17 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class UpdateUserHandler
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher)
     {
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    /**
-     * @param UpdateUserCommand $command
-     */
-    public function handle(UpdateUserCommand $command)
+    public function handle(UpdateUserCommand $command): void
     {
         $user = $command->getUser();
         $password = $command->getPassword();

@@ -17,10 +17,6 @@ class ResponseController extends AbstractController
 {
     /**
      * @Route("/admin/quiz/{quiz}/response/list", requirements={"quiz" = "\d+"}, name="bo_quiz_response_list")
-     *
-     * @param Quiz $quiz
-     *
-     * @return Response
      */
     public function listAction(Quiz $quiz): Response
     {
@@ -29,13 +25,6 @@ class ResponseController extends AbstractController
 
     /**
      * @Route("/admin/quiz/{quiz}/response/new", requirements={"quiz" = "\d+"}, name="bo_quiz_response_new")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param EntityManagerInterface $entityManager
-     * @param Quiz $quiz
-     *
-     * @return Response
      */
     public function newAction(
         Request $request,
@@ -53,14 +42,6 @@ class ResponseController extends AbstractController
 
     /**
      * @Route("/admin/quiz/{quiz}/response/edit/{response}", requirements={"quiz" = "\d+", "response" = "\d+"}, name="bo_quiz_response_edit")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param EntityManagerInterface $entityManager
-     * @param Quiz $quiz
-     * @param QuizResponse $response
-     *
-     * @return Response
      */
     public function editAction(
         Request $request,
@@ -74,11 +55,6 @@ class ResponseController extends AbstractController
 
     /**
      * @Route("/admin/quiz/{quiz}/response/delete/{response}", requirements={"quiz" = "\d+", "response" = "\d+"}, name="bo_quiz_response_delete")
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param QuizResponse $response
-     *
-     * @return Response
      */
     public function deleteResponseAction(EntityManagerInterface $entityManager, QuizResponse $response): Response
     {
@@ -92,14 +68,6 @@ class ResponseController extends AbstractController
         }
     }
 
-    /**
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param EntityManagerInterface $entityManager
-     * @param QuizResponse $response
-     *
-     * @return Response
-     */
     protected function addOrEditResponseAction(
         Request $request,
         TranslatorInterface $translator,

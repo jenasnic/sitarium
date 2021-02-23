@@ -2,8 +2,8 @@
 
 namespace App\Service\Serializer;
 
-use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;
 use App\Model\Tmdb\Movie;
+use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
@@ -22,6 +22,10 @@ class MovieDenormalizer extends ObjectNormalizer implements ContextAwareDenormal
 
     public function denormalize($data, string $type, string $format = null, array $context = [])
     {
+        if (isset($data['release_date']) && empty($data['release_date'])) {
+            $data['release_date'] = null;
+        }
+
         return parent::denormalize($data, $type, $format, $context);
     }
 

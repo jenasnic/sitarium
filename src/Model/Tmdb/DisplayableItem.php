@@ -4,27 +4,12 @@ namespace App\Model\Tmdb;
 
 class DisplayableItem
 {
-    /**
-     * @var int
-     */
-    public $tmdbId;
+    public int $tmdbId;
 
-    /**
-     * @var string
-     */
-    public $displayName;
+    public string $displayName;
 
-    /**
-     * @var string
-     */
+    public string $pictureUrl;
 
-    public $pictureUrl;
-
-    /**
-     * @param int $tmdbId
-     * @param string $displayName
-     * @param string $pictureUrl
-     */
     public function __construct($tmdbId, $displayName, $pictureUrl)
     {
         $this->tmdbId = $tmdbId;

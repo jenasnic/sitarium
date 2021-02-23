@@ -6,37 +6,21 @@ use App\Entity\User;
 
 class UpdateUserCommand
 {
-    /**
-     * @var User
-     */
-    protected $user;
+    protected User $user;
 
-    /**
-     * @var string
-     */
-    protected $password;
+    protected ?string $password;
 
-    /**
-     * @param User $user
-     * @param string $password
-     */
     public function __construct(User $user, string $password = null)
     {
         $this->user = $user;
         $this->password = $password;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPassword(): ?string
     {
         return $this->password;

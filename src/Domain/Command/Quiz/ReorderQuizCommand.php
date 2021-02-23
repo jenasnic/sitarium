@@ -10,22 +10,13 @@ namespace App\Domain\Command\Quiz;
  */
 class ReorderQuizCommand
 {
-    /**
-     * @var array
-     */
-    protected $reorderedIds;
+    protected array $reorderedIds;
 
-    /**
-     * @param array $reorderedIds
-     */
     public function __construct(array $reorderedIds)
     {
         $this->reorderedIds = $reorderedIds;
     }
 
-    /**
-     * @return array
-     */
     public function getReorderedIds(): array
     {
         return $this->reorderedIds;

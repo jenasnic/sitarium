@@ -23,20 +23,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class MovieController extends AbstractController
 {
     /**
-     * Max movie count to return when searching movies through TMDB.
-     *
-     * @var int
-     */
-    const MAX_MOVIE_RESULT_COUNT = 10;
-
-    /**
      * @Route("/admin/maze/movie/list", name="bo_maze_movie_list")
-     *
-     * @param Request $request
-     * @param MovieRepository $movieRepository
-     * @param BuildProcessRepository $buildProcessRepository
-     *
-     * @return Response
      */
     public function listAction(
         Request $request,
@@ -55,10 +42,6 @@ class MovieController extends AbstractController
 
     /**
      * @Route("/admin/maze/movie/view/{movie}", requirements={"movie" = "\d+"}, name="bo_maze_movie_view")
-     *
-     * @param Movie $movie
-     *
-     * @return Response
      */
     public function viewAction(Movie $movie): Response
     {
@@ -67,10 +50,6 @@ class MovieController extends AbstractController
 
     /**
      * @Route("/admin/maze/movie/new", name="bo_maze_movie_new")
-     *
-     * @param UrlGeneratorInterface $urlGenerator
-     *
-     * @return Response
      */
     public function newAction(UrlGeneratorInterface $urlGenerator): Response
     {
@@ -82,12 +61,6 @@ class MovieController extends AbstractController
 
     /**
      * @Route("/admin/maze/movie/add/{tmdbId}", requirements={"tmdbId" = "\d+"}, name="bo_maze_movie_add")
-     *
-     * @param TranslatorInterface $translator
-     * @param AddMovieHandler $handler
-     * @param int $tmdbId
-     *
-     * @return Response
      */
     public function addAction(
         TranslatorInterface $translator,
@@ -106,12 +79,6 @@ class MovieController extends AbstractController
 
     /**
      * @Route("/admin/maze/movie/search", name="bo_maze_movie_search")
-     *
-     * @param Request $request
-     * @param TmdbDataProvider $tmdbDataProvider
-     * @param DisplayableResultAdapter $displayableResultAdapter
-     *
-     * @return Response
      */
     public function searchAction(
         Request $request,
@@ -122,7 +89,7 @@ class MovieController extends AbstractController
         $movies = [];
 
         if (strlen($title) > 2) {
-            $movies = $tmdbDataProvider->searchMovies($title, new MovieValidator(), self::MAX_MOVIE_RESULT_COUNT);
+            $movies = $tmdbDataProvider->searchMovies($title, new MovieValidator());
         }
 
         return $this->render('back/tmdb/search_result.html.twig', [
@@ -133,12 +100,6 @@ class MovieController extends AbstractController
 
     /**
      * @Route("/admin/maze/movie/delete/{movie}", requirements={"movie" = "\d+"}, name="bo_maze_movie_delete")
-     *
-     * @param TranslatorInterface $translator
-     * @param EntityManagerInterface $entityManager
-     * @param Movie $movie
-     *
-     * @return Response
      */
     public function deleteAction(
         TranslatorInterface $translator,

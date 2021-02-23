@@ -15,20 +15,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class UpdateProcessForSynchronizationSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var BuildProcessRepository
-     */
-    protected $buildProcessRepository;
+    protected BuildProcessRepository $buildProcessRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @param BuildProcessRepository $buildProcessRepository
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(
         BuildProcessRepository $buildProcessRepository,
         EntityManagerInterface $entityManager
@@ -37,10 +27,7 @@ class UpdateProcessForSynchronizationSubscriber implements EventSubscriberInterf
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             SynchronizationStartEvent::SYNCHRONIZE_DATA_START => 'onSynchronizationStart',
@@ -50,10 +37,7 @@ class UpdateProcessForSynchronizationSubscriber implements EventSubscriberInterf
         ];
     }
 
-    /**
-     * @param SynchronizationStartEvent $event
-     */
-    public function onSynchronizationStart(SynchronizationStartEvent $event)
+    public function onSynchronizationStart(SynchronizationStartEvent $event): void
     {
         $buildProcess = new BuildProcess(
             ProcessTypeEnum::SYNCHRONIZATION,
@@ -65,10 +49,7 @@ class UpdateProcessForSynchronizationSubscriber implements EventSubscriberInterf
         $this->entityManager->flush();
     }
 
-    /**
-     * @param SynchronizationProgressEvent $event
-     */
-    public function onSynchronizationProgress(SynchronizationProgressEvent $event)
+    public function onSynchronizationProgress(SynchronizationProgressEvent $event): void
     {
         $buildProcess = $this->buildProcessRepository->findPendingProcessByType(ProcessTypeEnum::SYNCHRONIZATION);
         $buildProcess->setCount($event->getProgress());
@@ -76,10 +57,7 @@ class UpdateProcessForSynchronizationSubscriber implements EventSubscriberInterf
         $this->entityManager->flush();
     }
 
-    /**
-     * @param Event $event
-     */
-    public function onSynchronizationEnd(Event $event)
+    public function onSynchronizationEnd(Event $event): void
     {
         $buildProcess = $this->buildProcessRepository->findPendingProcessByType(ProcessTypeEnum::SYNCHRONIZATION);
         $buildProcess->setEndedAt(new \DateTime());

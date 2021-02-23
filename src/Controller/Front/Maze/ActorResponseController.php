@@ -16,12 +16,6 @@ class ActorResponseController extends AbstractController
 {
     /**
      * @Route("/quiz-filmographie/ajax/valider-response", name="fo_maze_actor_progress", methods="POST")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param ActorPathResponseValidator $responseChecker
-     *
-     * @return JsonResponse
      */
     public function progressAction(
         Request $request,
@@ -52,12 +46,6 @@ class ActorResponseController extends AbstractController
 
     /**
      * @Route("/quiz-filmographie/ajax/indice", name="fo_maze_actor_trick", methods="POST")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param ActorRepository $actorRepository
-     *
-     * @return JsonResponse
      */
     public function trickAction(
         Request $request,
@@ -91,13 +79,6 @@ class ActorResponseController extends AbstractController
 
     /**
      * @Route("/quiz-filmographie/ajax/tricher", name="fo_maze_actor_cheat", methods="POST")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param ActorRepository $actorRepository
-     * @param FilmographyMovieRepository $filmographyMovieRepository
-     *
-     * @return JsonResponse
      */
     public function cheatAction(
         Request $request,

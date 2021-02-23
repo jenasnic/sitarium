@@ -23,13 +23,6 @@ class AccountController extends AbstractController
 {
     /**
      * @Route("/creer-compte", name="fo_account_new")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param TokenStorageInterface $tokenStorageInterface
-     * @param AddUserHandler $handler
-     *
-     * @return Response
      */
     public function newAction(
         Request $request,
@@ -70,13 +63,6 @@ class AccountController extends AbstractController
     /**
      * @Route("/mon-compte", name="fo_account_infos")
      * @Security("is_granted('ROLE_USER')")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param QuizRepository $quizRepository
-     * @param UpdateUserHandler $handler
-     *
-     * @return Response
      */
     public function infosAction(
         Request $request,

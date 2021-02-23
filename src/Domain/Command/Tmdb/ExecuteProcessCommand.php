@@ -6,26 +6,12 @@ use App\Enum\Tmdb\ProcessTypeEnum;
 
 class ExecuteProcessCommand
 {
-    /**
-     * @var string
-     */
-    protected $type;
+    protected string $type;
 
-    /**
-     * @var array|null
-     */
-    protected $parameters;
+    protected ?array $parameters;
 
-    /**
-     * @var array|null
-     */
-    protected $options;
+    protected ?array $options;
 
-    /**
-     * @param string $type
-     * @param array|null $parameters
-     * @param array|null $options
-     */
     public function __construct(string $type, ?array $parameters, ?array $options)
     {
         if (!ProcessTypeEnum::exists($type)) {
@@ -37,25 +23,16 @@ class ExecuteProcessCommand
         $this->options = $options;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return array|null
-     */
     public function getParameters(): ?array
     {
         return $this->parameters;
     }
 
-    /**
-     * @return array|null
-     */
     public function getOptions(): ?array
     {
         return $this->options;

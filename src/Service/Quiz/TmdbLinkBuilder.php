@@ -18,32 +18,15 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class TmdbLinkBuilder
 {
-    /**
-     * @var QuizRepository
-     */
-    protected $quizRepository;
+    protected QuizRepository $quizRepository;
 
-    /**
-     * @var TmdbApiService
-     */
-    protected $tmdbService;
+    // @todo : use TmdbDataProvider
+    protected TmdbApiService $tmdbService;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @param QuizRepository $quizRepository
-     * @param TmdbApiService $tmdbService
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
         QuizRepository $quizRepository,
         TmdbApiService $tmdbService,
@@ -59,7 +42,7 @@ class TmdbLinkBuilder
     /**
      * @param int $quizId
      */
-    public function build(int $quizId)
+    public function build(int $quizId): void
     {
         $processCount = 0;
         $responses = $this->quizRepository->find($quizId)->getResponses();

@@ -3,6 +3,7 @@
 namespace App\Entity\Quiz;
 
 use App\Entity\User;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,86 +16,57 @@ class Winner
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(name="id", type="integer")
-     *
-     * @var int
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
-     *
-     * @var User
      */
-    private $user;
+    private ?User $user = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Quiz\Quiz")
      * @ORM\JoinColumn(nullable=false)
-     *
-     * @var Quiz
      */
-    private $quiz;
+    private ?Quiz $quiz = null;
 
     /**
      * @ORM\Column(name="date", type="datetime")
-     *
-     * @var \DateTime
      */
-    private $date;
+    private ?DateTime $date = null;
 
-    /**
-     * @return int
-     */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return User
-     */
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    /**
-     * @param User $user
-     */
-    public function setUser(User $user)
+    public function setUser(User $user): void
     {
         $this->user = $user;
     }
 
-    /**
-     * @return Quiz
-     */
-    public function getQuiz(): Quiz
+    public function getQuiz(): ?Quiz
     {
         return $this->quiz;
     }
 
-    /**
-     * @param Quiz $quiz
-     */
-    public function setQuiz(Quiz $quiz)
+    public function setQuiz(Quiz $quiz): void
     {
         $this->quiz = $quiz;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDate(): \DateTime
+    public function getDate(): ?DateTime
     {
         return $this->date;
     }
 
-    /**
-     * @param \DateTime $date
-     */
-    public function setDate(\DateTime $date)
+    public function setDate(?DateTime $date): void
     {
         $this->date = $date;
     }

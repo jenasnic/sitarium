@@ -23,44 +23,18 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class ActorFilmographyBuilder
 {
-    /**
-     * @var TmdbDataProvider
-     */
-    protected $tmdbDataProvider;
+    protected TmdbDataProvider $tmdbDataProvider;
 
-    /**
-     * @var FilmographyMovieConverter
-     */
-    protected $filmographyMovieConverter;
+    protected FilmographyMovieConverter $filmographyMovieConverter;
 
-    /**
-     * @var ActorRepository
-     */
-    protected $actorRepository;
+    protected ActorRepository $actorRepository;
 
-    /**
-     * @var FilmographyMovieRepository
-     */
-    protected $filmographyMovieRepository;
+    protected FilmographyMovieRepository $filmographyMovieRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @param TmdbDataProvider $tmdbDataProvider
-     * @param FilmographyMovieConverter $filmographyMovieConverter
-     * @param ActorRepository $actorRepository
-     * @param FilmographyMovieRepository $filmographyMovieRepository
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
         TmdbDataProvider $tmdbDataProvider,
         FilmographyMovieConverter $filmographyMovieConverter,
@@ -77,7 +51,7 @@ class ActorFilmographyBuilder
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function build()
+    public function build(): void
     {
         try {
             $this->clearPreviousData();
@@ -103,18 +77,16 @@ class ActorFilmographyBuilder
         }
     }
 
-    protected function clearPreviousData()
+    protected function clearPreviousData(): void
     {
         $this->actorRepository->resetActorStatus();
         $this->filmographyMovieRepository->clearFilmography();
     }
 
     /**
-     * Returns all movies for specified actors.
+     * @param array<Actor> $actorList
      *
-     * @param array $actorList
-     *
-     * @return FilmographyMovie[]|array Map with movie tmdbId as key and FilmographyMovie as value
+     * @return FilmographyMovie[]|array<int, FilmographyMovie>
      */
     protected function getAllMovies(array $actorList): array
     {
@@ -154,9 +126,9 @@ class ActorFilmographyBuilder
     /**
      * Returns only movies with at least 2 actors.
      *
-     * @param array $tmdbMovies
+     * @param array<int, FilmographyMovie> $tmdbMovies
      *
-     * @return FilmographyMovie[]|array Map with actor tmdbId as key and CastingActor as value
+     * @return FilmographyMovie[]|array<int, FilmographyMovie>
      */
     protected function getFilteredMovies(array $tmdbMovies): array
     {
@@ -172,8 +144,8 @@ class ActorFilmographyBuilder
     }
 
     /**
-     * @param Actor[]|array $actors
-     * @param FilmographyMovie[]|array $movies
+     * @param Actor[]|array<Actor> $actors
+     * @param FilmographyMovie[]|array<FilmographyMovie> $movies
      */
     protected function updateActorStatus(array $actors, array $movies): void
     {

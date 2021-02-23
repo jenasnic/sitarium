@@ -16,14 +16,6 @@ class BuildProcessController extends AbstractController
 {
     /**
      * @Route("/admin/tmdb/build/process", name="bo_tmdb_build_process", methods="POST")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param BuildProcessRepository $buildProcessRepository
-     * @param ExecuteProcessHandler $executeProcessHandler
-     * @param ExecuteProcessCommand $executeProcessCommand
-     *
-     * @return Response
      */
     public function buildProcessAction(
         Request $request,
@@ -58,10 +50,6 @@ class BuildProcessController extends AbstractController
 
     /**
      * @Route("/admin/maze/build/progress", name="bo_tmdb_build_progress")
-     *
-     * @param BuildProcessRepository $buildProcessRepository
-     *
-     * @return JsonResponse
      */
     public function progressAction(BuildProcessRepository $buildProcessRepository): JsonResponse
     {

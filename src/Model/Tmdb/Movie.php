@@ -2,224 +2,136 @@
 
 namespace App\Model\Tmdb;
 
+use DateTime;
+
 class Movie
 {
-    /**
-     * @var int
-     */
-    private $id;
+    private int $id;
 
-    /**
-     * @var string
-     */
-    private $title;
+    private ?string $title = null;
 
-    /**
-     * @var \DateTime
-     */
-    private $releaseDate;
+    private ?DateTime $releaseDate = null;
 
-    /**
-     * @var string
-     */
-    private $posterPath;
+    private ?string $posterPath = null;
 
-    /**
-     * @var string
-     */
-    private $tagline;
+    private ?string $tagline = null;
 
-    /**
-     * @var string
-     */
-    private $overview;
+    private ?string $overview = null;
 
-    /**
-     * @var int
-     */
-    private $voteCount;
+    private ?int $voteCount = null;
 
-    /**
-     * @var float
-     */
-    private $voteAverage;
+    private ?float $voteAverage = null;
 
-    /**
-     * @var float
-     */
-    private $popularity;
+    private ?float $popularity = null;
 
-    /**
-     * @var string
-     */
-    private $character;
+    private ?string $character = null;
 
     /**
      * @var Genre[]|array<Genre>
      */
-    private $genres;
+    private array $genres = [];
 
     /**
-     * @var array
+     * @var array<int>
      */
-    private $genreIds;
+    private array $genreIds = [];
 
-    /**
-     * @return int
-     */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getReleaseDate(): ?\DateTime
+    public function getReleaseDate(): ?DateTime
     {
         return $this->releaseDate;
     }
 
-    /**
-     * @param \DateTime|null $releaseDate
-     */
-    public function setReleaseDate(?\DateTime $releaseDate)
+    public function setReleaseDate(?DateTime $releaseDate): void
     {
         $this->releaseDate = $releaseDate;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPosterPath(): ?string
     {
         return $this->posterPath;
     }
 
-    /**
-     * @param string|null $posterPath
-     */
-    public function setPosterPath(?string $posterPath)
+    public function setPosterPath(?string $posterPath): void
     {
         $this->posterPath = $posterPath;
     }
 
-    /**
-     * @return string|null
-     */
     public function getTagline(): ?string
     {
         return $this->tagline;
     }
 
-    /**
-     * @param string|null $tagline
-     */
-    public function setTagline(?string $tagline)
+    public function setTagline(?string $tagline): void
     {
         $this->tagline = $tagline;
     }
 
-    /**
-     * @return string|null
-     */
     public function getOverview(): ?string
     {
         return $this->overview;
     }
 
-    /**
-     * @param string|null $overview
-     */
-    public function setOverview(?string $overview)
+    public function setOverview(?string $overview): void
     {
         $this->overview = $overview;
     }
 
-    /**
-     * @return number
-     */
-    public function getVoteCount()
+    public function getVoteCount(): ?int
     {
         return $this->voteCount;
     }
 
-    /**
-     * @param number $voteCount
-     */
-    public function setVoteCount($voteCount)
+    public function setVoteCount(int $voteCount): void
     {
         $this->voteCount = $voteCount;
     }
 
-    /**
-     * @return float
-     */
-    public function getVoteAverage()
+    public function getVoteAverage(): ?float
     {
         return $this->voteAverage;
     }
 
-    /**
-     * @param float $voteAverage
-     */
-    public function setVoteAverage($voteAverage)
+    public function setVoteAverage(float $voteAverage): void
     {
         $this->voteAverage = $voteAverage;
     }
 
-    /**
-     * @return float
-     */
-    public function getPopularity()
+    public function getPopularity(): ?float
     {
         return $this->popularity;
     }
 
-    /**
-     * @param float $popularity
-     */
-    public function setPopularity($popularity)
+    public function setPopularity(float $popularity): void
     {
         $this->popularity = $popularity;
     }
 
-    /**
-     * @return string
-     */
-    public function getCharacter()
+    public function getCharacter(): ?string
     {
         return $this->character;
     }
 
-    /**
-     * @param string $character
-     */
-    public function setCharacter($character)
+    public function setCharacter(?string $character): void
     {
         $this->character = $character;
     }
@@ -235,13 +147,13 @@ class Movie
     /**
      * @param Genre[]|array<Genre> $genres
      */
-    public function setGenres(array $genres)
+    public function setGenres(array $genres): void
     {
         $this->genres = $genres;
     }
 
     /**
-     * @return array
+     * @return array<int>
      */
     public function getGenreIds(): array
     {
@@ -249,9 +161,9 @@ class Movie
     }
 
     /**
-     * @param array $genreIds
+     * @param array<int> $genreIds
      */
-    public function setGenreIds(array $genreIds)
+    public function setGenreIds(array $genreIds): void
     {
         $this->genreIds = $genreIds;
     }

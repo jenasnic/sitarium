@@ -15,20 +15,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class UpdateProcessForCastingSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var BuildProcessRepository
-     */
-    protected $buildProcessRepository;
+    protected BuildProcessRepository $buildProcessRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @param BuildProcessRepository $buildProcessRepository
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(
         BuildProcessRepository $buildProcessRepository,
         EntityManagerInterface $entityManager
@@ -37,10 +27,7 @@ class UpdateProcessForCastingSubscriber implements EventSubscriberInterface
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             CastingStartEvent::BUILD_CASTING_START => 'onBuildCastingStart',
@@ -50,10 +37,7 @@ class UpdateProcessForCastingSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param CastingStartEvent $event
-     */
-    public function onBuildCastingStart(CastingStartEvent $event)
+    public function onBuildCastingStart(CastingStartEvent $event): void
     {
         $buildProcess = new BuildProcess(ProcessTypeEnum::CASTING, $event->getTotal());
 
@@ -61,10 +45,7 @@ class UpdateProcessForCastingSubscriber implements EventSubscriberInterface
         $this->entityManager->flush();
     }
 
-    /**
-     * @param CastingProgressEvent $event
-     */
-    public function onBuildCastingProgress(CastingProgressEvent $event)
+    public function onBuildCastingProgress(CastingProgressEvent $event): void
     {
         $buildProcess = $this->buildProcessRepository->findPendingProcessByType(ProcessTypeEnum::CASTING);
         $buildProcess->setCount($event->getProgress());
@@ -72,10 +53,7 @@ class UpdateProcessForCastingSubscriber implements EventSubscriberInterface
         $this->entityManager->flush();
     }
 
-    /**
-     * @param Event $event
-     */
-    public function onBuildCastingEnd(Event $event)
+    public function onBuildCastingEnd(Event $event): void
     {
         $buildProcess = $this->buildProcessRepository->findPendingProcessByType(ProcessTypeEnum::CASTING);
         $buildProcess->setEndedAt(new \DateTime());

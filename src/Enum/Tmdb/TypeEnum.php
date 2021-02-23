@@ -4,12 +4,9 @@ namespace App\Enum\Tmdb;
 
 class TypeEnum
 {
-    const ACTOR = 'actor';
-    const MOVIE = 'movie';
+    public const ACTOR = 'actor';
+    public const MOVIE = 'movie';
 
-    /**
-     * @return array
-     */
     public static function getAll(): array
     {
         return [
@@ -18,9 +15,6 @@ class TypeEnum
         ];
     }
 
-    /**
-     * @return bool
-     */
     public static function exist(string $value): bool
     {
         return in_array($value, self::getAll());

@@ -13,30 +13,17 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class ResetUserPasswordHandler
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher)
     {
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    /**
-     * @param ResetPasswordCommand $command
-     */
-    public function handle(ResetPasswordCommand $command)
+    public function handle(ResetPasswordCommand $command): void
     {
         $password = PasswordUtil::generatePassword(6, true, true, true, false);
 

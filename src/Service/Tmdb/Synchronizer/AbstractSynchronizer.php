@@ -10,28 +10,17 @@ use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * @psalm-template T
+ */
 abstract class AbstractSynchronizer implements SynchronizerInterface
 {
-    /**
-     * @var TmdbDataProvider
-     */
-    protected $tmdbDataProvider;
+    protected TmdbDataProvider $tmdbDataProvider;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @param TmdbDataProvider $tmdbDataProvider
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
         TmdbDataProvider $tmdbDataProvider,
         EntityManagerInterface $entityManager,
@@ -76,20 +65,15 @@ abstract class AbstractSynchronizer implements SynchronizerInterface
         }
     }
 
-    /**
-     * @param string $type
-     *
-     * @return bool
-     */
-    abstract public function support($type): bool;
+    abstract public function support(string $type): bool;
 
     /**
-     * @return array
+     * @psalm-return array<T>
      */
-    abstract protected function getAllData();
+    abstract protected function getAllData(): array;
 
     /**
-     * @param mixed $data
+     * @psalm-var T
      *
      * @return bool TRUE if data is updated, FALSE either
      */

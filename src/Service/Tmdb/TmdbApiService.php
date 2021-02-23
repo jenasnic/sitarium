@@ -9,26 +9,12 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class TmdbApiService
 {
-    /**
-     * @var string
-     */
-    protected $apiKey;
+    protected string $apiKey;
 
-    /**
-     * @var string
-     */
-    protected $baseUri;
+    protected string $baseUri;
 
-    /**
-     * @var HttpClientInterface
-     */
-    protected $httpClient;
+    protected HttpClientInterface $httpClient;
 
-    /**
-     * @param HttpClientInterface $client
-     * @param string $baseUri
-     * @param string $apiKey
-     */
     public function __construct(HttpClientInterface $httpClient, string $baseUri, string $apiKey)
     {
         $this->apiKey = $apiKey;
@@ -36,6 +22,9 @@ class TmdbApiService
         $this->httpClient = $httpClient;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getActor(int $tmdbId): array
     {
         $url = $this->decorateUri('/person/'.$tmdbId);
@@ -46,6 +35,9 @@ class TmdbApiService
         ;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getMovie(int $tmdbId): array
     {
         $url = $this->decorateUri('/movie/'.$tmdbId);
@@ -56,6 +48,9 @@ class TmdbApiService
         ;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getGenres(): array
     {
         $url = $this->decorateUri('/genre/movie/list');
@@ -66,7 +61,10 @@ class TmdbApiService
         ;
     }
 
-    public function searchActors(string $search)
+    /**
+     * @return array<string, mixed>
+     */
+    public function searchActors(string $search): array
     {
         $url = $this->decorateUri('/search/person?query='.$search);
 
@@ -76,7 +74,10 @@ class TmdbApiService
         ;
     }
 
-    public function searchMovies(string $search)
+    /**
+     * @return array<string, mixed>
+     */
+    public function searchMovies(string $search): array
     {
         $url = $this->decorateUri('/search/movie?query='.$search);
 
@@ -86,6 +87,9 @@ class TmdbApiService
         ;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getFilmography(int $tmdbId): array
     {
         $url = $this->decorateUri('/person/'.$tmdbId.'/movie_credits');
@@ -96,6 +100,9 @@ class TmdbApiService
         ;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getCasting(int $tmdbId): array
     {
         $url = $this->decorateUri('/movie/'.$tmdbId.'/credits');
@@ -106,6 +113,9 @@ class TmdbApiService
         ;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getSimilarMovies(int $tmdbId): array
     {
         $url = $this->decorateUri('/movie/'.$tmdbId.'/similar');

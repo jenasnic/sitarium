@@ -13,30 +13,17 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class AddUserHandler
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher)
     {
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    /**
-     * @param AddUserCommand $command
-     */
-    public function handle(AddUserCommand $command)
+    public function handle(AddUserCommand $command): void
     {
         $password = $command->getPassword();
         if (null === $password) {

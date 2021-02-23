@@ -8,19 +8,13 @@ use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * @extends AbstractSynchronizer<FilmographyMovie>
+ */
 class FilmographyMovieSynchronizer extends AbstractSynchronizer
 {
-    /**
-     * @var FilmographyMovieRepository
-     */
-    protected $filmographyMovieRepository;
+    protected FilmographyMovieRepository $filmographyMovieRepository;
 
-    /**
-     * @param TmdbDataProvider $tmdbDataProvider
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param FilmographyMovieRepository $filmographyMovieRepository
-     */
     public function __construct(
         TmdbDataProvider $tmdbDataProvider,
         EntityManagerInterface $entityManager,
@@ -37,15 +31,15 @@ class FilmographyMovieSynchronizer extends AbstractSynchronizer
      *
      * @return bool
      */
-    public function support($type): bool
+    public function support(string $type): bool
     {
         return FilmographyMovie::class === $type;
     }
 
     /**
-     * @return array
+     * @return FilmographyMovie[]|array<FilmographyMovie>
      */
-    protected function getAllData()
+    protected function getAllData(): array
     {
         return $this->filmographyMovieRepository->findAll();
     }

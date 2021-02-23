@@ -10,9 +10,9 @@ use App\Service\Tmdb\Synchronizer\SynchronizerInterface;
 class TmdbDataSynchronizer
 {
     /**
-     * @var SynchronizerInterface[]
+     * @var SynchronizerInterface[]|iterable<SynchronizerInterface>
      */
-    protected $synchronizers = [];
+    protected iterable $synchronizers;
 
     public function __construct(iterable $synchronizers)
     {

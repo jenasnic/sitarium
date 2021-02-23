@@ -14,19 +14,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class SearchController extends AbstractController
 {
     /**
-     * Max result count to return when searching entities through TMDB.
-     *
-     * @var int
-     */
-    const MAX_RESULT_COUNT = 10;
-
-    /**
      * @Route("/admin/tmdb/search/{type}", name="bo_tmdb_search", requirements={"type"="\w+"})
-     *
-     * @param UrlGeneratorInterface $urlGenerator
-     * @param string $type
-     *
-     * @return Response
      */
     public function searchAction(UrlGeneratorInterface $urlGenerator, string $type): Response
     {
@@ -42,15 +30,6 @@ class SearchController extends AbstractController
 
     /**
      * @Route("/admin/tmdb/search/{type}/result", name="bo_tmdb_search_result", requirements={"type"="\w+"})
-     *
-     * Requires query parameter 'value' to specifiy searched value for current type.
-     *
-     * @param Request $request
-     * @param TmdbDataProvider $tmdbDataProvider
-     * @param DisplayableResultAdapter $displayableResultAdapter
-     * @param string $type
-     *
-     * @return Response
      */
     public function searchResultAction(
         Request $request,
@@ -69,11 +48,11 @@ class SearchController extends AbstractController
         if (strlen($value) > 2) {
             switch ($type) {
                 case TypeEnum::ACTOR :
-                    $result = $tmdbDataProvider->searchActors($value, null, self::MAX_RESULT_COUNT);
+                    $result = $tmdbDataProvider->searchActors($value, null);
                     $displayRoute = 'bo_tmdb_display_actor';
                     break;
                 case TypeEnum::MOVIE :
-                    $result = $tmdbDataProvider->searchMovies($value, null, self::MAX_RESULT_COUNT);
+                    $result = $tmdbDataProvider->searchMovies($value, null);
                     $displayRoute = 'bo_tmdb_display_movie';
                     break;
                 default:

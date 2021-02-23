@@ -18,11 +18,11 @@ class MinPathFinder
     /**
      * Allows to find shortest path between two specified grah items.
      *
-     * @param array $mazeGraph map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
+     * @param array<int, MazeGraphItem> $mazeGraph map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
      * @param MazeGraphItem $startItem mazeGraphItem to use as starting point to find shortest path
      * @param MazeGraphItem $endItem mazeGraphItem to use as ending point to find shortest path
      *
-     * @return Actor[]|Movie[]|array|null array of items linked together
+     * @return Actor[]|Movie[]|array<mixed>|null array of items linked together
      */
     public function find(array $mazeGraph, MazeGraphItem $startItem, MazeGraphItem $endItem): ?array
     {
@@ -46,10 +46,10 @@ class MinPathFinder
      * Allows to find shortest path between items.
      * NOTE : Recursive method used to find path...
      *
-     * @param array $mazeGraph map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
+     * @param array<int, MazeGraphItem> $mazeGraph map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
      * @param MazeGraphItem $currentItem mazeGraphItem to use as starting point to find shortest path
      * @param MazeGraphItem $itemToReach mazeGraphItem to use as ending point to find shortest path
-     * @param MazeGraphItem[]|array $currentPath current path of MazeGraphItem (path we are building recursively)
+     * @param MazeGraphItem[]|array<MazeGraphItem> $currentPath current path of MazeGraphItem (path we are building recursively)
      *
      * @return MazeGraphItem[]|array|null array of MazeGraphItem matching shortest path or NULL if no path found
      */
@@ -114,7 +114,7 @@ class MinPathFinder
     }
 
     /**
-     * @param array $mazeGraph
+     * @param array<MazeGraphItem> $mazeGraph
      * @param int $bestPathSize
      */
     private function setBestPathSizeForGraphItem(array $mazeGraph, int $bestPathSize): void
@@ -126,7 +126,7 @@ class MinPathFinder
     }
 
     /**
-     * @param MazeGraphItem[]|array $itemPath
+     * @param MazeGraphItem[]|array<MazeGraphItem> $itemPath
      */
     private function updateBestPathPositionForGraphItem(array $itemPath): void
     {

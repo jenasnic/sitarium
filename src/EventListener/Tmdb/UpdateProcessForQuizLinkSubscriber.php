@@ -14,20 +14,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class UpdateProcessForQuizLinkSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var BuildProcessRepository
-     */
-    protected $buildProcessRepository;
+    protected BuildProcessRepository $buildProcessRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @param BuildProcessRepository $buildProcessRepository
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(
         BuildProcessRepository $buildProcessRepository,
         EntityManagerInterface $entityManager
@@ -36,10 +26,7 @@ class UpdateProcessForQuizLinkSubscriber implements EventSubscriberInterface
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             TmdbLinkStartEvent::BUILD_TMDB_LINK_START => 'onBuildTmdbLinkStart',
@@ -48,10 +35,7 @@ class UpdateProcessForQuizLinkSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param TmdbLinkStartEvent $event
-     */
-    public function onBuildTmdbLinkStart(TmdbLinkStartEvent $event)
+    public function onBuildTmdbLinkStart(TmdbLinkStartEvent $event): void
     {
         $buildProcess = new BuildProcess(ProcessTypeEnum::QUIZ_LINK, $event->getTotal());
 
@@ -59,10 +43,7 @@ class UpdateProcessForQuizLinkSubscriber implements EventSubscriberInterface
         $this->entityManager->flush();
     }
 
-    /**
-     * @param TmdbLinkProgressEvent $event
-     */
-    public function onBuildTmdbLinkProgress(TmdbLinkProgressEvent $event)
+    public function onBuildTmdbLinkProgress(TmdbLinkProgressEvent $event): void
     {
         $buildProcess = $this->buildProcessRepository->findPendingProcessByType(ProcessTypeEnum::QUIZ_LINK);
         $buildProcess->setCount($event->getProgress());
@@ -70,10 +51,7 @@ class UpdateProcessForQuizLinkSubscriber implements EventSubscriberInterface
         $this->entityManager->flush();
     }
 
-    /**
-     * @param Event $event
-     */
-    public function onBuildTmdbLinkEnd(Event $event)
+    public function onBuildTmdbLinkEnd(Event $event): void
     {
         $buildProcess = $this->buildProcessRepository->findPendingProcessByType(ProcessTypeEnum::QUIZ_LINK);
         $buildProcess->setEndedAt(new \DateTime());

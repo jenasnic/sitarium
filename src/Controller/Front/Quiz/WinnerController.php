@@ -17,14 +17,6 @@ class WinnerController extends AbstractController
 {
     /**
      * @Route("/quiz/ajax/quiz-resolu/{quiz}", name="fo_quiz_resolved", methods="POST")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param ResolveQuizValidator $validator
-     * @param RegisterWinnerHandler $handler
-     * @param Quiz $quiz
-     *
-     * @return Response
      */
     public function quizResolvedAction(
         Request $request,

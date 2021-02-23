@@ -10,14 +10,8 @@ use App\Model\Maze\MazeGraphItem;
  */
 class ActorGraphBuilder
 {
-    /**
-     * @var ActorRepository
-     */
-    protected $actorRepository;
+    protected ActorRepository $actorRepository;
 
-    /**
-     * @param ActorRepository $actorRepository
-     */
     public function __construct(ActorRepository $actorRepository)
     {
         $this->actorRepository = $actorRepository;
@@ -33,7 +27,7 @@ class ActorGraphBuilder
      * @param int $minVoteCount (default = 0) Minimum vote count value for movies used to build actor graph. This allows to use only famous movie when building graph using movies as link between actors.
      * Default value 0 means that we ignore vote count (i.e. use all movies to link actors...)
      *
-     * @return array map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
+     * @return array<int, MazeGraphItem>
      */
     public function buildGraph(?array $actorIds = null, int $minVoteCount = 0): array
     {

@@ -12,26 +12,12 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class DeleteUserHandler
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @var UserResponseRepository
-     */
-    protected $userResponseRepository;
+    protected UserResponseRepository $userResponseRepository;
 
-    /**
-     * @var WinnerRepository
-     */
-    protected $winnerRepository;
+    protected WinnerRepository $winnerRepository;
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param UserResponseRepository $userResponseRepository
-     * @param WinnerRepository $winnerRepository
-     */
     public function __construct(
         EntityManagerInterface $entityManager,
         UserResponseRepository $userResponseRepository,
@@ -42,10 +28,7 @@ class DeleteUserHandler
         $this->winnerRepository = $winnerRepository;
     }
 
-    /**
-     * @param DeleteUserCommand $command
-     */
-    public function handle(DeleteUserCommand $command)
+    public function handle(DeleteUserCommand $command): void
     {
         // Remove response linked to user + remove user link for winner
         $this->userResponseRepository->removeResponsesForUserId($command->getUser()->getId());

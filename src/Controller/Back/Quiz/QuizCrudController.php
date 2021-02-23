@@ -21,13 +21,6 @@ class QuizCrudController extends AbstractController
 {
     /**
      * @Route("/admin/quiz/new", name="bo_quiz_new", methods="POST")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param EntityManagerInterface $entityManager
-     * @param QuizRepository $quizRepository
-     *
-     * @return Response
      */
     public function newAction(
         Request $request,
@@ -53,14 +46,6 @@ class QuizCrudController extends AbstractController
 
     /**
      * @Route("/admin/quiz/edit/{quiz}", requirements={"quiz" = "\d+"}, name="bo_quiz_edit")
-     *
-     * @param Request $request
-     * @param BuildProcessRepository $buildProcessRepository
-     * @param TranslatorInterface $translator
-     * @param SaveQuizHandler $handler
-     * @param Quiz $quiz
-     *
-     * @return Response
      */
     public function editAction(
         Request $request,
@@ -91,12 +76,6 @@ class QuizCrudController extends AbstractController
 
     /**
      * @Route("/admin/quiz/delete/{quiz}", requirements={"quiz" = "\d+"}, name="bo_quiz_delete")
-     *
-     * @param TranslatorInterface $translator
-     * @param DeleteQuizHandler $handler
-     * @param Quiz $quiz
-     *
-     * @return Response
      */
     public function deleteAction(
         TranslatorInterface $translator,

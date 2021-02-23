@@ -11,30 +11,17 @@ use App\Entity\Quiz\Quiz;
  */
 class SaveQuizHandler
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @var string
-     */
-    protected $rootDir;
+    protected string $rootDir;
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param string $rootDir
-     */
     public function __construct(EntityManagerInterface $entityManager, string $rootDir)
     {
         $this->entityManager = $entityManager;
         $this->rootDir = $rootDir;
     }
 
-    /**
-     * @param SaveQuizCommand $command
-     */
-    public function handle(SaveQuizCommand $command)
+    public function handle(SaveQuizCommand $command): void
     {
         $quiz = $command->getQuiz();
         $this->processUpload($quiz);
@@ -49,12 +36,7 @@ class SaveQuizHandler
         $this->entityManager->flush();
     }
 
-    /**
-     * Allows to upload file defined in Quiz object.
-     *
-     * @param Quiz $quiz quiz we want to upload picture
-     */
-    private function processUpload(Quiz $quiz)
+    private function processUpload(Quiz $quiz): void
     {
         $relativeFolderPath = '/userfiles/quiz';
         $absoluteFolderPath = $this->rootDir.'/public'.$relativeFolderPath;

@@ -17,10 +17,6 @@ class TaglineController extends AbstractController
 {
     /**
      * @Route("/quiz-tagline", name="fo_tagline")
-     *
-     * @param GenreRepository $repository
-     *
-     * @return Response
      */
     public function taglineAction(GenreRepository $repository): Response
     {
@@ -29,13 +25,6 @@ class TaglineController extends AbstractController
 
     /**
      * @Route("/quiz-tagline/{slug}", name="fo_tagline_genre")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param MovieRepository $repository
-     * @param Genre $genre
-     *
-     * @return Response
      */
     public function playAction(
         Request $request,

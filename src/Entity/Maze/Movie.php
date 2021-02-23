@@ -3,6 +3,7 @@
 namespace App\Entity\Maze;
 
 use App\Enum\Maze\CastingStatusEnum;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,45 +17,37 @@ class Movie
     /**
      * @ORM\Id
      * @ORM\Column(name="tmdbId", type="integer")
-     *
-     * @var int
      */
-    private $tmdbId;
+    private int $tmdbId;
 
     /**
      * @ORM\Column(name="title", type="string", length=255)
-     *
-     * @var string
      */
-    private $title;
+    private ?string $title = null;
 
     /**
      * @ORM\Column(name="releaseDate", type="datetime", nullable=true)
-     *
-     * @var \DateTime
      */
-    private $releaseDate;
+    private ?DateTime $releaseDate = null;
 
     /**
      * @ORM\Column(name="pictureUrl", type="string", length=255, nullable=true)
      *
-     * @var string
+     * @var 
      */
-    private $pictureUrl;
+    private ?string $pictureUrl = null;
 
     /**
      * @ORM\Column(name="status", type="string", length=25)
-     *
-     * @var string
      */
-    private $status;
+    private string $status;
 
     /**
      * @ORM\ManyToMany(targetEntity="CastingActor", mappedBy="movies")
      *
-     * @var CastingActor[]|Collection
+     * @var Collection<int, CastingActor>
      */
-    private $actors;
+    private Collection $actors;
 
     public function __construct()
     {
@@ -62,82 +55,52 @@ class Movie
         $this->setStatus(CastingStatusEnum::UNINITIALIZED);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTmdbId(): int
     {
         return $this->tmdbId;
     }
 
-    /**
-     * @param int $tmdbId
-     */
-    public function setTmdbId(int $tmdbId)
+    public function setTmdbId(int $tmdbId): void
     {
         $this->tmdbId = $tmdbId;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getReleaseDate(): ?\DateTime
+    public function getReleaseDate(): ?DateTime
     {
         return $this->releaseDate;
     }
 
-    /**
-     * @param \DateTime|null $releaseDate
-     */
-    public function setReleaseDate(?\DateTime $releaseDate)
+    public function setReleaseDate(?DateTime $releaseDate): void
     {
         $this->releaseDate = $releaseDate;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPictureUrl(): ?string
     {
         return $this->pictureUrl;
     }
 
-    /**
-     * @param string|null $pictureUrl
-     */
-    public function setPictureUrl(?string $pictureUrl)
+    public function setPictureUrl(?string $pictureUrl): void
     {
         $this->pictureUrl = $pictureUrl;
     }
 
-    /**
-     * @return string
-     */
     public function getStatus(): string
     {
         return $this->status;
     }
 
-    /**
-     * @param string $status
-     */
-    public function setStatus(string $status)
+    public function setStatus(string $status): void
     {
         if (!CastingStatusEnum::exists($status)) {
             throw new \InvalidArgumentException(sprintf('Invalid status "%s"', $status));
@@ -147,24 +110,18 @@ class Movie
     }
 
     /**
-     * @return CastingActor[]|Collection
+     * @return CastingActor[]|Collection<int, CastingActor>
      */
     public function getActors(): Collection
     {
         return $this->actors;
     }
 
-    /**
-     * @param CastingActor $actor
-     */
     public function addActor(CastingActor $actor): void
     {
         $this->actors->add($actor);
     }
 
-    /**
-     * @param CastingActor $actor
-     */
     public function removeActor(CastingActor $actor): void
     {
         $this->actors->removeElement($actor);

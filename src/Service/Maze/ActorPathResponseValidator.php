@@ -13,20 +13,10 @@ use App\Tool\TextUtil;
  */
 class ActorPathResponseValidator
 {
-    /**
-     * @var ActorRepository
-     */
-    protected $actorRepository;
+    protected ActorRepository $actorRepository;
 
-    /**
-     * @var FilmographyMovieRepository
-     */
-    protected $movieRepository;
+    protected FilmographyMovieRepository $movieRepository;
 
-    /**
-     * @param ActorRepository $actorRepository
-     * @param FilmographyMovieRepository $movieRepository
-     */
     public function __construct(ActorRepository $actorRepository, FilmographyMovieRepository $movieRepository)
     {
         $this->actorRepository = $actorRepository;
@@ -35,12 +25,6 @@ class ActorPathResponseValidator
 
     /**
      * Allows to check if both specified actors define common movie matching specified movie title.
-     *
-     * @param int $actorId1
-     * @param int $actorId2
-     * @param string $movieTitle
-     *
-     * @return FilmographyMovie|null common movie matching specified title or null if no common movie found
      */
     public function check(int $actorId1, int $actorId2, string $movieTitle): ?FilmographyMovie
     {

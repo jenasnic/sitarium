@@ -13,15 +13,9 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
  */
 class TmdbDataProvider
 {
-    /**
-     * @var TmdbApiService
-     */
-    protected $tmdbApiService;
+    protected TmdbApiService $tmdbApiService;
 
-    /**
-     * @var DenormalizerInterface
-     */
-    protected $denormalizer;
+    protected DenormalizerInterface $denormalizer;
 
     public function __construct(TmdbApiService $tmdbApiService, DenormalizerInterface $denormalizer)
     {
@@ -43,6 +37,9 @@ class TmdbDataProvider
         return $this->denormalizer->denormalize($data, Movie::class);
     }
 
+    /**
+     * @return array<Genre>
+     */
     public function getGenres(): array
     {
         $data = $this->tmdbApiService->getGenres();
@@ -50,20 +47,29 @@ class TmdbDataProvider
         return $this->buildArray($data['results'], Genre::class);
     }
 
-    public function searchActors(string $search, TmdbValidatorInterface $validator = null, int $maxCount = 10)
+    /**
+     * @return array<Actor>
+     */
+    public function searchActors(string $search, TmdbValidatorInterface $validator = null, int $maxCount = 10): array
     {
         $data = $this->tmdbApiService->searchActors($search);
 
         return $this->buildArray($data['results'], Actor::class, $validator, $maxCount);
     }
 
-    public function searchMovies(string $search, TmdbValidatorInterface $validator = null, int $maxCount = 10)
+    /**
+     * @return array<Movie>
+     */
+    public function searchMovies(string $search, TmdbValidatorInterface $validator = null, int $maxCount = 10): array
     {
         $data = $this->tmdbApiService->searchMovies($search);
 
         return $this->buildArray($data['results'], Movie::class, $validator, $maxCount);
     }
 
+    /**
+     * @return array<Movie>
+     */
     public function getFilmography(int $actorId): array
     {
         $data = $this->tmdbApiService->getFilmography($actorId);
@@ -71,6 +77,9 @@ class TmdbDataProvider
         return $this->buildArray($data['cast'], Movie::class);
     }
 
+    /**
+     * @return array<Actor>
+     */
     public function getCasting(int $movieId): array
     {
         $data = $this->tmdbApiService->getCasting($movieId);
@@ -78,6 +87,9 @@ class TmdbDataProvider
         return $this->buildArray($data['cast'], Actor::class);
     }
 
+    /**
+     * @return array<Movie>
+     */
     public function getSimilarMovies(int $movieId): array
     {
         $data = $this->tmdbApiService->getSimilarMovies($movieId);
@@ -85,7 +97,15 @@ class TmdbDataProvider
         return $this->buildArray($data['results'], Movie::class);
     }
 
-    protected function buildArray(array $data, string $className, TmdbValidatorInterface $validator = null, $maxCount = null): array
+    /**
+     * @param array<mixed> $data
+     * @param string $className
+     * @param TmdbValidatorInterface $validator
+     * @param int|null $maxCount
+     *
+     * @return array<mixed>
+     */
+    protected function buildArray(array $data, string $className, ?TmdbValidatorInterface $validator = null, ?int $maxCount = null): array
     {
         $result = [];
 

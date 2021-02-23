@@ -5,6 +5,7 @@ namespace App\Service\Maze;
 use App\Entity\Maze\Actor;
 use App\Entity\Maze\Movie;
 use App\Model\Maze\MazeGraphItem;
+use InvalidArgumentException;
 
 /**
  * This class allows to build a kind of maze between items of specified graph.
@@ -19,21 +20,21 @@ class RandomPathFinder
      * Allows to build an array with linked items from specfied graph with specified size.
      * NOTE : If no path found, choose a smaller items count or increase items list in graph.
      *
-     * @param array $mazeGraph map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
+     * @param array<int, MazeGraphItem> $mazeGraph map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
      * @param int $mazeSize number of linked items we want to find (at least 2)
      *
-     * @throws \InvalidArgumentException Throw exception if specified size doesn't allows to build path of items...
+     * @throws InvalidArgumentException Throw exception if specified size doesn't allows to build path of items...
      *
-     * @return Actor[]|Movie[]|array|null array of items linked together (size of array is 'mazeSize')
+     * @return Actor[]|Movie[]|array<mixed>|null array of items linked together (size of array is 'mazeSize')
      */
     public function find(array $mazeGraph, int $mazeSize): ?array
     {
         if ($mazeSize < 2) {
-            throw new \InvalidArgumentException(sprintf('Items count must be equal or greater than 2 (%u items found).', $mazeSize));
+            throw new InvalidArgumentException(sprintf('Items count must be equal or greater than 2 (%u items found).', $mazeSize));
         }
 
         if ($mazeSize > count($mazeGraph)) {
-            throw new \InvalidArgumentException(sprintf('Items count is too large to build a path. Choose a smaller items count size or increase items list in graph (%u items found).', $mazeSize));
+            throw new InvalidArgumentException(sprintf('Items count is too large to build a path. Choose a smaller items count size or increase items list in graph (%u items found).', $mazeSize));
         }
 
         // Browse all MazeGraphItem randomly and try to find a path with specified size
@@ -64,12 +65,12 @@ class RandomPathFinder
      * Allows to build path with MazeGraphItem depending on specified parameters.
      * NOTE : Recursive method used to build path...
      *
-     * @param array $mazeGraph map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
+     * @param array<int, MazeGraphItem> $mazeGraph map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
      * @param MazeGraphItem $graphItem mazeGraphItem to use to build path (as new path step)
-     * @param array $currentPath current path of MazeGraphItem (path we are building recursively)
+     * @param array<MazeGraphItem> $currentPath current path of MazeGraphItem (path we are building recursively)
      * @param int $pathSize Size of path (for previous argument $currentPath) we want to get (i.e. item count).
      *
-     * @return MazeGraphItem[]|array array of MazeGraphItem matching current built path
+     * @return MazeGraphItem[]|array<MazeGraphItem> array of MazeGraphItem matching current built path
      */
     protected function findPathWithSize(array $mazeGraph, MazeGraphItem $graphItem, array $currentPath, int $pathSize): array
     {
@@ -100,9 +101,9 @@ class RandomPathFinder
     }
 
     /**
-     * @param MazeGraphItem[]|array $array
+     * @param MazeGraphItem[]|array<MazeGraphItem> $array
      *
-     * @return MazeGraphItem[]|array
+     * @return MazeGraphItem[]|array<MazeGraphItem>
      */
     private function shuffleArray(array $array): array
     {

@@ -11,16 +11,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class BuildFilmographyCommand extends AbstractBuildProcessCommand
 {
-    /**
-     * @var ActorFilmographyBuilder
-     */
-    protected $filmographyBuilder;
+    protected ActorFilmographyBuilder $filmographyBuilder;
 
-    /**
-     * @param BuildProcessRepository $buildProcessRepository
-     * @param EntityManagerInterface $entityManager
-     * @param ActorFilmographyBuilder $filmographyBuilder
-     */
     public function __construct(
         BuildProcessRepository $buildProcessRepository,
         EntityManagerInterface $entityManager,
@@ -32,9 +24,9 @@ class BuildFilmographyCommand extends AbstractBuildProcessCommand
     }
 
     /**
-     * Command settings.
+     * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
         $this->setDescription('Build filmography for referenced actors.');
@@ -43,7 +35,7 @@ class BuildFilmographyCommand extends AbstractBuildProcessCommand
     /**
      * {@inheritdoc}
      */
-    protected function executeProcess(InputInterface $input, OutputInterface $output)
+    protected function executeProcess(InputInterface $input, OutputInterface $output): void
     {
         $this->filmographyBuilder->build();
     }

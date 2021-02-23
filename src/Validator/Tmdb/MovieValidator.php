@@ -4,6 +4,9 @@ namespace App\Validator\Tmdb;
 
 use App\Model\Tmdb\Movie;
 
+/**
+ * @implements TmdbValidatorInterface<Movie>
+ */
 class MovieValidator implements TmdbValidatorInterface
 {
     /**

@@ -16,10 +16,6 @@ class QuizListController extends AbstractController
 {
     /**
      * @Route("/admin/quiz/list", name="bo_quiz_list")
-     *
-     * @param QuizRepository $quizRepository
-     *
-     * @return Response
      */
     public function listAction(QuizRepository $quizRepository): Response
     {
@@ -30,12 +26,6 @@ class QuizListController extends AbstractController
 
     /**
      * @Route("/admin/quiz/reorder", name="bo_quiz_reorder", methods="POST")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param ReorderQuizHandler $handler
-     *
-     * @return Response
      */
     public function reorderAction(
         Request $request,

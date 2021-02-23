@@ -15,31 +15,23 @@ class Movie
     /**
      * @ORM\Id
      * @ORM\Column(name="tmdbId", type="integer")
-     *
-     * @var int
      */
-    private $tmdbId;
+    private ?int $tmdbId = null;
 
     /**
      * @ORM\Column(name="title", type="string", length=255)
-     *
-     * @var string
      */
-    private $title;
+    private ?string $title = null;
 
     /**
      * @ORM\Column(name="pictureUrl", type="string", length=255, nullable=true)
-     *
-     * @var string
      */
-    private $pictureUrl;
+    private ?string $pictureUrl = null;
 
     /**
      * @ORM\Column(name="tagline", type="text", nullable=true)
-     *
-     * @var string
      */
-    private $tagline;
+    private ?string $tagline = null;
 
     /**
      * @ORM\ManyToMany(targetEntity="Genre")
@@ -48,152 +40,70 @@ class Movie
      *      inverseJoinColumns={@ORM\JoinColumn(name="genre_id", referencedColumnName="tmdbId", onDelete="CASCADE")}
      * )
      *
-     * @var Genre[]|Collection
+     * @var Genre[]|Collection<int, Genre>
      */
-    private $genres;
-
-    /**
-     * @var int
-     */
-    private $voteCount;
-
-    /**
-     * @var \DateTime
-     */
-    private $releaseDate;
-
-    /**
-     * @var array
-     */
-    private $genreIds;
-
-    /**
-     * @var Genre[]|array
-     */
-    private $tmdbGenres;
+    private Collection $genres;
 
     public function __construct()
     {
         $this->genres = new ArrayCollection();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getTmdbId(): int
+    public function getTmdbId(): ?int
     {
         return $this->tmdbId;
     }
 
-    /**
-     * @param int $tmdbId
-     */
-    public function setTmdbId(int $tmdbId)
+    public function setTmdbId(int $tmdbId): void
     {
         $this->tmdbId = $tmdbId;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPictureUrl(): ?string
     {
         return $this->pictureUrl;
     }
 
-    /**
-     * @param string|null $pictureUrl
-     */
-    public function setPictureUrl(?string $pictureUrl)
+    public function setPictureUrl(?string $pictureUrl): void
     {
         $this->pictureUrl = $pictureUrl;
     }
 
-    /**
-     * @return string|null
-     */
     public function getTagline(): ?string
     {
         return $this->tagline;
     }
 
-    /**
-     * @param string|null $tagline
-     */
-    public function setTagline(?string $tagline)
+    public function setTagline(?string $tagline): void
     {
         $this->tagline = $tagline;
     }
 
     /**
-     * @return Genre[]|Collection
+     * @return Genre[]|Collection<int, Genre>
      */
     public function getGenres(): Collection
     {
         return $this->genres;
     }
 
-    /**
-     * @param Genre $genre
-     */
     public function addGenre(Genre $genre): void
     {
         $this->genres->add($genre);
     }
 
-    /**
-     * @param Genre $genre
-     */
     public function removeGenre(Genre $genre): void
     {
         $this->genres->removeElement($genre);
-    }
-
-    /**
-     * @return int
-     */
-    public function getVoteCount(): int
-    {
-        return $this->voteCount;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getReleaseDate(): ?\DateTime
-    {
-        return $this->releaseDate;
-    }
-
-    /**
-     * @return array
-     */
-    public function getGenreIds(): array
-    {
-        return $this->genreIds;
-    }
-
-    /**
-     * @return Genre[]|array
-     */
-    public function getTmdbGenres(): array
-    {
-        return $this->tmdbGenres;
     }
 }

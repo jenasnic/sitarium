@@ -22,11 +22,6 @@ class UserController extends AbstractController
 {
     /**
      * @Route("/admin/user/list", name="bo_user_list", methods="GET")
-     *
-     * @param Request $request
-     * @param UserRepository $userRepository
-     *
-     * @return Response
      */
     public function listAction(Request $request, UserRepository $userRepository): Response
     {
@@ -41,12 +36,6 @@ class UserController extends AbstractController
 
     /**
      * @Route("/admin/user/add", name="bo_user_add")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param AddUserHandler $handler
-     *
-     * @return Response
      */
     public function addAction(Request $request, TranslatorInterface $translator, AddUserHandler $handler): Response
     {
@@ -72,13 +61,6 @@ class UserController extends AbstractController
 
     /**
      * @Route("/admin/user/edit/{user}", requirements={"user" = "\d+"}, name="bo_user_edit")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param UpdateUserHandler $handler
-     * @param User $user
-     *
-     * @return Response
      */
     public function editAction(
         Request $request,
@@ -107,12 +89,6 @@ class UserController extends AbstractController
 
     /**
      * @Route("/admin/user/delete/{user}", requirements={"user" = "\d+"}, name="bo_user_delete")
-     *
-     * @param TranslatorInterface $translator
-     * @param DeleteUserHandler $handler
-     * @param User $user
-     *
-     * @return Response
      */
     public function deleteAction(TranslatorInterface $translator, DeleteUserHandler $handler, User $user): Response
     {

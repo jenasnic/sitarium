@@ -8,22 +8,13 @@ class TmdbLinkProgressEvent extends Event
 {
     public const BUILD_TMDB_LINK_PROGRESS = 'build_tmdb_link_progress';
 
-    /**
-     * @var int
-     */
-    protected $progress;
+    protected int $progress;
 
-    /**
-     * @param int $progress
-     */
     public function __construct(int $progress)
     {
         $this->progress = $progress;
     }
 
-    /**
-     * @return int
-     */
     public function getProgress(): int
     {
         return $this->progress;

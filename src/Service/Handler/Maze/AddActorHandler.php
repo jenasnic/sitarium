@@ -13,32 +13,14 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class AddActorHandler
 {
-    /**
-     * @var TmdbDataProvider
-     */
-    protected $tmdbDataProvider;
+    protected TmdbDataProvider $tmdbDataProvider;
 
-    /**
-     * @var ActorConverter
-     */
-    protected $actorConverter;
+    protected ActorConverter $actorConverter;
 
-    /**
-     * @var ActorRepository
-     */
-    protected $actorRepository;
+    protected ActorRepository $actorRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @param TmdbDataProvider $tmdbDataProvider
-     * @param ActorConverter $actorConverter
-     * @param ActorRepository $actorRepository
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(
         TmdbDataProvider $tmdbDataProvider,
         ActorConverter $actorConverter,
@@ -51,10 +33,7 @@ class AddActorHandler
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @param AddActorCommand $command
-     */
-    public function handle(AddActorCommand $command)
+    public function handle(AddActorCommand $command): void
     {
         // Check if actor already exist
         if (null !== $this->actorRepository->find($command->getTmdbId())) {

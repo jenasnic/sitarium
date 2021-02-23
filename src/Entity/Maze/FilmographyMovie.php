@@ -2,6 +2,7 @@
 
 namespace App\Entity\Maze;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,38 +16,28 @@ class FilmographyMovie
     /**
      * @ORM\Id
      * @ORM\Column(name="tmdbId", type="integer")
-     *
-     * @var int
      */
-    private $tmdbId;
+    private int $tmdbId;
 
     /**
      * @ORM\Column(name="title", type="string", length=255)
-     *
-     * @var string
      */
-    private $title;
+    private ?string $title = null;
 
     /**
      * @ORM\Column(name="releaseDate", type="datetime", nullable=true)
-     *
-     * @var \DateTime
      */
-    private $releaseDate;
+    private ?DateTime $releaseDate = null;
 
     /**
      * @ORM\Column(name="voteCount", type="integer")
-     *
-     * @var int
      */
-    private $voteCount;
+    private int $voteCount = 0;
 
     /**
      * @ORM\Column(name="pictureUrl", type="string", length=255, nullable=true)
-     *
-     * @var string
      */
-    private $pictureUrl;
+    private ?string $pictureUrl = null;
 
     /**
      * @ORM\ManyToMany(targetEntity="Actor", inversedBy="movies", cascade={"persist"})
@@ -55,114 +46,78 @@ class FilmographyMovie
      *      inverseJoinColumns={@ORM\JoinColumn(name="actor_id", referencedColumnName="tmdbId", onDelete="CASCADE")}
      * )
      *
-     * @var Actor[]|Collection
+     * @var Collection<int, Actor>
      */
-    private $actors;
+    private Collection $actors;
 
     public function __construct()
     {
         $this->actors = new ArrayCollection();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTmdbId(): int
     {
         return $this->tmdbId;
     }
 
-    /**
-     * @param int $tmdbId
-     */
-    public function setTmdbId(int $tmdbId)
+    public function setTmdbId(int $tmdbId): void
     {
         $this->tmdbId = $tmdbId;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getReleaseDate(): ?\DateTime
+    public function getReleaseDate(): ?DateTime
     {
         return $this->releaseDate;
     }
 
-    /**
-     * @param \DateTime|null $releaseDate
-     */
-    public function setReleaseDate(?\DateTime $releaseDate)
+    public function setReleaseDate(?DateTime $releaseDate): void
     {
         $this->releaseDate = $releaseDate;
     }
 
-    /**
-     * @return int
-     */
     public function getVoteCount(): int
     {
         return $this->voteCount;
     }
 
-    /**
-     * @param int $voteCount
-     */
-    public function setVoteCount(int $voteCount)
+    public function setVoteCount(int $voteCount): void
     {
         $this->voteCount = $voteCount;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPictureUrl(): ?string
     {
         return $this->pictureUrl;
     }
 
-    /**
-     * @param string|null $pictureUrl
-     */
-    public function setPictureUrl(?string $pictureUrl)
+    public function setPictureUrl(?string $pictureUrl): void
     {
         $this->pictureUrl = $pictureUrl;
     }
 
     /**
-     * @return Actor[]|Collection
+     * @return Actor[]|Collection<int, Actor>
      */
     public function getActors(): Collection
     {
         return $this->actors;
     }
 
-    /**
-     * @param Actor $actor
-     */
     public function addActor(Actor $actor): void
     {
         $this->actors->add($actor);
     }
 
-    /**
-     * @param Actor $actor
-     */
     public function removeActor(Actor $actor): void
     {
         $this->actors->removeElement($actor);

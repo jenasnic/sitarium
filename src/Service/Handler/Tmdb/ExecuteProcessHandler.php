@@ -11,23 +11,14 @@ use Symfony\Component\Process\Process;
  */
 class ExecuteProcessHandler
 {
-    /**
-     * @var string
-     */
-    protected $rootDir;
+    protected string $rootDir;
 
-    /**
-     * @param string $rootDir
-     */
     public function __construct(string $rootDir)
     {
         $this->rootDir = $rootDir;
     }
 
-    /**
-     * @param ExecuteProcessCommand $command
-     */
-    public function handle(ExecuteProcessCommand $command)
+    public function handle(ExecuteProcessCommand $command): void
     {
         $symfonyCommand = sprintf('tmdb:build:%s', $command->getType());
 

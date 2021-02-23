@@ -12,12 +12,6 @@ class DisplayController extends AbstractController
 {
     /**
      * @Route("/admin/tmdb/display/actor/{tmdbId}", name="bo_tmdb_display_actor", requirements={"tmdbId"="\d+"})
-     *
-     * @param Request $request
-     * @param TmdbDataProvider $tmdbDataProvider
-     * @param int $tmdbId
-     *
-     * @return Response
      */
     public function displayActorAction(Request $request, TmdbDataProvider $tmdbDataProvider, int $tmdbId): Response
     {
@@ -28,12 +22,6 @@ class DisplayController extends AbstractController
 
     /**
      * @Route("/admin/tmdb/display/movie/{tmdbId}", name="bo_tmdb_display_movie", requirements={"tmdbId"="\d+"})
-     *
-     * @param Request $request
-     * @param TmdbDataProvider $tmdbDataProvider
-     * @param int $tmdbId
-     *
-     * @return Response
      */
     public function displayMovieAction(Request $request, TmdbDataProvider $tmdbDataProvider, int $tmdbId): Response
     {

@@ -4,22 +4,13 @@ namespace App\Domain\Command\Tagline;
 
 class AddMoviesCommand
 {
-    /**
-     * @var int[]|array
-     */
-    protected $tmdbIds;
+    protected array $tmdbIds;
 
-    /**
-     * @param int[]|array $tmdbId
-     */
     public function __construct(array $tmdbIds)
     {
         $this->tmdbIds = $tmdbIds;
     }
 
-    /**
-     * @return int[]|array
-     */
     public function getTmdbIds(): array
     {
         return $this->tmdbIds;

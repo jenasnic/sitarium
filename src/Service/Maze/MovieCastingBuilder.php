@@ -23,44 +23,18 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class MovieCastingBuilder
 {
-    /**
-     * @var TmdbDataProvider
-     */
-    protected $tmdbDataProvider;
+    protected TmdbDataProvider $tmdbDataProvider;
 
-    /**
-     * @var CastingActorConverter
-     */
-    protected $castingActorConverter;
+    protected CastingActorConverter $castingActorConverter;
 
-    /**
-     * @var MovieRepository
-     */
-    protected $movieRepository;
+    protected MovieRepository $movieRepository;
 
-    /**
-     * @var CastingActorRepository
-     */
-    protected $castingActorRepository;
+    protected CastingActorRepository $castingActorRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @param TmdbDataProvider $tmdbDataProvider
-     * @param CastingActorConverter $castingActorConverter
-     * @param MovieRepository $movieRepository
-     * @param CastingActorRepository $castingActorRepository
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
         TmdbDataProvider $tmdbDataProvider,
         CastingActorConverter $castingActorConverter,
@@ -77,7 +51,7 @@ class MovieCastingBuilder
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function build()
+    public function build(): void
     {
         try {
             $this->clearPreviousData();
@@ -103,18 +77,16 @@ class MovieCastingBuilder
         }
     }
 
-    protected function clearPreviousData()
+    protected function clearPreviousData(): void
     {
         $this->movieRepository->resetMoviesStatus();
         $this->castingActorRepository->clearCasting();
     }
 
     /**
-     * Returns all actors for specified movies.
+     * @param array<Movie> $movieList
      *
-     * @param array $movieList
-     *
-     * @return CastingActor[]|array Map with actor tmdbId as key and CastingActor as value
+     * @return CastingActor[]|array<int, CastingActor>
      */
     protected function getAllActors(array $movieList): array
     {
@@ -149,9 +121,9 @@ class MovieCastingBuilder
     /**
      * Returns only actors with at least 2 movies.
      *
-     * @param array $tmdbActors
+     * @param array<int, CastingActor> $tmdbActors
      *
-     * @return CastingActor[]|array Map with actor tmdbId as key and CastingActor as value
+     * @return CastingActor[]|array<int, CastingActor>
      */
     protected function getFilteredActors(array $tmdbActors): array
     {
@@ -167,8 +139,8 @@ class MovieCastingBuilder
     }
 
     /**
-     * @param Movie[]|array $movies
-     * @param CastingActor[]|array $actors
+     * @param Movie[]|array<Movie> $movies
+     * @param CastingActor[]|array<CastingActor> $actors
      */
     protected function updateMovieStatus(array $movies, array $actors): void
     {

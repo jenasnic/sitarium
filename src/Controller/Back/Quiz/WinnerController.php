@@ -16,12 +16,6 @@ class WinnerController extends AbstractController
 {
     /**
      * @Route("/admin/quiz/{quiz}/winner/list", requirements={"quiz" = "\d+"}, name="bo_quiz_winner_list")
-     *
-     * @param Request $request
-     * @param WinnerRepository $winnerRepository
-     * @param Quiz $quiz
-     *
-     * @return Response
      */
     public function listWinnerAction(Request $request, WinnerRepository $winnerRepository, Quiz $quiz): Response
     {
@@ -37,10 +31,6 @@ class WinnerController extends AbstractController
 
     /**
      * @Route("/admin/quiz/winner/detail/{winner}", requirements={"winner" = "\d+"}, name="bo_quiz_winner_detail")
-     *
-     * @param Winner $winner
-     *
-     * @return Response
      */
     public function detailWinnerAction(Winner $winner): Response
     {
@@ -49,12 +39,6 @@ class WinnerController extends AbstractController
 
     /**
      * @Route("/admin/quiz/{quiz}/winner/clear", requirements={"quiz" = "\d+"}, name="bo_quiz_winner_clear")
-     *
-     * @param TranslatorInterface $translator
-     * @param WinnerRepository $winnerRepository
-     * @param Quiz $quiz
-     *
-     * @return Response
      */
     public function clearWinnerAction(
         TranslatorInterface $translator,

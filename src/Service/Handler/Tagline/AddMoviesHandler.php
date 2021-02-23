@@ -13,32 +13,14 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class AddMoviesHandler
 {
-    /**
-     * @var TmdbDataProvider
-     */
-    protected $tmdbDataProvider;
+    protected TmdbDataProvider $tmdbDataProvider;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @var MovieRepository
-     */
-    protected $movieRepository;
+    protected MovieRepository $movieRepository;
 
-    /**
-     * @var GenreRepository
-     */
-    protected $genreRepository;
+    protected GenreRepository $genreRepository;
 
-    /**
-     * @param TmdbDataProvider $tmdbDataProvider
-     * @param EntityManagerInterface $entityManager
-     * @param MovieRepository $movieRepository
-     * @param GenreRepository $genreRepository
-     */
     public function __construct(
         TmdbDataProvider $tmdbDataProvider,
         EntityManagerInterface $entityManager,
@@ -51,10 +33,7 @@ class AddMoviesHandler
         $this->genreRepository = $genreRepository;
     }
 
-    /**
-     * @param AddMoviesCommand $command
-     */
-    public function handle(AddMoviesCommand $command)
+    public function handle(AddMoviesCommand $command): void
     {
         foreach ($command->getTmdbIds() as $tmdbId) {
             if (null !== $this->movieRepository->find($tmdbId)) {

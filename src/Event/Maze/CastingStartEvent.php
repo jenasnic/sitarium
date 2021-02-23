@@ -8,22 +8,13 @@ class CastingStartEvent extends Event
 {
     public const BUILD_CASTING_START = 'build_casting_start';
 
-    /**
-     * @var int
-     */
-    protected $total;
+    protected int $total;
 
-    /**
-     * @param int $total
-     */
     public function __construct(int $total)
     {
         $this->total = $total;
     }
 
-    /**
-     * @return int
-     */
     public function getTotal(): int
     {
         return $this->total;

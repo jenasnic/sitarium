@@ -12,31 +12,14 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class DeleteQuizHandler
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @var UserResponseRepository
-     */
-    protected $userResponseRepository;
+    protected UserResponseRepository $userResponseRepository;
 
-    /**
-     * @var WinnerRepository
-     */
-    protected $winnerRepository;
+    protected WinnerRepository $winnerRepository;
 
-    /**
-     * @var string
-     */
-    protected $rootDir;
+    protected string $rootDir;
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param UserResponseRepository $userResponseRepository
-     * @param WinnerRepository $winnerRepository
-     */
     public function __construct(
         EntityManagerInterface $entityManager,
         UserResponseRepository $userResponseRepository,
@@ -49,10 +32,7 @@ class DeleteQuizHandler
         $this->rootDir = $rootDir;
     }
 
-    /**
-     * @param DeleteQuizCommand $command
-     */
-    public function handle(DeleteQuizCommand $command)
+    public function handle(DeleteQuizCommand $command): void
     {
         $pictureToDelete = $this->rootDir.'/public'.$command->getQuiz()->getPictureUrl();
         $thumbnailToDelete = $this->rootDir.'/public'.$command->getQuiz()->getThumbnailUrl();

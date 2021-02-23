@@ -17,10 +17,6 @@ class LocateController extends AbstractController
 {
     /**
      * @Route("/admin/quiz/{quiz}/response/locate", requirements={"quiz" = "\d+"}, name="bo_quiz_response_locate")
-     *
-     * @param Quiz $quiz
-     *
-     * @return Response
      */
     public function indexAction(Quiz $quiz): Response
     {
@@ -29,12 +25,6 @@ class LocateController extends AbstractController
 
     /**
      * @Route("/admin/quiz/response/set-location", name="bo_quiz_locate_response", methods="POST")
-     *
-     * @param Request $request
-     * @param ResponseRepository $repository
-     * @param EntityManagerInterface $entityManager
-     *
-     * @return Response
      */
     public function setLocationAction(Request $request, ResponseRepository $repository, EntityManagerInterface $entityManager): Response
     {
@@ -59,12 +49,6 @@ class LocateController extends AbstractController
 
     /**
      * @Route("/admin/quiz/response/get-location", name="bo_quiz_response_location", methods="GET")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param ResponseRepository $repository
-     *
-     * @return Response
      */
     public function getLocationAction(
         Request $request,

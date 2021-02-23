@@ -7,19 +7,13 @@ use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * @extends AbstractSynchronizer<CastingActor>
+ */
 class CastingActorSynchronizer extends AbstractSynchronizer
 {
-    /**
-     * @var CastingActorRepository
-     */
-    protected $castingActorRepository;
+    protected CastingActorRepository $castingActorRepository;
 
-    /**
-     * @param TmdbDataProvider $tmdbDataProvider
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param CastingActorRepository $actorRepository
-     */
     public function __construct(
         TmdbDataProvider $tmdbDataProvider,
         EntityManagerInterface $entityManager,
@@ -36,15 +30,15 @@ class CastingActorSynchronizer extends AbstractSynchronizer
      *
      * @return bool
      */
-    public function support($type): bool
+    public function support(string $type): bool
     {
         return CastingActor::class === $type;
     }
 
     /**
-     * @return array
+     * @return CastingActor[]|array<CastingActor>
      */
-    protected function getAllData()
+    protected function getAllData(): array
     {
         return $this->castingActorRepository->findAll();
     }

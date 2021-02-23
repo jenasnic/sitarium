@@ -13,32 +13,14 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class AddMovieHandler
 {
-    /**
-     * @var TmdbDataProvider
-     */
-    protected $tmdbDataProvider;
+    protected TmdbDataProvider $tmdbDataProvider;
 
-    /**
-     * @var MovieConverter
-     */
-    protected $movieConverter;
+    protected MovieConverter $movieConverter;
 
-    /**
-     * @var MovieRepository
-     */
-    protected $movieRepository;
+    protected MovieRepository $movieRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @param TmdbDataProvider $tmdbDataProvider
-     * @param MovieConverter $movieConverter
-     * @param MovieRepository $movieRepository
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(
         TmdbDataProvider $tmdbDataProvider,
         MovieConverter $movieConverter,
@@ -51,10 +33,7 @@ class AddMovieHandler
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @param AddMovieCommand $command
-     */
-    public function handle(AddMovieCommand $command)
+    public function handle(AddMovieCommand $command): void
     {
         // Check if movie already exist
         if (null !== $this->movieRepository->find($command->getTmdbId())) {

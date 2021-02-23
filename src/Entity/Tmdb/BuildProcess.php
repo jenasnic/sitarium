@@ -2,8 +2,9 @@
 
 namespace App\Entity\Tmdb;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Enum\Tmdb\ProcessTypeEnum;
+use DateTime;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="tmdb_build_process")
@@ -15,57 +16,39 @@ class BuildProcess
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(name="id", type="integer")
-     *
-     * @var int
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(name="type", type="string", length=25)
-     *
-     * @var string
      */
-    private $type;
+    private string $type;
 
     /**
      * @ORM\Column(name="options", type="text", nullable=true)
-     *
-     * @var string
      */
-    private $options;
+    private ?string $options;
 
     /**
      * @ORM\Column(name="startedAt", type="datetime")
-     *
-     * @var \DateTime
      */
-    private $startedAt;
+    private ?DateTime $startedAt = null;
 
     /**
      * @ORM\Column(name="endedAt", type="datetime", nullable=true)
-     *
-     * @var \DateTime
      */
-    private $endedAt;
+    private ?DateTime $endedAt = null;
 
     /**
      * @ORM\Column(name="count", type="integer")
-     *
-     * @var int
      */
     private $count;
 
     /**
      * @ORM\Column(name="total", type="integer")
-     *
-     * @var int
      */
     private $total;
 
-    /**
-     * @param string $type
-     * @param int $total
-     */
     public function __construct(string $type, int $total, ?string $options = null)
     {
         $this->setType($type);
@@ -75,26 +58,17 @@ class BuildProcess
         $this->total = $total;
     }
 
-    /**
-     * @return int
-     */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @param string $type
-     */
-    public function setType(string $type)
+    public function setType(string $type): void
     {
         if (!ProcessTypeEnum::exists($type)) {
             throw new \InvalidArgumentException(sprintf('Invalid type "%s"', $type));
@@ -103,82 +77,52 @@ class BuildProcess
         $this->type = $type;
     }
 
-    /**
-     * @return string|null
-     */
     public function getOptions(): ?string
     {
         return $this->options;
     }
 
-    /**
-     * @param string|null $options
-     */
-    public function setOptions(?string $options)
+    public function setOptions(?string $options): void
     {
         $this->options = $options;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getStartedAt(): \DateTime
+    public function getStartedAt(): ?DateTime
     {
         return $this->startedAt;
     }
 
-    /**
-     * @param \DateTime $startedAt
-     */
-    public function setStartedAt(\DateTime $startedAt)
+    public function setStartedAt(DateTime $startedAt): void
     {
         $this->startedAt = $startedAt;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getEndedAt(): \DateTime
+    public function getEndedAt(): ?DateTime
     {
         return $this->endedAt;
     }
 
-    /**
-     * @param \DateTime $endedAt
-     */
-    public function setEndedAt(\DateTime $endedAt)
+    public function setEndedAt(?DateTime $endedAt): void
     {
         $this->endedAt = $endedAt;
     }
 
-    /**
-     * @return int
-     */
     public function getCount(): int
     {
         return $this->count;
     }
 
-    /**
-     * @param int $count
-     */
-    public function setCount(int $count)
+    public function setCount(int $count): void
     {
         $this->count = $count;
     }
 
-    /**
-     * @return int
-     */
     public function getTotal(): int
     {
         return $this->total;
     }
 
-    /**
-     * @param int $total
-     */
-    public function setTotal(int $total)
+    public function setTotal(int $total): void
     {
         $this->total = $total;
     }

@@ -15,20 +15,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class UpdateProcessForFilmographySubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var BuildProcessRepository
-     */
-    protected $buildProcessRepository;
+    protected BuildProcessRepository $buildProcessRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @param BuildProcessRepository $buildProcessRepository
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(
         BuildProcessRepository $buildProcessRepository,
         EntityManagerInterface $entityManager
@@ -37,10 +27,7 @@ class UpdateProcessForFilmographySubscriber implements EventSubscriberInterface
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             FilmographyStartEvent::BUILD_FILMOGRAPHY_START => 'onBuildFilmographyStart',
@@ -50,10 +37,7 @@ class UpdateProcessForFilmographySubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param FilmographyStartEvent $event
-     */
-    public function onBuildFilmographyStart(FilmographyStartEvent $event)
+    public function onBuildFilmographyStart(FilmographyStartEvent $event): void
     {
         $buildProcess = new BuildProcess(ProcessTypeEnum::FILMOGRAPHY, $event->getTotal());
 
@@ -61,10 +45,7 @@ class UpdateProcessForFilmographySubscriber implements EventSubscriberInterface
         $this->entityManager->flush();
     }
 
-    /**
-     * @param FilmographyProgressEvent $event
-     */
-    public function onBuildFilmographyProgress(FilmographyProgressEvent $event)
+    public function onBuildFilmographyProgress(FilmographyProgressEvent $event): void
     {
         $buildProcess = $this->buildProcessRepository->findPendingProcessByType(ProcessTypeEnum::FILMOGRAPHY);
         $buildProcess->setCount($event->getProgress());
@@ -72,10 +53,7 @@ class UpdateProcessForFilmographySubscriber implements EventSubscriberInterface
         $this->entityManager->flush();
     }
 
-    /**
-     * @param Event $event
-     */
-    public function onBuildFilmographyEnd(Event $event)
+    public function onBuildFilmographyEnd(Event $event): void
     {
         $buildProcess = $this->buildProcessRepository->findPendingProcessByType(ProcessTypeEnum::FILMOGRAPHY);
         $buildProcess->setEndedAt(new \DateTime());

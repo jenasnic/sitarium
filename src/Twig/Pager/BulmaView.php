@@ -8,50 +8,22 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BulmaView implements ViewInterface
 {
-    /**
-     * @var BulmaTemplate
-     */
-    protected $template;
+    protected BulmaTemplate $template;
 
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
+    protected TranslatorInterface $translator;
 
-    /**
-     * @var PagerfantaInterface
-     */
-    private $pagerfanta;
+    private PagerfantaInterface $pagerfanta;
 
-    /**
-     * @var int
-     */
-    private $proximity;
+    private int $proximity;
 
-    /**
-     * @var int
-     */
-    private $currentPage;
+    private int $currentPage;
 
-    /**
-     * @var int
-     */
-    private $nbPages;
+    private int $nbPages;
 
-    /**
-     * @var int
-     */
-    private $startPage;
+    private int $startPage;
 
-    /**
-     * @var int
-     */
-    private $endPage;
+    private int $endPage;
 
-    /**
-     * @param BulmaTemplate $template
-     * @param TranslatorInterface $translator
-     */
     public function __construct(BulmaTemplate $template, TranslatorInterface $translator)
     {
         $this->template = $template;
@@ -61,7 +33,7 @@ class BulmaView implements ViewInterface
     /**
      * {@inheritdoc}
      */
-    public function render(PagerfantaInterface $pagerfanta, $routeGenerator, array $options = [])
+    public function render(PagerfantaInterface $pagerfanta, $routeGenerator, array $options = []): string
     {
         $this->pagerfanta = $pagerfanta;
         $this->currentPage = $pagerfanta->getCurrentPage();
@@ -90,7 +62,7 @@ class BulmaView implements ViewInterface
         return $this->generate();
     }
 
-    protected function generate()
+    protected function generate(): string
     {
         $relButtons = $this->previous().$this->next();
 
@@ -108,7 +80,7 @@ class BulmaView implements ViewInterface
         return str_replace($search, $replace, $this->template->container());
     }
 
-    private function previous()
+    private function previous(): string
     {
         if ($this->pagerfanta->hasPreviousPage()) {
             return $this->template->previousEnabled($this->pagerfanta->getPreviousPage());
@@ -117,7 +89,7 @@ class BulmaView implements ViewInterface
         return $this->template->previousDisabled();
     }
 
-    private function next()
+    private function next(): string
     {
         if ($this->pagerfanta->hasNextPage()) {
             return $this->template->nextEnabled($this->pagerfanta->getNextPage());
@@ -126,7 +98,7 @@ class BulmaView implements ViewInterface
         return $this->template->nextDisabled();
     }
 
-    private function page(int $page)
+    private function page(int $page): string
     {
         if ($page === $this->currentPage) {
             return $this->template->current($page);
@@ -135,14 +107,14 @@ class BulmaView implements ViewInterface
         return $this->template->page($page);
     }
 
-    private function separatorFirst()
+    private function separatorFirst(): string
     {
         if ($this->startPage > 2) {
             return $this->template->separator();
         }
     }
 
-    private function middlePages()
+    private function middlePages(): string
     {
         $pages = '';
 
@@ -153,14 +125,14 @@ class BulmaView implements ViewInterface
         return $pages;
     }
 
-    private function separatorLast()
+    private function separatorLast(): string
     {
         if ($this->endPage < $this->nbPages - 1) {
             return $this->template->separator();
         }
     }
 
-    private function last()
+    private function last(): string
     {
         if ($this->pagerfanta->getNbPages() > 1) {
             return $this->page($this->pagerfanta->getNbPages());
@@ -170,7 +142,7 @@ class BulmaView implements ViewInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'bulma';
     }

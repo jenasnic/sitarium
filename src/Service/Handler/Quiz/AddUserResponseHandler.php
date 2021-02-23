@@ -12,30 +12,17 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class AddUserResponseHandler
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @var UserResponseRepository
-     */
-    protected $userResponseRepository;
+    protected UserResponseRepository $userResponseRepository;
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param UserResponseRepository $userResponseRepository
-     */
     public function __construct(EntityManagerInterface $entityManager, UserResponseRepository $userResponseRepository)
     {
         $this->entityManager = $entityManager;
         $this->userResponseRepository = $userResponseRepository;
     }
 
-    /**
-     * @param AddUserResponseCommand $command
-     */
-    public function handle(AddUserResponseCommand $command)
+    public function handle(AddUserResponseCommand $command): void
     {
         $responseAlreadyFound = $this->userResponseRepository->checkExistingResponseForUserId(
             $command->getUser()->getId(),

@@ -12,7 +12,7 @@ use App\Entity\Maze\Movie;
 class MoviePathLinkReducer
 {
     /**
-     * @param Movie[]|array $moviePath
+     * @param Movie[]|array<Movie> $moviePath
      */
     public function reduceLinks(array $moviePath): void
     {
@@ -32,14 +32,6 @@ class MoviePathLinkReducer
         }
     }
 
-    /**
-     * Allows to get first common actor between two specified movies.
-     *
-     * @param Movie $movie1 first movie we want to extract common actor with second movie
-     * @param Movie $movie2 second movie we want to extract common actor with first movie
-     *
-     * @return CastingActor common actor
-     */
     protected function extractFirstCommonActorForMovies(Movie $movie1, Movie $movie2): CastingActor
     {
         foreach ($movie1->getActors() as $actor) {

@@ -11,26 +11,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractBuildProcessCommand extends Command
 {
-    /**
-     * @var BuildProcessRepository
-     */
-    protected $buildProcessRepository;
+    protected BuildProcessRepository $buildProcessRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface$entityManager;
 
-    /**
-     * @var string
-     */
-    protected $processType;
+    protected string $processType;
 
-    /**
-     * @param BuildProcessRepository $buildProcessRepository
-     * @param EntityManagerInterface $entityManager
-     * @param string $processType
-     */
     public function __construct(
         BuildProcessRepository $buildProcessRepository,
         EntityManagerInterface $entityManager,
@@ -46,12 +32,12 @@ abstract class AbstractBuildProcessCommand extends Command
         parent::__construct();
     }
 
-    abstract protected function executeProcess(InputInterface $input, OutputInterface $output);
+    abstract protected function executeProcess(InputInterface $input, OutputInterface $output): void;
 
     /**
-     * Command settings.
+     * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName(sprintf('tmdb:build:%s', $this->processType))
@@ -62,7 +48,7 @@ abstract class AbstractBuildProcessCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->buildProcessRepository->isProcessPending()) {
             $output->writeln('Process already pending...');
@@ -74,7 +60,7 @@ abstract class AbstractBuildProcessCommand extends Command
         try {
             $this->executeProcess($input, $output);
         } catch (\Exception $e) {
-            $output->writeln($e->getMessage());
+            $output->writeln($e->getTraceAsString());
             $this->stopPendingProcess();
 
             return Command::FAILURE;
@@ -85,7 +71,7 @@ abstract class AbstractBuildProcessCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function stopPendingProcess()
+    private function stopPendingProcess(): void
     {
         $pendingProcess = $this->buildProcessRepository->findPendingProcessByType($this->processType);
 

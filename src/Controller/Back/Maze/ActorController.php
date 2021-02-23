@@ -23,20 +23,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ActorController extends AbstractController
 {
     /**
-     * Max actor count to return when searching actors through TMDB.
-     *
-     * @var int
-     */
-    const MAX_ACTOR_RESULT_COUNT = 10;
-
-    /**
      * @Route("/admin/maze/actor/list", name="bo_maze_actor_list")
-     *
-     * @param Request $request
-     * @param ActorRepository $actorRepository
-     * @param BuildProcessRepository $buildProcessRepository
-     *
-     * @return Response
      */
     public function listAction(
         Request $request,
@@ -55,10 +42,6 @@ class ActorController extends AbstractController
 
     /**
      * @Route("/admin/maze/actor/view/{actor}", requirements={"actor" = "\d+"}, name="bo_maze_actor_view")
-     *
-     * @param Actor $actor
-     *
-     * @return Response
      */
     public function viewAction(Actor $actor): Response
     {
@@ -67,10 +50,6 @@ class ActorController extends AbstractController
 
     /**
      * @Route("/admin/maze/actor/new", name="bo_maze_actor_new")
-     *
-     * @param UrlGeneratorInterface $urlGenerator
-     *
-     * @return Response
      */
     public function newAction(UrlGeneratorInterface $urlGenerator): Response
     {
@@ -82,12 +61,6 @@ class ActorController extends AbstractController
 
     /**
      * @Route("/admin/maze/actor/add/{tmdbId}", requirements={"tmdbId" = "\d+"}, name="bo_maze_actor_add")
-     *
-     * @param TranslatorInterface $translator
-     * @param AddActorHandler $handler
-     * @param int $tmdbId
-     *
-     * @return Response
      */
     public function addAction(
         TranslatorInterface $translator,
@@ -106,12 +79,6 @@ class ActorController extends AbstractController
 
     /**
      * @Route("/admin/maze/actor/search", name="bo_maze_actor_search")
-     *
-     * @param Request $request
-     * @param TmdbDataProvider $tmdbDataProvider
-     * @param DisplayableResultAdapter $displayableResultAdapter
-     *
-     * @return Response
      */
     public function searchAction(
         Request $request,
@@ -122,7 +89,7 @@ class ActorController extends AbstractController
         $actors = [];
 
         if (strlen($name) > 2) {
-            $actors = $tmdbDataProvider->searchActors($name, new ActorValidator(), self::MAX_ACTOR_RESULT_COUNT);
+            $actors = $tmdbDataProvider->searchActors($name, new ActorValidator());
         }
 
         return $this->render('back/tmdb/search_result.html.twig', [
@@ -133,12 +100,6 @@ class ActorController extends AbstractController
 
     /**
      * @Route("/admin/maze/actor/delete/{actor}", requirements={"actor" = "\d+"}, name="bo_maze_actor_delete")
-     *
-     * @param TranslatorInterface $translator
-     * @param EntityManagerInterface $entityManager
-     * @param Actor $actor
-     *
-     * @return Response
      */
     public function deleteAction(
         TranslatorInterface $translator,

@@ -4,6 +4,9 @@ namespace App\Validator\Tmdb;
 
 use App\Model\Tmdb\Actor;
 
+/**
+ * @implements TmdbValidatorInterface<Actor>
+ */
 class CastingActorValidator implements TmdbValidatorInterface
 {
     /**

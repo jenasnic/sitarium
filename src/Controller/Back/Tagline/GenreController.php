@@ -15,10 +15,6 @@ class GenreController extends AbstractController
 {
     /**
      * @Route("/admin/tagline/genre/list", name="bo_tagline_genre_list")
-     *
-     * @param GenreRepository $genreRepository
-     *
-     * @return Response
      */
     public function listAction(GenreRepository $genreRepository): Response
     {
@@ -30,12 +26,6 @@ class GenreController extends AbstractController
 
     /**
      * @Route("/admin/tagline/genre/delete/{genre}", requirements={"genre" = "\d+"}, name="bo_tagline_genre_delete")
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param TranslatorInterface $translator
-     * @param Genre $genre
-     *
-     * @return Response
      */
     public function deleteAction(
         EntityManagerInterface $entityManager,
@@ -56,11 +46,6 @@ class GenreController extends AbstractController
 
     /**
      * @Route("/admin/tagline/genre/synchronize", name="bo_tagline_genre_synchronize")
-     *
-     * @param GenreSynchronizer $synchronizer
-     * @param TranslatorInterface $translator
-     *
-     * @return Response
      */
     public function synchronizeAction(GenreSynchronizer $synchronizer, TranslatorInterface $translator): Response
     {

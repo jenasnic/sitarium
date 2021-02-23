@@ -4,13 +4,10 @@ namespace App\Enum\Maze;
 
 class CastingStatusEnum
 {
-    const UNINITIALIZED = 'casting_to_check';
-    const INITIALIZED = 'casting_validated';
-    const EMPTY = 'casting_empty';
+    public const UNINITIALIZED = 'casting_to_check';
+    public const INITIALIZED = 'casting_validated';
+    public const EMPTY = 'casting_empty';
 
-    /**
-     * @return array
-     */
     public static function getAll(): array
     {
         return [
@@ -20,11 +17,6 @@ class CastingStatusEnum
         ];
     }
 
-    /**
-     * @param string $status
-     *
-     * @return bool
-     */
     public static function exists(string $status): bool
     {
         return in_array($status, self::getAll());

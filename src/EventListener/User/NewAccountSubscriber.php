@@ -3,6 +3,7 @@
 namespace App\EventListener\User;
 
 use App\Event\User\NewAccountEvent;
+use Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
@@ -10,32 +11,14 @@ use Twig\Environment;
 
 class NewAccountSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var MailerInterface
-     */
-    protected $mailer;
+    protected MailerInterface $mailer;
 
-    /**
-     * @var Environment
-     */
-    protected $twig;
+    protected Environment $twig;
 
-    /**
-     * @var string
-     */
-    protected $mailerFrom;
+    protected string $mailerFrom;
 
-    /**
-     * @var string
-     */
-    protected $mailerSender;
+    protected string $mailerSender;
 
-    /**
-     * @param MailerInterface $mailer
-     * @param Environment $twig
-     * @param string $mailFrom
-     * @param string $mailSender
-     */
     public function __construct(
         MailerInterface $mailer,
         Environment $twig,
@@ -48,20 +31,14 @@ class NewAccountSubscriber implements EventSubscriberInterface
         $this->mailerSender = $mailerSender;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             NewAccountEvent::NEW_ACCOUNT => 'onNewAccount',
         ];
     }
 
-    /**
-     * @param NewAccountEvent $event
-     */
-    public function onNewAccount(NewAccountEvent $event)
+    public function onNewAccount(NewAccountEvent $event): void
     {
         try {
             $subject = 'Bienvenue '.$event->getUser()->getDisplayName();
@@ -81,7 +58,7 @@ class NewAccountSubscriber implements EventSubscriberInterface
             ;
 
             $this->mailer->send($mailMessage);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         }
     }
 }

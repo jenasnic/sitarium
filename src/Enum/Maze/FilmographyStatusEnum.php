@@ -4,13 +4,10 @@ namespace App\Enum\Maze;
 
 class FilmographyStatusEnum
 {
-    const UNINITIALIZED = 'filmography_to_check';
-    const INITIALIZED = 'filmography_validated';
-    const EMPTY = 'filmography_empty';
+    public const UNINITIALIZED = 'filmography_to_check';
+    public const INITIALIZED = 'filmography_validated';
+    public const EMPTY = 'filmography_empty';
 
-    /**
-     * @return array
-     */
     public static function getAll(): array
     {
         return [
@@ -20,11 +17,6 @@ class FilmographyStatusEnum
         ];
     }
 
-    /**
-     * @param string $status
-     *
-     * @return bool
-     */
     public static function exists(string $status): bool
     {
         return in_array($status, self::getAll());

@@ -12,7 +12,7 @@ use App\Entity\Maze\FilmographyMovie;
 class ActorPathLinkReducer
 {
     /**
-     * @param Actor[]|array $actorPath
+     * @param Actor[]|array<Actor> $actorPath
      */
     public function reduceLinks(array $actorPath): void
     {
@@ -32,14 +32,6 @@ class ActorPathLinkReducer
         }
     }
 
-    /**
-     * Allows to get most known common movie between two specified actors.
-     *
-     * @param Actor $actor1 first actor we want to extract common movie with second actor
-     * @param Actor $actor2 second actor we want to extract common movie with first actor
-     *
-     * @return FilmographyMovie common movie with best vote count
-     */
     protected function extractTopRatedCommonMovieForActors(Actor $actor1, Actor $actor2): FilmographyMovie
     {
         $topRatedMovie = null;

@@ -4,14 +4,11 @@ namespace App\Enum\Tmdb;
 
 class ProcessTypeEnum
 {
-    const FILMOGRAPHY = 'filmography';
-    const CASTING = 'casting';
-    const QUIZ_LINK = 'quiz_link';
-    const SYNCHRONIZATION = 'synchronization';
+    public const FILMOGRAPHY = 'filmography';
+    public const CASTING = 'casting';
+    public const QUIZ_LINK = 'quiz_link';
+    public const SYNCHRONIZATION = 'synchronization';
 
-    /**
-     * @return array
-     */
     public static function getAll(): array
     {
         return [
@@ -22,11 +19,6 @@ class ProcessTypeEnum
         ];
     }
 
-    /**
-     * @param string $status
-     *
-     * @return bool
-     */
     public static function exists(string $status): bool
     {
         return in_array($status, self::getAll());

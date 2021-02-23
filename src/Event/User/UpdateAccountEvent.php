@@ -9,38 +9,22 @@ class UpdateAccountEvent extends Event
 {
     public const UPDATE_ACCOUNT = 'update_account';
 
-    /**
-     * @var User
-     */
-    protected $user;
+    protected User $user;
 
-    /**
-     * @var string|null
-     */
-    protected $password;
+    protected ?string $password;
 
-    /**
-     * @param User $user
-     * @param string|null $password
-     */
-    public function __construct(User $user, ?string $password)
+    public function __construct(User $user, ?string $password = null)
     {
         $this->user = $user;
         $this->password = $password;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return string
-     */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }

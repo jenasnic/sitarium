@@ -10,17 +10,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class TaglineMovieSynchronizer extends AbstractSynchronizer
 {
-    /**
-     * @var MovieRepository
-     */
-    protected $movieRepository;
+    protected MovieRepository $movieRepository;
 
-    /**
-     * @param TmdbDataProvider $tmdbDataProvider
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param MovieRepository $movieRepository
-     */
     public function __construct(
         TmdbDataProvider $tmdbDataProvider,
         EntityManagerInterface $entityManager,
@@ -32,20 +23,15 @@ class TaglineMovieSynchronizer extends AbstractSynchronizer
         $this->movieRepository = $movieRepository;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return bool
-     */
-    public function support($type): bool
+    public function support(string $type): bool
     {
         return Movie::class === $type;
     }
 
     /**
-     * @return array
+     * @return array<Movie>
      */
-    protected function getAllData()
+    protected function getAllData(): array
     {
         return $this->movieRepository->findAll();
     }

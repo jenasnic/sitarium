@@ -13,16 +13,8 @@ use Symfony\Component\Console\Input\InputArgument;
 
 class BuildTmdbLinkCommand extends AbstractBuildProcessCommand
 {
-    /**
-     * @var TmdbLinkBuilder
-     */
-    protected $tmdbLinkBuilder;
+    protected TmdbLinkBuilder $tmdbLinkBuilder;
 
-    /**
-     * @param BuildProcessRepository $buildProcessRepository
-     * @param EntityManagerInterface $entityManager
-     * @param TmdbLinkBuilder $castingBuilder
-     */
     public function __construct(
         BuildProcessRepository $buildProcessRepository,
         EntityManagerInterface $entityManager,
@@ -34,9 +26,9 @@ class BuildTmdbLinkCommand extends AbstractBuildProcessCommand
     }
 
     /**
-     * Command settings.
+     * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -53,7 +45,7 @@ class BuildTmdbLinkCommand extends AbstractBuildProcessCommand
     /**
      * {@inheritdoc}
      */
-    protected function executeProcess(InputInterface $input, OutputInterface $output)
+    protected function executeProcess(InputInterface $input, OutputInterface $output): void
     {
         $quizId = $input->getArgument('quizId');
         $this->tmdbLinkBuilder->build($quizId);

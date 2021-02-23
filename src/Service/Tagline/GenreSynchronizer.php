@@ -12,26 +12,13 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class GenreSynchronizer
 {
-    /**
-     * @var GenreRepository
-     */
-    protected $genreRepository;
+    protected GenreRepository $genreRepository;
 
-    /**
-     * @var TmdbApiService
-     */
-    protected $tmdbService;
+    // @todo : use TmdbDataProvider
+    protected TmdbApiService $tmdbService;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @param GenreRepository $genreRepository
-     * @param TmdbApiService $tmdbService
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(
         GenreRepository $genreRepository,
         TmdbApiService $tmdbService,
@@ -42,7 +29,7 @@ class GenreSynchronizer
         $this->entityManager = $entityManager;
     }
 
-    public function synchronize()
+    public function synchronize(): void
     {
         $tmdbGenres = $this->tmdbService->getGenres(Genre::class);
 

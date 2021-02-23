@@ -8,22 +8,13 @@ class CastingProgressEvent extends Event
 {
     public const BUILD_CASTING_PROGRESS = 'build_casting_progress';
 
-    /**
-     * @var int
-     */
-    protected $progress;
+    protected int $progress;
 
-    /**
-     * @param int $progress
-     */
     public function __construct(int $progress)
     {
         $this->progress = $progress;
     }
 
-    /**
-     * @return int
-     */
     public function getProgress(): int
     {
         return $this->progress;
