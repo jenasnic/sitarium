@@ -44,7 +44,7 @@ class TmdbDataProvider
     {
         $data = $this->tmdbApiService->getGenres();
 
-        return $this->buildArray($data['results'], Genre::class);
+        return $this->buildArray($data['genres'], Genre::class);
     }
 
     /**
@@ -70,21 +70,21 @@ class TmdbDataProvider
     /**
      * @return array<Movie>
      */
-    public function getFilmography(int $actorId): array
+    public function getFilmography(int $actorId, TmdbValidatorInterface $validator = null): array
     {
         $data = $this->tmdbApiService->getFilmography($actorId);
 
-        return $this->buildArray($data['cast'], Movie::class);
+        return $this->buildArray($data['cast'], Movie::class, $validator);
     }
 
     /**
      * @return array<Actor>
      */
-    public function getCasting(int $movieId): array
+    public function getCasting(int $movieId, TmdbValidatorInterface $validator = null): array
     {
         $data = $this->tmdbApiService->getCasting($movieId);
 
-        return $this->buildArray($data['cast'], Actor::class);
+        return $this->buildArray($data['cast'], Actor::class, $validator);
     }
 
     /**

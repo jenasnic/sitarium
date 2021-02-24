@@ -19,7 +19,6 @@ class CastingActorValidator implements TmdbValidatorInterface
      */
     public function isValid($actor): bool
     {
-        // If no picture => ignore actor
         if (empty($actor->getProfilePath())) {
             return false;
         }

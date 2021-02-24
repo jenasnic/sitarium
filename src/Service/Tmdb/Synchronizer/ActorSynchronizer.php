@@ -26,14 +26,9 @@ class ActorSynchronizer extends AbstractSynchronizer
         $this->actorRepository = $actorRepository;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return bool
-     */
-    public function support(string $type): bool
+    protected function getType(): string
     {
-        return Actor::class === $type;
+        return Actor::class;
     }
 
     /**
@@ -53,12 +48,18 @@ class ActorSynchronizer extends AbstractSynchronizer
     {
         $tmdbData = $this->tmdbDataProvider->getActor($data->getTmdbId());
 
+        $isUpdated = false;
+
         if ($data->getPictureUrl() !== $tmdbData->getProfilePath()) {
             $data->setPictureUrl($tmdbData->getProfilePath());
-
-            return true;
+            $isUpdated = true;
         }
 
-        return false;
+        if ($data->getFullname() !== $tmdbData->getName()) {
+            $data->setFullname($tmdbData->getName());
+            $isUpdated = true;
+        }
+
+        return $isUpdated;
     }
 }

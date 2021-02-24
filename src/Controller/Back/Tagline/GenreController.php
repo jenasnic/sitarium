@@ -6,6 +6,7 @@ use App\Entity\Tagline\Genre;
 use App\Repository\Tagline\GenreRepository;
 use App\Service\Tagline\GenreSynchronizer;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,7 +38,7 @@ class GenreController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('info', $translator->trans('back.global.delete.success'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', $translator->trans('back.global.delete.error'));
         }
 
@@ -52,7 +53,7 @@ class GenreController extends AbstractController
         try {
             $synchronizer->synchronize();
             $this->addFlash('info', $translator->trans('back.tagline.genre.synchronize.success'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', $translator->trans('back.tagline.genre.synchronize.error'));
         }
 

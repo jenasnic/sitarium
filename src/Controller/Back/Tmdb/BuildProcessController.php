@@ -5,6 +5,7 @@ namespace App\Controller\Back\Tmdb;
 use App\Domain\Command\Tmdb\ExecuteProcessCommand;
 use App\Repository\Tmdb\BuildProcessRepository;
 use App\Service\Handler\Tmdb\ExecuteProcessHandler;
+use InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +28,7 @@ class BuildProcessController extends AbstractController
         $redirect = $request->request->get('redirect');
 
         if (null === $redirect) {
-            throw new \InvalidArgumentException(sprintf('Invalid redirect URL "%s"', $redirect));
+            throw new InvalidArgumentException(sprintf('Invalid redirect URL "%s"', $redirect));
         }
 
         $pendingProcess = $buildProcessRepository->findPendingProcess();

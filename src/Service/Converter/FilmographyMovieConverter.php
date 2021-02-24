@@ -13,7 +13,7 @@ class FilmographyMovieConverter
 
         $entity->setTmdbId($movie->getId());
         $entity->setTitle($movie->getTitle());
-        $entity->setPictureUrl($movie->getProfilePath());
+        $entity->setPictureUrl($movie->getPosterPath());
         $entity->setReleaseDate($movie->getReleaseDate());
         $entity->setVoteCount($movie->getVoteCount());
 

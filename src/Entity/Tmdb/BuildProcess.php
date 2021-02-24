@@ -2,9 +2,11 @@
 
 namespace App\Entity\Tmdb;
 
+use App\Enum\Tmdb\ProcessStatusEnum;
 use App\Enum\Tmdb\ProcessTypeEnum;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 
 /**
  * @ORM\Table(name="tmdb_build_process")
@@ -25,6 +27,11 @@ class BuildProcess
     private string $type;
 
     /**
+     * @ORM\Column(name="status", type="string", length=25)
+     */
+    private string $status;
+
+    /**
      * @ORM\Column(name="options", type="text", nullable=true)
      */
     private ?string $options;
@@ -42,18 +49,19 @@ class BuildProcess
     /**
      * @ORM\Column(name="count", type="integer")
      */
-    private $count;
+    private int $count;
 
     /**
      * @ORM\Column(name="total", type="integer")
      */
-    private $total;
+    private int $total;
 
-    public function __construct(string $type, int $total, ?string $options = null)
+    public function __construct(string $type, string $status, int $total, ?string $options = null)
     {
         $this->setType($type);
+        $this->setStatus($status);
         $this->setOptions($options);
-        $this->startedAt = new \DateTime();
+        $this->startedAt = new DateTime();
         $this->count = 0;
         $this->total = $total;
     }
@@ -71,10 +79,24 @@ class BuildProcess
     public function setType(string $type): void
     {
         if (!ProcessTypeEnum::exists($type)) {
-            throw new \InvalidArgumentException(sprintf('Invalid type "%s"', $type));
+            throw new InvalidArgumentException(sprintf('Invalid type "%s"', $type));
         }
 
         $this->type = $type;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->type;
+    }
+
+    public function setStatus(string $status): void
+    {
+        if (!ProcessStatusEnum::exists($status)) {
+            throw new InvalidArgumentException(sprintf('Invalid status "%s"', $status));
+        }
+
+        $this->status = $status;
     }
 
     public function getOptions(): ?string

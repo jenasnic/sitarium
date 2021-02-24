@@ -12,6 +12,7 @@ use App\Repository\UserRepository;
 use App\Service\Handler\User\AddUserHandler;
 use App\Service\Handler\User\DeleteUserHandler;
 use App\Service\Handler\User\UpdateUserHandler;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,7 +50,7 @@ class UserController extends AbstractController
                 $handler->handle(new AddUserCommand($user, $newPassword));
 
                 $this->addFlash('info', $translator->trans('back.global.save.success'));
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', $translator->trans('back.global.save.error'));
             }
 
@@ -77,7 +78,7 @@ class UserController extends AbstractController
                 $handler->handle(new UpdateUserCommand($user, $newPassword));
 
                 $this->addFlash('info', $translator->trans('back.global.save.success'));
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', $translator->trans('back.global.save.error'));
             }
 
@@ -95,7 +96,7 @@ class UserController extends AbstractController
         try {
             $handler->handle(new DeleteUserCommand($user));
             $this->addFlash('info', $translator->trans('back.global.delete.success'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', $translator->trans('back.global.delete.error'));
         }
 

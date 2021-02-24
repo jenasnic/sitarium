@@ -6,6 +6,7 @@ use App\Entity\Quiz\Quiz;
 use App\Entity\Quiz\Winner;
 use App\Enum\PagerEnum;
 use App\Repository\Quiz\WinnerRepository;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,7 +49,7 @@ class WinnerController extends AbstractController
         try {
             $winnerRepository->removeWinnersForQuizId($quiz->getId());
             $this->addFlash('info', $translator->trans('back.global.delete.success'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', $translator->trans('back.global.delete.error'));
         }
 

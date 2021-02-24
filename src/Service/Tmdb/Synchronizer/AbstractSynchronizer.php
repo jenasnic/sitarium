@@ -8,6 +8,7 @@ use App\Event\Synchronization\SynchronizationProgressEvent;
 use App\Event\Synchronization\SynchronizationStartEvent;
 use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -31,18 +32,19 @@ abstract class AbstractSynchronizer implements SynchronizerInterface
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function synchronize(): int
+    public function synchronize(): void
     {
+        $count = 0;
+        $processed = 0;
+
         try {
             $datas = $this->getAllData();
 
             $this->eventDispatcher->dispatch(
-                new SynchronizationStartEvent(count($datas), $this->getLocalEntityClass()),
+                new SynchronizationStartEvent(count($datas), $this->getType()),
                 SynchronizationStartEvent::SYNCHRONIZE_DATA_START
             );
 
-            $count = 0;
-            $processed = 0;
             foreach ($datas as $data) {
                 if ($this->synchronizeData($data)) {
                     $this->entityManager->persist($data);
@@ -57,15 +59,17 @@ abstract class AbstractSynchronizer implements SynchronizerInterface
 
             $this->entityManager->flush();
             $this->eventDispatcher->dispatch(new SynchronizationEndEvent(), SynchronizationEndEvent::SYNCHRONIZE_DATA_END);
-
-            return $count;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->eventDispatcher->dispatch(new SynchronizationErrorEvent($e), SynchronizationErrorEvent::SYNCHRONIZE_DATA_ERROR);
-            throw $e;
         }
     }
 
-    abstract public function support(string $type): bool;
+    public function support(string $type): bool
+    {
+        return $type === $this->getType();
+    }
+
+    abstract protected function getType(): string;
 
     /**
      * @psalm-return array<T>

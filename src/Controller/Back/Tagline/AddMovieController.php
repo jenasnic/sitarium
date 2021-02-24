@@ -8,6 +8,7 @@ use App\Service\Handler\Tagline\AddMoviesHandler;
 use App\Service\Tmdb\DisplayableResultAdapter;
 use App\Service\Tmdb\TmdbDataProvider;
 use App\Validator\Tmdb\TaglineMovieValidator;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,7 +75,7 @@ class AddMovieController extends AbstractController
             $tmdbIds = explode(',', $request->request->get('movie-selection-ids'));
             $handler->handle(new AddMoviesCommand($tmdbIds));
             $this->addFlash('info', $translator->trans('back.global.add.success'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', $translator->trans('back.global.add.error'));
         }
 

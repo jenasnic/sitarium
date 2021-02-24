@@ -6,6 +6,7 @@ use App\Entity\Quiz\Quiz;
 use App\Entity\Quiz\Response as QuizResponse;
 use App\Repository\Quiz\ResponseRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,7 +43,7 @@ class LocateController extends AbstractController
             $entityManager->flush();
 
             return new JsonResponse(1);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new JsonResponse(0);
         }
     }
@@ -77,7 +78,7 @@ class LocateController extends AbstractController
             ];
 
             return new JsonResponse(['success' => true, 'info' => $location]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('back.quiz.location.error')]);
         }
     }

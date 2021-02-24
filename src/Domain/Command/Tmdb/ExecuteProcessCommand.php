@@ -3,6 +3,7 @@
 namespace App\Domain\Command\Tmdb;
 
 use App\Enum\Tmdb\ProcessTypeEnum;
+use InvalidArgumentException;
 
 class ExecuteProcessCommand
 {
@@ -15,7 +16,7 @@ class ExecuteProcessCommand
     public function __construct(string $type, ?array $parameters, ?array $options)
     {
         if (!ProcessTypeEnum::exists($type)) {
-            throw new \InvalidArgumentException(sprintf('Invalid type "%s"', $type));
+            throw new InvalidArgumentException(sprintf('Invalid type "%s"', $type));
         }
 
         $this->type = $type;

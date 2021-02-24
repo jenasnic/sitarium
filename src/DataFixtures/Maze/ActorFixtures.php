@@ -4,6 +4,7 @@ namespace App\DataFixtures\Maze;
 
 use App\Entity\Maze\Actor;
 use App\Enum\Maze\FilmographyStatusEnum;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -151,7 +152,7 @@ class ActorFixtures extends Fixture
         $data = new Actor();
         $data->setTmdbId($tmdbId);
         $data->setFullname($fullname);
-        $data->setBirthdate(\DateTime::createFromFormat('Y-m-d H:i:s', $birthdate));
+        $data->setBirthdate(DateTime::createFromFormat('Y-m-d H:i:s', $birthdate));
         $data->setPictureUrl($pictureUrl);
         $data->setStatus(FilmographyStatusEnum::UNINITIALIZED);
 

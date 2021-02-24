@@ -6,6 +6,7 @@ use App\Repository\Maze\ActorRepository;
 use App\Repository\Maze\FilmographyMovieRepository;
 use App\Service\Maze\ActorPathResponseValidator;
 use App\Tool\TmdbUtil;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,7 +40,7 @@ class ActorResponseController extends AbstractController
             }
 
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.response.incorrect')]);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.response.process_error')]);
         }
     }
@@ -72,7 +73,7 @@ class ActorResponseController extends AbstractController
             } else {
                 return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.actor.not_found')]);
             }
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.actor.filmography_error')]);
         }
     }
@@ -106,7 +107,7 @@ class ActorResponseController extends AbstractController
                 'tmdbLink' => sprintf('https://www.themoviedb.org/movie/%d', $commonMovie->getTmdbId()),
                 'pictureUrl' => TmdbUtil::getBasePictureUrl().$commonMovie->getPictureUrl(),
             ]);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.actor.cheat.error')]);
         }
     }

@@ -112,6 +112,8 @@ class BulmaView implements ViewInterface
         if ($this->startPage > 2) {
             return $this->template->separator();
         }
+
+        return '';
     }
 
     private function middlePages(): string
@@ -130,6 +132,8 @@ class BulmaView implements ViewInterface
         if ($this->endPage < $this->nbPages - 1) {
             return $this->template->separator();
         }
+
+        return '';
     }
 
     private function last(): string
@@ -137,6 +141,8 @@ class BulmaView implements ViewInterface
         if ($this->pagerfanta->getNbPages() > 1) {
             return $this->page($this->pagerfanta->getNbPages());
         }
+
+        return '';
     }
 
     /**

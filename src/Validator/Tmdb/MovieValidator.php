@@ -3,6 +3,7 @@
 namespace App\Validator\Tmdb;
 
 use App\Model\Tmdb\Movie;
+use DateTime;
 
 /**
  * @implements TmdbValidatorInterface<Movie>
@@ -18,13 +19,16 @@ class MovieValidator implements TmdbValidatorInterface
      */
     public function isValid($movie): bool
     {
-        // If no release date => ignore movie
+        if (empty($movie->getPosterPath())) {
+            return false;
+        }
+
         if (!$movie->getReleaseDate()) {
             return false;
         }
 
         // If movie not yet rated => ignore movie
-        if (new \DateTime() < $movie->getReleaseDate()) {
+        if (new DateTime() < $movie->getReleaseDate()) {
             return false;
         }
 

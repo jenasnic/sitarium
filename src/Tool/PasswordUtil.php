@@ -2,6 +2,7 @@
 
 namespace App\Tool;
 
+use InvalidArgumentException;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
 class PasswordUtil
@@ -48,7 +49,7 @@ class PasswordUtil
     ): string {
         $minSize = ($withLowerCase ? 1 : 0) + ($withUpperCase ? 1 : 0) + ($withNumeric ? 1 : 0) + ($withSpecial ? 1 : 0);
         if (0 === $minSize || $size < $minSize) {
-            throw new \InvalidArgumentException('Given parameters doesn\'t allow to generate password.');
+            throw new InvalidArgumentException('Given parameters doesn\'t allow to generate password.');
         }
 
         $result = '';

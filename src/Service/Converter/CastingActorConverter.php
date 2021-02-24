@@ -13,7 +13,6 @@ class CastingActorConverter
 
         $entity->setTmdbId($actor->getId());
         $entity->setFullname($actor->getName());
-        $entity->setCharacter($actor->getCharacter());
         $entity->setPictureUrl($actor->getProfilePath());
 
         return $entity;

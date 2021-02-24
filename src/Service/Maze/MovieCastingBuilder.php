@@ -14,7 +14,9 @@ use App\Repository\Maze\CastingActorRepository;
 use App\Repository\Maze\MovieRepository;
 use App\Service\Converter\CastingActorConverter;
 use App\Service\Tmdb\TmdbDataProvider;
+use App\Validator\Tmdb\CastingActorValidator;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -71,9 +73,8 @@ class MovieCastingBuilder
             $this->entityManager->flush();
 
             $this->eventDispatcher->dispatch(new CastingEndEvent(), CastingEndEvent::BUILD_CASTING_END);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->eventDispatcher->dispatch(new CastingErrorEvent($e), CastingErrorEvent::BUILD_CASTING_ERROR);
-            throw $e;
         }
     }
 
@@ -95,17 +96,15 @@ class MovieCastingBuilder
 
         /** @var Movie $movie */
         foreach ($movieList as $movie) {
-            $actorList = $this->tmdbDataProvider->getCasting($movie->getTmdbId());
+            $actorList = $this->tmdbDataProvider->getCasting($movie->getTmdbId(), new CastingActorValidator());
 
             /** @var Actor $actor */
             foreach ($actorList as $actor) {
-                $castingActor = $this->castingActorConverter->convert($actor);
-
-                if (!isset($actorFullList[$castingActor->getTmdbId()])) {
-                    $actorFullList[$castingActor->getTmdbId()] = $actor;
+                if (!isset($actorFullList[$actor->getId()])) {
+                    $actorFullList[$actor->getId()] = $this->castingActorConverter->convert($actor);
                 }
 
-                $castingActor = $actorFullList[$castingActor->getTmdbId()];
+                $castingActor = $actorFullList[$actor->getId()];
                 $castingActor->addMovie($movie);
             }
 

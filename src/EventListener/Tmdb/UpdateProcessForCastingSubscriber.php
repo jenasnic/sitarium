@@ -9,9 +9,11 @@ use App\Event\Maze\CastingErrorEvent;
 use App\Event\Maze\CastingProgressEvent;
 use App\Event\Maze\CastingStartEvent;
 use App\Repository\Tmdb\BuildProcessRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Contracts\EventDispatcher\Event;
+use App\Enum\Tmdb\ProcessStatusEnum;
 
 class UpdateProcessForCastingSubscriber implements EventSubscriberInterface
 {
@@ -33,13 +35,13 @@ class UpdateProcessForCastingSubscriber implements EventSubscriberInterface
             CastingStartEvent::BUILD_CASTING_START => 'onBuildCastingStart',
             CastingProgressEvent::BUILD_CASTING_PROGRESS => 'onBuildCastingProgress',
             CastingEndEvent::BUILD_CASTING_END => 'onBuildCastingEnd',
-            CastingErrorEvent::BUILD_CASTING_ERROR => 'onBuildCastingEnd',
+            CastingErrorEvent::BUILD_CASTING_ERROR => 'onBuildCastingError',
         ];
     }
 
     public function onBuildCastingStart(CastingStartEvent $event): void
     {
-        $buildProcess = new BuildProcess(ProcessTypeEnum::CASTING, $event->getTotal());
+        $buildProcess = new BuildProcess(ProcessTypeEnum::CASTING, ProcessStatusEnum::PENDING, $event->getTotal());
 
         $this->entityManager->persist($buildProcess);
         $this->entityManager->flush();
@@ -56,7 +58,17 @@ class UpdateProcessForCastingSubscriber implements EventSubscriberInterface
     public function onBuildCastingEnd(Event $event): void
     {
         $buildProcess = $this->buildProcessRepository->findPendingProcessByType(ProcessTypeEnum::CASTING);
-        $buildProcess->setEndedAt(new \DateTime());
+        $buildProcess->setStatus(ProcessStatusEnum::SUCCESS);
+        $buildProcess->setEndedAt(new DateTime());
+
+        $this->entityManager->flush();
+    }
+
+    public function onBuildCastingError(Event $event): void
+    {
+        $buildProcess = $this->buildProcessRepository->findPendingProcessByType(ProcessTypeEnum::CASTING);
+        $buildProcess->setStatus(ProcessStatusEnum::ERROR);
+        $buildProcess->setEndedAt(new DateTime());
 
         $this->entityManager->flush();
     }

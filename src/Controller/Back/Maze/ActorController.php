@@ -13,6 +13,7 @@ use App\Service\Tmdb\DisplayableResultAdapter;
 use App\Service\Tmdb\TmdbDataProvider;
 use App\Validator\Tmdb\ActorValidator;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,7 +71,7 @@ class ActorController extends AbstractController
         try {
             $handler->handle(new AddActorCommand($tmdbId));
             $this->addFlash('info', $translator->trans('back.global.add.success'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', $translator->trans('back.global.add.error'));
         }
 
@@ -111,7 +112,7 @@ class ActorController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('info', $translator->trans('back.global.delete.success'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', $translator->trans('back.global.delete.error'));
         }
 

@@ -4,7 +4,10 @@ namespace App\Command\Tmdb;
 
 use App\Enum\Tmdb\ProcessTypeEnum;
 use App\Repository\Tmdb\BuildProcessRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use InvalidArgumentException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -23,7 +26,7 @@ abstract class AbstractBuildProcessCommand extends Command
         string $processType
     ) {
         if (!ProcessTypeEnum::exists($processType)) {
-            throw new \InvalidArgumentException(sprintf('Invalid type "%s"', $processType));
+            throw new InvalidArgumentException(sprintf('Invalid type "%s"', $processType));
         }
         $this->buildProcessRepository = $buildProcessRepository;
         $this->entityManager = $entityManager;
@@ -59,7 +62,7 @@ abstract class AbstractBuildProcessCommand extends Command
         $output->writeln(sprintf('Build process %s', $this->processType));
         try {
             $this->executeProcess($input, $output);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $output->writeln($e->getTraceAsString());
             $this->stopPendingProcess();
 
@@ -76,7 +79,7 @@ abstract class AbstractBuildProcessCommand extends Command
         $pendingProcess = $this->buildProcessRepository->findPendingProcessByType($this->processType);
 
         if (null !== $pendingProcess) {
-            $pendingProcess->setEndedAt(new \DateTime());
+            $pendingProcess->setEndedAt(new DateTime());
             $this->entityManager->flush();
         }
     }

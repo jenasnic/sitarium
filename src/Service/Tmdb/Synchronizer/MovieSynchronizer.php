@@ -26,14 +26,9 @@ class MovieSynchronizer extends AbstractSynchronizer
         $this->movieRepository = $movieRepository;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return bool
-     */
-    public function support(string $type): bool
+    protected function getType(): string
     {
-        return Movie::class === $type;
+        return Movie::class;
     }
 
     /**
@@ -53,12 +48,18 @@ class MovieSynchronizer extends AbstractSynchronizer
     {
         $tmdbData = $this->tmdbDataProvider->getMovie($data->getTmdbId());
 
-        if ($data->getPictureUrl() !== $tmdbData->getProfilePath()) {
-            $data->setPictureUrl($tmdbData->getProfilePath());
+        $isUpdated = false;
 
-            return true;
+        if ($data->getPictureUrl() !== $tmdbData->getPosterPath()) {
+            $data->setPictureUrl($tmdbData->getPosterPath());
+            $isUpdated = true;
         }
 
-        return false;
+        if ($data->getTitle() !== $tmdbData->getTitle()) {
+            $data->setTitle($tmdbData->getTitle());
+            $isUpdated = true;
+        }
+
+        return $isUpdated;
     }
 }

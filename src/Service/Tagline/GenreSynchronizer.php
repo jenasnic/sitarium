@@ -2,9 +2,10 @@
 
 namespace App\Service\Tagline;
 
-use App\Entity\Tagline\Genre;
+use App\Model\Tmdb\Genre;
 use App\Repository\Tagline\GenreRepository;
-use App\Service\Tmdb\TmdbApiService;
+use App\Service\Converter\GenreConverter;
+use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -14,30 +15,33 @@ class GenreSynchronizer
 {
     protected GenreRepository $genreRepository;
 
-    // @todo : use TmdbDataProvider
-    protected TmdbApiService $tmdbService;
+    protected TmdbDataProvider $tmdbDataProvider;
+
+    protected GenreConverter $genreConverter;
 
     protected EntityManagerInterface $entityManager;
 
     public function __construct(
         GenreRepository $genreRepository,
-        TmdbApiService $tmdbService,
+        TmdbDataProvider $tmdbDataProvider,
+        GenreConverter $genreConverter,
         EntityManagerInterface $entityManager
     ) {
         $this->genreRepository = $genreRepository;
-        $this->tmdbService = $tmdbService;
+        $this->tmdbDataProvider = $tmdbDataProvider;
+        $this->genreConverter = $genreConverter;
         $this->entityManager = $entityManager;
     }
 
     public function synchronize(): void
     {
-        $tmdbGenres = $this->tmdbService->getGenres(Genre::class);
+        $tmdbGenres = $this->tmdbDataProvider->getGenres();
 
         /* @var Genre $tmdbGenre */
         foreach ($tmdbGenres as $tmdbGenre) {
-            $localGenre = $this->genreRepository->find($tmdbGenre->getTmdbId());
-            if (null === $localGenre) {
-                $this->entityManager->persist($tmdbGenre);
+            if (null === $this->genreRepository->find($tmdbGenre->getId())) {
+                $genre = $this->genreConverter->convert($tmdbGenre);
+                $this->entityManager->persist($genre);
             }
         }
 

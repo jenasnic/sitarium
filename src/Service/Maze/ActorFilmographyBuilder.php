@@ -15,7 +15,9 @@ use App\Repository\Maze\FilmographyMovieRepository;
 use App\Service\Converter\FilmographyMovieConverter;
 use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use App\Validator\Tmdb\FilmographyMovieValidator;
 
 /**
  * This class allows to get all movies relative to existing actors and to build filmography keeping only movies linked together
@@ -71,9 +73,8 @@ class ActorFilmographyBuilder
             $this->entityManager->flush();
 
             $this->eventDispatcher->dispatch(new FilmographyEndEvent(), FilmographyEndEvent::BUILD_FILMOGRAPHY_END);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->eventDispatcher->dispatch(new FilmographyErrorEvent($e), FilmographyErrorEvent::BUILD_FILMOGRAPHY_ERROR);
-            throw $e;
         }
     }
 
@@ -95,22 +96,19 @@ class ActorFilmographyBuilder
 
         /** @var Actor $actor */
         foreach ($actorList as $actor) {
-            $movieList = $this->tmdbDataProvider->getFilmography($actor->getTmdbId());
+            $movieList = $this->tmdbDataProvider->getFilmography($actor->getTmdbId(), new FilmographyMovieValidator());
 
             /** @var Movie $movie */
             foreach ($movieList as $movie) {
-                $filmographyMovie = $this->filmographyMovieConverter->convert($movie);
-
-                // Add movie to full list if not yet added
-                if (!isset($movieFullList[$filmographyMovie->getTmdbId()])) {
-                    $movieFullList[$filmographyMovie->getTmdbId()] = $filmographyMovie;
+                if (!isset($movieFullList[$movie->getId()])) {
+                    $movieFullList[$movie->getId()] = $this->filmographyMovieConverter->convert($movie);
                 }
 
-                $filmographyMovie = $movieFullList[$filmographyMovie->getTmdbId()];
+                $filmographyMovie = $movieFullList[$movie->getId()];
                 // Add current actor to movie
                 // WARNING : Check if actor not already exist (a same actor can appear several times in a same movie...)
                 if (0 === count($filmographyMovie->getActors()) || !$filmographyMovie->getActors()->contains($actor)) {
-                    $movie->addActor($actor);
+                    $filmographyMovie->addActor($actor);
                 }
             }
 

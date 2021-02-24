@@ -7,6 +7,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 
 /**
  * @ORM\Table(name="maze_movie")
@@ -103,7 +104,7 @@ class Movie
     public function setStatus(string $status): void
     {
         if (!CastingStatusEnum::exists($status)) {
-            throw new \InvalidArgumentException(sprintf('Invalid status "%s"', $status));
+            throw new InvalidArgumentException(sprintf('Invalid status "%s"', $status));
         }
 
         $this->status = $status;

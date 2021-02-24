@@ -9,6 +9,7 @@ use App\Service\Maze\MinPathFinder;
 use App\Service\Maze\RandomPathFinder;
 use App\Service\Tmdb\DisplayableResultAdapter;
 use App\Tool\TmdbUtil;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -68,7 +69,7 @@ class ActorPlayController extends AbstractController
             ]);
 
             return $this->renderPlayView($actorPath, $minVoteCount, $level, $replayUrl);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $this->addFlash('error', $this->translator->trans('front.maze.initialization_error'));
 
             return $this->redirectToRoute('fo_maze_actor');
@@ -93,7 +94,7 @@ class ActorPlayController extends AbstractController
             $replayUrl = $this->urlGenerator->generate('fo_maze_actor_select_min_path');
 
             return $this->renderPlayView($actorPath, $minVoteCount, $level, $replayUrl);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $this->addFlash('error', $this->translator->trans('front.maze.initialization_error'));
 
             return $this->redirectToRoute('actor_maze_fo');
@@ -117,7 +118,7 @@ class ActorPlayController extends AbstractController
             $replayUrl = $this->urlGenerator->generate('fo_maze_actor_select_max_path');
 
             return $this->renderPlayView($actorPath, $minVoteCount, $level, $replayUrl);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $this->addFlash('error', $this->translator->trans('front.maze.initialization_error'));
 
             return $this->redirectToRoute('actor_maze_fo');

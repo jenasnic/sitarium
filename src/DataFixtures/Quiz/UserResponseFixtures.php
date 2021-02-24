@@ -6,6 +6,7 @@ use App\DataFixtures\UserFixtures;
 use App\Entity\Quiz\Response;
 use App\Entity\Quiz\UserResponse;
 use App\Entity\User;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -59,28 +60,28 @@ class UserResponseFixtures extends Fixture implements DependentFixtureInterface
         $responseAnimation1 = $this->getReference(ResponseFixtures::RESPONSE_ANIMATION_1);
         $responseAnimation2 = $this->getReference(ResponseFixtures::RESPONSE_ANIMATION_2);
 
-        $data[] = $this->buildData($userRay, $responseMovie1, \DateTime::createFromFormat('Y-m-d', '2018-05-09'));
-        $data[] = $this->buildData($userRay, $responseMovie2, \DateTime::createFromFormat('Y-m-d', '2018-05-09'));
-        $data[] = $this->buildData($userRay, $responseMovie3, \DateTime::createFromFormat('Y-m-d', '2018-05-09'));
-        $data[] = $this->buildData($userRay, $responseMovie4, \DateTime::createFromFormat('Y-m-d', '2018-05-10'));
-        $data[] = $this->buildData($userRay, $responseMovie5, \DateTime::createFromFormat('Y-m-d', '2018-05-10'));
-        $data[] = $this->buildData($userRay, $responseSerie1, \DateTime::createFromFormat('Y-m-d', '2018-05-11'));
-        $data[] = $this->buildData($userRay, $responseSerie2, \DateTime::createFromFormat('Y-m-d', '2018-05-11'));
-        $data[] = $this->buildData($userRay, $responseSerie3, \DateTime::createFromFormat('Y-m-d', '2018-05-12'));
-        $data[] = $this->buildData($userRay, $responseAnimation1, \DateTime::createFromFormat('Y-m-d', '2018-05-12'));
-        $data[] = $this->buildData($userRay, $responseAnimation2, \DateTime::createFromFormat('Y-m-d', '2018-05-12'));
-        $data[] = $this->buildData($userTed, $responseMovie1, \DateTime::createFromFormat('Y-m-d', '2018-05-09'));
-        $data[] = $this->buildData($userTed, $responseMovie2, \DateTime::createFromFormat('Y-m-d', '2018-05-10'));
-        $data[] = $this->buildData($userTed, $responseMovie3, \DateTime::createFromFormat('Y-m-d', '2018-05-10'));
-        $data[] = $this->buildData($userTed, $responseMovie4, \DateTime::createFromFormat('Y-m-d', '2018-05-10'));
-        $data[] = $this->buildData($userTed, $responseMovie5, \DateTime::createFromFormat('Y-m-d', '2018-05-11'));
-        $data[] = $this->buildData($userTed, $responseSerie1, \DateTime::createFromFormat('Y-m-d', '2018-05-13'));
-        $data[] = $this->buildData($userTed, $responseSerie2, \DateTime::createFromFormat('Y-m-d', '2018-05-13'));
-        $data[] = $this->buildData($userTed, $responseAnimation1, \DateTime::createFromFormat('Y-m-d', '2018-05-12'));
-        $data[] = $this->buildData($userJeannot, $responseMovie1, \DateTime::createFromFormat('Y-m-d', '2018-05-11'));
-        $data[] = $this->buildData($userJeannot, $responseMovie2, \DateTime::createFromFormat('Y-m-d', '2018-05-11'));
-        $data[] = $this->buildData($userJeannot, $responseMovie3, \DateTime::createFromFormat('Y-m-d', '2018-05-12'));
-        $data[] = $this->buildData($userJeannot, $responseAnimation1, \DateTime::createFromFormat('Y-m-d', '2018-05-12'));
+        $data[] = $this->buildData($userRay, $responseMovie1, DateTime::createFromFormat('Y-m-d', '2018-05-09'));
+        $data[] = $this->buildData($userRay, $responseMovie2, DateTime::createFromFormat('Y-m-d', '2018-05-09'));
+        $data[] = $this->buildData($userRay, $responseMovie3, DateTime::createFromFormat('Y-m-d', '2018-05-09'));
+        $data[] = $this->buildData($userRay, $responseMovie4, DateTime::createFromFormat('Y-m-d', '2018-05-10'));
+        $data[] = $this->buildData($userRay, $responseMovie5, DateTime::createFromFormat('Y-m-d', '2018-05-10'));
+        $data[] = $this->buildData($userRay, $responseSerie1, DateTime::createFromFormat('Y-m-d', '2018-05-11'));
+        $data[] = $this->buildData($userRay, $responseSerie2, DateTime::createFromFormat('Y-m-d', '2018-05-11'));
+        $data[] = $this->buildData($userRay, $responseSerie3, DateTime::createFromFormat('Y-m-d', '2018-05-12'));
+        $data[] = $this->buildData($userRay, $responseAnimation1, DateTime::createFromFormat('Y-m-d', '2018-05-12'));
+        $data[] = $this->buildData($userRay, $responseAnimation2, DateTime::createFromFormat('Y-m-d', '2018-05-12'));
+        $data[] = $this->buildData($userTed, $responseMovie1, DateTime::createFromFormat('Y-m-d', '2018-05-09'));
+        $data[] = $this->buildData($userTed, $responseMovie2, DateTime::createFromFormat('Y-m-d', '2018-05-10'));
+        $data[] = $this->buildData($userTed, $responseMovie3, DateTime::createFromFormat('Y-m-d', '2018-05-10'));
+        $data[] = $this->buildData($userTed, $responseMovie4, DateTime::createFromFormat('Y-m-d', '2018-05-10'));
+        $data[] = $this->buildData($userTed, $responseMovie5, DateTime::createFromFormat('Y-m-d', '2018-05-11'));
+        $data[] = $this->buildData($userTed, $responseSerie1, DateTime::createFromFormat('Y-m-d', '2018-05-13'));
+        $data[] = $this->buildData($userTed, $responseSerie2, DateTime::createFromFormat('Y-m-d', '2018-05-13'));
+        $data[] = $this->buildData($userTed, $responseAnimation1, DateTime::createFromFormat('Y-m-d', '2018-05-12'));
+        $data[] = $this->buildData($userJeannot, $responseMovie1, DateTime::createFromFormat('Y-m-d', '2018-05-11'));
+        $data[] = $this->buildData($userJeannot, $responseMovie2, DateTime::createFromFormat('Y-m-d', '2018-05-11'));
+        $data[] = $this->buildData($userJeannot, $responseMovie3, DateTime::createFromFormat('Y-m-d', '2018-05-12'));
+        $data[] = $this->buildData($userJeannot, $responseAnimation1, DateTime::createFromFormat('Y-m-d', '2018-05-12'));
 
         return $data;
     }
@@ -88,14 +89,14 @@ class UserResponseFixtures extends Fixture implements DependentFixtureInterface
     /**
      * @param User $user
      * @param Response $response
-     * @param \DateTime $date
+     * @param DateTime $date
      *
      * @return UserResponse
      */
     protected function buildData(
         User $user,
         Response $response,
-        \DateTime $date
+        DateTime $date
     ): UserResponse {
         $data = new UserResponse();
         $data->setUser($user);

@@ -5,6 +5,7 @@ namespace App\Controller\Back\Quiz;
 use App\Domain\Command\Quiz\ReorderQuizCommand;
 use App\Repository\Quiz\QuizRepository;
 use App\Service\Handler\Quiz\ReorderQuizHandler;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,7 +40,7 @@ class QuizListController extends AbstractController
             $handler->handle(new ReorderQuizCommand($reorderedIds));
 
             return new JsonResponse(['success' => true, 'message' => $translator->trans('back.global.order.success')]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('back.global.order.error')]);
         }
     }

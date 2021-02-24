@@ -15,8 +15,8 @@ class TypeEnum
         ];
     }
 
-    public static function exist(string $value): bool
+    public static function exist(string $type): bool
     {
-        return in_array($value, self::getAll());
+        return in_array($type, self::getAll());
     }
 }

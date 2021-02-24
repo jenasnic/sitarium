@@ -5,6 +5,7 @@ namespace App\Controller\Front\Quiz;
 use App\Domain\Command\Quiz\AddUserResponseCommand;
 use App\Repository\Quiz\ResponseRepository;
 use App\Service\Handler\Quiz\AddUserResponseHandler;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,7 +51,7 @@ class ResponseController extends AbstractController
             }
 
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.response.incorrect')]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.response.process_error')]);
         }
     }
@@ -78,7 +79,7 @@ class ResponseController extends AbstractController
             } else {
                 return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.trick.no_trick_on_location')]);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.trick.process_error')]);
         }
     }

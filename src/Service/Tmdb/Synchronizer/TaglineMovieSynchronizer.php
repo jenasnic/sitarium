@@ -23,9 +23,9 @@ class TaglineMovieSynchronizer extends AbstractSynchronizer
         $this->movieRepository = $movieRepository;
     }
 
-    public function support(string $type): bool
+    protected function getType(): string
     {
-        return Movie::class === $type;
+        return Movie::class;
     }
 
     /**
@@ -45,12 +45,18 @@ class TaglineMovieSynchronizer extends AbstractSynchronizer
     {
         $tmdbData = $this->tmdbDataProvider->getMovie($data->getTmdbId());
 
-        if ($data->getPictureUrl() !== $tmdbData->getProfilePath()) {
-            $data->setPictureUrl($tmdbData->getProfilePath());
+        $isUpdated = false;
 
-            return true;
+        if ($data->getPictureUrl() !== $tmdbData->getPosterPath()) {
+            $data->setPictureUrl($tmdbData->getPosterPath());
+            $isUpdated = true;
         }
 
-        return false;
+        if ($data->getTagline() !== $tmdbData->getTagline()) {
+            $data->setTagline($tmdbData->getTagline());
+            $isUpdated = true;
+        }
+
+        return $isUpdated;
     }
 }

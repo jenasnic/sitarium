@@ -3,12 +3,14 @@
 namespace App\EventListener\Tmdb;
 
 use App\Entity\Tmdb\BuildProcess;
+use App\Enum\Tmdb\ProcessStatusEnum;
 use App\Enum\Tmdb\ProcessTypeEnum;
 use App\Event\Synchronization\SynchronizationEndEvent;
 use App\Event\Synchronization\SynchronizationErrorEvent;
 use App\Event\Synchronization\SynchronizationProgressEvent;
 use App\Event\Synchronization\SynchronizationStartEvent;
 use App\Repository\Tmdb\BuildProcessRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Contracts\EventDispatcher\Event;
@@ -33,7 +35,7 @@ class UpdateProcessForSynchronizationSubscriber implements EventSubscriberInterf
             SynchronizationStartEvent::SYNCHRONIZE_DATA_START => 'onSynchronizationStart',
             SynchronizationProgressEvent::SYNCHRONIZE_DATA_PROGRESS => 'onSynchronizationProgress',
             SynchronizationEndEvent::SYNCHRONIZE_DATA_END => 'onSynchronizationEnd',
-            SynchronizationErrorEvent::SYNCHRONIZE_DATA_ERROR => 'onSynchronizationEnd',
+            SynchronizationErrorEvent::SYNCHRONIZE_DATA_ERROR => 'onSynchronizationError',
         ];
     }
 
@@ -41,6 +43,7 @@ class UpdateProcessForSynchronizationSubscriber implements EventSubscriberInterf
     {
         $buildProcess = new BuildProcess(
             ProcessTypeEnum::SYNCHRONIZATION,
+            ProcessStatusEnum::PENDING,
             $event->getTotal(),
             $event->getEntityClass()
         );
@@ -60,7 +63,17 @@ class UpdateProcessForSynchronizationSubscriber implements EventSubscriberInterf
     public function onSynchronizationEnd(Event $event): void
     {
         $buildProcess = $this->buildProcessRepository->findPendingProcessByType(ProcessTypeEnum::SYNCHRONIZATION);
-        $buildProcess->setEndedAt(new \DateTime());
+        $buildProcess->setStatus(ProcessStatusEnum::SUCCESS);
+        $buildProcess->setEndedAt(new DateTime());
+
+        $this->entityManager->flush();
+    }
+
+    public function onSynchronizationError(Event $event): void
+    {
+        $buildProcess = $this->buildProcessRepository->findPendingProcessByType(ProcessTypeEnum::SYNCHRONIZATION);
+        $buildProcess->setStatus(ProcessStatusEnum::ERROR);
+        $buildProcess->setEndedAt(new DateTime());
 
         $this->entityManager->flush();
     }

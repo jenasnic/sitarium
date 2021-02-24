@@ -5,6 +5,7 @@ namespace App\Service\Handler\Quiz;
 use App\Domain\Command\Quiz\AddUserResponseCommand;
 use App\Entity\Quiz\UserResponse;
 use App\Repository\Quiz\UserResponseRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -33,7 +34,7 @@ class AddUserResponseHandler
             $userResponse = new UserResponse();
             $userResponse->setUser($command->getUser());
             $userResponse->setResponse($command->getResponse());
-            $userResponse->setDate(new \DateTime());
+            $userResponse->setDate(new DateTime());
 
             $this->entityManager->persist($userResponse);
             $this->entityManager->flush();

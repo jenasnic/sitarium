@@ -2,10 +2,10 @@
 
 namespace App\Service\Converter;
 
-use App\Entity\Maze\Movie;
+use App\Entity\Tagline\Movie;
 use App\Model\Tmdb\Movie as TmdbMovie;
 
-class MovieConverter
+class TaglineMovieConverter
 {
     public function convert(TmdbMovie $movie): Movie
     {
@@ -13,8 +13,9 @@ class MovieConverter
 
         $entity->setTmdbId($movie->getId());
         $entity->setTitle($movie->getTitle());
-        $entity->setPictureUrl($movie->getPosterPath());
         $entity->setReleaseDate($movie->getReleaseDate());
+        $entity->setPictureUrl($movie->getPosterPath());
+        $entity->setTagline($movie->getTagline());
 
         return $entity;
     }

@@ -10,7 +10,7 @@ class DisplayableItem
 
     public string $pictureUrl;
 
-    public function __construct($tmdbId, $displayName, $pictureUrl)
+    public function __construct(int $tmdbId, string $displayName, string $pictureUrl)
     {
         $this->tmdbId = $tmdbId;
         $this->displayName = $displayName;

@@ -19,8 +19,8 @@ class ProcessTypeEnum
         ];
     }
 
-    public static function exists(string $status): bool
+    public static function exists(string $type): bool
     {
-        return in_array($status, self::getAll());
+        return in_array($type, self::getAll());
     }
 }

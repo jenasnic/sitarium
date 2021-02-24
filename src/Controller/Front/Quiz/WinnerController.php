@@ -6,6 +6,7 @@ use App\Domain\Command\Quiz\RegisterWinnerCommand;
 use App\Entity\Quiz\Quiz;
 use App\Service\Handler\Quiz\RegisterWinnerHandler;
 use App\Service\Quiz\ResolveQuizValidator;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,7 +44,7 @@ class WinnerController extends AbstractController
             } else {
                 return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.winner.quiz_not_resolved')]);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.winner.quiz_resolve_error')]);
         }
     }

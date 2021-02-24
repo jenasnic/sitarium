@@ -19,14 +19,12 @@ class TmdbDataSynchronizer
         $this->synchronizers = $synchronizers;
     }
 
-    public function synchronize(string $type): ?int
+    public function synchronize(string $type): void
     {
         foreach ($this->synchronizers as $synchronizer) {
             if ($synchronizer->support($type)) {
-                return $synchronizer->synchronize();
+                $synchronizer->synchronize();
             }
         }
-
-        return null;
     }
 }

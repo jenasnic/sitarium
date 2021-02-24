@@ -7,6 +7,7 @@ use App\Entity\Quiz\Quiz;
 use App\Repository\Quiz\QuizRepository;
 use App\Repository\Quiz\UserResponseRepository;
 use App\Service\Handler\Quiz\ClearUserResponseHandler;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,7 +50,7 @@ class QuizController extends AbstractController
     {
         try {
             $handler->handle(new ClearUserResponseCommand($this->getUser(), $quiz));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', $translator->trans('front.quiz.response.reset_error'));
         }
 

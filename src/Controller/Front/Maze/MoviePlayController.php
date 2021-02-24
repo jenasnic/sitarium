@@ -8,6 +8,7 @@ use App\Service\Maze\MovieGraphBuilder;
 use App\Service\Maze\MoviePathHelpFactory;
 use App\Service\Maze\RandomPathFinder;
 use App\Service\Tmdb\DisplayableResultAdapter;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,7 +66,7 @@ class MoviePlayController extends AbstractController
             ]);
 
             return $this->renderPlayView($moviePath, $level, $replayUrl);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $this->addFlash('error', $this->translator->trans('front.maze.initialization_error'));
 
             return $this->redirectToRoute('fo_maze_movie');
@@ -88,7 +89,7 @@ class MoviePlayController extends AbstractController
             $replayUrl = $this->urlGenerator->generate('fo_maze_movie_select_min_path');
 
             return $this->renderPlayView($moviePath, $level, $replayUrl);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $this->addFlash('error', $this->translator->trans('front.maze.initialization_error'));
 
             return $this->redirectToRoute('movie_maze_fo');
@@ -110,7 +111,7 @@ class MoviePlayController extends AbstractController
             $replayUrl = $this->urlGenerator->generate('fo_maze_movie_select_max_path');
 
             return $this->renderPlayView($moviePath, $level, $replayUrl);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $this->addFlash('error', $this->translator->trans('front.maze.initialization_error'));
 
             return $this->redirectToRoute('movie_maze_fo');

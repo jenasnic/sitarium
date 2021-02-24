@@ -6,6 +6,7 @@ use App\Entity\Quiz\Quiz;
 use App\Entity\Quiz\Response as QuizResponse;
 use App\Form\Quiz\ResponseType;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,7 +64,7 @@ class ResponseController extends AbstractController
             $entityManager->flush();
 
             return new JsonResponse(1);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new JsonResponse(0);
         }
     }
@@ -84,7 +85,7 @@ class ResponseController extends AbstractController
                     $entityManager->flush();
 
                     return new JsonResponse(['success' => true, 'message' => $translator->trans('back.global.save.success')]);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     return new JsonResponse(['success' => false, 'message' => $translator->trans('back.global.save.error')]);
                 }
             } else {

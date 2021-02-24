@@ -42,6 +42,7 @@ class SynchronizeDataCommand extends AbstractBuildProcessCommand
      */
     protected function executeProcess(InputInterface $input, OutputInterface $output): void
     {
+        // @todo : use options to synchronize only entities of one type...
         $entities = [
             Actor::class,
             FilmographyMovie::class,

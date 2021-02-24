@@ -2,6 +2,7 @@
 
 namespace App\Entity\Tagline;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,6 +23,11 @@ class Movie
      * @ORM\Column(name="title", type="string", length=255)
      */
     private ?string $title = null;
+
+    /**
+     * @ORM\Column(name="releaseDate", type="datetime", nullable=true)
+     */
+    private ?DateTime $releaseDate = null;
 
     /**
      * @ORM\Column(name="pictureUrl", type="string", length=255, nullable=true)
@@ -67,6 +73,16 @@ class Movie
     public function setTitle(string $title): void
     {
         $this->title = $title;
+    }
+
+    public function getReleaseDate(): ?DateTime
+    {
+        return $this->releaseDate;
+    }
+
+    public function setReleaseDate(?DateTime $releaseDate): void
+    {
+        $this->releaseDate = $releaseDate;
     }
 
     public function getPictureUrl(): ?string
