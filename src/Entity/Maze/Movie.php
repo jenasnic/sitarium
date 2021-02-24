@@ -33,8 +33,6 @@ class Movie
 
     /**
      * @ORM\Column(name="pictureUrl", type="string", length=255, nullable=true)
-     *
-     * @var 
      */
     private ?string $pictureUrl = null;
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Service\Tmdb\Synchronizer;
 
 interface SynchronizerInterface

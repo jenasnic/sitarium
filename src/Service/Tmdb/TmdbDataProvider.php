@@ -48,6 +48,8 @@ class TmdbDataProvider
     }
 
     /**
+     * @param TmdbValidatorInterface<Actor> $validator
+     *
      * @return array<Actor>
      */
     public function searchActors(string $search, TmdbValidatorInterface $validator = null, int $maxCount = 10): array
@@ -58,6 +60,8 @@ class TmdbDataProvider
     }
 
     /**
+     * @param TmdbValidatorInterface<Movie> $validator
+     *
      * @return array<Movie>
      */
     public function searchMovies(string $search, TmdbValidatorInterface $validator = null, int $maxCount = 10): array
@@ -68,6 +72,8 @@ class TmdbDataProvider
     }
 
     /**
+     * @param TmdbValidatorInterface<Movie> $validator
+     *
      * @return array<Movie>
      */
     public function getFilmography(int $actorId, TmdbValidatorInterface $validator = null): array
@@ -78,6 +84,8 @@ class TmdbDataProvider
     }
 
     /**
+     * @param TmdbValidatorInterface<Actor> $validator
+     *
      * @return array<Actor>
      */
     public function getCasting(int $movieId, TmdbValidatorInterface $validator = null): array
@@ -99,9 +107,7 @@ class TmdbDataProvider
 
     /**
      * @param array<mixed> $data
-     * @param string $className
-     * @param TmdbValidatorInterface $validator
-     * @param int|null $maxCount
+     * @param TmdbValidatorInterface<mixed> $validator
      *
      * @return array<mixed>
      */

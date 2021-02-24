@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Service\Tmdb\Synchronizer;
 
 use App\Entity\Maze\CastingActor;

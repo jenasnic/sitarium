@@ -41,9 +41,9 @@ class WinnerController extends AbstractController
                 }
 
                 return new JsonResponse(['success' => true, 'message' => $message]);
-            } else {
-                return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.winner.quiz_not_resolved')]);
             }
+
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.winner.quiz_not_resolved')]);
         } catch (Exception $e) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.winner.quiz_resolve_error')]);
         }

@@ -35,7 +35,7 @@ class QuizListController extends AbstractController
     ): Response {
         try {
             $data = json_decode($request->getContent(), true);
-            $reorderedIds = json_decode($data['reorderedIds']);
+            $reorderedIds = json_decode($data['reorderedIds'], true);
 
             $handler->handle(new ReorderQuizCommand($reorderedIds));
 

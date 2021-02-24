@@ -51,7 +51,7 @@ class AddMovieController extends AbstractController
     }
 
     /**
-     * @Route("/admin/tagline/movie/similar/{tmdbId}", requirements={"tmdbId" = "\d+"}, name="bo_tagline_movie_similar")
+     * @Route("/admin/tagline/movie/similar/{tmdbId}", requirements={"tmdbId": "\d+"}, name="bo_tagline_movie_similar")
      */
     public function similarAction(
         TmdbDataProvider $tmdbDataProvider,
@@ -72,6 +72,7 @@ class AddMovieController extends AbstractController
         AddMoviesHandler $handler
     ): Response {
         try {
+            /** @var array<int> $tmdbIds */
             $tmdbIds = explode(',', $request->request->get('movie-selection-ids'));
             $handler->handle(new AddMoviesCommand($tmdbIds));
             $this->addFlash('info', $translator->trans('back.global.add.success'));

@@ -5,6 +5,9 @@ namespace App\Service\Tmdb\Adapter;
 use App\Model\Tmdb\Actor;
 use App\Model\Tmdb\DisplayableItem;
 
+/**
+ * @implements DisplayableAdapterInterface<Actor>
+ */
 class TmdbActorAdapter implements DisplayableAdapterInterface
 {
     /**

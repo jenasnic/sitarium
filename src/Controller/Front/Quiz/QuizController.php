@@ -43,7 +43,7 @@ class QuizController extends AbstractController
     }
 
     /**
-     * @Route("/quiz/rejouer/{quiz}", requirements={"quiz" = "\d+"}, name="fo_quiz_replay")
+     * @Route("/quiz/rejouer/{quiz}", requirements={"quiz": "\d+"}, name="fo_quiz_replay")
      * @Security("is_granted('ROLE_USER')")
      */
     public function replayAction(TranslatorInterface $translator, ClearUserResponseHandler $handler, Quiz $quiz): Response

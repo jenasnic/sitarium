@@ -9,6 +9,9 @@ class ProcessTypeEnum
     public const QUIZ_LINK = 'quiz_link';
     public const SYNCHRONIZATION = 'synchronization';
 
+    /**
+     * @return array<string>
+     */
     public static function getAll(): array
     {
         return [

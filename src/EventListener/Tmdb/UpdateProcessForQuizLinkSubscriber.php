@@ -7,8 +7,8 @@ use App\Enum\Tmdb\ProcessStatusEnum;
 use App\Enum\Tmdb\ProcessTypeEnum;
 use App\Event\Quiz\TmdbLinkEndEvent;
 use App\Event\Quiz\TmdbLinkErrorEvent;
-use App\Event\Quiz\TmdbLinkStartEvent;
 use App\Event\Quiz\TmdbLinkProgressEvent;
+use App\Event\Quiz\TmdbLinkStartEvent;
 use App\Repository\Tmdb\BuildProcessRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,6 +29,9 @@ class UpdateProcessForQuizLinkSubscriber implements EventSubscriberInterface
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public static function getSubscribedEvents(): array
     {
         return [

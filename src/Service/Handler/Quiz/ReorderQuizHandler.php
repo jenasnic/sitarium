@@ -24,8 +24,8 @@ class ReorderQuizHandler
     public function handle(ReorderQuizCommand $command): void
     {
         foreach ($command->getReorderedIds() as $orderedId) {
-            $quizToReorder = $this->quizRepository->find($orderedId->id);
-            $quizToReorder->setRank($orderedId->rank);
+            $quizToReorder = $this->quizRepository->find($orderedId['id']);
+            $quizToReorder->setRank($orderedId['rank']);
         }
 
         $this->entityManager->flush();

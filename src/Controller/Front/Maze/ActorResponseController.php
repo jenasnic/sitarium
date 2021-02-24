@@ -70,9 +70,9 @@ class ActorResponseController extends AbstractController
                 }
 
                 return new JsonResponse(['success' => true, 'responses' => $movies]);
-            } else {
-                return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.actor.not_found')]);
             }
+
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.actor.not_found')]);
         } catch (Exception $ex) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.actor.filmography_error')]);
         }

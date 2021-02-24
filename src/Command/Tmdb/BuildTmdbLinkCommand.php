@@ -6,10 +6,10 @@ use App\Enum\Tmdb\ProcessTypeEnum;
 use App\Repository\Tmdb\BuildProcessRepository;
 use App\Service\Quiz\TmdbLinkBuilder;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputDefinition;
-use Symfony\Component\Console\Input\InputArgument;
 
 class BuildTmdbLinkCommand extends AbstractBuildProcessCommand
 {
@@ -47,7 +47,7 @@ class BuildTmdbLinkCommand extends AbstractBuildProcessCommand
      */
     protected function executeProcess(InputInterface $input, OutputInterface $output): void
     {
-        $quizId = $input->getArgument('quizId');
+        $quizId = intval($input->getArgument('quizId'));
         $this->tmdbLinkBuilder->build($quizId);
     }
 }

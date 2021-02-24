@@ -31,6 +31,9 @@ class ResetPasswordSubscriber implements EventSubscriberInterface
         $this->mailerSender = $mailerSender;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -51,10 +54,10 @@ class ResetPasswordSubscriber implements EventSubscriberInterface
             // Create mail and send it
             $mailMessage = new Email();
             $mailMessage
-                ->setSubject($subject)
-                ->setFrom($this->mailerFrom, $this->mailerSender)
-                ->setTo($event->getUser()->getEmail())
-                ->setBody($messageContent, 'text/html')
+                ->subject($subject)
+                ->from($this->mailerFrom, $this->mailerSender)
+                ->to($event->getUser()->getEmail())
+                ->html($messageContent)
             ;
 
             $this->mailer->send($mailMessage);

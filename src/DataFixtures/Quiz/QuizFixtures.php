@@ -15,7 +15,7 @@ class QuizFixtures extends Fixture
     /**
      * {@inheritdoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $datas = $this->getDatas();
 
@@ -27,7 +27,7 @@ class QuizFixtures extends Fixture
     }
 
     /**
-     * @return array
+     * @return array<Quiz>
      */
     protected function getDatas(): array
     {
@@ -40,21 +40,6 @@ class QuizFixtures extends Fixture
         return $data;
     }
 
-    /**
-     * @param string $name
-     * @param string $slug
-     * @param bool $displayResponse
-     * @param bool $displayTrick
-     * @param bool $published
-     * @param int $rank
-     * @param string $pictureUrl
-     * @param int $pictureWidth
-     * @param int $pictureHeight
-     * @param string $thumbnailUrl
-     * @param string $reference
-     *
-     * @return Quiz
-     */
     protected function buildData(
         string $name,
         string $slug,

@@ -1,4 +1,6 @@
 {
+    "name": "jenasnic/sitarium",
+    "description": "Sitarium website - movie quiz...",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "dev",

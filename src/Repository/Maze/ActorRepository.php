@@ -2,8 +2,8 @@
 
 namespace App\Repository\Maze;
 
-use App\Enum\Maze\FilmographyStatusEnum;
 use App\Entity\Maze\Actor;
+use App\Enum\Maze\FilmographyStatusEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
@@ -58,15 +58,15 @@ class ActorRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param array (optionnal) $actorIds (default null) List of TMDB identifiers (as integer) for actors we want to get links.
-     * Default value null means that we get links for all existing actors.
-     * @param int (optionnal) $minVoteCount (default = 0) Minimum vote count value for movies used to find link between actors. This allows to use only famous movie when linking actors...
-     * Default value 0 means that we ignore vote count (i.e. use all movies to link actors...)
-     *
-     * @return array Array of linked actors using TMDB identifiers in a map with both keys : main_actor_identifier and linked_actor_identifier.
      * NOTE : unable to build same entity => use TMDB identifiers instead...
+     *
+     * @param array<int>|null $actorIds list of TMDB identifiers for actors we want to get links (null to get links for all existing actors)
+     * @param int $minVoteCount Minimum vote count value for movies used to find link between actors. This allows to use only famous movie when linking actors.
+     *                          Default value 0 means that we ignore vote count (i.e. use all movies to link actors...)
+     *
+     * @return array<array<string, int>> array of linked actors using TMDB identifiers in a map with both keys : main_actor_identifier and linked_actor_identifier
      */
-    public function getLinkedActorsIds($actorIds = null, $minVoteCount = 0): array
+    public function getLinkedActorsIds(array $actorIds = null, $minVoteCount = 0): array
     {
         $queryBuilder = $this->createQueryBuilder('main_actor');
 

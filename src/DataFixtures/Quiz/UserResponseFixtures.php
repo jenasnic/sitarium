@@ -16,7 +16,7 @@ class UserResponseFixtures extends Fixture implements DependentFixtureInterface
     /**
      * {@inheritdoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $datas = $this->getDatas();
 
@@ -39,7 +39,7 @@ class UserResponseFixtures extends Fixture implements DependentFixtureInterface
     }
 
     /**
-     * @return array
+     * @return array<UserResponse>
      */
     protected function getDatas(): array
     {
@@ -86,13 +86,6 @@ class UserResponseFixtures extends Fixture implements DependentFixtureInterface
         return $data;
     }
 
-    /**
-     * @param User $user
-     * @param Response $response
-     * @param DateTime $date
-     *
-     * @return UserResponse
-     */
     protected function buildData(
         User $user,
         Response $response,

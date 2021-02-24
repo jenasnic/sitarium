@@ -3,8 +3,8 @@
 namespace App\Service\Maze;
 
 use App\Entity\Maze\CastingActor;
-use App\Repository\Maze\MovieRepository;
 use App\Repository\Maze\CastingActorRepository;
+use App\Repository\Maze\MovieRepository;
 use App\Tool\TextUtil;
 
 /**

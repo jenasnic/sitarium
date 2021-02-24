@@ -45,6 +45,8 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(name="roles", type="simple_array")
+     *
+     * @var array<string>
      */
     private array $roles;
 
@@ -64,7 +66,7 @@ class User implements UserInterface
     /**
      * {@inheritdoc}
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 

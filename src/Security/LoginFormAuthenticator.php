@@ -2,9 +2,11 @@
 
 namespace App\Security;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -18,8 +20,6 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
-use App\Entity\User;
-use Symfony\Component\HttpFoundation\Response;
 
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
@@ -27,10 +27,13 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public const LOGIN_ROUTE = 'login';
 
-    private $userRepository;
-    private $urlGenerator;
-    private $csrfTokenManager;
-    private $passwordEncoder;
+    private UserRepository $userRepository;
+
+    private UrlGeneratorInterface $urlGenerator;
+
+    private CsrfTokenManagerInterface $csrfTokenManager;
+
+    private UserPasswordEncoderInterface $passwordEncoder;
 
     public function __construct(
         UserRepository $userRepository,
@@ -89,7 +92,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): Response
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey): Response
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
@@ -98,16 +101,18 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         return new RedirectResponse($this->urlGenerator->generate('fo_home'));
     }
 
-    protected function getLoginUrl(): string
-    {
-        return $this->urlGenerator->generate(self::LOGIN_ROUTE);
-    }
-
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
+     *
+     * @param mixed $credentials
      */
     public function getPassword($credentials): ?string
     {
         return $credentials['password'];
+    }
+
+    protected function getLoginUrl(): string
+    {
+        return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }

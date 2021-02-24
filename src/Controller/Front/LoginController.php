@@ -29,10 +29,9 @@ class LoginController extends AbstractController
     /**
      * @Route("/deconnexion", name="logout")
      */
-    public function logout()
+    public function logout(): void
     {
         // This method will be intercepted by the logout key on firewall.
-        return;
     }
 
     /**

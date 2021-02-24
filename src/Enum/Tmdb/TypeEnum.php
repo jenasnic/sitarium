@@ -7,6 +7,9 @@ class TypeEnum
     public const ACTOR = 'actor';
     public const MOVIE = 'movie';
 
+    /**
+     * @return array<string>
+     */
     public static function getAll(): array
     {
         return [

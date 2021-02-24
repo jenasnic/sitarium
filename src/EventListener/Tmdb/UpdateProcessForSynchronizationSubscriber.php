@@ -29,6 +29,9 @@ class UpdateProcessForSynchronizationSubscriber implements EventSubscriberInterf
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public static function getSubscribedEvents(): array
     {
         return [

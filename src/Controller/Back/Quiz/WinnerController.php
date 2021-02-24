@@ -16,11 +16,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class WinnerController extends AbstractController
 {
     /**
-     * @Route("/admin/quiz/{quiz}/winner/list", requirements={"quiz" = "\d+"}, name="bo_quiz_winner_list")
+     * @Route("/admin/quiz/{quiz}/winner/list", requirements={"quiz": "\d+"}, name="bo_quiz_winner_list")
      */
     public function listWinnerAction(Request $request, WinnerRepository $winnerRepository, Quiz $quiz): Response
     {
-        $page = $request->query->get('page', 1);
+        $page = intval($request->query->get('page', '1'));
         $name = $request->query->get('value', null);
 
         return $this->render('back/quiz/winner_list.html.twig', [
@@ -31,7 +31,7 @@ class WinnerController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/winner/detail/{winner}", requirements={"winner" = "\d+"}, name="bo_quiz_winner_detail")
+     * @Route("/admin/quiz/winner/detail/{winner}", requirements={"winner": "\d+"}, name="bo_quiz_winner_detail")
      */
     public function detailWinnerAction(Winner $winner): Response
     {
@@ -39,7 +39,7 @@ class WinnerController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/{quiz}/winner/clear", requirements={"quiz" = "\d+"}, name="bo_quiz_winner_clear")
+     * @Route("/admin/quiz/{quiz}/winner/clear", requirements={"quiz": "\d+"}, name="bo_quiz_winner_clear")
      */
     public function clearWinnerAction(
         TranslatorInterface $translator,

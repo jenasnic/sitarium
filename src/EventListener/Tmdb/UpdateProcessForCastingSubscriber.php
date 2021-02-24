@@ -3,6 +3,7 @@
 namespace App\EventListener\Tmdb;
 
 use App\Entity\Tmdb\BuildProcess;
+use App\Enum\Tmdb\ProcessStatusEnum;
 use App\Enum\Tmdb\ProcessTypeEnum;
 use App\Event\Maze\CastingEndEvent;
 use App\Event\Maze\CastingErrorEvent;
@@ -13,7 +14,6 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Contracts\EventDispatcher\Event;
-use App\Enum\Tmdb\ProcessStatusEnum;
 
 class UpdateProcessForCastingSubscriber implements EventSubscriberInterface
 {
@@ -29,6 +29,9 @@ class UpdateProcessForCastingSubscriber implements EventSubscriberInterface
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public static function getSubscribedEvents(): array
     {
         return [

@@ -48,7 +48,7 @@ abstract class AbstractSynchronizer implements SynchronizerInterface
             foreach ($datas as $data) {
                 if ($this->synchronizeData($data)) {
                     $this->entityManager->persist($data);
-                    $processed++;
+                    ++$processed;
                 }
 
                 // WARNING : wait between each TMDB request to not override request rate limit (4 per seconde)
@@ -77,7 +77,9 @@ abstract class AbstractSynchronizer implements SynchronizerInterface
     abstract protected function getAllData(): array;
 
     /**
-     * @psalm-var T
+     * @psalm-var T $data
+     *
+     * @param mixed $data
      *
      * @return bool TRUE if data is updated, FALSE either
      */

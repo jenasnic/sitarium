@@ -8,6 +8,9 @@ class FilmographyStatusEnum
     public const INITIALIZED = 'filmography_validated';
     public const EMPTY = 'filmography_empty';
 
+    /**
+     * @return array<string>
+     */
     public static function getAll(): array
     {
         return [

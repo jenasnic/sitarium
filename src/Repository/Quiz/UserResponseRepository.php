@@ -136,9 +136,7 @@ class UserResponseRepository extends ServiceEntityRepository
      *      - foundCount : number of times response has been found (as int)
      *      - lastDate : last date the response has been found (as DateTime).
      *
-     * @param int $quizId
-     *
-     * @return array array of informations about player with keys : id, title, foundCount and lastDate
+     * @return array<string, mixed>
      */
     public function getResponsesStatisticsForQuizId(int $quizId): array
     {
@@ -169,9 +167,7 @@ class UserResponseRepository extends ServiceEntityRepository
      *      - responseCount : number of response found for current user (as int)
      *      - lastDate : last date user has played (as DateTime).
      *
-     * @param int $quizId
-     *
-     * @return array array of informations about player with keys : id, firstname, lastname, responseCount and lastDate
+     * @return array<string, mixed>
      */
     public function getUsersStatisticsForQuizId(int $quizId): array
     {
@@ -203,9 +199,7 @@ class UserResponseRepository extends ServiceEntityRepository
      *      - responseCount : number of response found for current quiz (as int)
      *      - lastDate : last date user has played for current quiz (as DateTime).
      *
-     * @param int $userId
-     *
-     * @return array array of informations about quiz with keys : id, name, responseCount and lastDate
+     * @return array<string, mixed>
      */
     public function getQuizStatisticsForUserId(int $userId): array
     {
@@ -231,8 +225,6 @@ class UserResponseRepository extends ServiceEntityRepository
     /**
      * Allows to get all occurences of UserResponse for specified response ID (=> give all users having found response).
      *
-     * @param int $responseId
-     *
      * @return UserResponse[]|array list of user responses matching specified parameter
      */
     public function getUserResponsesForResponseId(int $responseId): array
@@ -249,9 +241,6 @@ class UserResponseRepository extends ServiceEntityRepository
 
     /**
      * Allows to check if specified response identifier already exist for specified user (i.e. user has already found response).
-     *
-     * @param int $userId
-     * @param int $responseId
      *
      * @return bool TRUE if specified response has already been found by specified user, FALSE either
      */

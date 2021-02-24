@@ -10,10 +10,7 @@ use App\Entity\Quiz\Quiz;
 class ResolveQuizValidator
 {
     /**
-     * @param Quiz $quiz
      * @param array<string> $responses
-     *
-     * @return bool
      */
     public function validate(Quiz $quiz, array $responses): bool
     {

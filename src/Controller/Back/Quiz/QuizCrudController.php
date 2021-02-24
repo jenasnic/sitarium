@@ -46,7 +46,7 @@ class QuizCrudController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/edit/{quiz}", requirements={"quiz" = "\d+"}, name="bo_quiz_edit")
+     * @Route("/admin/quiz/edit/{quiz}", requirements={"quiz": "\d+"}, name="bo_quiz_edit")
      */
     public function editAction(
         Request $request,
@@ -76,7 +76,7 @@ class QuizCrudController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/delete/{quiz}", requirements={"quiz" = "\d+"}, name="bo_quiz_delete")
+     * @Route("/admin/quiz/delete/{quiz}", requirements={"quiz": "\d+"}, name="bo_quiz_delete")
      */
     public function deleteAction(
         TranslatorInterface $translator,

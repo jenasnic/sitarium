@@ -17,7 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class LocateController extends AbstractController
 {
     /**
-     * @Route("/admin/quiz/{quiz}/response/locate", requirements={"quiz" = "\d+"}, name="bo_quiz_response_locate")
+     * @Route("/admin/quiz/{quiz}/response/locate", requirements={"quiz": "\d+"}, name="bo_quiz_response_locate")
      */
     public function indexAction(Quiz $quiz): Response
     {

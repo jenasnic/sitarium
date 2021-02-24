@@ -13,7 +13,7 @@ class MovieFixtures extends Fixture
     /**
      * {@inheritdoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $datas = $this->getDatas();
 
@@ -25,7 +25,7 @@ class MovieFixtures extends Fixture
     }
 
     /**
-     * @return array
+     * @return array<Movie>
      */
     protected function getDatas(): array
     {
@@ -135,14 +135,6 @@ class MovieFixtures extends Fixture
         return $data;
     }
 
-    /**
-     * @param int $tmdbId
-     * @param string $title
-     * @param string $releaseDate
-     * @param string $pictureUrl
-     *
-     * @return Movie
-     */
     protected function buildData(
         int $tmdbId,
         string $title,

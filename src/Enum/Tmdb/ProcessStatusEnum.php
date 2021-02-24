@@ -8,6 +8,9 @@ class ProcessStatusEnum
     public const SUCCESS = 'success';
     public const ERROR = 'error';
 
+    /**
+     * @return array<string>
+     */
     public static function getAll(): array
     {
         return [

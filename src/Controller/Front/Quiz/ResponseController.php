@@ -76,9 +76,9 @@ class ResponseController extends AbstractController
                 }, $responses);
 
                 return new JsonResponse(['success' => true, 'trick' => $responses]);
-            } else {
-                return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.trick.no_trick_on_location')]);
             }
+
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.trick.no_trick_on_location')]);
         } catch (Exception $e) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.trick.process_error')]);
         }

@@ -12,6 +12,9 @@ class MazeGraphItem
      */
     private $item;
 
+    /**
+     * @var array<MazeGraphItem>
+     */
     private array $linkedItems;
 
     private int $bestPathPosition = 0;
@@ -38,11 +41,14 @@ class MazeGraphItem
     /**
      * @param Actor|Movie $item
      */
-    public function setItem($item)
+    public function setItem($item): void
     {
         $this->item = $item;
     }
 
+    /**
+     * @return MazeGraphItem[]|array<MazeGraphItem>
+     */
     public function getLinkedItems(): array
     {
         return $this->linkedItems;
@@ -70,7 +76,7 @@ class MazeGraphItem
         return $this->bestPathSize;
     }
 
-    public function setBestPathSize($bestPathSize): void
+    public function setBestPathSize(int $bestPathSize): void
     {
         $this->bestPathSize = $bestPathSize;
     }

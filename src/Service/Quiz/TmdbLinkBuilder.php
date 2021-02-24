@@ -39,9 +39,6 @@ class TmdbLinkBuilder
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    /**
-     * @param int $quizId
-     */
     public function build(int $quizId): void
     {
         $processCount = 0;
@@ -75,7 +72,6 @@ class TmdbLinkBuilder
             }
 
             $this->eventDispatcher->dispatch(new TmdbLinkEndEvent(), TmdbLinkEndEvent::BUILD_TMDB_LINK_END);
-
         } catch (Exception $e) {
             $this->eventDispatcher->dispatch(new TmdbLinkErrorEvent($e), TmdbLinkErrorEvent::BUILD_TMDB_LINK_ERROR);
         }

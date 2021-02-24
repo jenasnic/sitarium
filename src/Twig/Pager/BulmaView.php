@@ -62,6 +62,14 @@ class BulmaView implements ViewInterface
         return $this->generate();
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getName(): string
+    {
+        return 'bulma';
+    }
+
     protected function generate(): string
     {
         $relButtons = $this->previous().$this->next();
@@ -143,13 +151,5 @@ class BulmaView implements ViewInterface
         }
 
         return '';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName(): string
-    {
-        return 'bulma';
     }
 }

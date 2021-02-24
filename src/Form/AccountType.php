@@ -12,6 +12,10 @@ use Symfony\Component\Validator\Constraints\Length;
 
 class AccountType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface<User> $builder
+     * @param array<string, mixed> $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

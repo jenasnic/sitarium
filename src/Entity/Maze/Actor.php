@@ -18,8 +18,6 @@ class Actor
     /**
      * @ORM\Id
      * @ORM\Column(name="tmdbId", type="integer")
-     *
-     * @var 
      */
     private int $tmdbId;
 

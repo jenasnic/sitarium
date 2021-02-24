@@ -26,7 +26,7 @@ class UserController extends AbstractController
      */
     public function listAction(Request $request, UserRepository $userRepository): Response
     {
-        $page = $request->query->get('page', 1);
+        $page = intval($request->query->get('page', '1'));
         $name = $request->query->get('value', null);
 
         return $this->render('back/user/list.html.twig', [
@@ -61,7 +61,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/user/edit/{user}", requirements={"user" = "\d+"}, name="bo_user_edit")
+     * @Route("/admin/user/edit/{user}", requirements={"user": "\d+"}, name="bo_user_edit")
      */
     public function editAction(
         Request $request,
@@ -89,7 +89,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/user/delete/{user}", requirements={"user" = "\d+"}, name="bo_user_delete")
+     * @Route("/admin/user/delete/{user}", requirements={"user": "\d+"}, name="bo_user_delete")
      */
     public function deleteAction(TranslatorInterface $translator, DeleteUserHandler $handler, User $user): Response
     {

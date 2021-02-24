@@ -37,9 +37,9 @@ class MinPathFinder
             }
 
             return $result;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -115,7 +115,6 @@ class MinPathFinder
 
     /**
      * @param array<MazeGraphItem> $mazeGraph
-     * @param int $bestPathSize
      */
     private function setBestPathSizeForGraphItem(array $mazeGraph, int $bestPathSize): void
     {

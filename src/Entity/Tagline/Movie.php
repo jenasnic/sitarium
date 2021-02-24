@@ -42,8 +42,8 @@ class Movie
     /**
      * @ORM\ManyToMany(targetEntity="Genre")
      * @ORM\JoinTable(name="tagline_movie_genre",
-     *      joinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="tmdbId", onDelete="CASCADE")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="genre_id", referencedColumnName="tmdbId", onDelete="CASCADE")}
+     *     joinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="tmdbId", onDelete="CASCADE")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="genre_id", referencedColumnName="tmdbId", onDelete="CASCADE")}
      * )
      *
      * @var Genre[]|Collection<int, Genre>

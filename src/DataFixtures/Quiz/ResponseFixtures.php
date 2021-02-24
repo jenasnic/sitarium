@@ -30,7 +30,7 @@ class ResponseFixtures extends Fixture implements DependentFixtureInterface
     /**
      * {@inheritdoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $datas = $this->getDatas();
 
@@ -52,7 +52,7 @@ class ResponseFixtures extends Fixture implements DependentFixtureInterface
     }
 
     /**
-     * @return array
+     * @return array<Response>
      */
     protected function getDatas(): array
     {
@@ -83,17 +83,6 @@ class ResponseFixtures extends Fixture implements DependentFixtureInterface
         return $data;
     }
 
-    /**
-     * @param string $title
-     * @param int $positionX
-     * @param int $positionY
-     * @param int $width
-     * @param int $height
-     * @param Quiz $quiz
-     * @param string $reference
-     *
-     * @return Response
-     */
     protected function buildData(
         string $title,
         int $positionX,

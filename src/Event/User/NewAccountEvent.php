@@ -11,7 +11,7 @@ class NewAccountEvent extends Event
 
     protected User $user;
 
-    protected $password;
+    protected string $password;
 
     public function __construct(User $user, string $password)
     {

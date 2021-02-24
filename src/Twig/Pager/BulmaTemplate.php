@@ -30,7 +30,7 @@ class BulmaTemplate extends Template
      */
     public function page($page): string
     {
-        $text = $page;
+        $text = strval($page);
 
         return $this->pageWithText($page, $text);
     }
@@ -38,7 +38,7 @@ class BulmaTemplate extends Template
     /**
      * {@inheritdoc}
      */
-    public function pageWithText($page, $text, $rel = null): string
+    public function pageWithText($page, $text/*, ?string $rel = null */): string
     {
         $search = ['%href%', '%current%', '%page%'];
         $replace = [$this->generateRoute($page), '', $text];
@@ -127,6 +127,8 @@ class BulmaTemplate extends Template
 
     /**
      * {@inheritdoc}
+     *
+     * @return array<string, string>
      */
     protected function getDefaultOptions(): array
     {

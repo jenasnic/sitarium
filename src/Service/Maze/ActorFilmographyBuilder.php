@@ -14,10 +14,10 @@ use App\Repository\Maze\ActorRepository;
 use App\Repository\Maze\FilmographyMovieRepository;
 use App\Service\Converter\FilmographyMovieConverter;
 use App\Service\Tmdb\TmdbDataProvider;
+use App\Validator\Tmdb\FilmographyMovieValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use App\Validator\Tmdb\FilmographyMovieValidator;
 
 /**
  * This class allows to get all movies relative to existing actors and to build filmography keeping only movies linked together

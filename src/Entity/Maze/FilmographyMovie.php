@@ -42,8 +42,8 @@ class FilmographyMovie
     /**
      * @ORM\ManyToMany(targetEntity="Actor", inversedBy="movies", cascade={"persist"})
      * @ORM\JoinTable(name="maze_actor_filmography_movie",
-     *      joinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="tmdbId", onDelete="CASCADE")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="actor_id", referencedColumnName="tmdbId", onDelete="CASCADE")}
+     *     joinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="tmdbId", onDelete="CASCADE")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="actor_id", referencedColumnName="tmdbId", onDelete="CASCADE")}
      * )
      *
      * @var Collection<int, Actor>

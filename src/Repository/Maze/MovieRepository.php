@@ -2,8 +2,8 @@
 
 namespace App\Repository\Maze;
 
-use App\Enum\Maze\CastingStatusEnum;
 use App\Entity\Maze\Movie;
+use App\Enum\Maze\CastingStatusEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
@@ -59,11 +59,11 @@ class MovieRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param array (optionnal) $movieIds (default null) List of TMDB identifiers (as integer) for movies we want to get links.
-     * Default value null means that we get links for all existing movies.
-     *
-     * @return array Array of linked movies using TMDB identifiers in a map with both keys : main_movie_identifier and linked_movie_identifier.
      * NOTE : unable to build same entity => use TMDB identifiers instead...
+     *
+     * @param array<int> $movieIds list of TMDB identifiers for movies we want to get links (null to get links for all existing movies)
+     *
+     * @return array<array<string, int>> array of linked movies using TMDB identifiers in a map with both keys : main_movie_identifier and linked_movie_identifier
      */
     public function getLinkedMoviesIds($movieIds = null): array
     {

@@ -19,7 +19,7 @@ class UserFixtures extends Fixture
     /**
      * {@inheritdoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $datas = $this->getDatas();
 
@@ -31,7 +31,7 @@ class UserFixtures extends Fixture
     }
 
     /**
-     * @return array
+     * @return array<User>
      */
     protected function getDatas(): array
     {
@@ -48,15 +48,7 @@ class UserFixtures extends Fixture
     }
 
     /**
-     * @param string $firstname
-     * @param string $lastname
-     * @param string $email
-     * @param string $username
-     * @param string $password
-     * @param array $roles
-     * @param string $reference
-     *
-     * @return User
+     * @param array<string> $roles
      */
     protected function buildData(
         string $firstname,

@@ -5,13 +5,19 @@ namespace App\Service\Tmdb;
 use App\Model\Tmdb\DisplayableItem;
 use App\Service\Tmdb\Adapter\DisplayableAdapterInterface;
 
+/**
+ * @see DisplayableAdapterInterface
+ */
 class DisplayableResultAdapter
 {
     /**
-     * @var DisplayableAdapterInterface[]|iterable<DisplayableAdapterInterface>
+     * @var DisplayableAdapterInterface<mixed>[]|iterable<DisplayableAdapterInterface<mixed>>
      */
     protected iterable $adapters = [];
 
+    /**
+     * @param iterable<DisplayableAdapterInterface<mixed>> $adapters
+     */
     public function __construct(iterable $adapters)
     {
         $this->adapters = $adapters;
@@ -35,6 +41,9 @@ class DisplayableResultAdapter
         return $result;
     }
 
+    /**
+     * @param mixed $item
+     */
     public function adaptItem($item): ?DisplayableItem
     {
         foreach ($this->adapters as $adapter) {

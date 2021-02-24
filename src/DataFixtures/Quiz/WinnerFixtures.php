@@ -21,7 +21,7 @@ class WinnerFixtures extends Fixture implements DependentFixtureInterface
     /**
      * {@inheritdoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $datas = $this->getDatas();
 
@@ -44,7 +44,7 @@ class WinnerFixtures extends Fixture implements DependentFixtureInterface
     }
 
     /**
-     * @return array
+     * @return array<Winner>
      */
     protected function getDatas(): array
     {
@@ -78,14 +78,6 @@ class WinnerFixtures extends Fixture implements DependentFixtureInterface
         return $data;
     }
 
-    /**
-     * @param User $user
-     * @param Quiz $quiz
-     * @param DateTime $date
-     * @param string $reference
-     *
-     * @return Winner
-     */
     protected function buildData(
         User $user,
         Quiz $quiz,

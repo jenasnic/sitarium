@@ -26,7 +26,7 @@ class GenreController extends AbstractController
     }
 
     /**
-     * @Route("/admin/tagline/genre/delete/{genre}", requirements={"genre" = "\d+"}, name="bo_tagline_genre_delete")
+     * @Route("/admin/tagline/genre/delete/{genre}", requirements={"genre": "\d+"}, name="bo_tagline_genre_delete")
      */
     public function deleteAction(
         EntityManagerInterface $entityManager,

@@ -24,7 +24,7 @@ class ListController extends AbstractController
         MovieRepository $movieRepository,
         BuildProcessRepository $buildProcessRepository
     ): Response {
-        $page = $request->query->get('page', 1);
+        $page = intval($request->query->get('page', '1'));
         $title = $request->query->get('value', null);
 
         return $this->render('back/tagline/movie/list.html.twig', [
@@ -35,7 +35,7 @@ class ListController extends AbstractController
     }
 
     /**
-     * @Route("/admin/tagline/movie/view/{movie}", requirements={"movie" = "\d+"}, name="bo_tagline_movie_view")
+     * @Route("/admin/tagline/movie/view/{movie}", requirements={"movie": "\d+"}, name="bo_tagline_movie_view")
      */
     public function viewAction(Movie $movie): Response
     {
@@ -43,7 +43,7 @@ class ListController extends AbstractController
     }
 
     /**
-     * @Route("/admin/tagline/movie/delete/{movie}", requirements={"movie" = "\d+"}, name="bo_tagline_movie_delete")
+     * @Route("/admin/tagline/movie/delete/{movie}", requirements={"movie": "\d+"}, name="bo_tagline_movie_delete")
      */
     public function deleteAction(
         EntityManagerInterface $entityManager,

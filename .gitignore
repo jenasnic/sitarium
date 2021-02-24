@@ -4,6 +4,7 @@
 .project
 .settings
 .php_cs.cache
+docker-compose.override.yml
 ###< IDE & tools ###
 
 ###> symfony/framework-bundle ###

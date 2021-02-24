@@ -5,6 +5,9 @@ namespace App\Service\Tmdb\Adapter;
 use App\Model\Tmdb\DisplayableItem;
 use App\Model\Tmdb\Movie;
 
+/**
+ * @implements DisplayableAdapterInterface<Movie>
+ */
 class TmdbMovieAdapter implements DisplayableAdapterInterface
 {
     /**

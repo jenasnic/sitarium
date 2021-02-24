@@ -14,6 +14,9 @@ class TmdbDataSynchronizer
      */
     protected iterable $synchronizers;
 
+    /**
+     * @param iterable<SynchronizerInterface> $synchronizers
+     */
     public function __construct(iterable $synchronizers)
     {
         $this->synchronizers = $synchronizers;

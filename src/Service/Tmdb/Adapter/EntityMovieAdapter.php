@@ -2,11 +2,14 @@
 
 namespace App\Service\Tmdb\Adapter;
 
-use App\Entity\Maze\Movie;
 use App\Entity\Maze\FilmographyMovie;
+use App\Entity\Maze\Movie;
 use App\Entity\Tagline\Movie as TaglineMovie;
 use App\Model\Tmdb\DisplayableItem;
 
+/**
+ * @implements DisplayableAdapterInterface<FilmographyMovie>
+ */
 class EntityMovieAdapter implements DisplayableAdapterInterface
 {
     /**

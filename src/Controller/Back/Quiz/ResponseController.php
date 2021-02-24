@@ -17,7 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ResponseController extends AbstractController
 {
     /**
-     * @Route("/admin/quiz/{quiz}/response/list", requirements={"quiz" = "\d+"}, name="bo_quiz_response_list")
+     * @Route("/admin/quiz/{quiz}/response/list", requirements={"quiz": "\d+"}, name="bo_quiz_response_list")
      */
     public function listAction(Quiz $quiz): Response
     {
@@ -25,7 +25,7 @@ class ResponseController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/{quiz}/response/new", requirements={"quiz" = "\d+"}, name="bo_quiz_response_new")
+     * @Route("/admin/quiz/{quiz}/response/new", requirements={"quiz": "\d+"}, name="bo_quiz_response_new")
      */
     public function newAction(
         Request $request,
@@ -42,7 +42,7 @@ class ResponseController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/{quiz}/response/edit/{response}", requirements={"quiz" = "\d+", "response" = "\d+"}, name="bo_quiz_response_edit")
+     * @Route("/admin/quiz/{quiz}/response/edit/{response}", requirements={"quiz": "\d+", "response": "\d+"}, name="bo_quiz_response_edit")
      */
     public function editAction(
         Request $request,
@@ -55,7 +55,7 @@ class ResponseController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/{quiz}/response/delete/{response}", requirements={"quiz" = "\d+", "response" = "\d+"}, name="bo_quiz_response_delete")
+     * @Route("/admin/quiz/{quiz}/response/delete/{response}", requirements={"quiz": "\d+", "response": "\d+"}, name="bo_quiz_response_delete")
      */
     public function deleteResponseAction(EntityManagerInterface $entityManager, QuizResponse $response): Response
     {

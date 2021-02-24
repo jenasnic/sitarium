@@ -45,7 +45,7 @@ class Actor
         return $this->character;
     }
 
-    public function setCharacter($character): void
+    public function setCharacter(?string $character): void
     {
         $this->character = $character;
     }
@@ -55,7 +55,7 @@ class Actor
         return $this->popularity;
     }
 
-    public function setPopularity($popularity): void
+    public function setPopularity(?float $popularity): void
     {
         $this->popularity = $popularity;
     }
@@ -65,7 +65,7 @@ class Actor
         return $this->biography;
     }
 
-    public function setBiography($biography): void
+    public function setBiography(?string $biography): void
     {
         $this->biography = $biography;
     }

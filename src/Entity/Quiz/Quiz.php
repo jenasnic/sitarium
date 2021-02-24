@@ -72,7 +72,7 @@ class Quiz
 
     /**
      * @ORM\OneToMany(targetEntity="Response", mappedBy="quiz", cascade={"remove"})
-     * @ORM\OrderBy({"title" = "ASC"})
+     * @ORM\OrderBy({"title": "ASC"})
      *
      * @var Collection<int, Response>
      */

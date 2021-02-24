@@ -6,6 +6,9 @@ use App\Entity\Maze\Actor;
 use App\Entity\Maze\CastingActor;
 use App\Model\Tmdb\DisplayableItem;
 
+/**
+ * @implements DisplayableAdapterInterface<CastingActor|Actor>
+ */
 class EntityActorAdapter implements DisplayableAdapterInterface
 {
     /**

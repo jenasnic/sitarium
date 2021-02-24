@@ -3,8 +3,8 @@
 namespace App\Service\Handler\Quiz;
 
 use App\Domain\Command\Quiz\SaveQuizCommand;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Quiz\Quiz;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Allows to save quiz when editing => process uploaded files.

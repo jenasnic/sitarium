@@ -168,7 +168,7 @@ class Response
         return $this->pictureUrl;
     }
 
-    public function setPictureUrl(?string $pictureUrl)
+    public function setPictureUrl(?string $pictureUrl): void
     {
         $this->pictureUrl = $pictureUrl;
     }

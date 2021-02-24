@@ -8,6 +8,9 @@ use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * @extends AbstractSynchronizer<Movie>
+ */
 class TaglineMovieSynchronizer extends AbstractSynchronizer
 {
     protected MovieRepository $movieRepository;

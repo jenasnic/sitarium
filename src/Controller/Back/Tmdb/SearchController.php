@@ -14,12 +14,12 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class SearchController extends AbstractController
 {
     /**
-     * @Route("/admin/tmdb/search/{type}", name="bo_tmdb_search", requirements={"type"="\w+"})
+     * @Route("/admin/tmdb/search/{type}", name="bo_tmdb_search", requirements={"type": "\w+"})
      */
     public function searchAction(UrlGeneratorInterface $urlGenerator, string $type): Response
     {
         if (!TypeEnum::exist($type)) {
-            return $this->createNotFoundException(sprintf('Type "%s" unknown!', $type));
+            throw $this->createNotFoundException(sprintf('Type "%s" unknown!', $type));
         }
 
         return $this->render('back/tmdb/search.html.twig', [
@@ -29,7 +29,7 @@ class SearchController extends AbstractController
     }
 
     /**
-     * @Route("/admin/tmdb/search/{type}/result", name="bo_tmdb_search_result", requirements={"type"="\w+"})
+     * @Route("/admin/tmdb/search/{type}/result", name="bo_tmdb_search_result", requirements={"type": "\w+"})
      */
     public function searchResultAction(
         Request $request,
@@ -38,7 +38,7 @@ class SearchController extends AbstractController
         string $type
     ): Response {
         if (!TypeEnum::exist($type)) {
-            return $this->createNotFoundException(sprintf('Type "%s" unknown!', $type));
+            throw $this->createNotFoundException(sprintf('Type "%s" unknown!', $type));
         }
 
         $value = $request->query->get('value', '');
@@ -47,17 +47,16 @@ class SearchController extends AbstractController
 
         if (strlen($value) > 2) {
             switch ($type) {
-                case TypeEnum::ACTOR :
+                case TypeEnum::ACTOR:
                     $result = $tmdbDataProvider->searchActors($value, null);
                     $displayRoute = 'bo_tmdb_display_actor';
                     break;
-                case TypeEnum::MOVIE :
+                case TypeEnum::MOVIE:
                     $result = $tmdbDataProvider->searchMovies($value, null);
                     $displayRoute = 'bo_tmdb_display_movie';
                     break;
                 default:
-                    return $this->createNotFoundException(sprintf('Type "%s" not supported!', $type));
-
+                    throw $this->createNotFoundException(sprintf('Type "%s" not supported!', $type));
             }
         }
 

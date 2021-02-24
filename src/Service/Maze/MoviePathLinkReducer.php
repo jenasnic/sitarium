@@ -25,14 +25,16 @@ class MoviePathLinkReducer
                 $followingMovie = $moviePath[$i + 1];
                 $firstCommonActor = $this->extractFirstCommonActorForMovies($movie, $followingMovie);
                 $movie->getActors()->clear();
-                $movie->addActor($firstCommonActor);
+                if (null !== $firstCommonActor) {
+                    $movie->addActor($firstCommonActor);
+                }
             } else {
                 $movie->getActors()->clear();
             }
         }
     }
 
-    protected function extractFirstCommonActorForMovies(Movie $movie1, Movie $movie2): CastingActor
+    protected function extractFirstCommonActorForMovies(Movie $movie1, Movie $movie2): ?CastingActor
     {
         foreach ($movie1->getActors() as $actor) {
             if ($movie2->getActors()->contains($actor)) {

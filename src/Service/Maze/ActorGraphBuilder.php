@@ -2,8 +2,8 @@
 
 namespace App\Service\Maze;
 
-use App\Repository\Maze\ActorRepository;
 use App\Model\Maze\MazeGraphItem;
+use App\Repository\Maze\ActorRepository;
 
 /**
  * This class allows to build actors graph (i.e. list of actors with all links between them through common movies).
@@ -23,9 +23,9 @@ class ActorGraphBuilder
      * => Entry point of the graph (representing an actor) can be reached using TMDB identifier of actor.
      *
      * @param int[]|array|null $actorIds Array of TMDB identifiers for actors to use to build graph.
-     * Default value null means that we build full graph for all existing actors.
+     *                                   Default value null means that we build full graph for all existing actors.
      * @param int $minVoteCount (default = 0) Minimum vote count value for movies used to build actor graph. This allows to use only famous movie when building graph using movies as link between actors.
-     * Default value 0 means that we ignore vote count (i.e. use all movies to link actors...)
+     *                          Default value 0 means that we ignore vote count (i.e. use all movies to link actors...)
      *
      * @return array<int, MazeGraphItem>
      */

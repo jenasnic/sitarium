@@ -2,6 +2,7 @@
 
 namespace App\Controller\Front\Maze;
 
+use App\Entity\Maze\Movie;
 use App\Service\Maze\MaxPathFinder;
 use App\Service\Maze\MinPathFinder;
 use App\Service\Maze\MovieGraphBuilder;
@@ -48,8 +49,8 @@ class MoviePlayController extends AbstractController
      */
     public function playAction(Request $request, RandomPathFinder $randomPathFinder): Response
     {
-        $count = $request->query->get('count');
-        $level = $request->query->get('level');
+        $count = intval($request->query->get('count'));
+        $level = intval($request->query->get('level'));
 
         if (!in_array($count, [3, 4, 5, 6, 7, 8, 9]) || !in_array($level, [0, 1, 2])) {
             $this->addFlash('warning', $this->translator->trans('front.maze.invalid_parameters'));
@@ -79,9 +80,9 @@ class MoviePlayController extends AbstractController
      */
     public function minPathAction(Request $request, MinPathFinder $minPathFinder): Response
     {
-        $startMovieId = $request->request->get('startTmdbId');
-        $endMovieId = $request->request->get('endTmdbId');
-        $level = $request->request->get('level');
+        $startMovieId = intval($request->request->get('startTmdbId'));
+        $endMovieId = intval($request->request->get('endTmdbId'));
+        $level = intval($request->request->get('level'));
 
         try {
             $movieGraph = $this->graphBuilder->buildGraph();
@@ -102,8 +103,9 @@ class MoviePlayController extends AbstractController
      */
     public function maxPathAction(Request $request, MaxPathFinder $maxPathFinder): Response
     {
+        /** @var array<int> $movieIds */
         $movieIds = explode(',', $request->request->get('tmdbIds'));
-        $level = $request->request->get('level');
+        $level = intval($request->request->get('level'));
 
         try {
             $movieGraph = $this->graphBuilder->buildGraph($movieIds);
@@ -118,6 +120,9 @@ class MoviePlayController extends AbstractController
         }
     }
 
+    /**
+     * @param array<Movie> $moviePath
+     */
     protected function renderPlayView(array $moviePath, int $level, string $replayUrl): Response
     {
         $helpActorList = $this->helpFactory->getActors($moviePath, $level);

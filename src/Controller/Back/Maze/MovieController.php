@@ -31,7 +31,7 @@ class MovieController extends AbstractController
         MovieRepository $movieRepository,
         BuildProcessRepository $buildProcessRepository
     ): Response {
-        $page = $request->query->get('page', 1);
+        $page = intval($request->query->get('page', '1'));
         $title = $request->query->get('value', null);
 
         return $this->render('back/maze/movie/list.html.twig', [
@@ -42,7 +42,7 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route("/admin/maze/movie/view/{movie}", requirements={"movie" = "\d+"}, name="bo_maze_movie_view")
+     * @Route("/admin/maze/movie/view/{movie}", requirements={"movie": "\d+"}, name="bo_maze_movie_view")
      */
     public function viewAction(Movie $movie): Response
     {
@@ -61,7 +61,7 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route("/admin/maze/movie/add/{tmdbId}", requirements={"tmdbId" = "\d+"}, name="bo_maze_movie_add")
+     * @Route("/admin/maze/movie/add/{tmdbId}", requirements={"tmdbId": "\d+"}, name="bo_maze_movie_add")
      */
     public function addAction(
         TranslatorInterface $translator,
@@ -100,7 +100,7 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route("/admin/maze/movie/delete/{movie}", requirements={"movie" = "\d+"}, name="bo_maze_movie_delete")
+     * @Route("/admin/maze/movie/delete/{movie}", requirements={"movie": "\d+"}, name="bo_maze_movie_delete")
      */
     public function deleteAction(
         TranslatorInterface $translator,

@@ -31,7 +31,7 @@ class StatisticsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/statistics/quiz/{quiz}", requirements={"quiz" = "\d+"}, name="bo_quiz_statistics_quiz")
+     * @Route("/admin/quiz/statistics/quiz/{quiz}", requirements={"quiz": "\d+"}, name="bo_quiz_statistics_quiz")
      */
     public function statisticsQuizAction(Quiz $quiz): Response
     {
@@ -43,7 +43,7 @@ class StatisticsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/statistics/user/{user}", requirements={"user" = "\d+"}, name="bo_quiz_statistics_user")
+     * @Route("/admin/quiz/statistics/user/{user}", requirements={"user": "\d+"}, name="bo_quiz_statistics_user")
      */
     public function statisticsUserAction(User $user): Response
     {
@@ -54,7 +54,7 @@ class StatisticsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/statistics/quiz/response/{response}", requirements={"response" = "\d+"}, name="bo_quiz_statistics_response")
+     * @Route("/admin/quiz/statistics/quiz/response/{response}", requirements={"response": "\d+"}, name="bo_quiz_statistics_response")
      */
     public function statisticsQuizResponseAction(QuizResponse $response): Response
     {
@@ -64,7 +64,7 @@ class StatisticsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/statistics/user/response/{user}/{quiz}", requirements={"user" = "\d+", "quiz" = "\d+"}, name="bo_quiz_statistics_user_response")
+     * @Route("/admin/quiz/statistics/user/response/{user}/{quiz}", requirements={"user": "\d+", "quiz": "\d+"}, name="bo_quiz_statistics_user_response")
      */
     public function statisticsUserResponseAction(User $user, Quiz $quiz): Response
     {

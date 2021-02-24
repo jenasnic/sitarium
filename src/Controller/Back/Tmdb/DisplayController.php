@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DisplayController extends AbstractController
 {
     /**
-     * @Route("/admin/tmdb/display/actor/{tmdbId}", name="bo_tmdb_display_actor", requirements={"tmdbId"="\d+"})
+     * @Route("/admin/tmdb/display/actor/{tmdbId}", name="bo_tmdb_display_actor", requirements={"tmdbId": "\d+"})
      */
     public function displayActorAction(Request $request, TmdbDataProvider $tmdbDataProvider, int $tmdbId): Response
     {
@@ -21,7 +21,7 @@ class DisplayController extends AbstractController
     }
 
     /**
-     * @Route("/admin/tmdb/display/movie/{tmdbId}", name="bo_tmdb_display_movie", requirements={"tmdbId"="\d+"})
+     * @Route("/admin/tmdb/display/movie/{tmdbId}", name="bo_tmdb_display_movie", requirements={"tmdbId": "\d+"})
      */
     public function displayMovieAction(Request $request, TmdbDataProvider $tmdbDataProvider, int $tmdbId): Response
     {

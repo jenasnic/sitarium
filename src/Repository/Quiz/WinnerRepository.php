@@ -32,7 +32,8 @@ class WinnerRepository extends ServiceEntityRepository
                 ->andWhere($queryBuilder->expr()->orX(
                     sprintf('user.firstname like \'%%%s%%\'', $name),
                     sprintf('user.lastname like \'%%%s%%\'', $name)
-                ));
+                ))
+            ;
         }
 
         $paginator = new Pagerfanta(new QueryAdapter($queryBuilder));

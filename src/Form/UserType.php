@@ -2,12 +2,17 @@
 
 namespace App\Form;
 
+use App\Entity\User;
 use App\Enum\User\RoleEnum;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class UserType extends AccountType
 {
+    /**
+     * @param FormBuilderInterface<User> $builder
+     * @param array<string, mixed> $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);

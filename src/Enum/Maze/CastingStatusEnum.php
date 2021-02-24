@@ -8,6 +8,9 @@ class CastingStatusEnum
     public const INITIALIZED = 'casting_validated';
     public const EMPTY = 'casting_empty';
 
+    /**
+     * @return array<string>
+     */
     public static function getAll(): array
     {
         return [

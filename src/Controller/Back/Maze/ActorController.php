@@ -31,7 +31,7 @@ class ActorController extends AbstractController
         ActorRepository $actorRepository,
         BuildProcessRepository $buildProcessRepository
     ): Response {
-        $page = $request->query->get('page', 1);
+        $page = intval($request->query->get('page', '1'));
         $fullname = $request->query->get('value', null);
 
         return $this->render('back/maze/actor/list.html.twig', [
@@ -42,7 +42,7 @@ class ActorController extends AbstractController
     }
 
     /**
-     * @Route("/admin/maze/actor/view/{actor}", requirements={"actor" = "\d+"}, name="bo_maze_actor_view")
+     * @Route("/admin/maze/actor/view/{actor}", requirements={"actor": "\d+"}, name="bo_maze_actor_view")
      */
     public function viewAction(Actor $actor): Response
     {
@@ -61,7 +61,7 @@ class ActorController extends AbstractController
     }
 
     /**
-     * @Route("/admin/maze/actor/add/{tmdbId}", requirements={"tmdbId" = "\d+"}, name="bo_maze_actor_add")
+     * @Route("/admin/maze/actor/add/{tmdbId}", requirements={"tmdbId": "\d+"}, name="bo_maze_actor_add")
      */
     public function addAction(
         TranslatorInterface $translator,
@@ -100,7 +100,7 @@ class ActorController extends AbstractController
     }
 
     /**
-     * @Route("/admin/maze/actor/delete/{actor}", requirements={"actor" = "\d+"}, name="bo_maze_actor_delete")
+     * @Route("/admin/maze/actor/delete/{actor}", requirements={"actor": "\d+"}, name="bo_maze_actor_delete")
      */
     public function deleteAction(
         TranslatorInterface $translator,

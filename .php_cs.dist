@@ -3,16 +3,19 @@
 $finder = PhpCsFixer\Finder::create()
     ->exclude('vendor')
     ->notPath('src/Symfony/Component/Translation/Tests/fixtures/resources.php')
-    ->in(__DIR__)
+    ->in(__DIR__ . '/src/')
 ;
 
 return PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
     ->setRules(array(
+        '@PHP74Migration' => true,
+        '@PhpCsFixer' => true,
         '@Symfony' => true,
+        '@DoctrineAnnotation' => true,
         'array_syntax' => ['syntax' => 'short'],
-        'dir_constant' => true,
-        'phpdoc_align' => false,
+        'phpdoc_align' => ['align' => 'left'],
     ))
     ->setFinder($finder)
 ;
+
