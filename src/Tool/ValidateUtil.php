@@ -17,7 +17,7 @@ class ValidateUtil
      */
     public static function checkMail(string $mail): bool
     {
-        return empty($mail) ? false : preg_match(self::$MAIL_REGEX, $mail);
+        return empty($mail) ? false : preg_match(self::MAIL_REGEX, $mail);
     }
 
     /**
@@ -29,7 +29,7 @@ class ValidateUtil
      */
     public static function checkPhoneNumber(string $phone): bool
     {
-        return empty($phone) ? false : preg_match(self::$PHONE_REGEX, $phone);
+        return empty($phone) ? false : preg_match(self::PHONE_REGEX, $phone);
     }
 
     /**
@@ -42,7 +42,7 @@ class ValidateUtil
      */
     public static function checkForUrlRestriction(string $text): bool
     {
-        return empty($text) ? false : preg_match(self::$URL_REGEX, $text);
+        return empty($text) ? false : preg_match(self::URL_REGEX, $text);
     }
 
     /**
@@ -50,8 +50,8 @@ class ValidateUtil
      *
      * @param string $password password we want to check if matches password security
      * @param int $level 1 for low security (only lower / upper case or letter / numeric),
-     * 2 for medium security (lower / upper case + numeric),
-     * 3 for high security (lower / upper case + numeric + special character)
+     *                   2 for medium security (lower / upper case + numeric),
+     *                   3 for high security (lower / upper case + numeric + special character)
      *
      * @return bool TRUE if password is valid, FALSE either
      */

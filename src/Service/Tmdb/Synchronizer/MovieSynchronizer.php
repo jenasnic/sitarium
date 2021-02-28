@@ -3,74 +3,63 @@
 namespace App\Service\Tmdb\Synchronizer;
 
 use App\Entity\Maze\Movie;
-use App\Model\Tmdb\Search\DisplayableInterface;
 use App\Repository\Maze\MovieRepository;
-use App\Service\Tmdb\TmdbApiService;
+use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * @extends AbstractSynchronizer<Movie>
+ */
 class MovieSynchronizer extends AbstractSynchronizer
 {
-    /**
-     * @var MovieRepository
-     */
-    protected $movieRepository;
-    
-    /**
-     * @param TmdbApiService $tmdbService
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param MovieRepository $movieRepository
-     */
+    protected MovieRepository $movieRepository;
+
     public function __construct(
-        TmdbApiService $tmdbService,
+        TmdbDataProvider $tmdbDataProvider,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher,
         MovieRepository $movieRepository
     ) {
-        parent::__construct($tmdbService, $entityManager, $eventDispatcher);
+        parent::__construct($tmdbDataProvider, $entityManager, $eventDispatcher);
 
         $this->movieRepository = $movieRepository;
     }
 
-    /**
-     * @return string
-     */
-    protected function getLocalEntityClass()
+    protected function getType(): string
     {
         return Movie::class;
     }
 
     /**
-     * @return string
+     * @return Movie[]|array<Movie>
      */
-    protected function getTmdbEntityClass()
-    {
-        return Movie::class;
-    }
-
-    /**
-     * @return DisplayableInterface[]|array
-     */
-    protected function getAllData()
+    protected function getAllData(): array
     {
         return $this->movieRepository->findAll();
     }
 
     /**
-     * @param Movie $localData
-     * @param Movie $tmdbData
+     * @param Movie $data
      *
      * @return bool TRUE if local data is updated, FALSE either
      */
-    protected function synchronizeData($localData, $tmdbData): bool
+    protected function synchronizeData($data): bool
     {
-        if ($localData->getPictureUrl() !== $tmdbData->getPictureUrl()) {
-            $localData->setPictureUrl($tmdbData->getPictureUrl());
+        $tmdbData = $this->tmdbDataProvider->getMovie($data->getTmdbId());
 
-            return true;
+        $isUpdated = false;
+
+        if ($data->getPictureUrl() !== $tmdbData->getPosterPath()) {
+            $data->setPictureUrl($tmdbData->getPosterPath());
+            $isUpdated = true;
         }
 
-        return false;
+        if ($data->getTitle() !== $tmdbData->getTitle()) {
+            $data->setTitle($tmdbData->getTitle());
+            $isUpdated = true;
+        }
+
+        return $isUpdated;
     }
 }

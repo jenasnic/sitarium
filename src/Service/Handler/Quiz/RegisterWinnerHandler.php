@@ -4,6 +4,7 @@ namespace App\Service\Handler\Quiz;
 
 use App\Domain\Command\Quiz\RegisterWinnerCommand;
 use App\Entity\Quiz\Winner;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -11,28 +12,19 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class RegisterWinnerHandler
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @param RegisterWinnerCommand $command
-     */
-    public function handle(RegisterWinnerCommand $command)
+    public function handle(RegisterWinnerCommand $command): void
     {
         $winner = new Winner();
         $winner->setQuiz($command->getQuiz());
         $winner->setUser($command->getUser());
-        $winner->setDate(new \DateTime());
+        $winner->setDate(new DateTime());
 
         $this->entityManager->persist($winner);
         $this->entityManager->flush();

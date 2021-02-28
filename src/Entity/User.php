@@ -15,52 +15,40 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(name="id", type="integer")
-     *
-     * @var int
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(name="firstname", type="string", length=55)
-     *
-     * @var string
      */
-    private $firstname;
+    private ?string $firstname = null;
 
     /**
      * @ORM\Column(name="lastname", type="string", length=55)
-     *
-     * @var string
      */
-    private $lastname;
+    private ?string $lastname = null;
 
     /**
      * @ORM\Column(name="email", type="string", unique=true, length=255)
-     *
-     * @var string
      */
-    private $email;
+    private ?string $email = null;
 
     /**
      * @ORM\Column(name="username", type="string", unique=true, length=55)
-     *
-     * @var string
      */
-    private $username;
+    private ?string $username = null;
 
     /**
      * @ORM\Column(name="password", type="string", length=255)
-     *
-     * @var string
      */
-    private $password;
+    private ?string $password = null;
 
     /**
      * @ORM\Column(name="roles", type="simple_array")
      *
-     * @var array
+     * @var array<string>
      */
-    private $roles;
+    private array $roles;
 
     public function __construct()
     {
@@ -78,109 +66,70 @@ class User implements UserInterface
     /**
      * {@inheritdoc}
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string|null
-     */
     public function getFirstname(): ?string
     {
         return $this->firstname;
     }
 
-    /**
-     * @param string $firstname
-     */
-    public function setFirstname(string $firstname)
+    public function setFirstname(string $firstname): void
     {
         $this->firstname = $firstname;
     }
 
-    /**
-     * @return string|null
-     */
     public function getLastname(): ?string
     {
         return $this->lastname;
     }
 
-    /**
-     * @param string $lastname
-     */
-    public function setLastname(string $lastname)
+    public function setLastname(string $lastname): void
     {
         $this->lastname = $lastname;
     }
 
-    /**
-     * @return string|null
-     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     */
-    public function setEmail(string $email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * @return string|null
-     */
     public function getUsername(): ?string
     {
         return $this->username;
     }
 
-    /**
-     * @param string $username
-     */
-    public function setUsername(string $username)
+    public function setUsername(string $username): void
     {
         $this->username = $username;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    /**
-     * @param string $password
-     */
-    public function setPassword(string $password)
+    public function setPassword(string $password): void
     {
         $this->password = $password;
     }
 
-    /**
-     * @return array
-     */
     public function getRoles(): array
     {
         return $this->roles;
     }
 
-    /**
-     * @param string $role
-     */
     public function addRole(string $role): void
     {
         if (!in_array($role, $this->roles)) {
@@ -188,9 +137,6 @@ class User implements UserInterface
         }
     }
 
-    /**
-     * @param string $role
-     */
     public function removeRole(string $role): void
     {
         $this->roles = array_filter($this->roles, function ($internalRole) use ($role) {
@@ -198,9 +144,6 @@ class User implements UserInterface
         });
     }
 
-    /**
-     * @return string
-     */
     public function getDisplayName(): string
     {
         return sprintf('%s %s', ucfirst($this->firstname), strtoupper($this->lastname));

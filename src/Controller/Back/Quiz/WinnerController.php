@@ -6,6 +6,7 @@ use App\Entity\Quiz\Quiz;
 use App\Entity\Quiz\Winner;
 use App\Enum\PagerEnum;
 use App\Repository\Quiz\WinnerRepository;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,17 +16,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class WinnerController extends AbstractController
 {
     /**
-     * @Route("/admin/quiz/{quiz}/winner/list", requirements={"quiz" = "\d+"}, name="bo_quiz_winner_list")
-     *
-     * @param Request $request
-     * @param WinnerRepository $winnerRepository
-     * @param Quiz $quiz
-     *
-     * @return Response
+     * @Route("/admin/quiz/{quiz}/winner/list", requirements={"quiz": "\d+"}, name="bo_quiz_winner_list")
      */
     public function listWinnerAction(Request $request, WinnerRepository $winnerRepository, Quiz $quiz): Response
     {
-        $page = $request->query->get('page', 1);
+        $page = intval($request->query->get('page', '1'));
         $name = $request->query->get('value', null);
 
         return $this->render('back/quiz/winner_list.html.twig', [
@@ -36,11 +31,7 @@ class WinnerController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/winner/detail/{winner}", requirements={"winner" = "\d+"}, name="bo_quiz_winner_detail")
-     *
-     * @param Winner $winner
-     *
-     * @return Response
+     * @Route("/admin/quiz/winner/detail/{winner}", requirements={"winner": "\d+"}, name="bo_quiz_winner_detail")
      */
     public function detailWinnerAction(Winner $winner): Response
     {
@@ -48,13 +39,7 @@ class WinnerController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/{quiz}/winner/clear", requirements={"quiz" = "\d+"}, name="bo_quiz_winner_clear")
-     *
-     * @param TranslatorInterface $translator
-     * @param WinnerRepository $winnerRepository
-     * @param Quiz $quiz
-     *
-     * @return Response
+     * @Route("/admin/quiz/{quiz}/winner/clear", requirements={"quiz": "\d+"}, name="bo_quiz_winner_clear")
      */
     public function clearWinnerAction(
         TranslatorInterface $translator,
@@ -64,7 +49,7 @@ class WinnerController extends AbstractController
         try {
             $winnerRepository->removeWinnersForQuizId($quiz->getId());
             $this->addFlash('info', $translator->trans('back.global.delete.success'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', $translator->trans('back.global.delete.error'));
         }
 

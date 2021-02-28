@@ -4,15 +4,16 @@ namespace App\DataFixtures\Maze;
 
 use App\Entity\Maze\Movie;
 use App\Enum\Maze\CastingStatusEnum;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class MovieFixtures extends Fixture
 {
     /**
      * {@inheritdoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $datas = $this->getDatas();
 
@@ -24,7 +25,7 @@ class MovieFixtures extends Fixture
     }
 
     /**
-     * @return array
+     * @return array<Movie>
      */
     protected function getDatas(): array
     {
@@ -134,14 +135,6 @@ class MovieFixtures extends Fixture
         return $data;
     }
 
-    /**
-     * @param int $tmdbId
-     * @param string $title
-     * @param string $releaseDate
-     * @param string $pictureUrl
-     *
-     * @return Movie
-     */
     protected function buildData(
         int $tmdbId,
         string $title,
@@ -151,7 +144,7 @@ class MovieFixtures extends Fixture
         $data = new Movie();
         $data->setTmdbId($tmdbId);
         $data->setTitle($title);
-        $data->setReleaseDate(\DateTime::createFromFormat('Y-m-d H:i:s', $releaseDate));
+        $data->setReleaseDate(DateTime::createFromFormat('Y-m-d H:i:s', $releaseDate));
         $data->setPictureUrl($pictureUrl);
         $data->setStatus(CastingStatusEnum::UNINITIALIZED);
 

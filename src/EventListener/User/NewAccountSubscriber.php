@@ -2,41 +2,26 @@
 
 namespace App\EventListener\User;
 
-use App\Event\UserEvents;
 use App\Event\User\NewAccountEvent;
+use Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Twig\Environment;
 
 class NewAccountSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var \Swift_Mailer
-     */
-    protected $mailer;
+    protected MailerInterface $mailer;
 
-    /**
-     * @var \Twig_Environment
-     */
-    protected $twig;
+    protected Environment $twig;
 
-    /**
-     * @var string
-     */
-    protected $mailerFrom;
+    protected string $mailerFrom;
 
-    /**
-     * @var string
-     */
-    protected $mailerSender;
+    protected string $mailerSender;
 
-    /**
-     * @param \Swift_Mailer $mailer
-     * @param \Twig_Environment $twig
-     * @param string $mailFrom
-     * @param string $mailSender
-     */
     public function __construct(
-        \Swift_Mailer $mailer,
-        \Twig_Environment $twig,
+        MailerInterface $mailer,
+        Environment $twig,
         string $mailerFrom,
         string $mailerSender
     ) {
@@ -47,19 +32,16 @@ class NewAccountSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return array<string, string>
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
-            UserEvents::NEW_ACCOUNT => 'onNewAccount',
+            NewAccountEvent::NEW_ACCOUNT => 'onNewAccount',
         ];
     }
 
-    /**
-     * @param NewAccountEvent $event
-     */
-    public function onNewAccount(NewAccountEvent $event)
+    public function onNewAccount(NewAccountEvent $event): void
     {
         try {
             $subject = 'Bienvenue '.$event->getUser()->getDisplayName();
@@ -70,16 +52,16 @@ class NewAccountSubscriber implements EventSubscriberInterface
             ]);
 
             // Create mail and send it
-            $mailMessage = new \Swift_Message();
+            $mailMessage = new Email();
             $mailMessage
-                ->setSubject($subject)
-                ->setFrom($this->mailerFrom, $this->mailerSender)
-                ->setTo($event->getUser()->getEmail())
-                ->setBody($messageContent, 'text/html')
+                ->subject($subject)
+                ->from($this->mailerFrom, $this->mailerSender)
+                ->to($event->getUser()->getEmail())
+                ->html($messageContent)
             ;
 
             $this->mailer->send($mailMessage);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         }
     }
 }

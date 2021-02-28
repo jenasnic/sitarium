@@ -2,126 +2,91 @@
 
 namespace App\Model\Tmdb;
 
-use App\Annotation\Tmdb\TmdbType;
-use App\Annotation\Tmdb\TmdbField;
+use DateTime;
 
-/**
- * @TmdbType("PERSON")
- */
 class Actor
 {
-    /**
-     * @TmdbField(name="id", type="integer")
-     *
-     * @var int
-     */
-    private $tmdbId;
+    private ?int $id = null;
 
-    /**
-     * @TmdbField(name="name")
-     *
-     * @var string
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @TmdbField(name="biography")
-     *
-     * @var string
-     */
-    private $biography;
+    private ?string $character = null;
 
-    /**
-     * @TmdbField(name="birthday", type="datetime", dateFormat="Y-m-d")
-     *
-     * @var \DateTime
-     */
-    private $birthdate;
+    private ?float $popularity = null;
 
-    /**
-     * @TmdbField(name="profile_path")
-     *
-     * @var string
-     */
-    private $pictureUrl;
+    private ?string $biography = null;
 
-    /**
-     * @return int
-     */
-    public function getTmdbId(): int
+    private ?DateTime $birthday = null;
+
+    private ?string $profilePath = null;
+
+    public function getId(): ?int
     {
-        return $this->tmdbId;
+        return $this->id;
     }
 
-    /**
-     * @param int $tmdbId
-     */
-    public function setTmdbId(int $tmdbId)
+    public function setId(int $id): void
     {
-        $this->tmdbId = $tmdbId;
+        $this->id = $id;
     }
 
-    /**
-     * @return string
-     */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
-    public function getBiography()
+    public function getCharacter(): ?string
+    {
+        return $this->character;
+    }
+
+    public function setCharacter(?string $character): void
+    {
+        $this->character = $character;
+    }
+
+    public function getPopularity(): ?float
+    {
+        return $this->popularity;
+    }
+
+    public function setPopularity(?float $popularity): void
+    {
+        $this->popularity = $popularity;
+    }
+
+    public function getBiography(): ?string
     {
         return $this->biography;
     }
 
-    /**
-     * @param string $biography
-     */
-    public function setBiography($biography)
+    public function setBiography(?string $biography): void
     {
         $this->biography = $biography;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getBirthdate(): ?\DateTime
+    public function getBirthday(): ?DateTime
     {
-        return $this->birthdate;
+        return $this->birthday;
     }
 
-    /**
-     * @param \DateTime|null $birthdate
-     */
-    public function setBirthdate(?\DateTime $birthdate)
+    public function setBirthday(?DateTime $birthday): void
     {
-        $this->birthdate = $birthdate;
+        $this->birthday = $birthday;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPictureUrl(): ?string
+    public function getProfilePath(): ?string
     {
-        return $this->pictureUrl;
+        return $this->profilePath;
     }
 
-    /**
-     * @param string|null $pictureUrl
-     */
-    public function setPictureUrl(?string $pictureUrl)
+    public function setProfilePath(?string $profilePath): void
     {
-        $this->pictureUrl = $pictureUrl;
+        $this->profilePath = $profilePath;
     }
 }

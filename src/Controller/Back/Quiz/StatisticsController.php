@@ -12,14 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class StatisticsController extends AbstractController
 {
-    /**
-     * @var UserResponseRepository
-     */
-    protected $userResponseReporitory;
+    protected UserResponseRepository $userResponseReporitory;
 
-    /**
-     * @param UserResponseRepository $userResponseReporitory
-     */
     public function __construct(UserResponseRepository $userResponseReporitory)
     {
         $this->userResponseReporitory = $userResponseReporitory;
@@ -27,8 +21,6 @@ class StatisticsController extends AbstractController
 
     /**
      * @Route("/admin/quiz/statistics", name="bo_quiz_statistics")
-     *
-     * @return Response
      */
     public function statisticsAction(): Response
     {
@@ -39,11 +31,7 @@ class StatisticsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/statistics/quiz/{quiz}", requirements={"quiz" = "\d+"}, name="bo_quiz_statistics_quiz")
-     *
-     * @param Quiz $quiz
-     *
-     * @return Response
+     * @Route("/admin/quiz/statistics/quiz/{quiz}", requirements={"quiz": "\d+"}, name="bo_quiz_statistics_quiz")
      */
     public function statisticsQuizAction(Quiz $quiz): Response
     {
@@ -55,11 +43,7 @@ class StatisticsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/statistics/user/{user}", requirements={"user" = "\d+"}, name="bo_quiz_statistics_user")
-     *
-     * @param User $user
-     *
-     * @return Response
+     * @Route("/admin/quiz/statistics/user/{user}", requirements={"user": "\d+"}, name="bo_quiz_statistics_user")
      */
     public function statisticsUserAction(User $user): Response
     {
@@ -70,11 +54,7 @@ class StatisticsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/statistics/quiz/response/{response}", requirements={"response" = "\d+"}, name="bo_quiz_statistics_response")
-     *
-     * @param QuizResponse $response
-     *
-     * @return Response
+     * @Route("/admin/quiz/statistics/quiz/response/{response}", requirements={"response": "\d+"}, name="bo_quiz_statistics_response")
      */
     public function statisticsQuizResponseAction(QuizResponse $response): Response
     {
@@ -84,12 +64,7 @@ class StatisticsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/statistics/user/response/{user}/{quiz}", requirements={"user" = "\d+", "quiz" = "\d+"}, name="bo_quiz_statistics_user_response")
-     *
-     * @param User $user
-     * @param Quiz $quiz
-     *
-     * @return Response
+     * @Route("/admin/quiz/statistics/user/response/{user}/{quiz}", requirements={"user": "\d+", "quiz": "\d+"}, name="bo_quiz_statistics_user_response")
      */
     public function statisticsUserResponseAction(User $user, Quiz $quiz): Response
     {

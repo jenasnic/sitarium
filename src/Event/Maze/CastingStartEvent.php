@@ -2,26 +2,19 @@
 
 namespace App\Event\Maze;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class CastingStartEvent extends Event
 {
-    /**
-     * @var int
-     */
-    protected $total;
+    public const BUILD_CASTING_START = 'build_casting_start';
 
-    /**
-     * @param int $total
-     */
+    protected int $total;
+
     public function __construct(int $total)
     {
         $this->total = $total;
     }
 
-    /**
-     * @return int
-     */
     public function getTotal(): int
     {
         return $this->total;

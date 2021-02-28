@@ -2,9 +2,7 @@
 
 namespace App\Entity\Tagline;
 
-use App\Annotation\Tmdb\TmdbField;
-use App\Annotation\Tmdb\TmdbType;
-use App\Model\Tmdb\Search\DisplayableInterface;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,212 +10,116 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Table(name="tagline_movie")
  * @ORM\Entity(repositoryClass="App\Repository\Tagline\MovieRepository")
- * @TmdbType("MOVIE")
  */
-class Movie implements DisplayableInterface
+class Movie
 {
     /**
      * @ORM\Id
-     * @TmdbField(name="id", type="integer")
      * @ORM\Column(name="tmdbId", type="integer")
-     *
-     * @var int
      */
-    private $tmdbId;
+    private ?int $tmdbId = null;
 
     /**
      * @ORM\Column(name="title", type="string", length=255)
-     * @TmdbField(name="title")
-     *
-     * @var string
      */
-    private $title;
+    private ?string $title = null;
+
+    /**
+     * @ORM\Column(name="releaseDate", type="datetime", nullable=true)
+     */
+    private ?DateTime $releaseDate = null;
 
     /**
      * @ORM\Column(name="pictureUrl", type="string", length=255, nullable=true)
-     * @TmdbField(name="poster_path")
-     *
-     * @var string
      */
-    private $pictureUrl;
+    private ?string $pictureUrl = null;
 
     /**
      * @ORM\Column(name="tagline", type="text", nullable=true)
-     * @TmdbField(name="tagline")
-     *
-     * @var string
      */
-    private $tagline;
+    private ?string $tagline = null;
 
     /**
      * @ORM\ManyToMany(targetEntity="Genre")
      * @ORM\JoinTable(name="tagline_movie_genre",
-     *      joinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="tmdbId", onDelete="CASCADE")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="genre_id", referencedColumnName="tmdbId", onDelete="CASCADE")}
+     *     joinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="tmdbId", onDelete="CASCADE")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="genre_id", referencedColumnName="tmdbId", onDelete="CASCADE")}
      * )
      *
-     * @var Genre[]|Collection
+     * @var Genre[]|Collection<int, Genre>
      */
-    private $genres;
-
-    /**
-     * @TmdbField(name="vote_count", type="integer")
-     *
-     * @var int
-     */
-    private $voteCount;
-
-    /**
-     * @TmdbField(name="release_date", type="datetime", dateFormat="Y-m-d")
-     *
-     * @var \DateTime
-     */
-    private $releaseDate;
-
-    /**
-     * @TmdbField(name="genre_ids", type="array")
-     *
-     * @var array
-     */
-    private $genreIds;
-
-    /**
-     * @TmdbField(name="genres", type="object_array", subClass="App\Entity\Tagline\Genre")
-     *
-     * @var Genre[]|array
-     */
-    private $tmdbGenres;
+    private Collection $genres;
 
     public function __construct()
     {
         $this->genres = new ArrayCollection();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getTmdbId(): int
+    public function getTmdbId(): ?int
     {
         return $this->tmdbId;
     }
 
-    /**
-     * @param int $tmdbId
-     */
-    public function setTmdbId(int $tmdbId)
+    public function setTmdbId(int $tmdbId): void
     {
         $this->tmdbId = $tmdbId;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function getReleaseDate(): ?DateTime
+    {
+        return $this->releaseDate;
+    }
+
+    public function setReleaseDate(?DateTime $releaseDate): void
+    {
+        $this->releaseDate = $releaseDate;
+    }
+
     public function getPictureUrl(): ?string
     {
         return $this->pictureUrl;
     }
 
-    /**
-     * @param string|null $pictureUrl
-     */
-    public function setPictureUrl(?string $pictureUrl)
+    public function setPictureUrl(?string $pictureUrl): void
     {
         $this->pictureUrl = $pictureUrl;
     }
 
-    /**
-     * @return string|null
-     */
     public function getTagline(): ?string
     {
         return $this->tagline;
     }
 
-    /**
-     * @param string|null $tagline
-     */
-    public function setTagline(?string $tagline)
+    public function setTagline(?string $tagline): void
     {
         $this->tagline = $tagline;
     }
 
     /**
-     * @return Genre[]|Collection
+     * @return Genre[]|Collection<int, Genre>
      */
     public function getGenres(): Collection
     {
         return $this->genres;
     }
 
-    /**
-     * @param Genre $genre
-     */
     public function addGenre(Genre $genre): void
     {
         $this->genres->add($genre);
     }
 
-    /**
-     * @param Genre $genre
-     */
     public function removeGenre(Genre $genre): void
     {
         $this->genres->removeElement($genre);
-    }
-
-    /**
-     * @return int
-     */
-    public function getVoteCount(): int
-    {
-        return $this->voteCount;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getReleaseDate(): ?\DateTime
-    {
-        return $this->releaseDate;
-    }
-
-    /**
-     * @return array
-     */
-    public function getGenreIds(): array
-    {
-        return $this->genreIds;
-    }
-
-    /**
-     * @return Genre[]|array
-     */
-    public function getTmdbGenres(): array
-    {
-        return $this->tmdbGenres;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDisplayName(): string
-    {
-        return $this->title;
     }
 }

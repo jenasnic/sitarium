@@ -2,42 +2,28 @@
 
 namespace App\Event\Synchronization;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class SynchronizationStartEvent extends Event
 {
-    /**
-     * @var int
-     */
-    protected $total;
+    public const SYNCHRONIZE_DATA_START = 'synchronize_data_start';
 
-    /**
-     * @var string
-     */
-    protected $entityClass;
+    protected int $total;
 
-    /**
-     * @param int $total
-     * @param string $entityClass
-     */
+    protected string $entityClass;
+
     public function __construct(int $total, string $entityClass)
     {
         $this->total = $total;
         $this->entityClass = $entityClass;
     }
 
-    /**
-     * @return int
-     */
     public function getTotal(): int
     {
         return $this->total;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getEntityClass(): ?string
+    public function getEntityClass(): string
     {
         return $this->entityClass;
     }

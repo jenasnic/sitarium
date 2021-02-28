@@ -12,6 +12,7 @@ use App\Repository\UserRepository;
 use App\Service\Handler\User\AddUserHandler;
 use App\Service\Handler\User\DeleteUserHandler;
 use App\Service\Handler\User\UpdateUserHandler;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,15 +23,10 @@ class UserController extends AbstractController
 {
     /**
      * @Route("/admin/user/list", name="bo_user_list", methods="GET")
-     *
-     * @param Request $request
-     * @param UserRepository $userRepository
-     *
-     * @return Response
      */
     public function listAction(Request $request, UserRepository $userRepository): Response
     {
-        $page = $request->query->get('page', 1);
+        $page = intval($request->query->get('page', '1'));
         $name = $request->query->get('value', null);
 
         return $this->render('back/user/list.html.twig', [
@@ -41,12 +37,6 @@ class UserController extends AbstractController
 
     /**
      * @Route("/admin/user/add", name="bo_user_add")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param AddUserHandler $handler
-     *
-     * @return Response
      */
     public function addAction(Request $request, TranslatorInterface $translator, AddUserHandler $handler): Response
     {
@@ -60,7 +50,7 @@ class UserController extends AbstractController
                 $handler->handle(new AddUserCommand($user, $newPassword));
 
                 $this->addFlash('info', $translator->trans('back.global.save.success'));
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', $translator->trans('back.global.save.error'));
             }
 
@@ -71,14 +61,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/user/edit/{user}", requirements={"user" = "\d+"}, name="bo_user_edit")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param UpdateUserHandler $handler
-     * @param User $user
-     *
-     * @return Response
+     * @Route("/admin/user/edit/{user}", requirements={"user": "\d+"}, name="bo_user_edit")
      */
     public function editAction(
         Request $request,
@@ -95,7 +78,7 @@ class UserController extends AbstractController
                 $handler->handle(new UpdateUserCommand($user, $newPassword));
 
                 $this->addFlash('info', $translator->trans('back.global.save.success'));
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', $translator->trans('back.global.save.error'));
             }
 
@@ -106,20 +89,14 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/user/delete/{user}", requirements={"user" = "\d+"}, name="bo_user_delete")
-     *
-     * @param TranslatorInterface $translator
-     * @param DeleteUserHandler $handler
-     * @param User $user
-     *
-     * @return Response
+     * @Route("/admin/user/delete/{user}", requirements={"user": "\d+"}, name="bo_user_delete")
      */
     public function deleteAction(TranslatorInterface $translator, DeleteUserHandler $handler, User $user): Response
     {
         try {
             $handler->handle(new DeleteUserCommand($user));
             $this->addFlash('info', $translator->trans('back.global.delete.success'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', $translator->trans('back.global.delete.error'));
         }
 

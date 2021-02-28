@@ -3,7 +3,6 @@
 namespace App\Service\Handler\User;
 
 use App\Domain\Command\User\AddUserCommand;
-use App\Event\UserEvents;
 use App\Event\User\NewAccountEvent;
 use App\Tool\PasswordUtil;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,30 +13,17 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class AddUserHandler
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher)
     {
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    /**
-     * @param AddUserCommand $command
-     */
-    public function handle(AddUserCommand $command)
+    public function handle(AddUserCommand $command): void
     {
         $password = $command->getPassword();
         if (null === $password) {
@@ -50,6 +36,6 @@ class AddUserHandler
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $this->eventDispatcher->dispatch(UserEvents::NEW_ACCOUNT, new NewAccountEvent($user, $password));
+        $this->eventDispatcher->dispatch(new NewAccountEvent($user, $password), NewAccountEvent::NEW_ACCOUNT);
     }
 }

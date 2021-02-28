@@ -9,9 +9,11 @@ use App\Enum\Tmdb\TypeEnum;
 use App\Repository\Maze\ActorRepository;
 use App\Repository\Tmdb\BuildProcessRepository;
 use App\Service\Handler\Maze\AddActorHandler;
-use App\Service\Tmdb\TmdbApiService;
-use App\Validator\Maze\ActorValidator;
+use App\Service\Tmdb\DisplayableResultAdapter;
+use App\Service\Tmdb\TmdbDataProvider;
+use App\Validator\Tmdb\ActorValidator;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,27 +24,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ActorController extends AbstractController
 {
     /**
-     * Max actor count to return when searching actors through TMDB.
-     *
-     * @var int
-     */
-    const MAX_ACTOR_RESULT_COUNT = 10;
-
-    /**
      * @Route("/admin/maze/actor/list", name="bo_maze_actor_list")
-     *
-     * @param Request $request
-     * @param ActorRepository $actorRepository
-     * @param BuildProcessRepository $buildProcessRepository
-     *
-     * @return Response
      */
     public function listAction(
         Request $request,
         ActorRepository $actorRepository,
         BuildProcessRepository $buildProcessRepository
     ): Response {
-        $page = $request->query->get('page', 1);
+        $page = intval($request->query->get('page', '1'));
         $fullname = $request->query->get('value', null);
 
         return $this->render('back/maze/actor/list.html.twig', [
@@ -53,11 +42,7 @@ class ActorController extends AbstractController
     }
 
     /**
-     * @Route("/admin/maze/actor/view/{actor}", requirements={"actor" = "\d+"}, name="bo_maze_actor_view")
-     *
-     * @param Actor $actor
-     *
-     * @return Response
+     * @Route("/admin/maze/actor/view/{actor}", requirements={"actor": "\d+"}, name="bo_maze_actor_view")
      */
     public function viewAction(Actor $actor): Response
     {
@@ -66,10 +51,6 @@ class ActorController extends AbstractController
 
     /**
      * @Route("/admin/maze/actor/new", name="bo_maze_actor_new")
-     *
-     * @param UrlGeneratorInterface $urlGenerator
-     *
-     * @return Response
      */
     public function newAction(UrlGeneratorInterface $urlGenerator): Response
     {
@@ -80,13 +61,7 @@ class ActorController extends AbstractController
     }
 
     /**
-     * @Route("/admin/maze/actor/add/{tmdbId}", requirements={"tmdbId" = "\d+"}, name="bo_maze_actor_add")
-     *
-     * @param TranslatorInterface $translator
-     * @param AddActorHandler $handler
-     * @param int $tmdbId
-     *
-     * @return Response
+     * @Route("/admin/maze/actor/add/{tmdbId}", requirements={"tmdbId": "\d+"}, name="bo_maze_actor_add")
      */
     public function addAction(
         TranslatorInterface $translator,
@@ -96,7 +71,7 @@ class ActorController extends AbstractController
         try {
             $handler->handle(new AddActorCommand($tmdbId));
             $this->addFlash('info', $translator->trans('back.global.add.success'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', $translator->trans('back.global.add.error'));
         }
 
@@ -105,38 +80,27 @@ class ActorController extends AbstractController
 
     /**
      * @Route("/admin/maze/actor/search", name="bo_maze_actor_search")
-     *
-     * @param Request $request
-     * @param TmdbApiService $tmdbService
-     *
-     * @return Response
      */
     public function searchAction(
         Request $request,
-        TmdbApiService $tmdbService
+        TmdbDataProvider $tmdbDataProvider,
+        DisplayableResultAdapter $displayableResultAdapter
     ): Response {
         $name = $request->query->get('value', '');
         $actors = [];
 
         if (strlen($name) > 2) {
-            $result = $tmdbService->searchEntity(Actor::class, $name, new ActorValidator(), self::MAX_ACTOR_RESULT_COUNT);
-            $actors = $result['results'];
+            $actors = $tmdbDataProvider->searchActors($name, new ActorValidator());
         }
 
         return $this->render('back/tmdb/search_result.html.twig', [
-            'items' => $actors,
+            'items' => $displayableResultAdapter->adaptArray($actors),
             'callback' => 'bo_maze_actor_add',
         ]);
     }
 
     /**
-     * @Route("/admin/maze/actor/delete/{actor}", requirements={"actor" = "\d+"}, name="bo_maze_actor_delete")
-     *
-     * @param TranslatorInterface $translator
-     * @param EntityManagerInterface $entityManager
-     * @param Actor $actor
-     *
-     * @return Response
+     * @Route("/admin/maze/actor/delete/{actor}", requirements={"actor": "\d+"}, name="bo_maze_actor_delete")
      */
     public function deleteAction(
         TranslatorInterface $translator,
@@ -148,7 +112,7 @@ class ActorController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('info', $translator->trans('back.global.delete.success'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', $translator->trans('back.global.delete.error'));
         }
 

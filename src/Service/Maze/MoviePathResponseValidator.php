@@ -3,8 +3,8 @@
 namespace App\Service\Maze;
 
 use App\Entity\Maze\CastingActor;
-use App\Repository\Maze\MovieRepository;
 use App\Repository\Maze\CastingActorRepository;
+use App\Repository\Maze\MovieRepository;
 use App\Tool\TextUtil;
 
 /**
@@ -13,20 +13,10 @@ use App\Tool\TextUtil;
  */
 class MoviePathResponseValidator
 {
-    /**
-     * @var MovieRepository
-     */
-    protected $movieRepository;
+    protected MovieRepository $movieRepository;
 
-    /**
-     * @var CastingActorRepository
-     */
-    protected $actorRepository;
+    protected CastingActorRepository $actorRepository;
 
-    /**
-     * @param MovieRepository $movieRepository
-     * @param CastingActorRepository $actorRepository
-     */
     public function __construct(MovieRepository $movieRepository, CastingActorRepository $actorRepository)
     {
         $this->movieRepository = $movieRepository;
@@ -35,12 +25,6 @@ class MoviePathResponseValidator
 
     /**
      * Allows to check if both specified movies define common actor matching specified name.
-     *
-     * @param int $actorId1
-     * @param int $actorId2
-     * @param string $movieTitle
-     *
-     * @return CastingActor|null common actor matching specified name or null if no common actor found
      */
     public function check(int $movieId1, int $movieId2, string $actorName): ?CastingActor
     {

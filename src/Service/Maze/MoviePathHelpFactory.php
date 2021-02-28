@@ -12,12 +12,10 @@ use Doctrine\Common\Collections\Collection;
 class MoviePathHelpFactory
 {
     /**
-     * Allows to get list of actors to use to resolve specified movie path (used to display help for movie maze...).
-     *
-     * @param Movie[]|array $moviePath array of movies we want to get casting as helper
+     * @param Movie[]|array<Movie> $moviePath
      * @param int $level difficulty level (0 easy, 1 medium, 2 difficult) used to reduce help list count
      *
-     * @return CastingActor[]|array array of actors matching specified parameters
+     * @return CastingActor[]|array<CastingActor>
      */
     public function getActors(array $moviePath, int $level): array
     {
@@ -99,10 +97,10 @@ class MoviePathHelpFactory
     /**
      * Allows to get common actors between 2 specified actors list.
      *
-     * @param CastingActor[]|Collection $actorList1
-     * @param CastingActor[]|Collection $actorList2
+     * @param CastingActor[]|Collection<int, CastingActor> $actorList1
+     * @param CastingActor[]|Collection<int, CastingActor> $actorList2
      *
-     * @return array
+     * @return CastingActor[]|array<CastingActor>
      */
     private function getCommonActorList(Collection $actorList1, Collection $actorList2): array
     {

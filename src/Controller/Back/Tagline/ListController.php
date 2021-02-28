@@ -7,6 +7,7 @@ use App\Enum\PagerEnum;
 use App\Repository\Tagline\MovieRepository;
 use App\Repository\Tmdb\BuildProcessRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,19 +18,13 @@ class ListController extends AbstractController
 {
     /**
      * @Route("/admin/tagline/movie/list", name="bo_tagline_movie_list")
-     *
-     * @param Request $request
-     * @param MovieRepository $movieRepository
-     * @param BuildProcessRepository $buildProcessRepository
-     *
-     * @return Response
      */
     public function listAction(
         Request $request,
         MovieRepository $movieRepository,
         BuildProcessRepository $buildProcessRepository
     ): Response {
-        $page = $request->query->get('page', 1);
+        $page = intval($request->query->get('page', '1'));
         $title = $request->query->get('value', null);
 
         return $this->render('back/tagline/movie/list.html.twig', [
@@ -40,11 +35,7 @@ class ListController extends AbstractController
     }
 
     /**
-     * @Route("/admin/tagline/movie/view/{movie}", requirements={"movie" = "\d+"}, name="bo_tagline_movie_view")
-     *
-     * @param Movie $movie
-     *
-     * @return Response
+     * @Route("/admin/tagline/movie/view/{movie}", requirements={"movie": "\d+"}, name="bo_tagline_movie_view")
      */
     public function viewAction(Movie $movie): Response
     {
@@ -52,13 +43,7 @@ class ListController extends AbstractController
     }
 
     /**
-     * @Route("/admin/tagline/movie/delete/{movie}", requirements={"movie" = "\d+"}, name="bo_tagline_movie_delete")
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param TranslatorInterface $translator
-     * @param Movie $movie
-     *
-     * @return Response
+     * @Route("/admin/tagline/movie/delete/{movie}", requirements={"movie": "\d+"}, name="bo_tagline_movie_delete")
      */
     public function deleteAction(
         EntityManagerInterface $entityManager,
@@ -70,7 +55,7 @@ class ListController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('info', $translator->trans('back.global.delete.success'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', $translator->trans('back.global.delete.error'));
         }
 

@@ -6,6 +6,7 @@ use App\Domain\Command\Quiz\RegisterWinnerCommand;
 use App\Entity\Quiz\Quiz;
 use App\Service\Handler\Quiz\RegisterWinnerHandler;
 use App\Service\Quiz\ResolveQuizValidator;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,14 +18,6 @@ class WinnerController extends AbstractController
 {
     /**
      * @Route("/quiz/ajax/quiz-resolu/{quiz}", name="fo_quiz_resolved", methods="POST")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param ResolveQuizValidator $validator
-     * @param RegisterWinnerHandler $handler
-     * @param Quiz $quiz
-     *
-     * @return Response
      */
     public function quizResolvedAction(
         Request $request,
@@ -48,10 +41,10 @@ class WinnerController extends AbstractController
                 }
 
                 return new JsonResponse(['success' => true, 'message' => $message]);
-            } else {
-                return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.winner.quiz_not_resolved')]);
             }
-        } catch (\Exception $e) {
+
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.winner.quiz_not_resolved')]);
+        } catch (Exception $e) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.winner.quiz_resolve_error')]);
         }
     }

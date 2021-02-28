@@ -15,10 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ExecuteProcessCommandConverter implements ParamConverterInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function apply(Request $request, ParamConverter $configuration)
+    public function apply(Request $request, ParamConverter $configuration): bool
     {
         $type = $request->request->get('type');
         $parameters = $request->request->get('parameters', null);
@@ -36,12 +33,11 @@ class ExecuteProcessCommandConverter implements ParamConverterInterface
             $configuration->getName(),
             new ExecuteProcessCommand($type, $parameters, $options)
         );
+
+        return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function supports(ParamConverter $configuration)
+    public function supports(ParamConverter $configuration): bool
     {
         return ExecuteProcessCommand::class === $configuration->getClass();
     }

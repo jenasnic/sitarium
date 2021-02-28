@@ -6,6 +6,7 @@ use App\Repository\Maze\ActorRepository;
 use App\Repository\Maze\FilmographyMovieRepository;
 use App\Service\Maze\ActorPathResponseValidator;
 use App\Tool\TmdbUtil;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,12 +17,6 @@ class ActorResponseController extends AbstractController
 {
     /**
      * @Route("/quiz-filmographie/ajax/valider-response", name="fo_maze_actor_progress", methods="POST")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param ActorPathResponseValidator $responseChecker
-     *
-     * @return JsonResponse
      */
     public function progressAction(
         Request $request,
@@ -45,19 +40,13 @@ class ActorResponseController extends AbstractController
             }
 
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.response.incorrect')]);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.response.process_error')]);
         }
     }
 
     /**
      * @Route("/quiz-filmographie/ajax/indice", name="fo_maze_actor_trick", methods="POST")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param ActorRepository $actorRepository
-     *
-     * @return JsonResponse
      */
     public function trickAction(
         Request $request,
@@ -81,23 +70,16 @@ class ActorResponseController extends AbstractController
                 }
 
                 return new JsonResponse(['success' => true, 'responses' => $movies]);
-            } else {
-                return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.actor.not_found')]);
             }
-        } catch (\Exception $ex) {
+
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.actor.not_found')]);
+        } catch (Exception $ex) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.actor.filmography_error')]);
         }
     }
 
     /**
      * @Route("/quiz-filmographie/ajax/tricher", name="fo_maze_actor_cheat", methods="POST")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param ActorRepository $actorRepository
-     * @param FilmographyMovieRepository $filmographyMovieRepository
-     *
-     * @return JsonResponse
      */
     public function cheatAction(
         Request $request,
@@ -125,7 +107,7 @@ class ActorResponseController extends AbstractController
                 'tmdbLink' => sprintf('https://www.themoviedb.org/movie/%d', $commonMovie->getTmdbId()),
                 'pictureUrl' => TmdbUtil::getBasePictureUrl().$commonMovie->getPictureUrl(),
             ]);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.actor.cheat.error')]);
         }
     }

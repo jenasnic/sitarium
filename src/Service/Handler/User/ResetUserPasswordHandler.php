@@ -3,7 +3,6 @@
 namespace App\Service\Handler\User;
 
 use App\Domain\Command\User\ResetPasswordCommand;
-use App\Event\UserEvents;
 use App\Event\User\ResetPasswordEvent;
 use App\Tool\PasswordUtil;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,30 +13,17 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class ResetUserPasswordHandler
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher)
     {
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    /**
-     * @param ResetPasswordCommand $command
-     */
-    public function handle(ResetPasswordCommand $command)
+    public function handle(ResetPasswordCommand $command): void
     {
         $password = PasswordUtil::generatePassword(6, true, true, true, false);
 
@@ -47,6 +33,6 @@ class ResetUserPasswordHandler
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $this->eventDispatcher->dispatch(UserEvents::RESET_PASSWORD, new ResetPasswordEvent($user, $password));
+        $this->eventDispatcher->dispatch(new ResetPasswordEvent($user, $password), ResetPasswordEvent::RESET_PASSWORD);
     }
 }

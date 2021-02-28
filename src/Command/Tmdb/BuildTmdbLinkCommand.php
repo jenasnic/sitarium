@@ -6,23 +6,15 @@ use App\Enum\Tmdb\ProcessTypeEnum;
 use App\Repository\Tmdb\BuildProcessRepository;
 use App\Service\Quiz\TmdbLinkBuilder;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputDefinition;
-use Symfony\Component\Console\Input\InputArgument;
 
 class BuildTmdbLinkCommand extends AbstractBuildProcessCommand
 {
-    /**
-     * @var TmdbLinkBuilder
-     */
-    protected $tmdbLinkBuilder;
+    protected TmdbLinkBuilder $tmdbLinkBuilder;
 
-    /**
-     * @param BuildProcessRepository $buildProcessRepository
-     * @param EntityManagerInterface $entityManager
-     * @param TmdbLinkBuilder $castingBuilder
-     */
     public function __construct(
         BuildProcessRepository $buildProcessRepository,
         EntityManagerInterface $entityManager,
@@ -34,9 +26,9 @@ class BuildTmdbLinkCommand extends AbstractBuildProcessCommand
     }
 
     /**
-     * Command settings.
+     * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -53,9 +45,9 @@ class BuildTmdbLinkCommand extends AbstractBuildProcessCommand
     /**
      * {@inheritdoc}
      */
-    protected function executeProcess(InputInterface $input, OutputInterface $output)
+    protected function executeProcess(InputInterface $input, OutputInterface $output): void
     {
-        $quizId = $input->getArgument('quizId');
+        $quizId = intval($input->getArgument('quizId'));
         $this->tmdbLinkBuilder->build($quizId);
     }
 }

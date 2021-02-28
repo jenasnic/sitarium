@@ -7,7 +7,7 @@ class TextUtil
     /**
      * Allows to remove all HTML from specified text (tags with its attributes...).
      *
-     * @param string text we want to remove HTML code
+     * @param string $text Text we want to remove HTML code
      *
      * @return string Specified text without HTML tags, i.e. without HTML structure.
      */
@@ -22,12 +22,12 @@ class TextUtil
      * WARNING : If text contains HTML code, text might be truncated on HTHML => causes errors.
      * In this case, it is highly recommended to remove HTML tags before.
      *
-     * @param string text Text we want to truncate
-     * @param int size Max length of new truncated text (if more than current text size => no truncation)
+     * @param string $text Text we want to truncate
+     * @param int $size Max length of new truncated text (if more than current text size => no truncation)
      *
-     * @return string truncated text with specified length
+     * @return string Truncated text with specified length
      */
-    public static function truncateText(string $text, string $size): string
+    public static function truncateText(string $text, int $size): string
     {
         if (empty($text) || strlen($text) <= $size) {
             return $text;
@@ -37,13 +37,11 @@ class TextUtil
         $textToCheck = substr($text, 0, $size + 1);
         $maxSize = strrpos($textToCheck, ' ');
 
-        return (-1 === $maxSize) ? substr($text, 0, $size) : substr($text, 0, $maxSize);
+        return (false === $maxSize) ? substr($text, 0, $size) : substr($text, 0, $maxSize);
     }
 
     /**
      * Sanitize a string by replacing all accent characters by the same characters without accent and by replacing special characters by "-".
-     *
-     * @param string stringToSanitize
      *
      * @return string A "clean" string sanitize from any accent or special characters
      */

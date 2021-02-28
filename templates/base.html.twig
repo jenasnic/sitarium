@@ -9,7 +9,7 @@
         <title>{% block title %}Sitarium{% endblock %}</title>
         <link rel="icon" type="image/x-icon" href="/favicon.svg" />
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+            {{ encore_entry_link_tags('css/app') }}
         {% endblock %}
     </head>
     <body>
@@ -26,8 +26,7 @@
             </div>
         </div>
         {% block javascripts %}
-            <script src="{{ asset('build/runtime.js') }}"></script>
-            <script src="{{ asset('build/js/app.js') }}"></script>
+            {{ encore_entry_script_tags('js/app') }}
         {% endblock %}
     </body>
 </html>

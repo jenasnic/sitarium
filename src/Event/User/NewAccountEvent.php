@@ -3,41 +3,27 @@
 namespace App\Event\User;
 
 use App\Entity\User;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class NewAccountEvent extends Event
 {
-    /**
-     * @var User
-     */
-    protected $user;
+    public const NEW_ACCOUNT = 'new_account';
 
-    /**
-     * @var string
-     */
-    protected $password;
+    protected User $user;
 
-    /**
-     * @param User $user
-     * @param string $password
-     */
+    protected string $password;
+
     public function __construct(User $user, string $password)
     {
         $this->user = $user;
         $this->password = $password;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return string
-     */
     public function getPassword(): string
     {
         return $this->password;

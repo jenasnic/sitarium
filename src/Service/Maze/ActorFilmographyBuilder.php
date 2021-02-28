@@ -5,14 +5,18 @@ namespace App\Service\Maze;
 use App\Entity\Maze\Actor;
 use App\Entity\Maze\FilmographyMovie;
 use App\Enum\Maze\FilmographyStatusEnum;
-use App\Event\MazeEvents;
+use App\Event\Maze\FilmographyEndEvent;
+use App\Event\Maze\FilmographyErrorEvent;
 use App\Event\Maze\FilmographyProgressEvent;
 use App\Event\Maze\FilmographyStartEvent;
+use App\Model\Tmdb\Movie;
 use App\Repository\Maze\ActorRepository;
 use App\Repository\Maze\FilmographyMovieRepository;
-use App\Service\Tmdb\TmdbApiService;
-use App\Validator\Maze\FilmographyMovieValidator;
+use App\Service\Converter\FilmographyMovieConverter;
+use App\Service\Tmdb\TmdbDataProvider;
+use App\Validator\Tmdb\FilmographyMovieValidator;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -21,60 +25,42 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class ActorFilmographyBuilder
 {
-    /**
-     * @var TmdbApiService
-     */
-    protected $tmdbService;
+    protected TmdbDataProvider $tmdbDataProvider;
 
-    /**
-     * @var ActorRepository
-     */
-    protected $actorRepository;
+    protected FilmographyMovieConverter $filmographyMovieConverter;
 
-    /**
-     * @var FilmographyMovieRepository
-     */
-    protected $filmographyMovieRepository;
+    protected ActorRepository $actorRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected FilmographyMovieRepository $filmographyMovieRepository;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @param TmdbApiService $tmdbService
-     * @param ActorRepository $actorRepository
-     * @param FilmographyMovieRepository $filmographyMovieRepository
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     */
+    protected EventDispatcherInterface $eventDispatcher;
+
     public function __construct(
-        TmdbApiService $tmdbService,
+        TmdbDataProvider $tmdbDataProvider,
+        FilmographyMovieConverter $filmographyMovieConverter,
         ActorRepository $actorRepository,
         FilmographyMovieRepository $filmographyMovieRepository,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $this->tmdbService = $tmdbService;
+        $this->tmdbDataProvider = $tmdbDataProvider;
+        $this->filmographyMovieConverter = $filmographyMovieConverter;
         $this->actorRepository = $actorRepository;
         $this->filmographyMovieRepository = $filmographyMovieRepository;
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function build()
+    public function build(): void
     {
         try {
             $this->clearPreviousData();
 
             $actors = $this->actorRepository->findAll();
 
-            $this->eventDispatcher->dispatch(MazeEvents::BUILD_FILMOGRAPHY_START, new FilmographyStartEvent(count($actors)));
+            $this->eventDispatcher->dispatch(new FilmographyStartEvent(count($actors)), FilmographyStartEvent::BUILD_FILMOGRAPHY_START);
 
             $allMovies = $this->getAllMovies($actors);
             $filteredMovies = $this->getFilteredMovies($allMovies);
@@ -86,25 +72,22 @@ class ActorFilmographyBuilder
 
             $this->entityManager->flush();
 
-            $this->eventDispatcher->dispatch(MazeEvents::BUILD_FILMOGRAPHY_END);
-        } catch (\Exception $e) {
-            $this->eventDispatcher->dispatch(MazeEvents::BUILD_FILMOGRAPHY_ERROR);
-            throw $e;
+            $this->eventDispatcher->dispatch(new FilmographyEndEvent(), FilmographyEndEvent::BUILD_FILMOGRAPHY_END);
+        } catch (Exception $e) {
+            $this->eventDispatcher->dispatch(new FilmographyErrorEvent($e), FilmographyErrorEvent::BUILD_FILMOGRAPHY_ERROR);
         }
     }
 
-    protected function clearPreviousData()
+    protected function clearPreviousData(): void
     {
         $this->actorRepository->resetActorStatus();
         $this->filmographyMovieRepository->clearFilmography();
     }
 
     /**
-     * Returns all movies for specified actors.
+     * @param array<Actor> $actorList
      *
-     * @param array $actorList
-     *
-     * @return FilmographyMovie[]|array Map with movie tmdbId as key and FilmographyMovie as value
+     * @return FilmographyMovie[]|array<int, FilmographyMovie>
      */
     protected function getAllMovies(array $actorList): array
     {
@@ -113,32 +96,26 @@ class ActorFilmographyBuilder
 
         /** @var Actor $actor */
         foreach ($actorList as $actor) {
-            $movieList = $this->tmdbService->getFilmographyForActorId(
-                $actor->getTmdbId(),
-                'movie',
-                FilmographyMovie::class,
-                new FilmographyMovieValidator()
-            );
+            $movieList = $this->tmdbDataProvider->getFilmography($actor->getTmdbId(), new FilmographyMovieValidator());
 
-            /** @var FilmographyMovie $movie */
+            /** @var Movie $movie */
             foreach ($movieList as $movie) {
-                // Add movie to full list if not yet added
-                if (!isset($movieFullList[$movie->getTmdbId()])) {
-                    $movieFullList[$movie->getTmdbId()] = $movie;
+                if (!isset($movieFullList[$movie->getId()])) {
+                    $movieFullList[$movie->getId()] = $this->filmographyMovieConverter->convert($movie);
                 }
 
-                $movie = $movieFullList[$movie->getTmdbId()];
+                $filmographyMovie = $movieFullList[$movie->getId()];
                 // Add current actor to movie
                 // WARNING : Check if actor not already exist (a same actor can appear several times in a same movie...)
-                if (0 === count($movie->getActors()) || !$movie->getActors()->contains($actor)) {
-                    $movie->addActor($actor);
+                if (0 === count($filmographyMovie->getActors()) || !$filmographyMovie->getActors()->contains($actor)) {
+                    $filmographyMovie->addActor($actor);
                 }
             }
 
             // WARNING : wait between each TMDB request to not override request rate limit (4 per seconde)
             usleep(250001);
 
-            $this->eventDispatcher->dispatch(MazeEvents::BUILD_FILMOGRAPHY_PROGRESS, new FilmographyProgressEvent(++$processCount));
+            $this->eventDispatcher->dispatch(new FilmographyProgressEvent(++$processCount), FilmographyProgressEvent::BUILD_FILMOGRAPHY_PROGRESS);
         }
 
         return $movieFullList;
@@ -147,9 +124,9 @@ class ActorFilmographyBuilder
     /**
      * Returns only movies with at least 2 actors.
      *
-     * @param array $tmdbMovies
+     * @param array<int, FilmographyMovie> $tmdbMovies
      *
-     * @return FilmographyMovie[]|array Map with actor tmdbId as key and CastingActor as value
+     * @return FilmographyMovie[]|array<int, FilmographyMovie>
      */
     protected function getFilteredMovies(array $tmdbMovies): array
     {
@@ -165,8 +142,8 @@ class ActorFilmographyBuilder
     }
 
     /**
-     * @param Actor[]|array $actors
-     * @param FilmographyMovie[]|array $movies
+     * @param Actor[]|array<Actor> $actors
+     * @param FilmographyMovie[]|array<FilmographyMovie> $movies
      */
     protected function updateActorStatus(array $actors, array $movies): void
     {

@@ -7,37 +7,21 @@ use App\Entity\User;
 
 class RegisterWinnerCommand
 {
-    /**
-     * @var Quiz
-     */
-    protected $quiz;
+    protected Quiz $quiz;
 
-    /**
-     * @var User
-     */
-    protected $user;
+    protected User $user;
 
-    /**
-     * @param Quiz $quiz
-     * @param User $user
-     */
     public function __construct(Quiz $quiz, User $user)
     {
         $this->quiz = $quiz;
         $this->user = $user;
     }
 
-    /**
-     * @return Quiz
-     */
     public function getQuiz(): Quiz
     {
         return $this->quiz;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;

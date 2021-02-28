@@ -7,37 +7,21 @@ use App\Entity\User;
 
 class ClearUserResponseCommand
 {
-    /**
-     * @var User
-     */
-    protected $user;
+    protected User $user;
 
-    /**
-     * @var Quiz
-     */
-    protected $quiz;
+    protected Quiz $quiz;
 
-    /**
-     * @param User $user
-     * @param Quiz $quiz
-     */
     public function __construct(User $user, Quiz $quiz)
     {
         $this->user = $user;
         $this->quiz = $quiz;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return Quiz
-     */
     public function getQuiz(): Quiz
     {
         return $this->quiz;

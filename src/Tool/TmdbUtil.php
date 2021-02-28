@@ -26,8 +26,6 @@ class TmdbUtil
 
     /**
      * Allows to get default base path URL for picture from TMDB.
-     *
-     * @return string
      */
     public static function getBasePictureUrl(): string
     {

@@ -4,11 +4,11 @@ namespace App\Enum\Tmdb;
 
 class TypeEnum
 {
-    const ACTOR = 'actor';
-    const MOVIE = 'movie';
+    public const ACTOR = 'actor';
+    public const MOVIE = 'movie';
 
     /**
-     * @return array
+     * @return array<string>
      */
     public static function getAll(): array
     {
@@ -16,5 +16,10 @@ class TypeEnum
             self::ACTOR,
             self::MOVIE,
         ];
+    }
+
+    public static function exist(string $type): bool
+    {
+        return in_array($type, self::getAll());
     }
 }

@@ -2,26 +2,19 @@
 
 namespace App\Event\Maze;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class FilmographyProgressEvent extends Event
 {
-    /**
-     * @var int
-     */
-    protected $progress;
+    public const BUILD_FILMOGRAPHY_PROGRESS = 'build_filmography_progress';
 
-    /**
-     * @param int $progress
-     */
+    protected int $progress;
+
     public function __construct(int $progress)
     {
         $this->progress = $progress;
     }
 
-    /**
-     * @return int
-     */
     public function getProgress(): int
     {
         return $this->progress;

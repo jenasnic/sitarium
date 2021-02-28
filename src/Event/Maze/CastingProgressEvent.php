@@ -2,26 +2,19 @@
 
 namespace App\Event\Maze;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class CastingProgressEvent extends Event
 {
-    /**
-     * @var int
-     */
-    protected $progress;
+    public const BUILD_CASTING_PROGRESS = 'build_casting_progress';
 
-    /**
-     * @param int $progress
-     */
+    protected int $progress;
+
     public function __construct(int $progress)
     {
         $this->progress = $progress;
     }
 
-    /**
-     * @return int
-     */
     public function getProgress(): int
     {
         return $this->progress;

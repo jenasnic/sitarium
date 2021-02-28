@@ -1,3 +1,6 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
@@ -13,39 +16,46 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-        public: false       # Allows optimizing the container by removing unused services; this also means
-                            # fetching services directly from the container via $container->get() won't work.
-                            # The best practice is to be explicit about your dependencies anyway.
+
         bind:
             $rootDir: '%kernel.project_dir%'
             $mailerFrom: '%mailer_from%'
             $mailerSender: '%mailer_sender%'
 
     _instanceof:
+
         App\Service\Tmdb\Synchronizer\SynchronizerInterface:
             tags: ['tmdb.synchronizer']
+
+        App\Service\Tmdb\Adapter\DisplayableAdapterInterface:
+            tags: ['tmdb.adapter']
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
-        resource: '../src/{Command,DataFixtures,EventListener,Repository,Request,Service,Twig}'
+        resource: '../src/{Command,DataFixtures,EventListener,Repository,Request,Service,Security,Twig}'
 
-    App\Service\Tmdb\DataSynchronizer:
-        arguments: [!tagged {tag: tmdb.synchronizer}]
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    App\Service\Tmdb\TmdbDataSynchronizer:
+        arguments:
+            - !tagged_iterator tmdb.synchronizer
+
+    App\Service\Tmdb\DisplayableResultAdapter:
+        arguments:
+            - !tagged_iterator tmdb.adapter
 
     App\Service\Tmdb\TmdbApiService:
         bind:
             $apiKey: '%tmdb_api_key%'
             $baseUri: '%tmdb_base_uri%'
-
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
-    App\Controller\:
-        resource: '../src/Controller'
-        tags: ['controller.service_arguments']
-
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
 
     App\Twig\Pager\BulmaView:
         class: App\Twig\Pager\BulmaView

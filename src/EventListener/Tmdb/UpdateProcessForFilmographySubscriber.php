@@ -3,31 +3,24 @@
 namespace App\EventListener\Tmdb;
 
 use App\Entity\Tmdb\BuildProcess;
+use App\Enum\Tmdb\ProcessStatusEnum;
 use App\Enum\Tmdb\ProcessTypeEnum;
-use App\Event\MazeEvents;
+use App\Event\Maze\FilmographyEndEvent;
+use App\Event\Maze\FilmographyErrorEvent;
 use App\Event\Maze\FilmographyProgressEvent;
 use App\Event\Maze\FilmographyStartEvent;
 use App\Repository\Tmdb\BuildProcessRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class UpdateProcessForFilmographySubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var BuildProcessRepository
-     */
-    protected $buildProcessRepository;
+    protected BuildProcessRepository $buildProcessRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @param BuildProcessRepository $buildProcessRepository
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(
         BuildProcessRepository $buildProcessRepository,
         EntityManagerInterface $entityManager
@@ -37,33 +30,27 @@ class UpdateProcessForFilmographySubscriber implements EventSubscriberInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return array<string, string>
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
-            MazeEvents::BUILD_FILMOGRAPHY_START => 'onBuildFilmographyStart',
-            MazeEvents::BUILD_FILMOGRAPHY_PROGRESS => 'onBuildFilmographyProgress',
-            MazeEvents::BUILD_FILMOGRAPHY_END => 'onBuildFilmographyEnd',
-            MazeEvents::BUILD_FILMOGRAPHY_ERROR => 'onBuildFilmographyEnd',
+            FilmographyStartEvent::BUILD_FILMOGRAPHY_START => 'onBuildFilmographyStart',
+            FilmographyProgressEvent::BUILD_FILMOGRAPHY_PROGRESS => 'onBuildFilmographyProgress',
+            FilmographyEndEvent::BUILD_FILMOGRAPHY_END => 'onBuildFilmographyEnd',
+            FilmographyErrorEvent::BUILD_FILMOGRAPHY_ERROR => 'onBuildFilmographyError',
         ];
     }
 
-    /**
-     * @param FilmographyStartEvent $event
-     */
-    public function onBuildFilmographyStart(FilmographyStartEvent $event)
+    public function onBuildFilmographyStart(FilmographyStartEvent $event): void
     {
-        $buildProcess = new BuildProcess(ProcessTypeEnum::FILMOGRAPHY, $event->getTotal());
+        $buildProcess = new BuildProcess(ProcessTypeEnum::FILMOGRAPHY, ProcessStatusEnum::PENDING, $event->getTotal());
 
         $this->entityManager->persist($buildProcess);
         $this->entityManager->flush();
     }
 
-    /**
-     * @param FilmographyProgressEvent $event
-     */
-    public function onBuildFilmographyProgress(FilmographyProgressEvent $event)
+    public function onBuildFilmographyProgress(FilmographyProgressEvent $event): void
     {
         $buildProcess = $this->buildProcessRepository->findPendingProcessByType(ProcessTypeEnum::FILMOGRAPHY);
         $buildProcess->setCount($event->getProgress());
@@ -71,13 +58,20 @@ class UpdateProcessForFilmographySubscriber implements EventSubscriberInterface
         $this->entityManager->flush();
     }
 
-    /**
-     * @param Event $event
-     */
-    public function onBuildFilmographyEnd(Event $event)
+    public function onBuildFilmographyEnd(Event $event): void
     {
         $buildProcess = $this->buildProcessRepository->findPendingProcessByType(ProcessTypeEnum::FILMOGRAPHY);
-        $buildProcess->setEndedAt(new \DateTime());
+        $buildProcess->setStatus(ProcessStatusEnum::SUCCESS);
+        $buildProcess->setEndedAt(new DateTime());
+
+        $this->entityManager->flush();
+    }
+
+    public function onBuildFilmographyError(Event $event): void
+    {
+        $buildProcess = $this->buildProcessRepository->findPendingProcessByType(ProcessTypeEnum::FILMOGRAPHY);
+        $buildProcess->setStatus(ProcessStatusEnum::ERROR);
+        $buildProcess->setEndedAt(new DateTime());
 
         $this->entityManager->flush();
     }

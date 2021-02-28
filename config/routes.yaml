@@ -1,4 +1,3 @@
-login_check:
-    path: /login_check
-logout:
-    path: /deconnexion
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index

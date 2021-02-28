@@ -2,9 +2,7 @@
 
 namespace App\Entity\Tagline;
 
-use App\Annotation\Tmdb\TmdbField;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table(name="tagline_genre")
@@ -15,72 +13,45 @@ class Genre
     /**
      * @ORM\Id
      * @ORM\Column(name="tmdbId", type="integer")
-     * @TmdbField(name="id", type="integer")
-     *
-     * @var int
      */
-    private $tmdbId;
+    private ?int $tmdbId = null;
 
     /**
      * @ORM\Column(name="name", type="string", length=55)
-     * @TmdbField(name="name")
-     *
-     * @var string
      */
-    private $name;
+    private ?string $name = null;
 
     /**
      * @ORM\Column(name="slug", type="string", length=128, unique=true)
-     * @Gedmo\Slug(fields={"name"})
-     *
-     * @var string
      */
-    private $slug;
+    private ?string $slug = null;
 
-    /**
-     * @return int
-     */
-    public function getTmdbId(): int
+    public function getTmdbId(): ?int
     {
         return $this->tmdbId;
     }
 
-    /**
-     * @param int $tmdbId
-     */
-    public function setTmdbId(int $tmdbId)
+    public function setTmdbId(int $tmdbId): void
     {
         $this->tmdbId = $tmdbId;
     }
 
-    /**
-     * @return string
-     */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
-    /**
-     * @param string $slug
-     */
-    public function setSlug(string $slug)
+    public function setSlug(string $slug): void
     {
         $this->slug = $slug;
     }

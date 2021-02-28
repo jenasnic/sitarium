@@ -6,6 +6,7 @@ use App\Entity\Quiz\Quiz;
 use App\Entity\Quiz\Response as QuizResponse;
 use App\Form\Quiz\ResponseType;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,11 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ResponseController extends AbstractController
 {
     /**
-     * @Route("/admin/quiz/{quiz}/response/list", requirements={"quiz" = "\d+"}, name="bo_quiz_response_list")
-     *
-     * @param Quiz $quiz
-     *
-     * @return Response
+     * @Route("/admin/quiz/{quiz}/response/list", requirements={"quiz": "\d+"}, name="bo_quiz_response_list")
      */
     public function listAction(Quiz $quiz): Response
     {
@@ -28,14 +25,7 @@ class ResponseController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/{quiz}/response/new", requirements={"quiz" = "\d+"}, name="bo_quiz_response_new")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param EntityManagerInterface $entityManager
-     * @param Quiz $quiz
-     *
-     * @return Response
+     * @Route("/admin/quiz/{quiz}/response/new", requirements={"quiz": "\d+"}, name="bo_quiz_response_new")
      */
     public function newAction(
         Request $request,
@@ -52,15 +42,7 @@ class ResponseController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/{quiz}/response/edit/{response}", requirements={"quiz" = "\d+", "response" = "\d+"}, name="bo_quiz_response_edit")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param EntityManagerInterface $entityManager
-     * @param Quiz $quiz
-     * @param QuizResponse $response
-     *
-     * @return Response
+     * @Route("/admin/quiz/{quiz}/response/edit/{response}", requirements={"quiz": "\d+", "response": "\d+"}, name="bo_quiz_response_edit")
      */
     public function editAction(
         Request $request,
@@ -73,12 +55,7 @@ class ResponseController extends AbstractController
     }
 
     /**
-     * @Route("/admin/quiz/{quiz}/response/delete/{response}", requirements={"quiz" = "\d+", "response" = "\d+"}, name="bo_quiz_response_delete")
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param QuizResponse $response
-     *
-     * @return Response
+     * @Route("/admin/quiz/{quiz}/response/delete/{response}", requirements={"quiz": "\d+", "response": "\d+"}, name="bo_quiz_response_delete")
      */
     public function deleteResponseAction(EntityManagerInterface $entityManager, QuizResponse $response): Response
     {
@@ -87,19 +64,11 @@ class ResponseController extends AbstractController
             $entityManager->flush();
 
             return new JsonResponse(1);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new JsonResponse(0);
         }
     }
 
-    /**
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param EntityManagerInterface $entityManager
-     * @param QuizResponse $response
-     *
-     * @return Response
-     */
     protected function addOrEditResponseAction(
         Request $request,
         TranslatorInterface $translator,
@@ -116,7 +85,7 @@ class ResponseController extends AbstractController
                     $entityManager->flush();
 
                     return new JsonResponse(['success' => true, 'message' => $translator->trans('back.global.save.success')]);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     return new JsonResponse(['success' => false, 'message' => $translator->trans('back.global.save.error')]);
                 }
             } else {

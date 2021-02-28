@@ -9,37 +9,29 @@ use App\Entity\Maze\Movie;
 use App\Entity\Tagline\Movie as TaglineMovie;
 use App\Enum\Tmdb\ProcessTypeEnum;
 use App\Repository\Tmdb\BuildProcessRepository;
-use App\Service\Tmdb\DataSynchronizer;
+use App\Service\Tmdb\TmdbDataSynchronizer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class SynchronizeDataCommand extends AbstractBuildProcessCommand
 {
-    /**
-     * @var DataSynchronizer
-     */
-    protected $dataSynchronizer;
+    protected TmdbDataSynchronizer $tmdbDataSynchronizer;
 
-    /**
-     * @param BuildProcessRepository $buildProcessRepository
-     * @param EntityManagerInterface $entityManager
-     * @param DataSynchronizer $dataSynchronizer
-     */
     public function __construct(
         BuildProcessRepository $buildProcessRepository,
         EntityManagerInterface $entityManager,
-        DataSynchronizer $dataSynchronizer
+        TmdbDataSynchronizer $tmdbDataSynchronizer
     ) {
-        $this->dataSynchronizer = $dataSynchronizer;
+        $this->tmdbDataSynchronizer = $tmdbDataSynchronizer;
 
         parent::__construct($buildProcessRepository, $entityManager, ProcessTypeEnum::SYNCHRONIZATION);
     }
-    
+
     /**
-     * Command settings.
+     * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
         $this->setDescription('Synchronize local data with TMDB data.');
@@ -48,8 +40,9 @@ class SynchronizeDataCommand extends AbstractBuildProcessCommand
     /**
      * {@inheritdoc}
      */
-    protected function executeProcess(InputInterface $input, OutputInterface $output)
+    protected function executeProcess(InputInterface $input, OutputInterface $output): void
     {
+        // @todo : use options to synchronize only entities of one type...
         $entities = [
             Actor::class,
             FilmographyMovie::class,
@@ -59,7 +52,7 @@ class SynchronizeDataCommand extends AbstractBuildProcessCommand
         ];
 
         foreach ($entities as $entity) {
-            $this->dataSynchronizer->synchronize($entity);
+            $this->tmdbDataSynchronizer->synchronize($entity);
         }
     }
 }

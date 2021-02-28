@@ -3,6 +3,7 @@
 namespace App\Entity\Quiz;
 
 use App\Entity\User;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,71 +16,47 @@ class UserResponse
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="App\Entity\User", fetch="EAGER")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     *
-     * @var User
      */
-    private $user;
+    private ?User $user = null;
 
     /**
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="App\Entity\Quiz\Response", fetch="EAGER")
      * @ORM\JoinColumn(name="response_id", referencedColumnName="id")
-     *
-     * @var Response
      */
-    private $response;
+    private ?Response $response = null;
 
     /**
      * @ORM\Column(name="date", type="datetime")
-     *
-     * @var \DateTime
      */
-    private $date;
+    private ?DateTime $date = null;
 
-    /**
-     * @return User
-     */
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    /**
-     * @param User $user
-     */
-    public function setUser(User $user)
+    public function setUser(User $user): void
     {
         $this->user = $user;
     }
 
-    /**
-     * @return Response
-     */
-    public function getResponse(): Response
+    public function getResponse(): ?Response
     {
         return $this->response;
     }
 
-    /**
-     * @param Response $response
-     */
-    public function setResponse(Response $response)
+    public function setResponse(Response $response): void
     {
         $this->response = $response;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDate(): \DateTime
+    public function getDate(): ?DateTime
     {
         return $this->date;
     }
 
-    /**
-     * @param \DateTime $date
-     */
-    public function setDate(\DateTime $date)
+    public function setDate(DateTime $date): void
     {
         $this->date = $date;
     }

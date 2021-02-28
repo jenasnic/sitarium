@@ -4,40 +4,29 @@ namespace App\Command\Tmdb;
 
 use App\Enum\Tmdb\ProcessTypeEnum;
 use App\Repository\Tmdb\BuildProcessRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use InvalidArgumentException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractBuildProcessCommand extends Command
 {
-    /**
-     * @var BuildProcessRepository
-     */
-    protected $buildProcessRepository;
+    protected BuildProcessRepository $buildProcessRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface$entityManager;
 
-    /**
-     * @var string
-     */
-    protected $processType;
+    protected string $processType;
 
-    /**
-     * @param BuildProcessRepository $buildProcessRepository
-     * @param EntityManagerInterface $entityManager
-     * @param string $processType
-     */
     public function __construct(
         BuildProcessRepository $buildProcessRepository,
         EntityManagerInterface $entityManager,
         string $processType
     ) {
         if (!ProcessTypeEnum::exists($processType)) {
-            throw new \InvalidArgumentException(sprintf('Invalid type "%s"', $processType));
+            throw new InvalidArgumentException(sprintf('Invalid type "%s"', $processType));
         }
         $this->buildProcessRepository = $buildProcessRepository;
         $this->entityManager = $entityManager;
@@ -46,12 +35,12 @@ abstract class AbstractBuildProcessCommand extends Command
         parent::__construct();
     }
 
-    abstract protected function executeProcess(InputInterface $input, OutputInterface $output);
+    abstract protected function executeProcess(InputInterface $input, OutputInterface $output): void;
 
     /**
-     * Command settings.
+     * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName(sprintf('tmdb:build:%s', $this->processType))
@@ -62,30 +51,35 @@ abstract class AbstractBuildProcessCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->buildProcessRepository->isProcessPending()) {
             $output->writeln('Process already pending...');
 
-            return;
+            return Command::FAILURE;
         }
 
         $output->writeln(sprintf('Build process %s', $this->processType));
         try {
             $this->executeProcess($input, $output);
-        } catch (\Exception $e) {
-            $output->writeln($e->getMessage());
+        } catch (Exception $e) {
+            $output->writeln($e->getTraceAsString());
             $this->stopPendingProcess();
+
+            return Command::FAILURE;
         }
+
         $output->writeln('OK');
+
+        return Command::SUCCESS;
     }
 
-    private function stopPendingProcess()
+    private function stopPendingProcess(): void
     {
         $pendingProcess = $this->buildProcessRepository->findPendingProcessByType($this->processType);
 
         if (null !== $pendingProcess) {
-            $pendingProcess->setEndedAt(new \DateTime());
+            $pendingProcess->setEndedAt(new DateTime());
             $this->entityManager->flush();
         }
     }

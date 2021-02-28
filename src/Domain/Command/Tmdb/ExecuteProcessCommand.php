@@ -3,33 +3,30 @@
 namespace App\Domain\Command\Tmdb;
 
 use App\Enum\Tmdb\ProcessTypeEnum;
+use InvalidArgumentException;
 
 class ExecuteProcessCommand
 {
-    /**
-     * @var string
-     */
-    protected $type;
+    protected string $type;
 
     /**
-     * @var array|null
+     * @var array<mixed>|null
      */
-    protected $parameters;
+    protected ?array $parameters;
 
     /**
-     * @var array|null
+     * @var array<mixed>|null
      */
-    protected $options;
+    protected ?array $options;
 
     /**
-     * @param string $type
-     * @param array|null $parameters
-     * @param array|null $options
+     * @param array<mixed>|null $parameters
+     * @param array<mixed>|null $options
      */
     public function __construct(string $type, ?array $parameters, ?array $options)
     {
         if (!ProcessTypeEnum::exists($type)) {
-            throw new \InvalidArgumentException(sprintf('Invalid type "%s"', $type));
+            throw new InvalidArgumentException(sprintf('Invalid type "%s"', $type));
         }
 
         $this->type = $type;
@@ -37,16 +34,13 @@ class ExecuteProcessCommand
         $this->options = $options;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
     /**
-     * @return array|null
+     * @return array<mixed>|null
      */
     public function getParameters(): ?array
     {
@@ -54,7 +48,7 @@ class ExecuteProcessCommand
     }
 
     /**
-     * @return array|null
+     * @return array<mixed>|null
      */
     public function getOptions(): ?array
     {

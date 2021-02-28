@@ -3,42 +3,28 @@
 namespace App\Event\User;
 
 use App\Entity\User;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class UpdateAccountEvent extends Event
 {
-    /**
-     * @var User
-     */
-    protected $user;
+    public const UPDATE_ACCOUNT = 'update_account';
 
-    /**
-     * @var string|null
-     */
-    protected $password;
+    protected User $user;
 
-    /**
-     * @param User $user
-     * @param string|null $password
-     */
-    public function __construct(User $user, ?string $password)
+    protected ?string $password;
+
+    public function __construct(User $user, ?string $password = null)
     {
         $this->user = $user;
         $this->password = $password;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return string
-     */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }

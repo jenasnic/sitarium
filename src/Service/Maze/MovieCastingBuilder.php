@@ -5,14 +5,18 @@ namespace App\Service\Maze;
 use App\Entity\Maze\CastingActor;
 use App\Entity\Maze\Movie;
 use App\Enum\Maze\CastingStatusEnum;
+use App\Event\Maze\CastingEndEvent;
+use App\Event\Maze\CastingErrorEvent;
 use App\Event\Maze\CastingProgressEvent;
 use App\Event\Maze\CastingStartEvent;
-use App\Event\MazeEvents;
+use App\Model\Tmdb\Actor;
 use App\Repository\Maze\CastingActorRepository;
 use App\Repository\Maze\MovieRepository;
-use App\Service\Tmdb\TmdbApiService;
-use App\Validator\Maze\CastingActorValidator;
+use App\Service\Converter\CastingActorConverter;
+use App\Service\Tmdb\TmdbDataProvider;
+use App\Validator\Tmdb\CastingActorValidator;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -21,60 +25,42 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class MovieCastingBuilder
 {
-    /**
-     * @var TmdbApiService
-     */
-    protected $tmdbService;
+    protected TmdbDataProvider $tmdbDataProvider;
 
-    /**
-     * @var MovieRepository
-     */
-    protected $movieRepository;
+    protected CastingActorConverter $castingActorConverter;
 
-    /**
-     * @var CastingActorRepository
-     */
-    protected $castingActorRepository;
+    protected MovieRepository $movieRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected CastingActorRepository $castingActorRepository;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @param TmdbApiService $tmdbService
-     * @param MovieRepository $movieRepository
-     * @param CastingActorRepository $castingActorRepository
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     */
+    protected EventDispatcherInterface $eventDispatcher;
+
     public function __construct(
-        TmdbApiService $tmdbService,
+        TmdbDataProvider $tmdbDataProvider,
+        CastingActorConverter $castingActorConverter,
         MovieRepository $movieRepository,
         CastingActorRepository $castingActorRepository,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $this->tmdbService = $tmdbService;
+        $this->tmdbDataProvider = $tmdbDataProvider;
+        $this->castingActorConverter = $castingActorConverter;
         $this->movieRepository = $movieRepository;
         $this->castingActorRepository = $castingActorRepository;
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function build()
+    public function build(): void
     {
         try {
             $this->clearPreviousData();
 
             $movies = $this->movieRepository->findAll();
 
-            $this->eventDispatcher->dispatch(MazeEvents::BUILD_CASTING_START, new CastingStartEvent(count($movies)));
+            $this->eventDispatcher->dispatch(new CastingStartEvent(count($movies)), CastingStartEvent::BUILD_CASTING_START);
 
             $allActors = $this->getAllActors($movies);
             $filteredActors = $this->getFilteredActors($allActors);
@@ -86,25 +72,22 @@ class MovieCastingBuilder
 
             $this->entityManager->flush();
 
-            $this->eventDispatcher->dispatch(MazeEvents::BUILD_CASTING_END);
-        } catch (\Exception $e) {
-            $this->eventDispatcher->dispatch(MazeEvents::BUILD_CASTING_ERROR);
-            throw $e;
+            $this->eventDispatcher->dispatch(new CastingEndEvent(), CastingEndEvent::BUILD_CASTING_END);
+        } catch (Exception $e) {
+            $this->eventDispatcher->dispatch(new CastingErrorEvent($e), CastingErrorEvent::BUILD_CASTING_ERROR);
         }
     }
 
-    protected function clearPreviousData()
+    protected function clearPreviousData(): void
     {
         $this->movieRepository->resetMoviesStatus();
         $this->castingActorRepository->clearCasting();
     }
 
     /**
-     * Returns all actors for specified movies.
+     * @param array<Movie> $movieList
      *
-     * @param array $movieList
-     *
-     * @return CastingActor[]|array Map with actor tmdbId as key and CastingActor as value
+     * @return CastingActor[]|array<int, CastingActor>
      */
     protected function getAllActors(array $movieList): array
     {
@@ -113,26 +96,22 @@ class MovieCastingBuilder
 
         /** @var Movie $movie */
         foreach ($movieList as $movie) {
-            $actorList = $this->tmdbService->getCastingForMovieId(
-                $movie->getTmdbId(),
-                CastingActor::class,
-                new CastingActorValidator()
-            );
+            $actorList = $this->tmdbDataProvider->getCasting($movie->getTmdbId(), new CastingActorValidator());
 
-            /** @var CastingActor $actor */
+            /** @var Actor $actor */
             foreach ($actorList as $actor) {
-                if (!isset($actorFullList[$actor->getTmdbId()])) {
-                    $actorFullList[$actor->getTmdbId()] = $actor;
+                if (!isset($actorFullList[$actor->getId()])) {
+                    $actorFullList[$actor->getId()] = $this->castingActorConverter->convert($actor);
                 }
 
-                $actor = $actorFullList[$actor->getTmdbId()];
-                $actor->addMovie($movie);
+                $castingActor = $actorFullList[$actor->getId()];
+                $castingActor->addMovie($movie);
             }
 
             // WARNING : wait between each TMDB request to not override request rate limit (4 per seconde)
             usleep(250001);
 
-            $this->eventDispatcher->dispatch(MazeEvents::BUILD_CASTING_PROGRESS, new CastingProgressEvent(++$processCount));
+            $this->eventDispatcher->dispatch(new CastingProgressEvent(++$processCount), CastingProgressEvent::BUILD_CASTING_PROGRESS);
         }
 
         return $actorFullList;
@@ -141,9 +120,9 @@ class MovieCastingBuilder
     /**
      * Returns only actors with at least 2 movies.
      *
-     * @param array $tmdbActors
+     * @param array<int, CastingActor> $tmdbActors
      *
-     * @return CastingActor[]|array Map with actor tmdbId as key and CastingActor as value
+     * @return CastingActor[]|array<int, CastingActor>
      */
     protected function getFilteredActors(array $tmdbActors): array
     {
@@ -159,8 +138,8 @@ class MovieCastingBuilder
     }
 
     /**
-     * @param Movie[]|array $movies
-     * @param CastingActor[]|array $actors
+     * @param Movie[]|array<Movie> $movies
+     * @param CastingActor[]|array<CastingActor> $actors
      */
     protected function updateMovieStatus(array $movies, array $actors): void
     {

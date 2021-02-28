@@ -2,26 +2,19 @@
 
 namespace App\Event\Quiz;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class TmdbLinkStartEvent extends Event
 {
-    /**
-     * @var int
-     */
-    protected $total;
+    public const BUILD_TMDB_LINK_START = 'build_tmdb_link_start';
 
-    /**
-     * @param int $total
-     */
+    protected int $total;
+
     public function __construct(int $total)
     {
         $this->total = $total;
     }
 
-    /**
-     * @return int
-     */
     public function getTotal(): int
     {
         return $this->total;

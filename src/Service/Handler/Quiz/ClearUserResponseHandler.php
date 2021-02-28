@@ -11,30 +11,17 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class ClearUserResponseHandler
 {
-    /**
-     * @var UserResponseRepository
-     */
-    protected $userResponseRepository;
+    protected UserResponseRepository $userResponseRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @param UserResponseRepository $userResponseRepository
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(UserResponseRepository $userResponseRepository, EntityManagerInterface $entityManager)
     {
         $this->userResponseRepository = $userResponseRepository;
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @param ClearUserResponseCommand $command
-     */
-    public function handle(ClearUserResponseCommand $command)
+    public function handle(ClearUserResponseCommand $command): void
     {
         $responses = $this->userResponseRepository->getResponsesForUserIdAndQuizId(
             $command->getUser()->getId(),

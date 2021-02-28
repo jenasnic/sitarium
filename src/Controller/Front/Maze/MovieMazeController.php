@@ -13,8 +13,6 @@ class MovieMazeController extends AbstractController
 {
     /**
      * @Route("/quiz-casting", name="fo_maze_movie")
-     *
-     * @return Response
      */
     public function indexAction(): Response
     {
@@ -24,10 +22,6 @@ class MovieMazeController extends AbstractController
     /**
      * @Route("/quiz-casting/plus-court-chemin", name="fo_maze_movie_select_min_path")
      * @Security("is_granted('ROLE_USER')")
-     *
-     * @param MovieRepository $movieRepository
-     *
-     * @return Response
      */
     public function selectMinPathAction(MovieRepository $movieRepository): Response
     {
@@ -39,10 +33,6 @@ class MovieMazeController extends AbstractController
     /**
      * @Route("/quiz-casting/plus-long-chemin", name="fo_maze_movie_select_max_path")
      * @Security("is_granted('ROLE_USER')")
-     *
-     * @param MovieRepository $movieRepository
-     *
-     * @return Response
      */
     public function selectMaxPathAction(MovieRepository $movieRepository): Response
     {

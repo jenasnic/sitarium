@@ -6,6 +6,7 @@ use App\Entity\Quiz\Quiz;
 use App\Entity\Quiz\Response as QuizResponse;
 use App\Repository\Quiz\ResponseRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,11 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class LocateController extends AbstractController
 {
     /**
-     * @Route("/admin/quiz/{quiz}/response/locate", requirements={"quiz" = "\d+"}, name="bo_quiz_response_locate")
-     *
-     * @param Quiz $quiz
-     *
-     * @return Response
+     * @Route("/admin/quiz/{quiz}/response/locate", requirements={"quiz": "\d+"}, name="bo_quiz_response_locate")
      */
     public function indexAction(Quiz $quiz): Response
     {
@@ -29,12 +26,6 @@ class LocateController extends AbstractController
 
     /**
      * @Route("/admin/quiz/response/set-location", name="bo_quiz_locate_response", methods="POST")
-     *
-     * @param Request $request
-     * @param ResponseRepository $repository
-     * @param EntityManagerInterface $entityManager
-     *
-     * @return Response
      */
     public function setLocationAction(Request $request, ResponseRepository $repository, EntityManagerInterface $entityManager): Response
     {
@@ -52,19 +43,13 @@ class LocateController extends AbstractController
             $entityManager->flush();
 
             return new JsonResponse(1);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new JsonResponse(0);
         }
     }
 
     /**
      * @Route("/admin/quiz/response/get-location", name="bo_quiz_response_location", methods="GET")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param ResponseRepository $repository
-     *
-     * @return Response
      */
     public function getLocationAction(
         Request $request,
@@ -93,7 +78,7 @@ class LocateController extends AbstractController
             ];
 
             return new JsonResponse(['success' => true, 'info' => $location]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('back.quiz.location.error')]);
         }
     }

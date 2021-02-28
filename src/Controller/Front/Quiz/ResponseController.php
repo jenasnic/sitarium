@@ -5,6 +5,7 @@ namespace App\Controller\Front\Quiz;
 use App\Domain\Command\Quiz\AddUserResponseCommand;
 use App\Repository\Quiz\ResponseRepository;
 use App\Service\Handler\Quiz\AddUserResponseHandler;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,13 +16,6 @@ class ResponseController extends AbstractController
 {
     /**
      * @Route("/quiz/ajax/valider-reponse", name="fo_quiz_check_response", methods="POST")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param ResponseRepository $responseRepository
-     * @param AddUserResponseHandler $handler
-     *
-     * @return JsonResponse
      */
     public function checkResponseAction(
         Request $request,
@@ -57,19 +51,13 @@ class ResponseController extends AbstractController
             }
 
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.response.incorrect')]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.response.process_error')]);
         }
     }
 
     /**
      * @Route("/quiz/ajax/indice", name="fo_quiz_trick", methods="POST")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param ResponseRepository $responseRepository
-     *
-     * @return JsonResponse
      */
     public function quizTrick(Request $request, TranslatorInterface $translator, ResponseRepository $responseRepository): JsonResponse
     {
@@ -88,10 +76,10 @@ class ResponseController extends AbstractController
                 }, $responses);
 
                 return new JsonResponse(['success' => true, 'trick' => $responses]);
-            } else {
-                return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.trick.no_trick_on_location')]);
             }
-        } catch (\Exception $e) {
+
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.trick.no_trick_on_location')]);
+        } catch (Exception $e) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.quiz.trick.process_error')]);
         }
     }

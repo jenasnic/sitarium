@@ -5,6 +5,7 @@ namespace App\Service\Handler\Quiz;
 use App\Domain\Command\Quiz\AddUserResponseCommand;
 use App\Entity\Quiz\UserResponse;
 use App\Repository\Quiz\UserResponseRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -12,30 +13,17 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class AddUserResponseHandler
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @var UserResponseRepository
-     */
-    protected $userResponseRepository;
+    protected UserResponseRepository $userResponseRepository;
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param UserResponseRepository $userResponseRepository
-     */
     public function __construct(EntityManagerInterface $entityManager, UserResponseRepository $userResponseRepository)
     {
         $this->entityManager = $entityManager;
         $this->userResponseRepository = $userResponseRepository;
     }
 
-    /**
-     * @param AddUserResponseCommand $command
-     */
-    public function handle(AddUserResponseCommand $command)
+    public function handle(AddUserResponseCommand $command): void
     {
         $responseAlreadyFound = $this->userResponseRepository->checkExistingResponseForUserId(
             $command->getUser()->getId(),
@@ -46,7 +34,7 @@ class AddUserResponseHandler
             $userResponse = new UserResponse();
             $userResponse->setUser($command->getUser());
             $userResponse->setResponse($command->getResponse());
-            $userResponse->setDate(new \DateTime());
+            $userResponse->setDate(new DateTime());
 
             $this->entityManager->persist($userResponse);
             $this->entityManager->flush();

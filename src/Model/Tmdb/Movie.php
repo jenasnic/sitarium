@@ -2,172 +2,169 @@
 
 namespace App\Model\Tmdb;
 
-use App\Annotation\Tmdb\TmdbType;
-use App\Annotation\Tmdb\TmdbField;
+use DateTime;
 
-/**
- * @TmdbType("MOVIE")
- */
 class Movie
 {
-    /**
-     * @TmdbField(name="id", type="integer")
-     *
-     * @var int
-     */
-    private $tmdbId;
+    private int $id;
+
+    private ?string $title = null;
+
+    private ?DateTime $releaseDate = null;
+
+    private ?string $posterPath = null;
+
+    private ?string $tagline = null;
+
+    private ?string $overview = null;
+
+    private ?int $voteCount = null;
+
+    private ?float $voteAverage = null;
+
+    private ?float $popularity = null;
+
+    private ?string $character = null;
 
     /**
-     * @TmdbField(name="title")
-     *
-     * @var string
+     * @var Genre[]|array<Genre>
      */
-    private $title;
+    private array $genres = [];
 
     /**
-     * @TmdbField(name="release_date", type="datetime", dateFormat="Y-m-d")
-     *
-     * @var \DateTime
+     * @var array<int>
      */
-    private $releaseDate;
+    private array $genreIds = [];
 
-    /**
-     * @TmdbField(name="poster_path")
-     *
-     * @var string
-     */
-    private $pictureUrl;
-
-    /**
-     * @TmdbField(name="belongs_to_collection", type="object", subClass="App\Model\Tmdb\MovieCollection")
-     *
-     * @var MovieCollection
-     */
-    private $collection;
-
-    /**
-     * @TmdbField(name="tagline")
-     *
-     * @var string
-     */
-    private $tagline;
-
-    /**
-     * @TmdbField(name="overview")
-     *
-     * @var string
-     */
-    private $overview;
-
-    /**
-     * @return int
-     */
-    public function getTmdbId(): int
+    public function getId(): ?int
     {
-        return $this->tmdbId;
+        return $this->id;
     }
 
-    /**
-     * @param int $tmdbId
-     */
-    public function setTmdbId(int $tmdbId)
+    public function setId(int $id): void
     {
-        $this->tmdbId = $tmdbId;
+        $this->id = $id;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getReleaseDate(): ?\DateTime
+    public function getReleaseDate(): ?DateTime
     {
         return $this->releaseDate;
     }
 
-    /**
-     * @param \DateTime|null $releaseDate
-     */
-    public function setReleaseDate(?\DateTime $releaseDate)
+    public function setReleaseDate(?DateTime $releaseDate): void
     {
         $this->releaseDate = $releaseDate;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPictureUrl(): ?string
+    public function getPosterPath(): ?string
     {
-        return $this->pictureUrl;
+        return $this->posterPath;
     }
 
-    /**
-     * @param string|null $pictureUrl
-     */
-    public function setPictureUrl(?string $pictureUrl)
+    public function setPosterPath(?string $posterPath): void
     {
-        $this->pictureUrl = $pictureUrl;
+        $this->posterPath = $posterPath;
     }
 
-    /**
-     * @return MovieCollection|null
-     */
-    public function getCollection(): ?MovieCollection
-    {
-        return $this->collection;
-    }
-
-    /**
-     * @param MovieCollection|null $collection
-     */
-    public function setCollection(?MovieCollection $collection)
-    {
-        $this->collection = $collection;
-    }
-
-    /**
-     * @return string|null
-     */
     public function getTagline(): ?string
     {
         return $this->tagline;
     }
 
-    /**
-     * @param string|null $tagline
-     */
-    public function setTagline(?string $tagline)
+    public function setTagline(?string $tagline): void
     {
         $this->tagline = $tagline;
     }
 
-    /**
-     * @return string|null
-     */
     public function getOverview(): ?string
     {
         return $this->overview;
     }
 
-    /**
-     * @param string|null $overview
-     */
-    public function setOverview(?string $overview)
+    public function setOverview(?string $overview): void
     {
         $this->overview = $overview;
+    }
+
+    public function getVoteCount(): ?int
+    {
+        return $this->voteCount;
+    }
+
+    public function setVoteCount(int $voteCount): void
+    {
+        $this->voteCount = $voteCount;
+    }
+
+    public function getVoteAverage(): ?float
+    {
+        return $this->voteAverage;
+    }
+
+    public function setVoteAverage(float $voteAverage): void
+    {
+        $this->voteAverage = $voteAverage;
+    }
+
+    public function getPopularity(): ?float
+    {
+        return $this->popularity;
+    }
+
+    public function setPopularity(float $popularity): void
+    {
+        $this->popularity = $popularity;
+    }
+
+    public function getCharacter(): ?string
+    {
+        return $this->character;
+    }
+
+    public function setCharacter(?string $character): void
+    {
+        $this->character = $character;
+    }
+
+    /**
+     * @return Genre[]|array<Genre>
+     */
+    public function getGenres(): array
+    {
+        return $this->genres;
+    }
+
+    /**
+     * @param Genre[]|array<Genre> $genres
+     */
+    public function setGenres(array $genres): void
+    {
+        $this->genres = $genres;
+    }
+
+    /**
+     * @return array<int>
+     */
+    public function getGenreIds(): array
+    {
+        return $this->genreIds;
+    }
+
+    /**
+     * @param array<int> $genreIds
+     */
+    public function setGenreIds(array $genreIds): void
+    {
+        $this->genreIds = $genreIds;
     }
 }

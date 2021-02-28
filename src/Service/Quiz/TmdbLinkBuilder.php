@@ -3,13 +3,14 @@
 namespace App\Service\Quiz;
 
 use App\Entity\Quiz\Response;
-use App\Event\QuizEvents;
+use App\Event\Quiz\TmdbLinkEndEvent;
+use App\Event\Quiz\TmdbLinkErrorEvent;
 use App\Event\Quiz\TmdbLinkProgressEvent;
 use App\Event\Quiz\TmdbLinkStartEvent;
-use App\Model\Tmdb\Movie;
 use App\Repository\Quiz\QuizRepository;
-use App\Service\Tmdb\TmdbApiService;
+use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -18,78 +19,61 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class TmdbLinkBuilder
 {
-    /**
-     * @var QuizRepository
-     */
-    protected $quizRepository;
+    protected QuizRepository $quizRepository;
 
-    /**
-     * @var TmdbApiService
-     */
-    protected $tmdbService;
+    protected TmdbDataProvider $tmdbDataProvider;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @param QuizRepository $quizRepository
-     * @param TmdbApiService $tmdbService
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
         QuizRepository $quizRepository,
-        TmdbApiService $tmdbService,
+        TmdbDataProvider $tmdbDataProvider,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher
     ) {
         $this->quizRepository = $quizRepository;
-        $this->tmdbService = $tmdbService;
+        $this->tmdbDataProvider = $tmdbDataProvider;
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    /**
-     * @param int $quizId
-     */
-    public function build(int $quizId)
+    public function build(int $quizId): void
     {
         $processCount = 0;
         $responses = $this->quizRepository->find($quizId)->getResponses();
 
-        $this->eventDispatcher->dispatch(QuizEvents::BUILD_TMDB_LINK_START, new TmdbLinkStartEvent(count($responses)));
+        $this->eventDispatcher->dispatch(new TmdbLinkStartEvent(count($responses)), TmdbLinkStartEvent::BUILD_TMDB_LINK_START);
 
-        /** @var Response $response */
-        foreach ($responses as $response) {
-            $movies = $this->tmdbService->searchEntity(Movie::class, $response->getTitle());
-            // WARNING : wait between each TMDB request to not override request rate limit (4 per seconde)
-            usleep(250001);
-
-            if ($movies['total'] > 0) {
-                $tmdbId = $movies['results'][0]->getTmdbId();
-                $movie = $this->tmdbService->getEntity(Movie::class, $tmdbId);
+        try {
+            /** @var Response $response */
+            foreach ($responses as $response) {
+                $movies = $this->tmdbDataProvider->searchMovies($response->getTitle());
                 // WARNING : wait between each TMDB request to not override request rate limit (4 per seconde)
                 usleep(250001);
 
-                $response->setTmdbId($tmdbId);
-                $response->setPictureUrl($movie->getPictureUrl());
-                $response->setTagline($movie->getTagline());
-                $response->setOverview($movie->getOverview());
+                if (count($movies) > 0) {
+                    $tmdbId = $movies[0]->getId();
+                    $movie = $this->tmdbDataProvider->getMovie($tmdbId);
+                    // WARNING : wait between each TMDB request to not override request rate limit (4 per seconde)
+                    usleep(250001);
 
-                $this->entityManager->persist($response);
-                $this->entityManager->flush();
+                    $response->setTmdbId($tmdbId);
+                    $response->setPictureUrl($movie->getPosterPath());
+                    $response->setTagline($movie->getTagline());
+                    $response->setOverview($movie->getOverview());
+
+                    $this->entityManager->persist($response);
+                    $this->entityManager->flush();
+                }
+
+                $this->eventDispatcher->dispatch(new TmdbLinkProgressEvent(++$processCount), TmdbLinkProgressEvent::BUILD_TMDB_LINK_PROGRESS);
             }
 
-            $this->eventDispatcher->dispatch(QuizEvents::BUILD_TMDB_LINK_PROGRESS, new TmdbLinkProgressEvent(++$processCount));
+            $this->eventDispatcher->dispatch(new TmdbLinkEndEvent(), TmdbLinkEndEvent::BUILD_TMDB_LINK_END);
+        } catch (Exception $e) {
+            $this->eventDispatcher->dispatch(new TmdbLinkErrorEvent($e), TmdbLinkErrorEvent::BUILD_TMDB_LINK_ERROR);
         }
-
-        $this->eventDispatcher->dispatch(QuizEvents::BUILD_TMDB_LINK_END);
     }
 }

@@ -2,26 +2,19 @@
 
 namespace App\Event\Quiz;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class TmdbLinkProgressEvent extends Event
 {
-    /**
-     * @var int
-     */
-    protected $progress;
+    public const BUILD_TMDB_LINK_PROGRESS = 'build_tmdb_link_progress';
 
-    /**
-     * @param int $progress
-     */
+    protected int $progress;
+
     public function __construct(int $progress)
     {
         $this->progress = $progress;
     }
 
-    /**
-     * @return int
-     */
     public function getProgress(): int
     {
         return $this->progress;

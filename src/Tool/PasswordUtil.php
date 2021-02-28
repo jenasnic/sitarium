@@ -2,6 +2,7 @@
 
 namespace App\Tool;
 
+use InvalidArgumentException;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
 class PasswordUtil
@@ -14,10 +15,7 @@ class PasswordUtil
     /**
      * Encode a string using SHA. Useful to get password hash.
      *
-     * @param string $password
      * @param string $salt
-     *
-     * @return string
      */
     public static function encodePassword(string $password, $salt = null): string
     {
@@ -48,7 +46,7 @@ class PasswordUtil
     ): string {
         $minSize = ($withLowerCase ? 1 : 0) + ($withUpperCase ? 1 : 0) + ($withNumeric ? 1 : 0) + ($withSpecial ? 1 : 0);
         if (0 === $minSize || $size < $minSize) {
-            throw new \InvalidArgumentException('Given parameters doesn\'t allow to generate password.');
+            throw new InvalidArgumentException('Given parameters doesn\'t allow to generate password.');
         }
 
         $result = '';
@@ -96,9 +94,6 @@ class PasswordUtil
      * Allows to know if both specified string have common character or not.<br/>
      * NOTE : This method is case sensitive.
      *
-     * @param string $s1
-     * @param string $s2
-     *
      * @return bool TRUE if specified String have common characters (one or many), FALSE either
      */
     protected static function hasCommonCharacter(string $s1, string $s2): bool
@@ -128,10 +123,10 @@ class PasswordUtil
      * @return string a string containing all required character types
      */
     protected static function buildSelectableCharBuilder(
-        string $withLowerCase,
-        string $withUpperCase,
-        string $withNumeric,
-        string $withSpecial
+        bool $withLowerCase,
+        bool $withUpperCase,
+        bool $withNumeric,
+        bool $withSpecial
     ): string {
         // Add all required characters to build password
         $selectableChar = '';

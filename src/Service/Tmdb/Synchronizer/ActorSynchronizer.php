@@ -3,74 +3,63 @@
 namespace App\Service\Tmdb\Synchronizer;
 
 use App\Entity\Maze\Actor;
-use App\Model\Tmdb\Search\DisplayableInterface;
 use App\Repository\Maze\ActorRepository;
-use App\Service\Tmdb\TmdbApiService;
+use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * @extends AbstractSynchronizer<Actor>
+ */
 class ActorSynchronizer extends AbstractSynchronizer
 {
-    /**
-     * @var ActorRepository
-     */
-    protected $actorRepository;
+    protected ActorRepository $actorRepository;
 
-    /**
-     * @param TmdbApiService $tmdbService
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param ActorRepository $actorRepository
-     */
     public function __construct(
-        TmdbApiService $tmdbService,
+        TmdbDataProvider $tmdbDataProvider,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher,
         ActorRepository $actorRepository
     ) {
-        parent::__construct($tmdbService, $entityManager, $eventDispatcher);
+        parent::__construct($tmdbDataProvider, $entityManager, $eventDispatcher);
 
         $this->actorRepository = $actorRepository;
     }
 
-    /**
-     * @return string
-     */
-    protected function getLocalEntityClass()
+    protected function getType(): string
     {
         return Actor::class;
     }
 
     /**
-     * @return string
+     * @return Actor[]|array<Actor>
      */
-    protected function getTmdbEntityClass()
-    {
-        return Actor::class;
-    }
-
-    /**
-     * @return DisplayableInterface[]|array
-     */
-    protected function getAllData()
+    protected function getAllData(): array
     {
         return $this->actorRepository->findAll();
     }
 
     /**
-     * @param Actor $localData
-     * @param Actor $tmdbData
+     * @param Actor $data
      *
      * @return bool TRUE if local data is updated, FALSE either
      */
-    protected function synchronizeData($localData, $tmdbData): bool
+    protected function synchronizeData($data): bool
     {
-        if ($localData->getPictureUrl() !== $tmdbData->getPictureUrl()) {
-            $localData->setPictureUrl($tmdbData->getPictureUrl());
+        $tmdbData = $this->tmdbDataProvider->getActor($data->getTmdbId());
 
-            return true;
+        $isUpdated = false;
+
+        if ($data->getPictureUrl() !== $tmdbData->getProfilePath()) {
+            $data->setPictureUrl($tmdbData->getProfilePath());
+            $isUpdated = true;
         }
 
-        return false;
+        if ($data->getFullname() !== $tmdbData->getName()) {
+            $data->setFullname($tmdbData->getName());
+            $isUpdated = true;
+        }
+
+        return $isUpdated;
     }
 }

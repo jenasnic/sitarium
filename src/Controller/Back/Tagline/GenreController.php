@@ -6,6 +6,7 @@ use App\Entity\Tagline\Genre;
 use App\Repository\Tagline\GenreRepository;
 use App\Service\Tagline\GenreSynchronizer;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,10 +16,6 @@ class GenreController extends AbstractController
 {
     /**
      * @Route("/admin/tagline/genre/list", name="bo_tagline_genre_list")
-     *
-     * @param GenreRepository $genreRepository
-     *
-     * @return Response
      */
     public function listAction(GenreRepository $genreRepository): Response
     {
@@ -29,13 +26,7 @@ class GenreController extends AbstractController
     }
 
     /**
-     * @Route("/admin/tagline/genre/delete/{genre}", requirements={"genre" = "\d+"}, name="bo_tagline_genre_delete")
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param TranslatorInterface $translator
-     * @param Genre $genre
-     *
-     * @return Response
+     * @Route("/admin/tagline/genre/delete/{genre}", requirements={"genre": "\d+"}, name="bo_tagline_genre_delete")
      */
     public function deleteAction(
         EntityManagerInterface $entityManager,
@@ -47,7 +38,7 @@ class GenreController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('info', $translator->trans('back.global.delete.success'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', $translator->trans('back.global.delete.error'));
         }
 
@@ -56,18 +47,13 @@ class GenreController extends AbstractController
 
     /**
      * @Route("/admin/tagline/genre/synchronize", name="bo_tagline_genre_synchronize")
-     *
-     * @param GenreSynchronizer $synchronizer
-     * @param TranslatorInterface $translator
-     *
-     * @return Response
      */
     public function synchronizeAction(GenreSynchronizer $synchronizer, TranslatorInterface $translator): Response
     {
         try {
             $synchronizer->synchronize();
             $this->addFlash('info', $translator->trans('back.tagline.genre.synchronize.success'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', $translator->trans('back.tagline.genre.synchronize.error'));
         }
 

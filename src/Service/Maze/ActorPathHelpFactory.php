@@ -12,13 +12,11 @@ use Doctrine\Common\Collections\Collection;
 class ActorPathHelpFactory
 {
     /**
-     * Allows to get list of movies to use to resolve specified actor path (used to display help for actor maze...).
-     *
-     * @param Actor[]|array $actorPath array of actors we want to get filmography as helper
+     * @param Actor[]|array<Actor> $actorPath
      * @param int $minVoteCount minimum vote count value used to extract movies from specified actors (difficulty level)
      * @param int $level difficulty level (0 easy, 1 medium, 2 difficult) used to reduce help list count
      *
-     * @return FilmographyMovie[]|array array of movies matching specified parameters
+     * @return FilmographyMovie[]|array<FilmographyMovie>
      */
     public function getMovies(array $actorPath, int $minVoteCount, int $level): array
     {
@@ -70,11 +68,11 @@ class ActorPathHelpFactory
     }
 
     /**
-     * Allows to fill movie list using specified paramaters.
+     * Allows to fill movie list using specified parameters.
      * NOTE : Specified movie list to fill will be updated in this method.
      *
-     * @param FilmographyMovie[]|array $movieListToFill array of movies we want to fill until reaching movie count per actor value
-     * @param FilmographyMovie[]|array $movieListSource array of movies used to fill previous parameter
+     * @param FilmographyMovie[]|array<FilmographyMovie> $movieListToFill array of movies we want to fill until reaching movie count per actor value
+     * @param FilmographyMovie[]|array<FilmographyMovie> $movieListSource array of movies used to fill previous parameter
      * @param int $addedMovieCount current movie count added to movie list we are filling
      * @param int $movieCountPerActor number of movies we want to add to movie list we are filling
      * @param int $minVoteCount minimum vote count value for movies used to build movie list (difficulty level)
@@ -102,11 +100,11 @@ class ActorPathHelpFactory
     /**
      * Allows to get common movies between 2 specified movie list.
      *
-     * @param FilmographyMovie[]|Collection $movieList1
-     * @param FilmographyMovie[]|Collection $movieList2
+     * @param FilmographyMovie[]|Collection<int, FilmographyMovie> $movieList1
+     * @param FilmographyMovie[]|Collection<int, FilmographyMovie> $movieList2
      * @param int $minVoteCount minimum vote count value for common movies to keep (difficulty level)
      *
-     * @return array
+     * @return FilmographyMovie[]|array<FilmographyMovie>
      */
     private function getCommonMovieList(Collection $movieList1, Collection $movieList2, int $minVoteCount): array
     {

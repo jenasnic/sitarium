@@ -2,107 +2,86 @@
 
 namespace App\Service\Tmdb\Synchronizer;
 
-use App\Event\SynchronizationEvents;
+use App\Event\Synchronization\SynchronizationEndEvent;
+use App\Event\Synchronization\SynchronizationErrorEvent;
 use App\Event\Synchronization\SynchronizationProgressEvent;
 use App\Event\Synchronization\SynchronizationStartEvent;
-use App\Model\Tmdb\Search\DisplayableInterface;
-use App\Service\Tmdb\TmdbApiService;
+use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * @psalm-template T
+ */
 abstract class AbstractSynchronizer implements SynchronizerInterface
 {
-    /**
-     * @var TmdbApiService
-     */
-    protected $tmdbService;
+    protected TmdbDataProvider $tmdbDataProvider;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @param TmdbApiService $tmdbService
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
-        TmdbApiService $tmdbService,
+        TmdbDataProvider $tmdbDataProvider,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $this->tmdbService = $tmdbService;
+        $this->tmdbDataProvider = $tmdbDataProvider;
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function synchronize(): int
+    public function synchronize(): void
     {
+        $count = 0;
+        $processed = 0;
+
         try {
             $datas = $this->getAllData();
 
             $this->eventDispatcher->dispatch(
-                SynchronizationEvents::SYNCHRONIZE_DATA_START,
-                new SynchronizationStartEvent(count($datas), $this->getLocalEntityClass())
+                new SynchronizationStartEvent(count($datas), $this->getType()),
+                SynchronizationStartEvent::SYNCHRONIZE_DATA_START
             );
 
-            $count = 0;
-            $processed = 0;
             foreach ($datas as $data) {
-                $tmdbData = $this->tmdbService->getEntity($this->getTmdbEntityClass(), $data->getTmdbId());
-
-                if ($this->synchronizeData($data, $tmdbData)) {
+                if ($this->synchronizeData($data)) {
                     $this->entityManager->persist($data);
-                    $processed++;
+                    ++$processed;
                 }
 
                 // WARNING : wait between each TMDB request to not override request rate limit (4 per seconde)
                 usleep(250001);
 
-                $this->eventDispatcher->dispatch(SynchronizationEvents::SYNCHRONIZE_DATA_PROGRESS, new SynchronizationProgressEvent(++$count));
+                $this->eventDispatcher->dispatch(new SynchronizationProgressEvent(++$count), SynchronizationProgressEvent::SYNCHRONIZE_DATA_PROGRESS);
             }
 
             $this->entityManager->flush();
-            $this->eventDispatcher->dispatch(SynchronizationEvents::SYNCHRONIZE_DATA_END);
-
-            return $count;
-        } catch (\Exception $e) {
-            $this->eventDispatcher->dispatch(SynchronizationEvents::SYNCHRONIZE_DATA_ERROR);
-            throw $e;
+            $this->eventDispatcher->dispatch(new SynchronizationEndEvent(), SynchronizationEndEvent::SYNCHRONIZE_DATA_END);
+        } catch (Exception $e) {
+            $this->eventDispatcher->dispatch(new SynchronizationErrorEvent($e), SynchronizationErrorEvent::SYNCHRONIZE_DATA_ERROR);
         }
     }
 
-    public function support($type): bool
+    public function support(string $type): bool
     {
-        return $this->getLocalEntityClass() === $type;
+        return $type === $this->getType();
     }
 
-    /**
-     * @return string
-     */
-    abstract protected function getLocalEntityClass();
+    abstract protected function getType(): string;
 
     /**
-     * @return string
+     * @psalm-return array<T>
      */
-    abstract protected function getTmdbEntityClass();
+    abstract protected function getAllData(): array;
 
     /**
-     * @return DisplayableInterface[]|array
+     * @psalm-var T $data
+     *
+     * @param mixed $data
+     *
+     * @return bool TRUE if data is updated, FALSE either
      */
-    abstract protected function getAllData();
-
-    /**
-     * @param mixed $localData
-     * @param mixed $tmdbData
-     * 
-     * @return bool TRUE if local data is updated, FALSE either
-     */
-    abstract protected function synchronizeData($localData, $tmdbData): bool;
+    abstract protected function synchronizeData($data): bool;
 }

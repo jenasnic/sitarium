@@ -5,6 +5,7 @@ namespace App\Controller\Front;
 use App\Domain\Command\User\ResetPasswordCommand;
 use App\Repository\UserRepository;
 use App\Service\Handler\User\ResetUserPasswordHandler;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,11 +16,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class LoginController extends AbstractController
 {
     /**
-     * @Route("/connexion", name="login", methods="GET")
-     *
-     * @param AuthenticationUtils $authenticationUtils
-     *
-     * @return Response
+     * @Route("/connexion", name="login", methods="GET|POST")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -30,14 +27,15 @@ class LoginController extends AbstractController
     }
 
     /**
+     * @Route("/deconnexion", name="logout")
+     */
+    public function logout(): void
+    {
+        // This method will be intercepted by the logout key on firewall.
+    }
+
+    /**
      * @Route("/mot-de-passe-oublie", name="fo_forgotten_password")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param UserRepository $userRepository
-     * @param ResetUserPasswordHandler $handler
-     *
-     * @return Response
      */
     public function infosAction(
         Request $request,
@@ -55,7 +53,7 @@ class LoginController extends AbstractController
                     $this->addFlash('info', $translator->trans('front.login.password.reset.send'));
 
                     return $this->redirectToRoute('login');
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $this->addFlash('error', $translator->trans('front.login.password.reset.error'));
                 }
             } else {

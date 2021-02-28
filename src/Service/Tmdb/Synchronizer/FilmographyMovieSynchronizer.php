@@ -3,75 +3,68 @@
 namespace App\Service\Tmdb\Synchronizer;
 
 use App\Entity\Maze\FilmographyMovie;
-use App\Model\Tmdb\Search\DisplayableInterface;
 use App\Repository\Maze\FilmographyMovieRepository;
-use App\Service\Tmdb\TmdbApiService;
+use App\Service\Tmdb\TmdbDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use App\Entity\Maze\Movie;
 
+/**
+ * @extends AbstractSynchronizer<FilmographyMovie>
+ */
 class FilmographyMovieSynchronizer extends AbstractSynchronizer
 {
-    /**
-     * @var FilmographyMovieRepository
-     */
-    protected $filmographyMovieRepository;
+    protected FilmographyMovieRepository $filmographyMovieRepository;
 
-    /**
-     * @param TmdbApiService $tmdbService
-     * @param EntityManagerInterface $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param FilmographyMovieRepository $filmographyMovieRepository
-     */
     public function __construct(
-        TmdbApiService $tmdbService,
+        TmdbDataProvider $tmdbDataProvider,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher,
         FilmographyMovieRepository $filmographyMovieRepository
     ) {
-        parent::__construct($tmdbService, $entityManager, $eventDispatcher);
+        parent::__construct($tmdbDataProvider, $entityManager, $eventDispatcher);
 
         $this->filmographyMovieRepository = $filmographyMovieRepository;
     }
 
-    /**
-     * @return string
-     */
-    protected function getLocalEntityClass()
+    protected function getType(): string
     {
         return FilmographyMovie::class;
     }
 
     /**
-     * @return string
+     * @return FilmographyMovie[]|array<FilmographyMovie>
      */
-    protected function getTmdbEntityClass()
-    {
-        return Movie::class;
-    }
-
-    /**
-     * @return DisplayableInterface[]|array
-     */
-    protected function getAllData()
+    protected function getAllData(): array
     {
         return $this->filmographyMovieRepository->findAll();
     }
 
     /**
-     * @param FilmographyMovie $localData
-     * @param Movie $tmdbData
+     * @param FilmographyMovie $data
      *
      * @return bool TRUE if local data is updated, FALSE either
      */
-    protected function synchronizeData($localData, $tmdbData): bool
+    protected function synchronizeData($data): bool
     {
-        if ($localData->getPictureUrl() !== $tmdbData->getPictureUrl()) {
-            $localData->setPictureUrl($tmdbData->getPictureUrl());
+        $tmdbData = $this->tmdbDataProvider->getMovie($data->getTmdbId());
 
-            return true;
+        $isUpdated = false;
+
+        if ($data->getPictureUrl() !== $tmdbData->getPosterPath()) {
+            $data->setPictureUrl($tmdbData->getPosterPath());
+            $isUpdated = true;
         }
 
-        return false;
+        if ($data->getTitle() !== $tmdbData->getTitle()) {
+            $data->setTitle($tmdbData->getTitle());
+            $isUpdated = true;
+        }
+
+        if ($data->getVoteCount() !== $tmdbData->getVoteCount()) {
+            $data->setVoteCount($tmdbData->getVoteCount());
+            $isUpdated = true;
+        }
+
+        return $isUpdated;
     }
 }

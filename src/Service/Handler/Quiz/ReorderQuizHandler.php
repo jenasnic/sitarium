@@ -11,34 +11,21 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class ReorderQuizHandler
 {
-    /**
-     * @var QuizRepository
-     */
-    protected $quizRepository;
+    protected QuizRepository $quizRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /**
-     * @param QuizRepository $quizRepository
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(QuizRepository $quizRepository, EntityManagerInterface $entityManager)
     {
         $this->quizRepository = $quizRepository;
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @param ReorderQuizCommand $command
-     */
-    public function handle(ReorderQuizCommand $command)
+    public function handle(ReorderQuizCommand $command): void
     {
         foreach ($command->getReorderedIds() as $orderedId) {
-            $quizToReorder = $this->quizRepository->find($orderedId->id);
-            $quizToReorder->setRank($orderedId->rank);
+            $quizToReorder = $this->quizRepository->find($orderedId['id']);
+            $quizToReorder->setRank($orderedId['rank']);
         }
 
         $this->entityManager->flush();

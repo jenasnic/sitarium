@@ -10,14 +10,8 @@ use App\Repository\Maze\MovieRepository;
  */
 class MovieGraphBuilder
 {
-    /**
-     * @var MovieRepository
-     */
-    protected $movieRespository;
+    protected MovieRepository $movieRespository;
 
-    /**
-     * @param MovieRepository $movieRespository
-     */
     public function __construct(MovieRepository $movieRespository)
     {
         $this->movieRespository = $movieRespository;
@@ -28,10 +22,9 @@ class MovieGraphBuilder
      * This graph is returned as a map with an entry for each point of the graph (i.e. each movie).
      * => Entry point of the graph (representing a movie) can be reached using TMDB identifier of movie.
      *
-     * @param int[]|array|null $movieIds Array of TMDB identifiers for movies to use to build graph.
-     * Default value null means that we build full graph for all existing movies.
+     * @param int[]|array<int>|null $movieIds array of TMDB identifiers for movies to use to build graph (null to build full graph for all existing movies)
      *
-     * @return array map of MazeGraphItem with TMDB identifier as key and MazeGraphItem as value
+     * @return array<int, MazeGraphItem>
      */
     public function buildGraph(?array $movieIds = null): array
     {

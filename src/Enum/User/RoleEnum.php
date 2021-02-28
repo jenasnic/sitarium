@@ -4,11 +4,11 @@ namespace App\Enum\User;
 
 class RoleEnum
 {
-    const ROLE_ADMIN = 'ROLE_ADMIN';
-    const ROLE_USER = 'ROLE_USER';
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
+    public const ROLE_USER = 'ROLE_USER';
 
     /**
-     * @return array
+     * @return array<string>
      */
     public static function getAll(): array
     {

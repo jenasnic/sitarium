@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Back Office{% endblock %}</title>
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('build/css/admin.css') }}">
+            {{ encore_entry_link_tags('css/admin') }}
         {% endblock %}
     </head>
     <body>
@@ -27,8 +27,7 @@
         </div>
 
         {% block javascripts %}
-            <script src="{{ asset('build/runtime.js') }}"></script>
-            <script src="{{ asset('build/js/admin.js') }}"></script>
+            {{ encore_entry_script_tags('js/admin') }}
         {% endblock %}
     </body>
 </html>

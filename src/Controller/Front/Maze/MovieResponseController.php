@@ -6,6 +6,7 @@ use App\Repository\Maze\CastingActorRepository;
 use App\Repository\Maze\MovieRepository;
 use App\Service\Maze\MoviePathResponseValidator;
 use App\Tool\TmdbUtil;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,12 +17,6 @@ class MovieResponseController extends AbstractController
 {
     /**
      * @Route("/quiz-casting/ajax/valider-response", name="fo_maze_movie_progress", methods="POST")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param MoviePathResponseValidator $responseChecker
-     *
-     * @return JsonResponse
      */
     public function progressAction(
         Request $request,
@@ -45,19 +40,13 @@ class MovieResponseController extends AbstractController
             }
 
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.response.incorrect')]);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.response.process_error')]);
         }
     }
 
     /**
      * @Route("/quiz-casting/ajax/indice", name="fo_maze_movie_trick", methods="POST")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param MovieRepository $movieRepository
-     *
-     * @return JsonResponse
      */
     public function trickAction(
         Request $request,
@@ -77,23 +66,16 @@ class MovieResponseController extends AbstractController
                 }
 
                 return new JsonResponse(['success' => true, 'responses' => $actors]);
-            } else {
-                return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.movie.not_found')]);
             }
-        } catch (\Exception $ex) {
+
+            return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.movie.not_found')]);
+        } catch (Exception $ex) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.movie.casting_error')]);
         }
     }
 
     /**
      * @Route("/quiz-casting/ajax/tricher", name="fo_maze_movie_cheat", methods="POST")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param MovieRepository $movieRepository
-     * @param CastingActorRepository $castingActorRepository
-     *
-     * @return JsonResponse
      */
     public function cheatAction(
         Request $request,
@@ -121,7 +103,7 @@ class MovieResponseController extends AbstractController
                 'tmdbLink' => sprintf('https://www.themoviedb.org/person/%d', $commonActor->getTmdbId()),
                 'pictureUrl' => TmdbUtil::getBasePictureUrl().$commonActor->getPictureUrl(),
             ]);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             return new JsonResponse(['success' => false, 'message' => $translator->trans('front.maze.movie.cheat.error')]);
         }
     }

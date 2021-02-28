@@ -6,9 +6,10 @@ use App\DataFixtures\UserFixtures;
 use App\Entity\Quiz\Quiz;
 use App\Entity\Quiz\Winner;
 use App\Entity\User;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class WinnerFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -20,7 +21,7 @@ class WinnerFixtures extends Fixture implements DependentFixtureInterface
     /**
      * {@inheritdoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $datas = $this->getDatas();
 
@@ -43,7 +44,7 @@ class WinnerFixtures extends Fixture implements DependentFixtureInterface
     }
 
     /**
-     * @return array
+     * @return array<Winner>
      */
     protected function getDatas(): array
     {
@@ -52,43 +53,35 @@ class WinnerFixtures extends Fixture implements DependentFixtureInterface
         $data[] = $this->buildData(
             $this->getReference(UserFixtures::USER_RAY),
             $this->getReference(QuizFixtures::QUIZ_MOVIES),
-            \DateTime::createFromFormat('Y-m-d', '2018-05-10'),
+            DateTime::createFromFormat('Y-m-d', '2018-05-10'),
             self::WINNER_REI
         );
         $data[] = $this->buildData(
             $this->getReference(UserFixtures::USER_TED),
             $this->getReference(QuizFixtures::QUIZ_MOVIES),
-            \DateTime::createFromFormat('Y-m-d', '2018-05-11'),
+            DateTime::createFromFormat('Y-m-d', '2018-05-11'),
             self::WINNER_TED
         );
         $data[] = $this->buildData(
             $this->getReference(UserFixtures::USER_JEANNOT),
             $this->getReference(QuizFixtures::QUIZ_MOVIES),
-            \DateTime::createFromFormat('Y-m-d', '2018-05-12'),
+            DateTime::createFromFormat('Y-m-d', '2018-05-12'),
             self::WINNER_JEANNOT
         );
         $data[] = $this->buildData(
             $this->getReference(UserFixtures::USER_DAN),
             $this->getReference(QuizFixtures::QUIZ_SERIES),
-            \DateTime::createFromFormat('Y-m-d', '2018-05-13'),
+            DateTime::createFromFormat('Y-m-d', '2018-05-13'),
             self::WINNER_DAN
         );
 
         return $data;
     }
 
-    /**
-     * @param User $user
-     * @param Quiz $quiz
-     * @param \DateTime $date
-     * @param string $reference
-     *
-     * @return Winner
-     */
     protected function buildData(
         User $user,
         Quiz $quiz,
-        \DateTime $date,
+        DateTime $date,
         string $reference
     ): Winner {
         $data = new Winner();

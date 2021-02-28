@@ -27,7 +27,7 @@ Required :
             <div class="box media">
                 <div class="media-left">
                     <figure class="image">
-                        <img src="{{ movie.pictureUrl|tmdbPictureUrl }}" alt="-">
+                        <img src="{{ movie.posterPath|tmdbPictureUrl }}" alt="-">
                     </figure>
                 </div>
                 <div class="media-content">
@@ -39,11 +39,11 @@ Required :
                             <p class="has-text-danger is-italic">{{ 'back.tagline.similar.no_tagline'|trans }}</p>
                         {% endif %}
                         <div class="content">
-                            {% for genre in movie.tmdbGenres %}
+                            {% for genre in movie.genres %}
                             <span class="tag is-info is-medium">{{ genre.name }}</span>
                             {% endfor %}
                         </div>
-                        <input data-movie-selection data-tmdb-id={{ movie.tmdbId }} type="checkbox">
+                        <input data-movie-selection data-tmdb-id={{ movie.id }} type="checkbox">
                         <span class="is-size-6">{{ 'back.tagline.similar.add'|trans }}</span>
                     </div>
                 </div>
@@ -58,12 +58,12 @@ Required :
             <div class="box similar-movie">
                 <label class="checkbox is-size-6">
                     <figure>
-                        <img src="{{ movie.pictureUrl|tmdbPictureUrl }}" alt="-">
+                        <img src="{{ movie.posterPath|tmdbPictureUrl }}" alt="-">
                     </figure>
                     <div class="content has-text-centered is-size-7">
                         {{ movie.title }}
                     </div>
-                    <input data-movie-selection data-tmdb-id={{ movie.tmdbId }} type="checkbox">
+                    <input data-movie-selection data-tmdb-id={{ movie.id }} type="checkbox">
                     {{ 'back.tagline.similar.add'|trans }}
                 </label>
             </div>

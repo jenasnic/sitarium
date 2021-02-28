@@ -4,15 +4,16 @@ namespace App\DataFixtures\Maze;
 
 use App\Entity\Maze\Actor;
 use App\Enum\Maze\FilmographyStatusEnum;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class ActorFixtures extends Fixture
 {
     /**
      * {@inheritdoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $datas = $this->getDatas();
 
@@ -24,7 +25,7 @@ class ActorFixtures extends Fixture
     }
 
     /**
-     * @return array
+     * @return array<Actor>
      */
     protected function getDatas(): array
     {
@@ -134,14 +135,6 @@ class ActorFixtures extends Fixture
         return $data;
     }
 
-    /**
-     * @param int $tmdbId
-     * @param string $fullname
-     * @param string $birthdate
-     * @param string $pictureUrl
-     *
-     * @return Actor
-     */
     protected function buildData(
         int $tmdbId,
         string $fullname,
@@ -151,7 +144,7 @@ class ActorFixtures extends Fixture
         $data = new Actor();
         $data->setTmdbId($tmdbId);
         $data->setFullname($fullname);
-        $data->setBirthdate(\DateTime::createFromFormat('Y-m-d H:i:s', $birthdate));
+        $data->setBirthdate(DateTime::createFromFormat('Y-m-d H:i:s', $birthdate));
         $data->setPictureUrl($pictureUrl);
         $data->setStatus(FilmographyStatusEnum::UNINITIALIZED);
 

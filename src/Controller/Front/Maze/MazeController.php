@@ -10,8 +10,6 @@ class MazeController extends AbstractController
 {
     /**
      * @Route("/quiz-domino", name="fo_maze")
-     *
-     * @return Response
      */
     public function mazeAction(): Response
     {

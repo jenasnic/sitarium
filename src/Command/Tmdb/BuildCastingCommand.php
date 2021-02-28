@@ -11,16 +11,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class BuildCastingCommand extends AbstractBuildProcessCommand
 {
-    /**
-     * @var MovieCastingBuilder
-     */
-    protected $castingBuilder;
+    protected MovieCastingBuilder $castingBuilder;
 
-    /**
-     * @param BuildProcessRepository $buildProcessRepository
-     * @param EntityManagerInterface $entityManager
-     * @param MovieCastingBuilder $castingBuilder
-     */
     public function __construct(
         BuildProcessRepository $buildProcessRepository,
         EntityManagerInterface $entityManager,
@@ -32,9 +24,9 @@ class BuildCastingCommand extends AbstractBuildProcessCommand
     }
 
     /**
-     * Command settings.
+     * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
         $this->setDescription('Build casting for referenced movies.');
@@ -43,7 +35,7 @@ class BuildCastingCommand extends AbstractBuildProcessCommand
     /**
      * {@inheritdoc}
      */
-    protected function executeProcess(InputInterface $input, OutputInterface $output)
+    protected function executeProcess(InputInterface $input, OutputInterface $output): void
     {
         $this->castingBuilder->build();
     }

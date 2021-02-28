@@ -7,6 +7,7 @@ use App\Entity\Quiz\Quiz;
 use App\Repository\Quiz\QuizRepository;
 use App\Repository\Quiz\UserResponseRepository;
 use App\Service\Handler\Quiz\ClearUserResponseHandler;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,10 +18,6 @@ class QuizController extends AbstractController
 {
     /**
      * @Route("/quiz-en-images", name="fo_quiz")
-     *
-     * @param QuizRepository $quizRepository
-     *
-     * @return Response
      */
     public function indexAction(QuizRepository $quizRepository): Response
     {
@@ -31,11 +28,6 @@ class QuizController extends AbstractController
 
     /**
      * @Route("/quiz/jouer/{slug}", name="fo_quiz_play")
-     *
-     * @param UserResponseRepository $userResponseRepository
-     * @param Quiz $quiz
-     *
-     * @return Response
      */
     public function playAction(UserResponseRepository $userResponseRepository, Quiz $quiz): Response
     {
@@ -51,20 +43,14 @@ class QuizController extends AbstractController
     }
 
     /**
-     * @Route("/quiz/rejouer/{quiz}", requirements={"quiz" = "\d+"}, name="fo_quiz_replay")
+     * @Route("/quiz/rejouer/{quiz}", requirements={"quiz": "\d+"}, name="fo_quiz_replay")
      * @Security("is_granted('ROLE_USER')")
-     *
-     * @param TranslatorInterface $translator
-     * @param ClearUserResponseHandler $handler
-     * @param Quiz $quiz
-     *
-     * @return Response
      */
     public function replayAction(TranslatorInterface $translator, ClearUserResponseHandler $handler, Quiz $quiz): Response
     {
         try {
             $handler->handle(new ClearUserResponseCommand($this->getUser(), $quiz));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', $translator->trans('front.quiz.response.reset_error'));
         }
 

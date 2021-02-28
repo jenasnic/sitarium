@@ -10,6 +10,7 @@ use App\Form\AccountType;
 use App\Repository\Quiz\QuizRepository;
 use App\Service\Handler\User\AddUserHandler;
 use App\Service\Handler\User\UpdateUserHandler;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,13 +24,6 @@ class AccountController extends AbstractController
 {
     /**
      * @Route("/creer-compte", name="fo_account_new")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param TokenStorageInterface $tokenStorageInterface
-     * @param AddUserHandler $handler
-     *
-     * @return Response
      */
     public function newAction(
         Request $request,
@@ -57,7 +51,7 @@ class AccountController extends AbstractController
                 ));
 
                 $this->addFlash('info', $translator->trans('front.account.create.success'));
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', $translator->trans('front.account.create.error'));
             }
 
@@ -70,13 +64,6 @@ class AccountController extends AbstractController
     /**
      * @Route("/mon-compte", name="fo_account_infos")
      * @Security("is_granted('ROLE_USER')")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param QuizRepository $quizRepository
-     * @param UpdateUserHandler $handler
-     *
-     * @return Response
      */
     public function infosAction(
         Request $request,
@@ -94,7 +81,7 @@ class AccountController extends AbstractController
                 $handler->handle(new UpdateUserCommand($user, $newPassword));
 
                 $this->addFlash('info', $translator->trans('front.account.update.success'));
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', $translator->trans('front.account.update.error'));
             }
 
