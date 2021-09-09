@@ -1,0 +1,54 @@
+{#
+Allows to list all tracking.
+Required :
+- pager : list of all tracking (as Pagerfanta).
+#}
+
+{% extends "admin.html.twig" %}
+
+{% block body %}
+
+    <div id="tracking-list">
+
+        <nav class="level">
+            <div class="level-left">
+                <h1 class="title">{{ 'back.tracking.list.title'|trans }}</h1>
+            </div>
+            <div class="level-right">
+                <div class="column">
+                    <a class="button is-primary" href="{{ path('bo_tracking_clear') }}">{{ 'global.delete_all'|trans }}</a>
+                </div>
+            </div>
+        </nav>
+
+        {% embed 'back/form/_grid_result.html.twig' with {'pager': pager} %}
+
+            {% block grid_header %}
+                <th>{{ 'back.tracking.list.column.ip'|trans }}</th>
+                <th>{{ 'back.tracking.list.column.date'|trans }}</th>
+                <th>{{ 'back.tracking.list.column.userAgent'|trans }}</th>
+                <th>{{ 'global.delete'|trans }}</th>
+            {% endblock %}
+
+            {% block grid_body %}
+                {% for tracking in pager.currentPageResults %}
+                    <tr>
+                        <td>{{ tracking.ip }}</td>
+                        <td>{{ tracking.date|date('d/m/Y H:i') }}</td>
+                        <td>{{ tracking.userAgent }}</td>
+                        <td>
+                            <a href="{{ path('bo_tracking_delete', { 'tracking': tracking.id }) }}" onclick="return confirm('{{ 'global.delete.confirm'|trans }}');" >
+                                <span class="icon has-text-danger button">
+                                    <i class="fas fa-trash-alt"></i>
+                                </span>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endblock %}
+
+        {% endembed %}
+
+    </div>
+
+{% endblock %}

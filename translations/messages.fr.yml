@@ -433,3 +433,14 @@ back.tmdb.build.process.quiz_link.start: Démarrage de la construction des liens
 back.tmdb.build.process.synchronization.already_pending: Synchronisation déjà en cours de construction, veuillez attendre la fin du processus...
 back.tmdb.build.process.synchronization.pending: Synchronisation des données en cours...
 back.tmdb.build.process.synchronization.start: Démarrage de la synchronisation...
+
+
+
+############
+# Tracking #
+############
+
+back.tracking.list.title: Tracking
+back.tracking.list.column.ip: IP
+back.tracking.list.column.date: Date
+back.tracking.list.column.userAgent: User Agent
