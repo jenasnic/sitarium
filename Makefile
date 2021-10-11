@@ -68,6 +68,18 @@ assets:
 
 
 ##
+## For deployment
+##---------------------------------------------------------------------------
+
+.PHONY: prod
+prod:
+	$(DOCKER_USER) $(COMPOSER_BIN) install --no-dev --optimize-autoloader --no-interaction
+	$(DOCKER_USER) $(YARN_BIN) install
+	$(DOCKER_USER) $(YARN_BIN) build --prod
+
+
+
+##
 ## Check
 ##---------------------------------------------------------------------------
 
