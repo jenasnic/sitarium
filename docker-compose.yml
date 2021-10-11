@@ -1,4 +1,4 @@
-version: "3.6"
+version: '3.6'
 
 services:
   nginx:
@@ -9,8 +9,6 @@ services:
       - ./public:/www/public
     environment:
       NGINX_HOST: sitarium.local
-    ports:
-      - 80:80
     links:
       - php
 
